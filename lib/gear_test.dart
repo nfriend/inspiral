@@ -31,24 +31,45 @@ class _GearTestPainter extends CustomPainter {
 class _GearTestState extends State<GearTest> {
   double posx = 100.0;
   double posy = 100.0;
+  double dragOffsetX = 0;
+  double dragOffsetY = 0;
+  bool isDraggingGear = false;
+  GlobalKey _customPaintKey = GlobalKey();
 
-  void onDragUpdate(BuildContext context, DragUpdateDetails details) {
-    final RenderBox box = context.findRenderObject();
-    final Offset localOffset = box.globalToLocal(details.globalPosition);
+  void _onGearPointerDown(PointerDownEvent event) {
+    final RenderBox box = _customPaintKey.currentContext.findRenderObject();
+    final Offset offset = box.globalToLocal(event.position);
     setState(() {
-      posx = localOffset.dx;
-      posy = localOffset.dy;
+      dragOffsetX = offset.dx - posx;
+      dragOffsetY = offset.dy - posy;
     });
+    setState(() {
+      isDraggingGear = true;
+    });
+  }
+
+  void _onGlobalPointerUp(PointerUpEvent event) {
+    setState(() {
+      isDraggingGear = false;
+    });
+  }
+
+  void _onGlobalPointerMove(PointerMoveEvent event, BuildContext context) {
+    if (isDraggingGear) {
+      final RenderBox box = _customPaintKey.currentContext.findRenderObject();
+      final Offset offset = box.globalToLocal(event.position);
+      setState(() {
+        posx = offset.dx - dragOffsetX;
+        posy = offset.dy - dragOffsetY;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return StatsFl(
-        child: GestureDetector(
-            onVerticalDragUpdate: (DragUpdateDetails details) =>
-                onDragUpdate(context, details),
-            onHorizontalDragUpdate: (DragUpdateDetails details) =>
-                onDragUpdate(context, details),
+        child: Listener(
+            onPointerMove: (event) => {_onGlobalPointerMove(event, context)},
             child: Column(children: [
               AppBar(title: const Text('Inspiral')),
               Expanded(
@@ -60,11 +81,16 @@ class _GearTestState extends State<GearTest> {
                         top: 0,
                         right: 0,
                         bottom: 0,
-                        child: CustomPaint(painter: _GearTestPainter())),
+                        child: CustomPaint(
+                            key: _customPaintKey, painter: _GearTestPainter())),
                     Positioned(
                         left: posx - 50,
                         top: posy - 50,
-                        child: Image.asset('images/gear_84.png', width: 100))
+                        child: Listener(
+                            onPointerDown: _onGearPointerDown,
+                            onPointerUp: _onGlobalPointerUp,
+                            child:
+                                Image.asset('images/gear_84.png', width: 100)))
                   ]),
                 ),
               )
