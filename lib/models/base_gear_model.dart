@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/gear_definition.dart';
 
-class GearModel extends ChangeNotifier {
-  GearModel(
+abstract class BaseGearModel extends ChangeNotifier {
+  BaseGearModel(
       {@required Offset initialOffset,
       @required GearDefinition initialGearDefinition}) {
     this._offset = initialOffset;
@@ -23,25 +23,23 @@ class GearModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _isDragging;
+  bool isDragging;
 
-  Offset _dragOffset;
+  Offset dragOffset;
 
   gearPointerDown(PointerDownEvent event) {
-    _isDragging = true;
+    isDragging = true;
 
-    _dragOffset = event.position - _offset;
+    dragOffset = event.position - offset;
   }
 
   globalPointerUp(PointerUpEvent event) {
-    _isDragging = false;
+    isDragging = false;
   }
 
   globalPointerMove(PointerMoveEvent event) {
-    if (_isDragging) {
-      _offset = event.position - _dragOffset;
-
-      notifyListeners();
+    if (isDragging) {
+      offset = event.position - dragOffset;
     }
   }
 }

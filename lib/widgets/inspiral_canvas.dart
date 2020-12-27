@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/gear_model.dart';
-import 'package:inspiral/widgets/gear.dart';
+import 'package:inspiral/models/fixed_gear_model.dart';
+import 'package:inspiral/models/rotating_gear_model.dart';
+import 'package:inspiral/widgets/fixed_gear.dart';
+import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:provider/provider.dart';
+import 'package:statsfl/statsfl.dart';
 
 class _TempGearTestPainter extends CustomPainter {
   @override
@@ -26,24 +29,34 @@ class _TempGearTestPainter extends CustomPainter {
 class InspiralCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var gear = Provider.of<GearModel>(context, listen: false);
+    var fixedGear = Provider.of<FixedGearModel>(context, listen: false);
+    var rotatingGear = Provider.of<RotatingGearModel>(context, listen: false);
 
     return Listener(
-        onPointerMove: gear.globalPointerMove,
-        onPointerUp: gear.globalPointerUp,
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-              flex: 1,
-              child: Stack(children: [
-                Positioned(
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: CustomPaint(painter: _TempGearTestPainter())),
-                Gear()
-              ])),
-        ]));
+        onPointerMove: (event) {
+          fixedGear.globalPointerMove(event);
+          rotatingGear.globalPointerMove(event);
+        },
+        onPointerUp: (event) {
+          fixedGear.globalPointerUp(event);
+          rotatingGear.globalPointerUp(event);
+        },
+        child: StatsFl(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+              Expanded(
+                  flex: 1,
+                  child: Stack(children: [
+                    Positioned(
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: CustomPaint(painter: _TempGearTestPainter())),
+                    FixedGear(),
+                    RotatingGear()
+                  ])),
+            ])));
   }
 }
