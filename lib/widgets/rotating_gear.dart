@@ -11,7 +11,7 @@ class RotatingGear extends StatelessWidget {
       offset: Offset(gear.offset.dx, gear.offset.dy),
       child: Listener(
           onPointerDown: gear.gearPointerDown,
-          child: Image.asset(gear.gearDefinition.image, width: 100)),
+          child: Image.asset(gear.gearDefinition.image)),
     );
   }
 }

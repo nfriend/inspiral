@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/fixed_gear_model.dart';
+import 'package:inspiral/models/gear_definitions.dart';
 import 'package:inspiral/models/rotating_gear_model.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/widgets/inspiral_canvas.dart';
@@ -14,13 +15,11 @@ class InspiralApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (context) => RotatingGearModel(
                   initialOffset: Offset(100, 100),
-                  initialGearDefinition:
-                      GearDefinition(image: 'images/gear_84.png'))),
+                  initialGearDefinition: GearDefinitions.defaultRotatingGear)),
           ChangeNotifierProxyProvider<RotatingGearModel, FixedGearModel>(
               create: (context) => FixedGearModel(
                   initialOffset: Offset(100, 300),
-                  initialGearDefinition:
-                      GearDefinition(image: 'images/gear_84.png')),
+                  initialGearDefinition: GearDefinitions.defaultFixedGear),
               update: (context, rotatingGear, fixedGear) {
                 rotatingGear.fixedGear = fixedGear;
                 fixedGear.rotatingGear = rotatingGear;

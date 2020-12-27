@@ -42,21 +42,13 @@ class InspiralCanvas extends StatelessWidget {
           rotatingGear.globalPointerUp(event);
         },
         child: StatsFl(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-              Expanded(
-                  flex: 1,
-                  child: Stack(children: [
-                    Positioned(
-                        left: 0,
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: CustomPaint(painter: _TempGearTestPainter())),
-                    FixedGear(),
-                    RotatingGear()
-                  ])),
-            ])));
+          child: Center(
+              child: Stack(children: [
+            CustomPaint(
+                size: Size(5000, 5000), painter: _TempGearTestPainter()),
+            FixedGear(),
+            RotatingGear()
+          ])),
+        ));
   }
 }

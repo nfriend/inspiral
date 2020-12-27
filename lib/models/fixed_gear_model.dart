@@ -13,7 +13,12 @@ class FixedGearModel extends BaseGearModel {
 
   RotatingGearModel rotatingGear;
 
-  rotatingGearDrag(Offset rotatingGearDelta) {
-    offset -= rotatingGearDelta;
+  @override
+  globalPointerMove(PointerMoveEvent event) {
+    if (this.isDragging) {
+      rotatingGear.fixedGearDrag(offset - (event.position - dragOffset));
+    }
+
+    super.globalPointerMove(event);
   }
 }
