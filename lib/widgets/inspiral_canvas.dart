@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/canvas_model.dart';
 import 'package:inspiral/models/fixed_gear_model.dart';
+import 'package:inspiral/models/pointer_model.dart';
 import 'package:inspiral/models/rotating_gear_model.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
@@ -31,28 +33,36 @@ class InspiralCanvas extends StatelessWidget {
   Widget build(BuildContext context) {
     var fixedGear = Provider.of<FixedGearModel>(context, listen: false);
     var rotatingGear = Provider.of<RotatingGearModel>(context, listen: false);
+    var pointers = Provider.of<PointersModel>(context, listen: false);
+    var canvas = Provider.of<CanvasModel>(context);
 
     return Listener(
         onPointerDown: (event) {
-          fixedGear.globalPointerDown(event);
-          rotatingGear.globalPointerDown(event);
+          pointers.globalPointerDown(event);
+          canvas.globalPointerDown(event);
         },
         onPointerMove: (event) {
           fixedGear.globalPointerMove(event);
           rotatingGear.globalPointerMove(event);
+          canvas.globalPointerMove(event);
         },
         onPointerUp: (event) {
+          pointers.globalPointerUp(event);
           fixedGear.globalPointerUp(event);
           rotatingGear.globalPointerUp(event);
+          canvas.globalPointerUp(event);
         },
         child: StatsFl(
           child: Center(
-              child: Stack(children: [
-            CustomPaint(
-                size: Size(5000, 5000), painter: _TempGearTestPainter()),
-            FixedGear(),
-            RotatingGear()
-          ])),
+              child: Transform.rotate(
+                  angle: canvas.rotation,
+                  child: Stack(children: [
+                    CustomPaint(
+                        size: Size(5000, 5000),
+                        painter: _TempGearTestPainter()),
+                    FixedGear(),
+                    RotatingGear()
+                  ]))),
         ));
   }
 }

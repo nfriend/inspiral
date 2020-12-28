@@ -8,7 +8,7 @@ class RotatingGear extends StatelessWidget {
     var gear = context.watch<RotatingGearModel>();
 
     return Transform.translate(
-      offset: Offset(gear.offset.dx, gear.offset.dy),
+      offset: Offset(gear.position.dx, gear.position.dy),
       child: Listener(
           onPointerDown: gear.gearPointerDown,
           child: Image.asset(gear.gearDefinition.image)),

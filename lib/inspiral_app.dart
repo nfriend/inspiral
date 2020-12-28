@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/canvas_model.dart';
-import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/fixed_gear_model.dart';
 import 'package:inspiral/models/gear_definitions.dart';
+import 'package:inspiral/models/pointer_model.dart';
 import 'package:inspiral/models/rotating_gear_model.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/widgets/inspiral_canvas.dart';
@@ -13,21 +13,31 @@ class InspiralApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (context) => CanvasModel(rotation: 0, zoom: 1),
-          ),
-          ChangeNotifierProvider(
+          ChangeNotifierProvider(create: (context) => PointersModel()),
+          ChangeNotifierProxyProvider<PointersModel, CanvasModel>(
+              create: (context) =>
+                  CanvasModel(initialRotation: 0, initialZoom: 1),
+              update: (context, pointers, canvas) {
+                canvas.pointers = pointers;
+                return canvas;
+              }),
+          ChangeNotifierProxyProvider<PointersModel, RotatingGearModel>(
               create: (context) => RotatingGearModel(
                   initialOffset: Offset(100, 100),
-                  initialGearDefinition: GearDefinitions.defaultRotatingGear)),
-          ChangeNotifierProxyProvider<RotatingGearModel, FixedGearModel>(
+                  initialGearDefinition: GearDefinitions.defaultRotatingGear),
+              update: (context, pointers, rotatingGear) {
+                rotatingGear.pointers = pointers;
+                return rotatingGear;
+              }),
+          ChangeNotifierProxyProvider2<PointersModel, RotatingGearModel,
+                  FixedGearModel>(
               create: (context) => FixedGearModel(
                   initialOffset: Offset(100, 300),
                   initialGearDefinition: GearDefinitions.defaultFixedGear),
-              update: (context, rotatingGear, fixedGear) {
-                rotatingGear.fixedGear = fixedGear;
+              update: (context, pointers, rotatingGear, fixedGear) {
+                fixedGear.pointers = pointers;
                 fixedGear.rotatingGear = rotatingGear;
-
+                rotatingGear.fixedGear = fixedGear;
                 return fixedGear;
               }),
         ],
