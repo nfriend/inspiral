@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/canvas_model.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/fixed_gear_model.dart';
 import 'package:inspiral/models/gear_definitions.dart';
@@ -12,6 +13,9 @@ class InspiralApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(
+            create: (context) => CanvasModel(rotation: 0, zoom: 1),
+          ),
           ChangeNotifierProvider(
               create: (context) => RotatingGearModel(
                   initialOffset: Offset(100, 100),

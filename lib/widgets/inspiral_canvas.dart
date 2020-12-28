@@ -33,6 +33,10 @@ class InspiralCanvas extends StatelessWidget {
     var rotatingGear = Provider.of<RotatingGearModel>(context, listen: false);
 
     return Listener(
+        onPointerDown: (event) {
+          fixedGear.globalPointerDown(event);
+          rotatingGear.globalPointerDown(event);
+        },
         onPointerMove: (event) {
           fixedGear.globalPointerMove(event);
           rotatingGear.globalPointerMove(event);
