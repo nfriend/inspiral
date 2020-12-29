@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/base_gear_model.dart';
-import 'package:inspiral/models/gear_definition.dart';
-import 'package:inspiral/models/rotating_gear_model.dart';
+import 'package:inspiral/models/models.dart';
 
 class FixedGearModel extends BaseGearModel {
   FixedGearModel({
@@ -14,11 +12,11 @@ class FixedGearModel extends BaseGearModel {
   RotatingGearModel rotatingGear;
 
   @override
-  globalPointerMove(PointerMoveEvent event) {
+  globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {
     if (this.isDragging) {
-      rotatingGear.fixedGearDrag(position - (event.position - dragOffset));
+      rotatingGear.fixedGearDrag(position - (pointerPosition - dragOffset));
     }
 
-    super.globalPointerMove(event);
+    super.globalPointerMove(pointerPosition, event);
   }
 }

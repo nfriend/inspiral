@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/gear_definition.dart';
-import 'package:inspiral/models/pointer_model.dart';
+import 'package:inspiral/models/models.dart';
 
 abstract class BaseGearModel extends ChangeNotifier {
   BaseGearModel(
@@ -26,6 +25,8 @@ abstract class BaseGearModel extends ChangeNotifier {
 
   PointersModel pointers;
 
+  CanvasModel canvas;
+
   Offset dragOffset = Offset(0, 0);
 
   /// The "device ID" of the pointer doing the dragging
@@ -34,21 +35,21 @@ abstract class BaseGearModel extends ChangeNotifier {
   /// Whether or not the gear is currently being dragged
   bool get isDragging => draggingPointerId > -1 && pointers.count == 1;
 
-  gearPointerDown(PointerDownEvent event) {
+  gearPointerDown(Offset pointerPosition, PointerDownEvent event) {
     if (!isDragging) {
       draggingPointerId = event.device;
 
-      dragOffset = event.position - position;
+      dragOffset = pointerPosition - position;
     }
   }
 
-  globalPointerMove(PointerMoveEvent event) {
+  globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
-      position = event.position - dragOffset;
+      position = pointerPosition - dragOffset;
     }
   }
 
-  globalPointerUp(PointerUpEvent event) {
+  globalPointerUp(Offset pointerPosition, PointerUpEvent event) {
     if (event.device == draggingPointerId) {
       draggingPointerId = -1;
     }

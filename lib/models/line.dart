@@ -23,4 +23,9 @@ class Line {
   Offset centerPoint() {
     return (point1 + point2) / 2;
   }
+
+  @override
+  String toString() {
+    return "Line($point1, $point2)";
+  }
 }

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/canvas_model.dart';
-import 'package:inspiral/models/fixed_gear_model.dart';
-import 'package:inspiral/models/gear_definitions.dart';
-import 'package:inspiral/models/pointer_model.dart';
-import 'package:inspiral/models/rotating_gear_model.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/widgets/inspiral_canvas.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +19,7 @@ class InspiralApp extends StatelessWidget {
               }),
           ChangeNotifierProxyProvider<PointersModel, RotatingGearModel>(
               create: (context) => RotatingGearModel(
-                  initialOffset: Offset(100, 100),
+                  initialOffset: Offset(0, 0),
                   initialGearDefinition: GearDefinitions.defaultRotatingGear),
               update: (context, pointers, rotatingGear) {
                 rotatingGear.pointers = pointers;
@@ -32,7 +28,7 @@ class InspiralApp extends StatelessWidget {
           ChangeNotifierProxyProvider2<PointersModel, RotatingGearModel,
                   FixedGearModel>(
               create: (context) => FixedGearModel(
-                  initialOffset: Offset(100, 300),
+                  initialOffset: Offset(0, 0),
                   initialGearDefinition: GearDefinitions.defaultFixedGear),
               update: (context, pointers, rotatingGear, fixedGear) {
                 fixedGear.pointers = pointers;

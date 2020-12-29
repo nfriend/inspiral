@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/base_gear_model.dart';
-import 'package:inspiral/models/fixed_gear_model.dart';
-import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/models.dart';
 
 class RotatingGearModel extends BaseGearModel {
   RotatingGearModel({

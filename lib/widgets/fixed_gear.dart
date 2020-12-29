@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/fixed_gear_model.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:provider/provider.dart';
 
 class FixedGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var gear = context.watch<FixedGearModel>();
+    final gear = context.watch<FixedGearModel>();
+    final canvas = Provider.of<CanvasModel>(context, listen: false);
 
     return Transform.translate(
-      offset: Offset(gear.position.dx, gear.position.dy),
+      offset: gear.position.scale(1, -1),
       child: Listener(
-          onPointerDown: gear.gearPointerDown,
-          child: Image.asset(gear.gearDefinition.image)),
+          onPointerDown: (event) {
+            final transformedPosition =
+                canvas.toCanvasCoordinates(event.position, context);
+
+            gear.gearPointerDown(transformedPosition, event);
+          },
+          child: Image.asset(gear.gearDefinition.image,
+              width: gear.gearDefinition.size.width,
+              height: gear.gearDefinition.size.height)),
     );
   }
 }

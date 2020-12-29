@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/canvas_model.dart';
-import 'package:inspiral/models/fixed_gear_model.dart';
-import 'package:inspiral/models/pointer_model.dart';
-import 'package:inspiral/models/rotating_gear_model.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:provider/provider.dart';
@@ -31,26 +28,35 @@ class _TempGearTestPainter extends CustomPainter {
 class InspiralCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var fixedGear = Provider.of<FixedGearModel>(context, listen: false);
-    var rotatingGear = Provider.of<RotatingGearModel>(context, listen: false);
-    var pointers = Provider.of<PointersModel>(context, listen: false);
-    var canvas = Provider.of<CanvasModel>(context);
+    final fixedGear = Provider.of<FixedGearModel>(context, listen: false);
+    final rotatingGear = Provider.of<RotatingGearModel>(context, listen: false);
+    final pointers = Provider.of<PointersModel>(context, listen: false);
+    final canvas = Provider.of<CanvasModel>(context);
 
     return Listener(
         onPointerDown: (event) {
-          pointers.globalPointerDown(event);
-          canvas.globalPointerDown(event);
+          final transformedPosition =
+              canvas.toCanvasCoordinates(event.position, context);
+
+          pointers.globalPointerDown(transformedPosition, event);
+          canvas.globalPointerDown(transformedPosition, event);
         },
         onPointerMove: (event) {
-          fixedGear.globalPointerMove(event);
-          rotatingGear.globalPointerMove(event);
-          canvas.globalPointerMove(event);
+          final transformedPosition =
+              canvas.toCanvasCoordinates(event.position, context);
+
+          fixedGear.globalPointerMove(transformedPosition, event);
+          rotatingGear.globalPointerMove(transformedPosition, event);
+          canvas.globalPointerMove(transformedPosition, event);
         },
         onPointerUp: (event) {
-          pointers.globalPointerUp(event);
-          fixedGear.globalPointerUp(event);
-          rotatingGear.globalPointerUp(event);
-          canvas.globalPointerUp(event);
+          final transformedPosition =
+              canvas.toCanvasCoordinates(event.position, context);
+
+          pointers.globalPointerUp(transformedPosition, event);
+          fixedGear.globalPointerUp(transformedPosition, event);
+          rotatingGear.globalPointerUp(transformedPosition, event);
+          canvas.globalPointerUp(transformedPosition, event);
         },
         child: StatsFl(
           child: Center(

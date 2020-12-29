@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/line.dart';
-import 'package:inspiral/models/pointer_model.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class CanvasModel extends ChangeNotifier {
@@ -51,7 +50,45 @@ class CanvasModel extends ChangeNotifier {
   bool get isTransforming =>
       pointer1Id > -1 && pointer2Id > -1 && pointers.count == 2;
 
-  void globalPointerDown(PointerDownEvent event) {
+  /// Transforms device pixel coordinates into canvas coordinates, taking into
+  /// account zoom, rotation, pan, and origin.
+  Offset toCanvasCoordinates(Offset position, BuildContext context) {
+    // Invert the Y axis so that it matched regular coordinate space
+    var transformedPosition = Offset(position.dx, -position.dy);
+
+    // Get the coordinates of the center of the screen
+    final screenCenter = MediaQuery.of(context).size.centerPoint();
+
+    // Move the origin to the center of the screen
+    transformedPosition = Offset(transformedPosition.dx - screenCenter.dx,
+        transformedPosition.dy + screenCenter.dy);
+
+    // Apply the current transformation
+    return MatrixUtils.transformPoint(transform, transformedPosition);
+  }
+
+  /// Transforms a position on the canvas into device pixel coordinates, taking
+  /// into account zoom, rotation, pan, and origin.
+  Offset toPixelCoordinates(Offset position, BuildContext context) {
+    final invertedTransform = transform.clone();
+    invertedTransform.invert();
+
+    // Apply the current transformation in reverse
+    var transformedPosition =
+        MatrixUtils.transformPoint(invertedTransform, position);
+
+    // Get the coordinates of the center of the screen
+    final screenCenter = MediaQuery.of(context).size.centerPoint();
+
+    // Move the origin to the top left corner of the screen
+    transformedPosition = Offset(transformedPosition.dx + screenCenter.dx,
+        transformedPosition.dy - screenCenter.dy);
+
+    // Invert the Y axis so that it matches pixel coordinate space
+    return Offset(transformedPosition.dx, -transformedPosition.dy);
+  }
+
+  void globalPointerDown(Offset pointerPosition, PointerDownEvent event) {
     if (pointers.count == 1) {
       pointer1Id = event.device;
       pointer1Position = event.position;
@@ -61,7 +98,7 @@ class CanvasModel extends ChangeNotifier {
     }
   }
 
-  void globalPointerMove(PointerMoveEvent event) {
+  void globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {
     if (isTransforming) {
       if (event.device == pointer1Id) {
         Line newLine = Line(point1: event.position, point2: pointer2Position);
@@ -75,7 +112,7 @@ class CanvasModel extends ChangeNotifier {
     }
   }
 
-  void globalPointerUp(PointerUpEvent event) {
+  void globalPointerUp(Offset pointerPosition, PointerUpEvent event) {
     if (pointers.count == 1) {
       pointer1Id = -1;
     } else if (pointers.count == 0) {
@@ -86,13 +123,13 @@ class CanvasModel extends ChangeNotifier {
   /// Given two lines, computes and applies the transformation that should be
   /// applied to the canvas based on the difference between the two lines.
   void _updateTransform(Line previousLine, Line newLine) {
-    Vector3 rotationPoint = newLine.centerPoint().toVector3();
+    final pivotVector = newLine.centerPoint().toVector3();
 
     var newTransform = transform.clone();
 
-    newTransform.translate(rotationPoint);
+    newTransform.translate(pivotVector);
     newTransform.rotateZ(previousLine.angleTo(newLine));
-    newTransform.translate(-rotationPoint);
+    newTransform.translate(-pivotVector);
 
     transform = newTransform;
   }
