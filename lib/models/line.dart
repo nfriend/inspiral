@@ -10,12 +10,17 @@ class Line {
   final Offset point2;
 
   /// The angle of this line, in radians
-  double get angle {
+  double angle() {
     return atan2(point2.dy - point1.dy, point2.dx - point1.dx);
   }
 
   /// The angle between this line and another
   double angleTo(Line other) {
-    return other.angle - angle;
+    return other.angle() - angle();
+  }
+
+  /// The point exactly between point1 and point2
+  Offset centerPoint() {
+    return (point1 + point2) / 2;
   }
 }

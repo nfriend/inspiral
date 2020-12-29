@@ -16,7 +16,7 @@ class InspiralApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => PointersModel()),
           ChangeNotifierProxyProvider<PointersModel, CanvasModel>(
               create: (context) =>
-                  CanvasModel(initialRotation: 0, initialZoom: 1),
+                  CanvasModel(initialTransform: Matrix4.identity()),
               update: (context, pointers, canvas) {
                 canvas.pointers = pointers;
                 return canvas;

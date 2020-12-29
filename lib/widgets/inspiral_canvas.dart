@@ -54,8 +54,8 @@ class InspiralCanvas extends StatelessWidget {
         },
         child: StatsFl(
           child: Center(
-              child: Transform.rotate(
-                  angle: canvas.rotation,
+              child: Transform(
+                  transform: canvas.transform,
                   child: Stack(children: [
                     CustomPaint(
                         size: Size(5000, 5000),

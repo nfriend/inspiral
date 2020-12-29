@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
 import 'package:inspiral/models/pointer_model.dart';
+import 'package:vector_math/vector_math_64.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 class CanvasModel extends ChangeNotifier {
-  CanvasModel({double initialRotation, double initialZoom}) {
-    this._rotation = initialRotation;
-    this.zoom = initialZoom;
+  CanvasModel({@required Matrix4 initialTransform}) {
+    _transform = initialTransform;
   }
 
   PointersModel pointers;
 
-  double _rotation = 0;
+  Matrix4 _transform;
 
-  /// The current rotation of the canvas, in radians
-  double get rotation => _rotation;
-  set rotation(double value) {
-    _rotation = value;
+  /// The current transformation of the canvas
+  Matrix4 get transform => _transform;
+  set transform(Matrix4 value) {
+    _transform = value;
     notifyListeners();
   }
-
-  /// The current zoom level
-  double zoom;
 
   /// The "device ID" of the first pointer
   int pointer1Id = -1;
@@ -67,11 +65,11 @@ class CanvasModel extends ChangeNotifier {
     if (isTransforming) {
       if (event.device == pointer1Id) {
         Line newLine = Line(point1: event.position, point2: pointer2Position);
-        _transform(pointerLine, newLine);
+        _updateTransform(pointerLine, newLine);
         pointer1Position = event.position;
       } else if (event.device == pointer2Id) {
         Line newLine = Line(point1: pointer1Position, point2: event.position);
-        _transform(pointerLine, newLine);
+        _updateTransform(pointerLine, newLine);
         pointer2Position = event.position;
       }
     }
@@ -87,8 +85,15 @@ class CanvasModel extends ChangeNotifier {
 
   /// Given two lines, computes and applies the transformation that should be
   /// applied to the canvas based on the difference between the two lines.
-  void _transform(Line previousLine, Line newLine) {
-    // TODO: make sure this is always in correct range
-    rotation += previousLine.angleTo(newLine);
+  void _updateTransform(Line previousLine, Line newLine) {
+    Vector3 rotationPoint = newLine.centerPoint().toVector3();
+
+    var newTransform = transform.clone();
+
+    newTransform.translate(rotationPoint);
+    newTransform.rotateZ(previousLine.angleTo(newLine));
+    newTransform.translate(-rotationPoint);
+
+    transform = newTransform;
   }
 }
