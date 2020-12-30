@@ -20,32 +20,25 @@ class CanvasProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// When undergoing a transform, this is the transform
+  /// matrix when the gesture was started
+  Matrix4 _transformAtGestureStart;
+
   /// The "device ID" of the first pointer
   int pointer1Id = -1;
 
   /// The "device ID" of the second pointer
   int pointer2Id = -1;
 
-  Offset _pointer1Position = Offset(0, 0);
-
   /// The last location of pointer 1
-  Offset get pointer1Position => _pointer1Position;
-  set pointer1Position(Offset value) {
-    _pointer1Position = value;
-    pointerLine = Line(point1: pointer1Position, point2: pointer2Position);
-  }
-
-  Offset _pointer2Position = Offset(0, 0);
+  Offset pointer1Position = Offset(0, 0);
 
   /// The last location of pointer 2
-  Offset get pointer2Position => _pointer2Position;
-  set pointer2Position(Offset value) {
-    _pointer2Position = value;
-    pointerLine = Line(point1: pointer1Position, point2: pointer2Position);
-  }
+  Offset pointer2Position = Offset(0, 0);
 
-  /// The line between the two pointers
-  Line pointerLine;
+  /// When undergoing a transform, this is the line
+  /// between to two pointers when the gesture was started
+  Line _lineAtGestureStart;
 
   /// Whether or not the canvas is being panned/rotated/zoomed
   bool get isTransforming =>
@@ -96,6 +89,9 @@ class CanvasProvider extends ChangeNotifier {
     } else if (pointers.count == 2) {
       pointer2Id = event.device;
       pointer2Position = event.position;
+      _transformAtGestureStart = transform;
+      _lineAtGestureStart =
+          Line(point1: pointer1Position, point2: pointer2Position);
     }
   }
 
@@ -103,12 +99,14 @@ class CanvasProvider extends ChangeNotifier {
       Offset pointerPosition, PointerMoveEvent event, BuildContext context) {
     if (isTransforming) {
       if (event.device == pointer1Id) {
-        Line newLine = Line(point1: event.position, point2: pointer2Position);
-        _updateTransform(pointerLine, newLine, context);
+        Line currentLine =
+            Line(point1: event.position, point2: pointer2Position);
+        _updateTransform(_lineAtGestureStart, currentLine, context);
         pointer1Position = event.position;
       } else if (event.device == pointer2Id) {
-        Line newLine = Line(point1: pointer1Position, point2: event.position);
-        _updateTransform(pointerLine, newLine, context);
+        Line currentLine =
+            Line(point1: pointer1Position, point2: event.position);
+        _updateTransform(_lineAtGestureStart, currentLine, context);
         pointer2Position = event.position;
       }
     }
@@ -117,6 +115,7 @@ class CanvasProvider extends ChangeNotifier {
   void globalPointerUp(Offset pointerPosition, PointerUpEvent event) {
     if (pointers.count == 1) {
       pointer1Id = -1;
+      _transformAtGestureStart = null;
     } else if (pointers.count == 0) {
       pointer2Id = -1;
     }
@@ -124,16 +123,16 @@ class CanvasProvider extends ChangeNotifier {
 
   /// Given two lines, computes and applies the transformation that should be
   /// applied to the canvas based on the difference between the two lines.
-  void _updateTransform(Line previousLine, Line newLine, BuildContext context) {
-    final pivotVector = newLine.centerPoint().toVector3();
+  void _updateTransform(
+      Line gestureStartLine, Line currentLine, BuildContext context) {
+    final pivotVector = gestureStartLine.centerPoint().toVector3();
 
-    print("newLine: $newLine");
     print("pivotVector: $pivotVector");
 
-    var newTransform = transform.clone();
+    var newTransform = _transformAtGestureStart.clone();
 
     newTransform.translate(pivotVector);
-    newTransform.rotateZ(previousLine.angleTo(newLine));
+    newTransform.rotateZ(gestureStartLine.angleTo(currentLine));
     newTransform.translate(-pivotVector);
 
     transform = newTransform;

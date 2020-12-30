@@ -54,6 +54,7 @@ class InspiralApp extends StatelessWidget {
                     minHeight: canvasSize.height,
                     maxWidth: canvasSize.width,
                     minWidth: canvasSize.width,
+                    alignment: Alignment.topLeft,
                     child: Container(
                         width: canvasSize.width,
                         height: canvasSize.height,
