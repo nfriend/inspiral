@@ -127,7 +127,7 @@ class CanvasProvider extends ChangeNotifier {
       Line gestureStartLine, Line currentLine, BuildContext context) {
     final pivotVector = gestureStartLine.centerPoint().toVector3();
 
-    var newTransform = _transformAtGestureStart.clone();
+    var newTransform = Matrix4.identity();
 
     // Rotate
     newTransform.translate(pivotVector);
@@ -146,6 +146,6 @@ class CanvasProvider extends ChangeNotifier {
     newTransform.scale(newScaleFactor, newScaleFactor, 0);
     newTransform.translate(-pivotVector);
 
-    transform = newTransform;
+    transform = newTransform * _transformAtGestureStart;
   }
 }
