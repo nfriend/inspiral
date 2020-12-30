@@ -14,6 +14,11 @@ class Line {
     return atan2(point2.dy - point1.dy, point2.dx - point1.dx);
   }
 
+  /// The length of this line
+  double length() {
+    return (point2 - point1).distance;
+  }
+
   /// The angle between this line and another
   double angleTo(Line other) {
     return other.angle() - angle();

@@ -47,19 +47,7 @@ class InspiralApp extends StatelessWidget {
           ),
           routes: {
             InspiralRoutes.canvas: (context) {
-              return StatsFl(
-                  child: Stack(children: [
-                OverflowBox(
-                    maxHeight: canvasSize.height,
-                    minHeight: canvasSize.height,
-                    maxWidth: canvasSize.width,
-                    minWidth: canvasSize.width,
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                        width: canvasSize.width,
-                        height: canvasSize.height,
-                        child: InspiralCanvas()))
-              ]));
+              return StatsFl(child: InspiralCanvas());
             }
           },
         ));

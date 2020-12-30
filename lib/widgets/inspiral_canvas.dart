@@ -4,6 +4,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:inspiral/providers/providers.dart';
+import 'package:statsfl/statsfl.dart';
 
 class _TempGearTestPainter extends CustomPainter {
   @override
@@ -34,41 +35,56 @@ class InspiralCanvas extends StatelessWidget {
     final pointers = Provider.of<PointersProvider>(context, listen: false);
     final canvas = Provider.of<CanvasProvider>(context);
 
-    return Listener(
-      onPointerDown: (event) {
-        final transformedPosition =
-            canvas.toCanvasCoordinates(event.position, context);
+    return StatsFl(
+        child: Listener(
+            behavior: HitTestBehavior.translucent,
+            onPointerDown: (event) {
+              final transformedPosition =
+                  canvas.toCanvasCoordinates(event.position, context);
 
-        pointers.globalPointerDown(transformedPosition, event);
-        canvas.globalPointerDown(transformedPosition, event);
-      },
-      onPointerMove: (event) {
-        final transformedPosition =
-            canvas.toCanvasCoordinates(event.position, context);
+              pointers.globalPointerDown(transformedPosition, event);
+              canvas.globalPointerDown(transformedPosition, event);
+            },
+            onPointerMove: (event) {
+              final transformedPosition =
+                  canvas.toCanvasCoordinates(event.position, context);
 
-        fixedGear.globalPointerMove(transformedPosition, event);
-        rotatingGear.globalPointerMove(transformedPosition, event);
-        canvas.globalPointerMove(transformedPosition, event, context);
-      },
-      onPointerUp: (event) {
-        final transformedPosition =
-            canvas.toCanvasCoordinates(event.position, context);
+              fixedGear.globalPointerMove(transformedPosition, event);
+              rotatingGear.globalPointerMove(transformedPosition, event);
+              canvas.globalPointerMove(transformedPosition, event, context);
+            },
+            onPointerUp: (event) {
+              final transformedPosition =
+                  canvas.toCanvasCoordinates(event.position, context);
 
-        pointers.globalPointerUp(transformedPosition, event);
-        fixedGear.globalPointerUp(transformedPosition, event);
-        rotatingGear.globalPointerUp(transformedPosition, event);
-        canvas.globalPointerUp(transformedPosition, event);
-      },
-      child: Transform(
-          transform: canvas.transform,
-          child: SizedBox(
-              width: 1000,
-              height: 1000,
-              child: Stack(children: [
-                CustomPaint(size: canvasSize, painter: _TempGearTestPainter()),
-                FixedGear(),
-                RotatingGear()
-              ]))),
-    );
+              pointers.globalPointerUp(transformedPosition, event);
+              fixedGear.globalPointerUp(transformedPosition, event);
+              rotatingGear.globalPointerUp(transformedPosition, event);
+              canvas.globalPointerUp(transformedPosition, event);
+            },
+            child: Stack(children: [
+              OverflowBox(
+                  maxHeight: canvasSize.height,
+                  minHeight: canvasSize.height,
+                  maxWidth: canvasSize.width,
+                  minWidth: canvasSize.width,
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    width: canvasSize.width,
+                    height: canvasSize.height,
+                    child: Transform(
+                        transform: canvas.transform,
+                        child: SizedBox(
+                            width: 1000,
+                            height: 1000,
+                            child: Stack(children: [
+                              CustomPaint(
+                                  size: canvasSize,
+                                  painter: _TempGearTestPainter()),
+                              FixedGear(),
+                              RotatingGear()
+                            ]))),
+                  ))
+            ])));
   }
 }

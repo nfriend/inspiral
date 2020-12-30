@@ -127,12 +127,23 @@ class CanvasProvider extends ChangeNotifier {
       Line gestureStartLine, Line currentLine, BuildContext context) {
     final pivotVector = gestureStartLine.centerPoint().toVector3();
 
-    print("pivotVector: $pivotVector");
-
     var newTransform = _transformAtGestureStart.clone();
 
+    // Rotate
     newTransform.translate(pivotVector);
     newTransform.rotateZ(gestureStartLine.angleTo(currentLine));
+    newTransform.translate(-pivotVector);
+
+    // Translate
+    var translationVector =
+        (currentLine.centerPoint() - gestureStartLine.centerPoint())
+            .toVector3();
+    newTransform.translate(translationVector);
+
+    // Scale
+    double newScaleFactor = currentLine.length() / gestureStartLine.length();
+    newTransform.translate(pivotVector);
+    newTransform.scale(newScaleFactor, newScaleFactor, 0);
     newTransform.translate(-pivotVector);
 
     transform = newTransform;
