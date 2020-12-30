@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/providers/providers.dart';
 
-abstract class BaseGearModel extends ChangeNotifier {
-  BaseGearModel(
+abstract class BaseGearProvider extends ChangeNotifier {
+  BaseGearProvider(
       {@required Offset initialPosition,
       @required GearDefinition initialGearDefinition}) {
     this._position = initialPosition;
@@ -23,9 +24,9 @@ abstract class BaseGearModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  PointersModel pointers;
+  PointersProvider pointers;
 
-  CanvasModel canvas;
+  CanvasProvider canvas;
 
   Offset dragOffset = Offset(0, 0);
 

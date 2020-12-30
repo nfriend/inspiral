@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PointersModel extends ChangeNotifier {
+class PointersProvider extends ChangeNotifier {
   int _count = 0;
   int get count => _count;
   set count(int value) {

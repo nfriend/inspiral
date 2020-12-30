@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/providers/providers.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
-class CanvasModel extends ChangeNotifier {
-  CanvasModel({@required Matrix4 initialTransform}) {
+class CanvasProvider extends ChangeNotifier {
+  CanvasProvider({@required Matrix4 initialTransform}) {
     _transform = initialTransform;
   }
 
-  PointersModel pointers;
+  PointersProvider pointers;
 
   Matrix4 _transform;
 
@@ -98,15 +99,16 @@ class CanvasModel extends ChangeNotifier {
     }
   }
 
-  void globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {
+  void globalPointerMove(
+      Offset pointerPosition, PointerMoveEvent event, BuildContext context) {
     if (isTransforming) {
       if (event.device == pointer1Id) {
         Line newLine = Line(point1: event.position, point2: pointer2Position);
-        _updateTransform(pointerLine, newLine);
+        _updateTransform(pointerLine, newLine, context);
         pointer1Position = event.position;
       } else if (event.device == pointer2Id) {
         Line newLine = Line(point1: pointer1Position, point2: event.position);
-        _updateTransform(pointerLine, newLine);
+        _updateTransform(pointerLine, newLine, context);
         pointer2Position = event.position;
       }
     }
@@ -122,8 +124,11 @@ class CanvasModel extends ChangeNotifier {
 
   /// Given two lines, computes and applies the transformation that should be
   /// applied to the canvas based on the difference between the two lines.
-  void _updateTransform(Line previousLine, Line newLine) {
+  void _updateTransform(Line previousLine, Line newLine, BuildContext context) {
     final pivotVector = newLine.centerPoint().toVector3();
+
+    print("newLine: $newLine");
+    print("pivotVector: $pivotVector");
 
     var newTransform = transform.clone();
 

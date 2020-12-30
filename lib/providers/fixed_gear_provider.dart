@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/providers/providers.dart';
 
-class FixedGearModel extends BaseGearModel {
-  FixedGearModel({
+class FixedGearProvider extends BaseGearProvider {
+  FixedGearProvider({
     @required Offset initialOffset,
     @required GearDefinition initialGearDefinition,
   }) : super(
             initialPosition: initialOffset,
             initialGearDefinition: initialGearDefinition);
 
-  RotatingGearModel rotatingGear;
+  RotatingGearProvider rotatingGear;
 
   @override
   globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {

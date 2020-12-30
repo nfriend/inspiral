@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/models.dart';
 import 'package:provider/provider.dart';
+import 'package:inspiral/providers/providers.dart';
 
 class FixedGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final gear = context.watch<FixedGearModel>();
-    final canvas = Provider.of<CanvasModel>(context, listen: false);
+    final gear = context.watch<FixedGearProvider>();
+    final canvas = Provider.of<CanvasProvider>(context, listen: false);
 
     return Transform.translate(
       offset: gear.position.scale(1, -1),
