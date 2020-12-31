@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -29,9 +31,6 @@ class _TempGearTestPainter extends CustomPainter {
 class InspiralCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final fixedGear = Provider.of<FixedGearProvider>(context, listen: false);
-    final rotatingGear =
-        Provider.of<RotatingGearProvider>(context, listen: false);
     final pointers = Provider.of<PointersProvider>(context, listen: false);
     final canvas = Provider.of<CanvasProvider>(context);
 
@@ -39,28 +38,15 @@ class InspiralCanvas extends StatelessWidget {
         child: Listener(
             behavior: HitTestBehavior.translucent,
             onPointerDown: (event) {
-              final transformedPosition =
-                  canvas.toCanvasCoordinates(event.position, context);
-
-              pointers.globalPointerDown(transformedPosition, event);
-              canvas.globalPointerDown(transformedPosition, event);
+              pointers.globalPointerDown(event);
+              canvas.globalPointerDown(event);
             },
             onPointerMove: (event) {
-              final transformedPosition =
-                  canvas.toCanvasCoordinates(event.position, context);
-
-              fixedGear.globalPointerMove(transformedPosition, event);
-              rotatingGear.globalPointerMove(transformedPosition, event);
-              canvas.globalPointerMove(transformedPosition, event, context);
+              canvas.globalPointerMove(event);
             },
             onPointerUp: (event) {
-              final transformedPosition =
-                  canvas.toCanvasCoordinates(event.position, context);
-
-              pointers.globalPointerUp(transformedPosition, event);
-              fixedGear.globalPointerUp(transformedPosition, event);
-              rotatingGear.globalPointerUp(transformedPosition, event);
-              canvas.globalPointerUp(transformedPosition, event);
+              pointers.globalPointerUp(event);
+              canvas.globalPointerUp(event);
             },
             child: Stack(children: [
               OverflowBox(

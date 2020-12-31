@@ -6,17 +6,13 @@ class RotatingGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gear = context.watch<RotatingGearProvider>();
-    final canvas = Provider.of<CanvasProvider>(context, listen: false);
 
     return Transform.translate(
-      offset: gear.position.scale(1, -1),
+      offset: gear.position,
       child: Listener(
-          onPointerDown: (event) {
-            final transformedPosition =
-                canvas.toCanvasCoordinates(event.position, context);
-
-            gear.gearPointerDown(transformedPosition, event);
-          },
+          onPointerDown: gear.gearPointerDown,
+          onPointerMove: gear.gearPointerMove,
+          onPointerUp: gear.gearPointerUp,
           child: Image.asset(gear.gearDefinition.image,
               width: gear.gearDefinition.size.width,
               height: gear.gearDefinition.size.height)),

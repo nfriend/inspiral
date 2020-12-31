@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 @immutable
 class Line {
-  Line({this.point1, this.point2});
+  Line(this.point1, this.point2);
 
   final Offset point1;
   final Offset point2;

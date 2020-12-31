@@ -15,4 +15,10 @@ class RotatingGearProvider extends BaseGearProvider {
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
   }
+
+  gearPointerMove(PointerMoveEvent event) {
+    if (event.device == draggingPointerId && isDragging) {
+      // TODO: gear moving logic here
+    }
+  }
 }

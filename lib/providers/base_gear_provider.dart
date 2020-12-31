@@ -36,21 +36,15 @@ abstract class BaseGearProvider extends ChangeNotifier {
   /// Whether or not the gear is currently being dragged
   bool get isDragging => draggingPointerId > -1 && pointers.count == 1;
 
-  gearPointerDown(Offset pointerPosition, PointerDownEvent event) {
+  gearPointerDown(PointerDownEvent event) {
     if (!isDragging) {
       draggingPointerId = event.device;
 
-      dragOffset = pointerPosition - position;
+      dragOffset = event.localPosition - position;
     }
   }
 
-  globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {
-    if (event.device == draggingPointerId && isDragging) {
-      position = pointerPosition - dragOffset;
-    }
-  }
-
-  globalPointerUp(Offset pointerPosition, PointerUpEvent event) {
+  gearPointerUp(PointerUpEvent event) {
     if (event.device == draggingPointerId) {
       draggingPointerId = -1;
     }

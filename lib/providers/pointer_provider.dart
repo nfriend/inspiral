@@ -8,11 +8,11 @@ class PointersProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  globalPointerDown(Offset pointerPosition, PointerDownEvent event) {
+  globalPointerDown(PointerDownEvent event) {
     count++;
   }
 
-  globalPointerUp(Offset pointerPosition, PointerUpEvent event) {
+  globalPointerUp(PointerUpEvent event) {
     count--;
   }
 }

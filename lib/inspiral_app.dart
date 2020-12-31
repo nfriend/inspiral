@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:statsfl/statsfl.dart';
 import 'package:provider/provider.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/widgets/inspiral_canvas.dart';

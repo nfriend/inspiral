@@ -12,12 +12,12 @@ class FixedGearProvider extends BaseGearProvider {
 
   RotatingGearProvider rotatingGear;
 
-  @override
-  globalPointerMove(Offset pointerPosition, PointerMoveEvent event) {
-    if (this.isDragging) {
-      rotatingGear.fixedGearDrag(position - (pointerPosition - dragOffset));
-    }
+  gearPointerMove(PointerMoveEvent event) {
+    if (event.device == draggingPointerId && isDragging) {
+      final newPosition = event.localPosition - dragOffset;
 
-    super.globalPointerMove(pointerPosition, event);
+      rotatingGear.fixedGearDrag(position - newPosition);
+      position = newPosition;
+    }
   }
 }

@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-const Size canvasSize = Size(500, 500);
+const Size canvasSize = Size(2000, 2000);
