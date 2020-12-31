@@ -61,6 +61,8 @@ class CanvasProvider extends ChangeNotifier {
       _updateTransform(previousLine, currentLine);
     }
 
+    // Always update the last coordinates of the pointers,
+    // even if we're not currently transforming.
     if (event.device == pointer1Id) {
       pointer1Position = event.position;
     } else if (event.device == pointer2Id) {
@@ -70,8 +72,18 @@ class CanvasProvider extends ChangeNotifier {
 
   void globalPointerUp(PointerUpEvent event) {
     if (pointers.count == 1) {
+      // If we're transitioning from two fingers down to one
+
+      if (event.device == pointer1Id) {
+        // If the finder that was lifted was pointer1, reassign pointer2 to pointer1
+        pointer1Id = pointer2Id;
+        pointer1Position = pointer2Position;
+      }
+
       pointer2Id = -1;
     } else if (pointers.count == 0) {
+      // If we're transitioning from one finger down to none
+
       pointer1Id = -1;
     }
   }
