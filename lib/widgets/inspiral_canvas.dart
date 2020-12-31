@@ -31,6 +31,9 @@ class _TempGearTestPainter extends CustomPainter {
 class InspiralCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final fixedGear = Provider.of<FixedGearProvider>(context, listen: false);
+    final rotatingGear =
+        Provider.of<RotatingGearProvider>(context, listen: false);
     final pointers = Provider.of<PointersProvider>(context, listen: false);
     final canvas = Provider.of<CanvasProvider>(context);
 
@@ -40,6 +43,8 @@ class InspiralCanvas extends StatelessWidget {
             onPointerDown: (event) {
               pointers.globalPointerDown(event);
               canvas.globalPointerDown(event);
+              fixedGear.globalPointerDown(event);
+              rotatingGear.globalPointerDown(event);
             },
             onPointerMove: (event) {
               canvas.globalPointerMove(event);

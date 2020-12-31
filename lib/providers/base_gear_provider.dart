@@ -44,6 +44,12 @@ abstract class BaseGearProvider extends ChangeNotifier {
     }
   }
 
+  globalPointerDown(PointerDownEvent event) {
+    if (pointers.count == 2) {
+      draggingPointerId = -1;
+    }
+  }
+
   gearPointerUp(PointerUpEvent event) {
     if (event.device == draggingPointerId) {
       draggingPointerId = -1;

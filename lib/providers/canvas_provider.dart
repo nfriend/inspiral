@@ -54,21 +54,25 @@ class CanvasProvider extends ChangeNotifier {
 
       if (event.device == pointer1Id) {
         currentLine = Line(event.position, pointer2Position);
-        pointer1Position = event.position;
       } else {
         currentLine = Line(pointer1Position, event.position);
-        pointer2Position = event.position;
       }
 
       _updateTransform(previousLine, currentLine);
+    }
+
+    if (event.device == pointer1Id) {
+      pointer1Position = event.position;
+    } else if (event.device == pointer2Id) {
+      pointer2Position = event.position;
     }
   }
 
   void globalPointerUp(PointerUpEvent event) {
     if (pointers.count == 1) {
-      pointer1Id = -1;
-    } else if (pointers.count == 0) {
       pointer2Id = -1;
+    } else if (pointers.count == 0) {
+      pointer1Id = -1;
     }
   }
 
