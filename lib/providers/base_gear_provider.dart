@@ -7,7 +7,7 @@ abstract class BaseGearProvider extends ChangeNotifier {
       {@required Offset initialPosition,
       @required GearDefinition initialGearDefinition}) {
     this._position = initialPosition;
-    this._gearDefinition = initialGearDefinition;
+    this._definition = initialGearDefinition;
   }
 
   Offset _position;
@@ -17,10 +17,10 @@ abstract class BaseGearProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  GearDefinition _gearDefinition;
-  GearDefinition get gearDefinition => _gearDefinition;
-  set gearDefinition(GearDefinition value) {
-    _gearDefinition = value;
+  GearDefinition _definition;
+  GearDefinition get definition => _definition;
+  set definition(GearDefinition value) {
+    _definition = value;
     notifyListeners();
   }
 

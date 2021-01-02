@@ -16,20 +16,20 @@ class FixedGear extends StatelessWidget {
         onPointerDown: gear.gearPointerDown,
         onPointerMove: gear.gearPointerMove,
         onPointerUp: gear.gearPointerUp,
-        child: Image.asset(gear.gearDefinition.image,
-            width: gear.gearDefinition.size.width,
-            height: gear.gearDefinition.size.height)));
+        child: Image.asset(gear.definition.image,
+            width: gear.definition.size.width,
+            height: gear.definition.size.height)));
 
     if (settings.debug) {
       stackChildren.add(IgnorePointer(
           child: Transform.translate(
-              offset: (gear.gearDefinition.size.toOffset() / 2)
+              offset: (gear.definition.size.toOffset() / 2)
                   .translate(debugDotSize.width / -2, debugDotSize.height / -2),
               child: Image.asset("images/blue_dot.png"))));
     }
 
     return Transform.translate(
-      offset: gear.position - gear.gearDefinition.size.toOffset() / 2,
+      offset: gear.position - gear.definition.size.toOffset() / 2,
       child: Stack(children: stackChildren),
     );
   }
