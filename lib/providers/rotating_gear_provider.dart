@@ -18,7 +18,10 @@ class RotatingGearProvider extends BaseGearProvider {
 
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
-      // TODO: gear moving logic here
+      double angleToFixed =
+          Line(fixedGear.position, event.localPosition).angle();
+
+      print(angleToFixed);
     }
   }
 }
