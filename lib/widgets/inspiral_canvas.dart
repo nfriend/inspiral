@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:inspiral/widgets/drag_line.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -36,6 +37,7 @@ class InspiralCanvas extends StatelessWidget {
         Provider.of<RotatingGearProvider>(context, listen: false);
     final pointers = Provider.of<PointersProvider>(context, listen: false);
     final canvas = Provider.of<CanvasProvider>(context);
+    final settings = Provider.of<SettingsProvider>(context);
 
     return StatsFl(
         child: Listener(
@@ -65,16 +67,14 @@ class InspiralCanvas extends StatelessWidget {
                     height: canvasSize.height,
                     child: Transform(
                         transform: canvas.transform,
-                        child: SizedBox(
-                            width: 1000,
-                            height: 1000,
-                            child: Stack(children: [
-                              CustomPaint(
-                                  size: canvasSize,
-                                  painter: _TempGearTestPainter()),
-                              FixedGear(),
-                              RotatingGear()
-                            ]))),
+                        child: Stack(children: [
+                          CustomPaint(
+                              size: canvasSize,
+                              painter: _TempGearTestPainter()),
+                          FixedGear(),
+                          RotatingGear(),
+                          settings.debug ? DragLine() : null
+                        ])),
                   ))
             ])));
   }

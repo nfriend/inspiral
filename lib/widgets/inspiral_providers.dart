@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/providers/drag_line_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/constants.dart';
@@ -42,20 +43,29 @@ class InspiralProviders extends StatelessWidget {
           }),
       ChangeNotifierProxyProvider<PointersProvider, RotatingGearProvider>(
           create: (context) => RotatingGearProvider(
-              initialOffset: canvasCenter,
+              initialOffset: canvasCenter.translate(99, -206),
               initialGearDefinition: GearDefinitions.defaultRotatingGear),
           update: (context, pointers, rotatingGear) {
             rotatingGear.pointers = pointers;
             return rotatingGear;
           }),
-      ChangeNotifierProxyProvider2<PointersProvider, RotatingGearProvider,
-              FixedGearProvider>(
+      ChangeNotifierProxyProvider2<CanvasProvider, RotatingGearProvider,
+              DragLineProvider>(
+          create: (context) => DragLineProvider(initialOffset: canvasCenter),
+          update: (context, canvas, rotatingGear, dragLine) {
+            dragLine.canvas = canvas;
+            dragLine.rotatingGear = rotatingGear;
+            return dragLine;
+          }),
+      ChangeNotifierProxyProvider3<PointersProvider, DragLineProvider,
+              RotatingGearProvider, FixedGearProvider>(
           create: (context) => FixedGearProvider(
               initialOffset: canvasCenter,
               initialGearDefinition: GearDefinitions.defaultFixedGear),
-          update: (context, pointers, rotatingGear, fixedGear) {
+          update: (context, pointers, dragLine, rotatingGear, fixedGear) {
             fixedGear.pointers = pointers;
             fixedGear.rotatingGear = rotatingGear;
+            fixedGear.dragLine = dragLine;
             rotatingGear.fixedGear = fixedGear;
             return fixedGear;
           }),

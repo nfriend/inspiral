@@ -27,10 +27,10 @@ class CanvasProvider extends ChangeNotifier {
   int pointer2Id = -1;
 
   /// The last location of pointer 1
-  Offset pointer1Position = Offset(0, 0);
+  Offset pointer1Position = Offset.zero;
 
   /// The last location of pointer 2
-  Offset pointer2Position = Offset(0, 0);
+  Offset pointer2Position = Offset.zero;
 
   /// Whether or not the canvas is being panned/rotated/zoomed
   bool get isTransforming =>

@@ -28,7 +28,7 @@ abstract class BaseGearProvider extends ChangeNotifier {
 
   CanvasProvider canvas;
 
-  Offset dragOffset = Offset(0, 0);
+  Offset dragOffset = Offset.zero;
 
   /// The "device ID" of the pointer doing the dragging
   int draggingPointerId = -1;

@@ -11,12 +11,14 @@ class FixedGearProvider extends BaseGearProvider {
             initialGearDefinition: initialGearDefinition);
 
   RotatingGearProvider rotatingGear;
+  DragLineProvider dragLine;
 
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
       final newPosition = event.localPosition - dragOffset;
 
       rotatingGear.fixedGearDrag(position - newPosition);
+      dragLine.fixedGearDrag(position - newPosition);
       position = newPosition;
     }
   }

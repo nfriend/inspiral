@@ -9,12 +9,19 @@ class RotatingGear extends StatelessWidget {
   Widget build(BuildContext context) {
     final gear = context.watch<RotatingGearProvider>();
     final settings = context.watch<SettingsProvider>();
+    final dragLine = Provider.of<DragLineProvider>(context, listen: false);
 
     List<Widget> stackChildren = [];
 
     stackChildren.add(Listener(
-        onPointerDown: gear.gearPointerDown,
-        onPointerMove: gear.gearPointerMove,
+        onPointerDown: (event) {
+          gear.gearPointerDown(event);
+          dragLine.gearPointerDown(event);
+        },
+        onPointerMove: (event) {
+          gear.gearPointerMove(event);
+          dragLine.gearPointerMove(event);
+        },
         onPointerUp: gear.gearPointerUp,
         child: Image.asset(gear.definition.image,
             width: gear.definition.size.width,

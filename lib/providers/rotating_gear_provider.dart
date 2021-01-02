@@ -21,7 +21,7 @@ class RotatingGearProvider extends BaseGearProvider {
       double angleToFixed =
           Line(fixedGear.position, event.localPosition).angle();
 
-      print(angleToFixed);
+      // print(angleToFixed);
     }
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const Size canvasSize = Size(2000, 2000);
 
 /// The canvas's origin
-const Offset canvasOrigin = Offset(0, 0);
+const Offset canvasOrigin = Offset.zero;
 
 /// The canvas's center point
 final Offset canvasCenter = canvasSize.center(canvasOrigin);
