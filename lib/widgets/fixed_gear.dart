@@ -22,8 +22,10 @@ class FixedGear extends StatelessWidget {
                 height: gear.gearDefinition.size.height))));
 
     if (settings.debug) {
-      stackChildren.add(Transform.translate(
-          offset: Offset(-8, -8), child: Image.asset("images/blue_dot.png")));
+      stackChildren.add(IgnorePointer(
+          child: Transform.translate(
+              offset: Offset(-8, -8),
+              child: Image.asset("images/blue_dot.png"))));
     }
 
     return Transform.translate(
