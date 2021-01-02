@@ -8,3 +8,6 @@ const Offset canvasOrigin = Offset(0, 0);
 
 /// The canvas's center point
 final Offset canvasCenter = canvasSize.center(canvasOrigin);
+
+/// The size of the debug dots
+const Size debugDotSize = Size(16, 16);

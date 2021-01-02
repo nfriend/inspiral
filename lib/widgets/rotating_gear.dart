@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/providers/providers.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -15,21 +16,20 @@ class RotatingGear extends StatelessWidget {
         onPointerDown: gear.gearPointerDown,
         onPointerMove: gear.gearPointerMove,
         onPointerUp: gear.gearPointerUp,
-        child: Transform.translate(
-            offset: gear.gearDefinition.size.toOffset() / -2,
-            child: Image.asset(gear.gearDefinition.image,
-                width: gear.gearDefinition.size.width,
-                height: gear.gearDefinition.size.height))));
+        child: Image.asset(gear.gearDefinition.image,
+            width: gear.gearDefinition.size.width,
+            height: gear.gearDefinition.size.height)));
 
     if (settings.debug) {
       stackChildren.add(IgnorePointer(
           child: Transform.translate(
-              offset: Offset(-8, -8),
+              offset: (gear.gearDefinition.size.toOffset() / 2)
+                  .translate(debugDotSize.width / -2, debugDotSize.height / -2),
               child: Image.asset("images/red_dot.png"))));
     }
 
     return Transform.translate(
-      offset: gear.position,
+      offset: gear.position - gear.gearDefinition.size.toOffset() / 2,
       child: Stack(children: stackChildren),
     );
   }
