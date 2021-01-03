@@ -17,7 +17,8 @@ GearDefinition generateCircleGearDefinition({int toothCount}) {
         double direction = (tooth / toothCount) * 2 * pi;
         return ContactPoint(
             position: Offset(
-                cos(direction) * toothCount, sin(direction) * toothCount),
+                    cos(direction) * toothCount, -sin(direction) * toothCount) *
+                2,
             direction: direction);
       });
 }

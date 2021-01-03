@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inspiral/widgets/drag_line.dart';
+import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -73,7 +73,10 @@ class InspiralCanvas extends StatelessWidget {
                               painter: _TempGearTestPainter()),
                           FixedGear(),
                           RotatingGear(),
-                          settings.debug ? DragLine() : null
+                          IgnorePointer(
+                              child: settings.debug
+                                  ? DebugCanvas()
+                                  : Container(width: 0.0, height: 0.0))
                         ])),
                   ))
             ])));

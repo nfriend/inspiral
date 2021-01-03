@@ -55,6 +55,7 @@ class InspiralProviders extends StatelessWidget {
           update: (context, canvas, rotatingGear, dragLine) {
             dragLine.canvas = canvas;
             dragLine.rotatingGear = rotatingGear;
+            rotatingGear.dragLine = dragLine;
             return dragLine;
           }),
       ChangeNotifierProxyProvider3<PointersProvider, DragLineProvider,
