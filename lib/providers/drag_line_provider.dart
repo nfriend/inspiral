@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/line.dart';
 import 'package:inspiral/providers/providers.dart';
 
 class DragLineProvider extends ChangeNotifier {
@@ -30,19 +33,30 @@ class DragLineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  double _angle = 0;
+  double get angle => _angle;
+  set angle(double value) {
+    _angle = value;
+    notifyListeners();
+  }
+
   gearPointerDown(PointerDownEvent event) {
-    _updatePointerPosition(event);
+    _updatePointerPositionAndAngle(event);
   }
 
   gearPointerMove(PointerMoveEvent event) {
-    _updatePointerPosition(event);
+    _updatePointerPositionAndAngle(event);
   }
 
   fixedGearDrag(Offset rotatingGearDelta) {
     pivotPosition -= rotatingGearDelta;
   }
 
-  _updatePointerPosition(PointerEvent event) {
+  _updatePointerPositionAndAngle(PointerEvent event) {
     pointerPosition = canvas.pixelToCanvasPosition(event.position);
+    final lineAngle = Line(pivotPosition, pointerPosition).angle();
+
+    // Translate the angle into the range [0, 2)
+    angle = (lineAngle * -1 + (2 * pi)) % (2 * pi);
   }
 }
