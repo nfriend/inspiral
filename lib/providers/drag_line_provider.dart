@@ -43,11 +43,6 @@ class DragLineProvider extends ChangeNotifier {
   }
 
   _updatePointerPosition(PointerEvent event) {
-    // event.localPosition is given relative to the gear itself (not the
-    // canvas), so in order to translate this into canvas coordinates, we need
-    // to add the rotating gear's position and subtract half its size.
-    pointerPosition = event.localPosition +
-        rotatingGear.position -
-        rotatingGear.definition.size.center(Offset.zero);
+    pointerPosition = canvas.pixelToCanvasPosition(event.position);
   }
 }

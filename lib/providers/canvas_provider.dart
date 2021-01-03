@@ -36,6 +36,27 @@ class CanvasProvider extends ChangeNotifier {
   bool get isTransforming =>
       pointer1Id > -1 && pointer2Id > -1 && pointers.count == 2;
 
+  /// Translates a coordinate in logical pixels to coordinates on the drawing
+  /// canvas. If for some reason this isn't possible (i.e., if the inverse
+  /// of the translate matrix can't be computed), this method returns
+  /// Offset.zero.
+  ///
+  /// This process was stolen from this flutter PR:
+  /// https://github.com/flutter/flutter/pull/32192/files#r287158219
+  ///
+  /// @param pixelPosition The pixel coordinates to translate into canvas
+  /// coordinates
+  Offset pixelToCanvasPosition(Offset pixelPosition) {
+    Matrix4 unprojection =
+        Matrix4.tryInvert(PointerEvent.removePerspectiveTransform(transform));
+
+    if (unprojection == null) {
+      return Offset.zero;
+    }
+
+    return PointerEvent.transformPosition(unprojection, pixelPosition);
+  }
+
   void globalPointerDown(PointerDownEvent event) {
     if (pointers.count == 1) {
       pointer1Id = event.device;

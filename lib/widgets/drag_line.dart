@@ -14,6 +14,8 @@ class _DragLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // Uncomment below to highlight the entire line canvas
+    // in a light color. Useful for debugging.
     // final rectPaint = Paint()
     //   ..color = Color(0X33E9EB75)
     //   ..style = PaintingStyle.fill;
