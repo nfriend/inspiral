@@ -40,6 +40,7 @@ class InspiralCanvas extends StatelessWidget {
     final settings = Provider.of<SettingsProvider>(context);
 
     return StatsFl(
+        isEnabled: settings.debug,
         child: Listener(
             behavior: HitTestBehavior.translucent,
             onPointerDown: (event) {
