@@ -14,7 +14,7 @@ class InspiralApp extends StatelessWidget {
       ),
       routes: {
         InspiralRoutes.canvas: (context) =>
-            InspiralProviders(child: StatsFl(child: InspiralCanvas()))
+            InspiralProviders(child: InspiralCanvas())
       },
     );
   }
