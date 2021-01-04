@@ -3,13 +3,6 @@ import 'package:inspiral/models/models.dart';
 import 'package:inspiral/providers/providers.dart';
 
 abstract class BaseGearProvider extends ChangeNotifier {
-  BaseGearProvider(
-      {@required Offset initialPosition,
-      @required GearDefinition initialGearDefinition}) {
-    this._position = initialPosition;
-    this._definition = initialGearDefinition;
-  }
-
   Offset _position;
   Offset get position => _position;
   set position(Offset value) {
@@ -21,6 +14,17 @@ abstract class BaseGearProvider extends ChangeNotifier {
   GearDefinition get definition => _definition;
   set definition(GearDefinition value) {
     _definition = value;
+    notifyListeners();
+  }
+
+  // The most recent contact point of the gear. These value(s) _could_ be
+  // computed and used internally in RotatingGearProvider, but we expose it
+  // publicly here to allow it to be rendered on the debug canvas for debugging
+  // purposes.
+  ContactPoint _contactPoint;
+  ContactPoint get contactPoint => _contactPoint;
+  set contactPoint(ContactPoint value) {
+    _contactPoint = value;
     notifyListeners();
   }
 

@@ -3,36 +3,32 @@ import 'package:inspiral/models/models.dart';
 import 'package:inspiral/providers/providers.dart';
 
 class RotatingGearProvider extends BaseGearProvider {
-  RotatingGearProvider({
-    @required Offset initialOffset,
-    @required GearDefinition initialGearDefinition,
-  }) : super(
-            initialPosition: initialOffset,
-            initialGearDefinition: initialGearDefinition);
+  RotatingGearProvider(
+      {@required double initialAngle,
+      @required GearDefinition initialDefinition}) {
+    definition = initialDefinition;
+    _initialAngle = initialAngle;
+  }
+
+  // This weird initialization logic is necessary because
+  // RotatingGearProvider and FixedGearProvider have references to each other,
+  // so the gear's initial position can't be computed in this class's
+  // constructor. So instead, this method is called by a consumer when
+  // we know all dependencies have been resolved.
+  bool _hasInitializedPosition = false;
+  double _initialAngle;
+  void initializePosition() {
+    if (_hasInitializedPosition) return;
+
+    position = _rotateToAngle(_initialAngle);
+
+    _hasInitializedPosition = true;
+  }
 
   FixedGearProvider fixedGear;
-
   DragLineProvider dragLine;
 
   double currentAngle = 0;
-
-  // The contact point of the fixed gear. This value is only used internally
-  // in this class, but we expose it publicly here to allow it to be rendered
-  // on the debug canvas for debugging purposes.
-  ContactPoint _fixedGearContactPoint;
-  ContactPoint get fixedGearContactPoint => _fixedGearContactPoint;
-  set fixedGearContactPoint(ContactPoint value) {
-    _fixedGearContactPoint = value;
-    notifyListeners();
-  }
-
-  // Same comment as above
-  ContactPoint _rotatingGearContactPoint;
-  ContactPoint get rotatingGearContactPoint => _rotatingGearContactPoint;
-  set rotatingGearContactPoint(ContactPoint value) {
-    _rotatingGearContactPoint = value;
-    notifyListeners();
-  }
 
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
@@ -40,14 +36,24 @@ class RotatingGearProvider extends BaseGearProvider {
 
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
-      double fixedGearTooth = fixedGear.definition.angleToTooth(dragLine.angle);
-
-      fixedGearContactPoint = fixedGear.definition
-          .toothToContactPoint(fixedGearTooth)
-            ..position += fixedGear.position;
-
-      rotatingGearContactPoint = definition.toothToContactPoint(fixedGearTooth)
-        ..position += position;
+      position = _rotateToAngle(dragLine.angle);
     }
+  }
+
+  Offset _rotateToAngle(double angle) {
+    double fixedGearTooth = fixedGear.definition.angleToTooth(angle);
+
+    fixedGear.contactPoint = fixedGear.definition
+        .toothToContactPoint(fixedGearTooth)
+        .translated(fixedGear.position);
+
+    ContactPoint rotatingGearRelativeContactPoint =
+        definition.toothToContactPoint(fixedGearTooth, isRotating: true);
+
+    contactPoint = rotatingGearRelativeContactPoint
+        .translated(fixedGear.contactPoint.position);
+
+    return fixedGear.contactPoint.position +
+        rotatingGearRelativeContactPoint.position;
   }
 }

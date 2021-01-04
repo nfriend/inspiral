@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/providers/drag_line_provider.dart';
 import 'package:provider/provider.dart';
@@ -43,15 +44,15 @@ class InspiralProviders extends StatelessWidget {
           }),
       ChangeNotifierProxyProvider<PointersProvider, RotatingGearProvider>(
           create: (context) => RotatingGearProvider(
-              initialOffset: canvasCenter.translate(99, -206),
-              initialGearDefinition: GearDefinitions.defaultRotatingGear),
+              initialAngle: pi / 2,
+              initialDefinition: GearDefinitions.defaultRotatingGear),
           update: (context, pointers, rotatingGear) {
             rotatingGear.pointers = pointers;
             return rotatingGear;
           }),
       ChangeNotifierProxyProvider2<CanvasProvider, RotatingGearProvider,
               DragLineProvider>(
-          create: (context) => DragLineProvider(initialOffset: canvasCenter),
+          create: (context) => DragLineProvider(initialPosition: canvasCenter),
           update: (context, canvas, rotatingGear, dragLine) {
             dragLine.canvas = canvas;
             dragLine.rotatingGear = rotatingGear;
@@ -61,13 +62,16 @@ class InspiralProviders extends StatelessWidget {
       ChangeNotifierProxyProvider3<PointersProvider, DragLineProvider,
               RotatingGearProvider, FixedGearProvider>(
           create: (context) => FixedGearProvider(
-              initialOffset: canvasCenter,
-              initialGearDefinition: GearDefinitions.defaultFixedGear),
+              initialPosition: canvasCenter,
+              initialDefinition: GearDefinitions.defaultFixedGear),
           update: (context, pointers, dragLine, rotatingGear, fixedGear) {
             fixedGear.pointers = pointers;
             fixedGear.rotatingGear = rotatingGear;
             fixedGear.dragLine = dragLine;
             rotatingGear.fixedGear = fixedGear;
+
+            rotatingGear.initializePosition();
+
             return fixedGear;
           }),
     ], child: child);

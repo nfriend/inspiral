@@ -4,11 +4,12 @@ import 'package:inspiral/providers/providers.dart';
 
 class FixedGearProvider extends BaseGearProvider {
   FixedGearProvider({
-    @required Offset initialOffset,
-    @required GearDefinition initialGearDefinition,
-  }) : super(
-            initialPosition: initialOffset,
-            initialGearDefinition: initialGearDefinition);
+    @required Offset initialPosition,
+    @required GearDefinition initialDefinition,
+  }) {
+    definition = initialDefinition;
+    position = initialPosition;
+  }
 
   RotatingGearProvider rotatingGear;
   DragLineProvider dragLine;

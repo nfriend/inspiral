@@ -169,8 +169,8 @@ class DebugCanvas extends StatelessWidget {
       params
         ..pivotPosition = dragLine.pivotPosition
         ..pointerPosition = dragLine.pointerPosition
-        ..fixedGearContactPoint = rotatingGear.fixedGearContactPoint
-        ..rotatingGearContactPoint = rotatingGear.rotatingGearContactPoint;
+        ..fixedGearContactPoint = fixedGear.contactPoint
+        ..rotatingGearContactPoint = rotatingGear.contactPoint;
     }
 
     return CustomPaint(size: canvasSize, painter: _DebugCanvasPainter(params));

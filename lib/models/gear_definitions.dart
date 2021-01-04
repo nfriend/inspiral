@@ -13,8 +13,11 @@ GearDefinition generateCircleGearDefinition({int toothCount}) {
       angleToTooth: (angle) {
         return (angle / (2 * pi)) * toothCount;
       },
-      toothToContactPoint: (tooth) {
-        double direction = (tooth / toothCount) * 2 * pi;
+      toothToContactPoint: (tooth, {isRotating = false}) {
+        // Rotating gears "spin" in the opposite direction as fixed gears
+        double conditionalReversal = isRotating ? -1 : 1;
+
+        double direction = (tooth / toothCount) * 2 * pi * conditionalReversal;
         return ContactPoint(
             position: Offset(
                     cos(direction) * toothCount, -sin(direction) * toothCount) *

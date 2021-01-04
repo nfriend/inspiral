@@ -6,9 +6,9 @@ import 'package:inspiral/providers/providers.dart';
 
 class DragLineProvider extends ChangeNotifier {
   DragLineProvider({
-    @required Offset initialOffset,
+    @required Offset initialPosition,
   }) {
-    _pivotPositionInCanvasCoordinates = initialOffset;
+    _pivotPositionInCanvasCoordinates = initialPosition;
   }
 
   CanvasProvider canvas;

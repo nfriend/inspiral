@@ -11,7 +11,8 @@ class GearDefinition {
 
   final double Function(double angle) angleToTooth;
 
-  final ContactPoint Function(double tooth) toothToContactPoint;
+  final ContactPoint Function(double tooth, {bool isRotating})
+      toothToContactPoint;
 
   GearDefinition(
       {@required this.image,
