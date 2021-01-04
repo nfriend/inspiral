@@ -44,7 +44,7 @@ class InspiralProviders extends StatelessWidget {
           }),
       ChangeNotifierProxyProvider<PointersProvider, RotatingGearProvider>(
           create: (context) => RotatingGearProvider(
-              initialAngle: pi / 2,
+              initialAngle: 0,
               initialDefinition: GearDefinitions.defaultRotatingGear),
           update: (context, pointers, rotatingGear) {
             rotatingGear.pointers = pointers;
