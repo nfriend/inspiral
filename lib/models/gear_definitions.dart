@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 
 /// Convenience function to generate a gear definition for regular circle gear
@@ -19,8 +20,8 @@ GearDefinition generateCircleGearDefinition({int toothCount}) {
 
         double direction = (tooth / toothCount) * 2 * pi * conditionalReversal;
         return ContactPoint(
-            position: Offset(
-                    cos(direction) * toothCount, -sin(direction) * toothCount) *
+            position: Offset(cos(direction) * (toothCount + toothLength / 2),
+                    -sin(direction) * (toothCount + toothLength / 2)) *
                 2,
             direction: direction);
       });
