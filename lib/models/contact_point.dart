@@ -1,4 +1,6 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 @immutable
 class ContactPoint {
@@ -14,6 +16,16 @@ class ContactPoint {
   /// Returns a new ContactPoint, translated by the provided offset
   ContactPoint translated(Offset offset) {
     return ContactPoint(position: position + offset, direction: direction);
+  }
+
+  /// Returns a new ContactPoint, rotated by `angle` around the provided point
+  /// Based on https://stackoverflow.com/a/2259502/1063392
+  ContactPoint rotated(double angle, Offset point) {
+    // Add the rotation to the new direction
+    double rotatedDirection = (direction + angle + (2 * pi)) % (2 * pi);
+
+    return ContactPoint(
+        position: point.rotated(angle, point), direction: rotatedDirection);
   }
 
   @override

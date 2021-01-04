@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 class RotatingGearProvider extends BaseGearProvider {
   RotatingGearProvider(
@@ -50,10 +51,18 @@ class RotatingGearProvider extends BaseGearProvider {
     ContactPoint rotatingGearRelativeContactPoint =
         definition.toothToContactPoint(fixedGearTooth, isRotating: true);
 
-    contactPoint = rotatingGearRelativeContactPoint
-        .translated(fixedGear.contactPoint.position);
+    Offset rotatingGearPosition = (fixedGear.contactPoint.position +
+            rotatingGearRelativeContactPoint.position)
+        .rotated(rotatingGearRelativeContactPoint.direction,
+            fixedGear.contactPoint.position);
 
-    return fixedGear.contactPoint.position +
-        rotatingGearRelativeContactPoint.position;
+    rotation = rotatingGearRelativeContactPoint.direction +
+        fixedGear.contactPoint.direction;
+
+    contactPoint = rotatingGearRelativeContactPoint
+        .translated(rotatingGearPosition)
+        .rotated(angle, rotatingGearPosition);
+
+    return rotatingGearPosition;
   }
 }

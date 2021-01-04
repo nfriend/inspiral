@@ -70,6 +70,11 @@ class InspiralProviders extends StatelessWidget {
             fixedGear.dragLine = dragLine;
             rotatingGear.fixedGear = fixedGear;
 
+            // TODO: This causes errors because it's changing a child's state
+            // inside of build(). Refactor all of these providers into "state"
+            // objects, where we can have more control over how they are
+            // instantiated, how their dependencies are linked, and how
+            // their initialization routines are run.
             rotatingGear.initializePosition();
 
             return fixedGear;

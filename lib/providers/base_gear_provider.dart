@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/providers/providers.dart';
 
 abstract class BaseGearProvider extends ChangeNotifier {
-  Offset _position;
+  Offset _position = canvasCenter;
   Offset get position => _position;
   set position(Offset value) {
     _position = value;
+    notifyListeners();
+  }
+
+  double _rotation = 0;
+  double get rotation => _rotation;
+  set rotation(double value) {
+    _rotation = value;
     notifyListeners();
   }
 

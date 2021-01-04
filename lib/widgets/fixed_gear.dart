@@ -9,14 +9,16 @@ class FixedGear extends StatelessWidget {
     final gear = context.watch<FixedGearProvider>();
 
     return Transform.translate(
-      offset: gear.position - gear.definition.size.toOffset() / 2,
-      child: Listener(
-          onPointerDown: gear.gearPointerDown,
-          onPointerMove: gear.gearPointerMove,
-          onPointerUp: gear.gearPointerUp,
-          child: Image.asset(gear.definition.image,
-              width: gear.definition.size.width,
-              height: gear.definition.size.height)),
-    );
+        offset: gear.position - gear.definition.size.toOffset() / 2,
+        child: Transform.rotate(
+          angle: gear.rotation,
+          child: Listener(
+              onPointerDown: gear.gearPointerDown,
+              onPointerMove: gear.gearPointerMove,
+              onPointerUp: gear.gearPointerUp,
+              child: Image.asset(gear.definition.image,
+                  width: gear.definition.size.width,
+                  height: gear.definition.size.height)),
+        ));
   }
 }
