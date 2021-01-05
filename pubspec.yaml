@@ -37,6 +37,9 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  xml: ^4.5.1
+  path: ^1.7.0
+  ansicolor: ^1.1.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
