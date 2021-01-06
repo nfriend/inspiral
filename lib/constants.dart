@@ -13,4 +13,6 @@ final Offset canvasCenter = canvasSize.center(canvasOrigin);
 const Size debugDotSize = Size(16, 16);
 
 /// The length of each gear tooth
+/// This value is slightly larger than the actual length of each tooth in order
+/// to add some breathing room between the gears.
 const double toothLength = 6;
