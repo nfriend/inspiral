@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// The global scaling factor for all sizes and position calculations
+const double scaleFactor = 4;
+
 /// The size of the drawable area
-const Size canvasSize = Size(2000, 2000);
+final Size canvasSize = Size(1000, 1000) * scaleFactor;
 
 /// The canvas's origin
 const Offset canvasOrigin = Offset.zero;
@@ -10,9 +13,12 @@ const Offset canvasOrigin = Offset.zero;
 final Offset canvasCenter = canvasSize.center(canvasOrigin);
 
 /// The size of the debug dots
-const Size debugDotSize = Size(16, 16);
+final Size debugDotSize = Size(2, 2) * scaleFactor;
 
-/// The length of each gear tooth
+/// The distance between gears when they are meshing.
 /// This value is slightly larger than the actual length of each tooth in order
 /// to add some breathing room between the gears.
-const double toothLength = 6;
+const double meshSpacing = 6;
+
+/// The length of each gear tooth
+const double toothLength = 5;

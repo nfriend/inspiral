@@ -5,7 +5,7 @@ import 'package:inspiral/models/models.dart';
 
 /// Convenience function to generate a gear definition for regular circle gear
 GearDefinition generateCircleGearDefinition({int toothCount}) {
-  double diameter = toothCount * 4 + 20.0;
+  double diameter = (toothCount + toothLength) * 2 * scaleFactor;
   final size = Size(diameter, diameter);
 
   return GearDefinition(
@@ -35,9 +35,9 @@ GearDefinition generateCircleGearDefinition({int toothCount}) {
             ((tooth / toothCount) * 2 * pi + conditionalExtraRotation) *
                 conditionalReversal;
         return ContactPoint(
-            position: Offset(cos(direction) * (toothCount + toothLength / 2),
-                    -sin(direction) * (toothCount + toothLength / 2)) *
-                2,
+            position: Offset(cos(direction) * (toothCount + meshSpacing / 2),
+                    -sin(direction) * (toothCount + meshSpacing / 2)) *
+                scaleFactor,
             direction: direction);
       });
 }

@@ -56,25 +56,27 @@ class _DebugCanvasPainter extends CustomPainter {
     final circlePaint = Paint()
       ..color = Color(0xCC3446EB)
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(params.fixedGearPosition, 8, circlePaint);
+    canvas.drawCircle(
+        params.fixedGearPosition, debugDotSize.width, circlePaint);
   }
 
   void paintRotatingGearCenter(Canvas canvas) {
     final circlePaint = Paint()
       ..color = Color(0xCCEB4034)
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(params.rotatingGearPosition, 8, circlePaint);
+    canvas.drawCircle(
+        params.rotatingGearPosition, debugDotSize.width, circlePaint);
   }
 
   void paintDragLine(Canvas canvas) {
     final circlePaint = Paint()
       ..color = Color(0xCCE9EB75)
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(params.pointerPosition, 8, circlePaint);
+    canvas.drawCircle(params.pointerPosition, debugDotSize.width, circlePaint);
 
     final linePaint = Paint()
       ..color = Color(0x88262626)
-      ..strokeWidth = 4
+      ..strokeWidth = 2 * scaleFactor
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(params.pivotPosition, params.pointerPosition, linePaint);
   }
@@ -92,7 +94,7 @@ class _DebugCanvasPainter extends CustomPainter {
       Canvas canvas, ContactPoint contactPoint, Color color) {
     final linePaint = Paint()
       ..color = color
-      ..strokeWidth = 2
+      ..strokeWidth = 1 * scaleFactor
       ..strokeCap = StrokeCap.round;
 
     final Offset endPostion = contactPoint.position;
