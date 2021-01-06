@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'constants.dart';
 import 'image_info.dart';
 
 // Update this path to point to the `inkscape` executable (if necessary)
@@ -21,9 +22,9 @@ checkForInkscape() async {
 convertSvgToPng(ImageInfo imageInfo) async {
   ProcessResult result = await Process.run(inkscapePath, [
     '--export-width',
-    imageInfo.outputWidth.toString(),
+    (imageInfo.outputWidth * scale).toInt().toString(),
     '--export-height',
-    imageInfo.outputHeight.toString(),
+    (imageInfo.outputHeight * scale).toInt().toString(),
     imageInfo.svgInputFilePath,
     '--export-filename',
     imageInfo.pngOutputFilePath
