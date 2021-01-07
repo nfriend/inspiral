@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/contact_point.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
 
 class _DebugCanvasPainterParams {
@@ -157,11 +156,11 @@ class DebugCanvas extends StatelessWidget {
     // to rely on it so that this widget is rebuild when rotatingGear.isDragging
     // is updated. We should revisit this when we've discovered a way to
     // propogate changes between dependent providers.
-    Provider.of<PointersProvider>(context);
+    Provider.of<PointersState>(context);
 
-    final rotatingGear = Provider.of<RotatingGearProvider>(context);
-    final fixedGear = Provider.of<FixedGearProvider>(context);
-    final dragLine = Provider.of<DragLineProvider>(context);
+    final rotatingGear = Provider.of<RotatingGearState>(context);
+    final fixedGear = Provider.of<FixedGearState>(context);
+    final dragLine = Provider.of<DragLineState>(context);
 
     final params = _DebugCanvasPainterParams()
       ..fixedGearPosition = fixedGear.position

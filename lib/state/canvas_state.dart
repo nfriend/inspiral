@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/models/models.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
-class CanvasProvider extends ChangeNotifier {
-  CanvasProvider({@required Matrix4 initialTransform}) {
+class CanvasState extends ChangeNotifier {
+  static CanvasState _instance;
+
+  factory CanvasState.init({@required Matrix4 initialTransform}) {
+    assert(_instance == null,
+        'The CanvasState.init() factory constructor should not be called more than once.');
+    return _instance =
+        CanvasState._internal(initialTransform: initialTransform);
+  }
+
+  factory CanvasState() {
+    assert(_instance != null,
+        'The CanvasState.init() factory constructor must be called before using the CanvasState() constructor.');
+    return _instance;
+  }
+
+  CanvasState._internal({@required Matrix4 initialTransform}) {
     _transform = initialTransform;
   }
 
-  PointersProvider pointers;
+  PointersState pointers;
 
   Matrix4 _transform;
 

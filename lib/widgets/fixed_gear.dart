@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class FixedGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final gear = context.watch<FixedGearProvider>();
+    final gear = context.watch<FixedGearState>();
 
     return Transform.translate(
         offset: gear.position - gear.definition.size.toOffset() / 2,

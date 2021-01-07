@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 
-abstract class BaseGearProvider extends ChangeNotifier {
+abstract class BaseGearState extends ChangeNotifier {
   Offset _position = canvasCenter;
   Offset get position => _position;
   set position(Offset value) {
@@ -36,9 +36,9 @@ abstract class BaseGearProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  PointersProvider pointers;
+  PointersState pointers;
 
-  CanvasProvider canvas;
+  CanvasState canvas;
 
   Offset dragOffset = Offset.zero;
 

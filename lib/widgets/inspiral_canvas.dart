@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:statsfl/statsfl.dart';
 
 class _TempGearTestPainter extends CustomPainter {
@@ -32,12 +32,11 @@ class _TempGearTestPainter extends CustomPainter {
 class InspiralCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final fixedGear = Provider.of<FixedGearProvider>(context, listen: false);
-    final rotatingGear =
-        Provider.of<RotatingGearProvider>(context, listen: false);
-    final pointers = Provider.of<PointersProvider>(context, listen: false);
-    final canvas = Provider.of<CanvasProvider>(context);
-    final settings = Provider.of<SettingsProvider>(context);
+    final fixedGear = Provider.of<FixedGearState>(context, listen: false);
+    final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
+    final pointers = Provider.of<PointersState>(context, listen: false);
+    final canvas = Provider.of<CanvasState>(context);
+    final settings = Provider.of<SettingsState>(context);
 
     return StatsFl(
         isEnabled: settings.debug,

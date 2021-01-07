@@ -1,12 +1,28 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
-class RotatingGearProvider extends BaseGearProvider {
-  RotatingGearProvider(
+class RotatingGearState extends BaseGearState {
+  static RotatingGearState _instance;
+
+  factory RotatingGearState.init(
+      {@required double initialAngle,
+      @required GearDefinition initialDefinition}) {
+    assert(_instance == null,
+        'The RotatingGearState.init() factory constructor should not be called more than once.');
+    return _instance = RotatingGearState._internal(
+        initialAngle: initialAngle, initialDefinition: initialDefinition);
+  }
+
+  factory RotatingGearState() {
+    assert(_instance != null,
+        'The RotatingGearState.init() factory constructor must be called before using the RotatingGearState() constructor.');
+    return _instance;
+  }
+
+  RotatingGearState._internal(
       {@required double initialAngle,
       @required GearDefinition initialDefinition}) {
     definition = initialDefinition;
@@ -28,8 +44,8 @@ class RotatingGearProvider extends BaseGearProvider {
     _hasInitializedPosition = true;
   }
 
-  FixedGearProvider fixedGear;
-  DragLineProvider dragLine;
+  FixedGearState fixedGear;
+  DragLineState dragLine;
 
   double currentAngle = 0;
 

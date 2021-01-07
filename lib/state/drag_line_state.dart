@@ -1,19 +1,33 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 
-class DragLineProvider extends ChangeNotifier {
-  DragLineProvider({
+class DragLineState extends ChangeNotifier {
+  static DragLineState _instance;
+
+  factory DragLineState.init({@required Offset initialPosition}) {
+    assert(_instance == null,
+        'The DragLineState.init() factory constructor should not be called more than once.');
+    return _instance =
+        DragLineState._internal(initialPosition: initialPosition);
+  }
+
+  factory DragLineState() {
+    assert(_instance != null,
+        'The DragLineState.init() factory constructor must be called before using the DragLineState() constructor.');
+    return _instance;
+  }
+
+  DragLineState._internal({
     @required Offset initialPosition,
   }) {
     _pivotPositionInCanvasCoordinates = initialPosition;
   }
 
-  CanvasProvider canvas;
+  CanvasState canvas;
 
-  RotatingGearProvider rotatingGear;
+  RotatingGearState rotatingGear;
 
   Offset _pointerPosition = Offset.zero;
 

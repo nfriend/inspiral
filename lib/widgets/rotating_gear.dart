@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:inspiral/providers/providers.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class RotatingGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final gear = context.watch<RotatingGearProvider>();
-    final dragLine = Provider.of<DragLineProvider>(context, listen: false);
+    final gear = context.watch<RotatingGearState>();
+    final dragLine = Provider.of<DragLineState>(context, listen: false);
 
     return Transform.translate(
         offset: gear.position - gear.definition.size.toOffset() / 2,
