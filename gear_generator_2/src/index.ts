@@ -6,12 +6,7 @@ import { circleGearSizes } from './constants';
 import { generateCircleGear } from './generate_circle_gear';
 
 (async () => {
-  const htmlFilesToRender: ImageInfo[] = [
-    {
-      htmlInputFilePath: path.resolve(__dirname, '../tmp', 'gear_24.html'),
-      pngOutputFilePath: path.resolve(__dirname, '../tmp', 'gear_24.png'),
-    },
-  ];
+  const htmlFilesToRender: ImageInfo[] = [];
 
   for (const size of circleGearSizes) {
     htmlFilesToRender.push(await generateCircleGear({ toothCount: size }));
@@ -25,16 +20,16 @@ import { generateCircleGear } from './generate_circle_gear';
       chalk.blueBright(
         `Rendering ${chalk.white(i + 1)} of ${chalk.white(
           htmlFilesToRender.length,
-        )}: ${info.pngOutputFilePath}`,
+        )}: ${info.pngPath}`,
       ),
     );
 
-    await page.goto(`file://${info.htmlInputFilePath}`);
+    await page.goto(`file://${info.htmlPath}`);
 
     const svgElement = await page.$('#gear');
 
     await svgElement.screenshot({
-      path: info.pngOutputFilePath,
+      path: info.pngPath,
       omitBackground: true,
     });
   }
