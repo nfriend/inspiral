@@ -10,6 +10,13 @@ export const toothHeight = 5;
 export const baseScale = 8;
 
 /**
+ * The amount of padding to add around each side of the image.
+ * (Without padding, the stroke bleeds off the image edge.)
+ * This should equal the stroke width of the generated SVG.
+ */
+export const padding = 0.25;
+
+/**
  * All the sizes of circle gears that should be generated
  */
 export const circleGearSizes = [

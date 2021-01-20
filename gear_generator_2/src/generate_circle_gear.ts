@@ -2,7 +2,7 @@ import { ImageInfo } from './image_info';
 import path from 'path';
 import fs from 'fs';
 import util from 'util';
-import { baseScale, toothHeight } from './constants';
+import { baseScale, padding, toothHeight } from './constants';
 import { GearPath } from './gear_path';
 import { GearSvg } from './gear_svg';
 import { Point } from './point';
@@ -18,7 +18,7 @@ interface CircleGearParams {
 export const generateCircleGear = async ({
   toothCount,
 }: CircleGearParams): Promise<ImageInfo> => {
-  const imageSize = (toothCount + toothHeight) * 2;
+  const imageSize = (toothCount + toothHeight + padding) * 2;
   const innerRadius = toothCount;
   const outerRadius = innerRadius + toothHeight;
   const centerPoint = { x: imageSize / 2, y: imageSize / 2 };
@@ -28,7 +28,7 @@ export const generateCircleGear = async ({
   const radiansPerToothValley = radiansPerToothTop;
 
   const svgPath: GearPath = new GearPath().moveTo({
-    x: imageSize,
+    x: centerPoint.x + outerRadius,
     y: centerPoint.y,
   });
 
