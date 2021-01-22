@@ -5,6 +5,7 @@ import globSync from 'glob';
 import util from 'util';
 import puppeteer from 'puppeteer';
 import { ContactPoint } from './contact_point';
+import { baseScale } from './constants';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
@@ -36,7 +37,7 @@ export const generatePointsFromSvgPaths = async () => {
 
     await page.setContent(getHtmlPageWithInlineSvg({ svgString }));
 
-    const points = await page.evaluate(analyzePath);
+    const points = await page.evaluate(analyzePath, baseScale);
 
     // Write the points to a JSON file that matches the naming convention
     // of the original SVG file.
@@ -83,8 +84,17 @@ const getHtmlPageWithInlineSvg = ({
  * NOTE: This function is run in the context of an HTML
  * rendered inside a headless Chrome instance.
  */
-const analyzePath = (): ContactPoint[] => {
-  const path = document.querySelector('path');
+const analyzePath = (baseScale: number): ContactPoint[] => {
+  const svg = document.querySelector('svg');
+  const svgSize = {
+    width: parseInt(svg.getAttribute('width'), 10),
+    height: parseInt(svg.getAttribute('height'), 10),
+  };
+  const centerPoint = {
+    x: svgSize.width / 2,
+    y: svgSize.height / 2,
+  };
+  const path = svg.querySelector('path');
   const totalLength = path.getTotalLength();
 
   // Step around the path bit by bit, recording
@@ -95,7 +105,10 @@ const analyzePath = (): ContactPoint[] => {
     const { x, y } = path.getPointAtLength(currentLength);
 
     evaluatedPoints.push({
-      p: { x, y },
+      p: {
+        x: (x - centerPoint.x) * baseScale,
+        y: (y - centerPoint.y) * baseScale,
+      },
       d: 0, // direction will be computed below
     });
 
