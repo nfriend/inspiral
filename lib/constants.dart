@@ -22,3 +22,7 @@ const double meshSpacing = 6;
 
 /// The length of each gear tooth
 const double toothLength = 5;
+
+/// The amount of padding added around each gear
+/// to avoid lines being clipped
+const double imagePadding = 0.25;

@@ -11,15 +11,28 @@ class InspiralProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Initialize all the singletons that will be provided below
-    initState(context);
+    Future<void> stateFuture = initState(context);
 
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => SettingsState()),
-      ChangeNotifierProvider(create: (context) => PointersState()),
-      ChangeNotifierProvider(create: (context) => CanvasState()),
-      ChangeNotifierProvider(create: (context) => RotatingGearState()),
-      ChangeNotifierProvider(create: (context) => DragLineState()),
-      ChangeNotifierProvider(create: (context) => FixedGearState())
-    ], child: child);
+    return FutureBuilder(
+        future: stateFuture,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.hasError) {
+            throw ("Something went wrong while initializing state! ${snapshot.error}");
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            return MultiProvider(providers: [
+              ChangeNotifierProvider(create: (context) => SettingsState()),
+              ChangeNotifierProvider(create: (context) => PointersState()),
+              ChangeNotifierProvider(create: (context) => CanvasState()),
+              ChangeNotifierProvider(create: (context) => RotatingGearState()),
+              ChangeNotifierProvider(create: (context) => DragLineState()),
+              ChangeNotifierProvider(create: (context) => FixedGearState())
+            ], child: child);
+          } else {
+            // TODO: Do we need a real loading state here?
+            // If the startup time is slow enough, consider
+            // showing a splash screen of some kind here.
+            return Container(color: Colors.white);
+          }
+        });
   }
 }

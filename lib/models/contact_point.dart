@@ -4,7 +4,7 @@ import 'package:inspiral/extensions/extensions.dart';
 
 @immutable
 class ContactPoint {
-  ContactPoint({this.position, this.direction});
+  const ContactPoint({this.position, this.direction});
 
   /// The position of this contact point relative to the gear's center point
   final Offset position;

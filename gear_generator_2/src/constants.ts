@@ -7,7 +7,7 @@ export const toothHeight = 5;
  * How many pixels should be rendered for each SVG unit
  * while generating the lowest-resolution version
  */
-export const baseScale = 8;
+export const baseScale = 4;
 
 /**
  * The amount of padding to add around each side of the image.

@@ -8,7 +8,13 @@ import 'package:inspiral/extensions/extensions.dart';
 
 /// Initializes all state singletons. This method must be called early in the
 /// application lifecycle, and it must only be called once.
-void initState(BuildContext context) {
+Future<void> initState(BuildContext context) async {
+  Stopwatch sw = Stopwatch()..start();
+  // Load all the gear definitions
+  await GearDefinitions.loadGearDefinitions(context);
+  sw.stop();
+  print("Gear loading took ${sw.elapsedMilliseconds} ms");
+
   // Compute an initial canvas translation that will place the
   // center point of the canvas directly in the center of the screen
   // By default, the canvas's top-left corner is lined up with
@@ -37,11 +43,12 @@ void initState(BuildContext context) {
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(
       initialAngle: pi / 2,
-      initialDefinition: GearDefinitions.defaultRotatingGear);
+      initialDefinition:
+          GearDefinitions.getGearDefinition(Gear.defaultRotating));
   final dragLine = DragLineState.init(initialPosition: canvasCenter);
   final fixedGear = FixedGearState.init(
       initialPosition: canvasCenter,
-      initialDefinition: GearDefinitions.defaultFixedGear);
+      initialDefinition: GearDefinitions.getGearDefinition(Gear.defaultFixed));
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;

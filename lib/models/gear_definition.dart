@@ -1,4 +1,6 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 
 @immutable
@@ -9,16 +11,48 @@ class GearDefinition {
   /// The size of the gear, in logical pixels
   final Size size;
 
-  final double Function(double angle) angleToTooth;
+  /// The number of teeth on this gear
+  final int toothCount;
 
-  final ContactPoint Function(double tooth, {bool isRotating})
-      toothToContactPoint;
+  /// The points that define the shape of this gear
+  final List<ContactPoint> points;
 
   GearDefinition(
       {@required this.image,
       @required this.size,
-      @required this.angleToTooth,
-      @required this.toothToContactPoint});
+      @required this.toothCount,
+      @required this.points});
+
+  double angleToTooth(double angle) {
+    return (angle / (2 * pi)) * toothCount;
+  }
+
+  ContactPoint toothToContactPoint(double tooth, {bool isRotating = false}) {
+    // Rotating gears "spin" in the opposite direction as fixed gears
+    double conditionalReversal = isRotating ? -1 : 1;
+
+    double conditionalExtraRotation = 0;
+
+    if (isRotating) {
+      // Rotating gears need to be rotated a full half rotation relative to
+      // fixed gears
+      conditionalExtraRotation += pi;
+
+      // Rotating gears with an even number of teeth also need to be offset
+      // by half a tooth in order to mesh with the fixed gear
+      double radiansPerTooth = (2 * pi) / toothCount;
+      conditionalExtraRotation += radiansPerTooth / 2;
+    }
+
+    double direction =
+        ((tooth / toothCount) * 2 * pi + conditionalExtraRotation) *
+            conditionalReversal;
+    return ContactPoint(
+        position: Offset(cos(direction) * (toothCount + meshSpacing / 2),
+                -sin(direction) * (toothCount + meshSpacing / 2)) *
+            scaleFactor,
+        direction: direction);
+  }
 
   ContactPoint angleToContactPoint(double angle) {
     return toothToContactPoint(angleToTooth(angle));
