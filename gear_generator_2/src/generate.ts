@@ -112,7 +112,7 @@ const analyzePath = (baseScale: number): ContactPoint[] => {
       d: 0, // direction will be computed below
     });
 
-    currentLength += (2 * Math.PI) / 10;
+    currentLength += 2 * Math.PI;
   }
 
   // Compute the direction (A.K.A normal line) of each point

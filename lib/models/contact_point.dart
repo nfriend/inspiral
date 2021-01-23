@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:tuple/tuple.dart';
 
 @immutable
 class ContactPoint {
@@ -41,4 +42,22 @@ class ContactPoint {
       other is ContactPoint &&
       other.position == position &&
       other.direction == direction;
+
+  /// Computes the weighted averaged of a number of ContactPoints
+  static ContactPoint weightedAverage(
+      List<Tuple2<ContactPoint, double>> weightedPoints) {
+    Offset averagedPosition = Offset.zero;
+    double averagedDirection = 0;
+    double totalWeight = 0;
+    for (final point in weightedPoints) {
+      averagedPosition += point.item1.position * point.item2;
+      averagedDirection += point.item1.direction * point.item2;
+      totalWeight += point.item2;
+    }
+    averagedPosition /= totalWeight;
+    averagedDirection /= totalWeight;
+
+    return ContactPoint(
+        position: averagedPosition, direction: averagedDirection);
+  }
 }

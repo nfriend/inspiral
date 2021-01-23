@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:tuple/tuple.dart';
 
 @immutable
 class GearDefinition {
@@ -23,60 +24,65 @@ class GearDefinition {
       @required this.toothCount,
       @required this.points});
 
+  /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {
     return (angle / (2 * pi)) * toothCount;
   }
 
+  // Returns the "contact point" - i.e. the position and normal line - of the
+  // gear at the provided tooth.
   ContactPoint toothToContactPoint(double tooth, {bool isRotating = false}) {
     // Rotating gears with an even number of teeth also need to be offset
     // by half a tooth in order to mesh with the fixed gear
     if (isRotating && toothCount % 2 == 0) {
-      tooth += .5;
+      tooth += 0.5;
     }
 
-    int contactPointIndex =
-        (points.length * (tooth / toothCount)).round() % (points.length - 1);
+    // Make sure tooth is always in range of [0, toothCount)
+    // This works even when tooth is negative.
+    tooth = tooth % toothCount;
+
+    // This represents the "unrounded" index that we should
+    // select from the array.
+    double contactPointIndexUnrounded = points.length * (tooth / toothCount);
+
+    // Find the two closest ContactPoints
+    // Note: These two indices will usually be different (offset by 1),
+    // _except_ if `contactPointIndexUnrounded` exactly equals an integer.
+    int contactPointLowerIndex =
+        contactPointIndexUnrounded.floor() % points.length;
+    int contactPointUpperIndex =
+        contactPointIndexUnrounded.ceil() % points.length;
 
     // Rotating gears "spin" in the opposite direction as fixed gears,
     // so need to search through the list of points backwards
     if (isRotating) {
-      contactPointIndex = (-1 * contactPointIndex) + (points.length - 1);
+      contactPointLowerIndex = -contactPointLowerIndex % points.length;
+      contactPointUpperIndex = -contactPointUpperIndex % points.length;
     }
 
-    ContactPoint point = points[contactPointIndex];
+    // Perform a weighted average of the two ContactPoints
+    // to get our final ContactPoint
+    ContactPoint lowerPoint = points[contactPointLowerIndex];
+    ContactPoint upperPoint = points[contactPointUpperIndex];
 
-    // print("${isRotating ? "Rotating gear:" : "Fixed gear:"} $point");
+    // Find the weight that should be applied to each point.
+    // For example, if `contactPointIndexUnrounded` is 12.25,
+    // we want ContactPoint[12] to be heavier weighted (.75, to be exact),
+    // than ContactPoint[13] (.25).
+    double lowerWeight =
+        contactPointIndexUnrounded.ceil() - contactPointIndexUnrounded;
+    double upperWeight = 1 - lowerWeight;
 
-    return point;
+    ContactPoint averagePoint = ContactPoint.weightedAverage([
+      Tuple2<ContactPoint, double>(lowerPoint, lowerWeight),
+      Tuple2<ContactPoint, double>(upperPoint, upperWeight)
+    ]);
+
+    return averagePoint;
   }
 
-  // ContactPoint toothToContactPointOld(double tooth, {bool isRotating = false}) {
-  //   // Rotating gears "spin" in the opposite direction as fixed gears
-  //   double conditionalReversal = isRotating ? -1 : 1;
-
-  //   double conditionalExtraRotation = 0;
-
-  //   if (isRotating) {
-  //     // Rotating gears need to be rotated a full half rotation relative to
-  //     // fixed gears
-  //     conditionalExtraRotation += pi;
-
-  //     // Rotating gears with an even number of teeth also need to be offset
-  //     // by half a tooth in order to mesh with the fixed gear
-  //     double radiansPerTooth = (2 * pi) / toothCount;
-  //     conditionalExtraRotation += radiansPerTooth / 2;
-  //   }
-
-  //   double direction =
-  //       ((tooth / toothCount) * 2 * pi + conditionalExtraRotation) *
-  //           conditionalReversal;
-  //   return ContactPoint(
-  //       position: Offset(cos(direction) * (toothCount + meshSpacing / 2),
-  //               -sin(direction) * (toothCount + meshSpacing / 2)) *
-  //           scaleFactor,
-  //       direction: direction);
-  // }
-
+  /// Returns the "contact point" for the provided angle
   ContactPoint angleToContactPoint(double angle) {
     return toothToContactPoint(angleToTooth(angle));
   }
