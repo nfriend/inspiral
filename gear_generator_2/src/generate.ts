@@ -85,6 +85,8 @@ const getHtmlPageWithInlineSvg = ({
  * rendered inside a headless Chrome instance.
  */
 const analyzePath = (baseScale: number): ContactPoint[] => {
+  const pi2 = 2 * Math.PI;
+
   const svg = document.querySelector('svg');
   const svgSize = {
     width: parseInt(svg.getAttribute('width'), 10),
@@ -95,13 +97,22 @@ const analyzePath = (baseScale: number): ContactPoint[] => {
     y: svgSize.height / 2,
   };
   const path = svg.querySelector('path');
+
+  // The total length of the path
   const totalLength = path.getTotalLength();
+
+  // The number of segments we will break this path into
+  const segmentCount = Math.floor(totalLength / pi2);
+
+  // How long each segment will be
+  const segmentLength = totalLength / segmentCount;
 
   // Step around the path bit by bit, recording
   // the coordinates of each point as we go
-  let currentLength = 0;
   let evaluatedPoints: ContactPoint[] = [];
-  while (currentLength < totalLength) {
+  for (let i = 0; i < segmentCount; i++) {
+    const currentLength = i * segmentLength;
+
     const { x, y } = path.getPointAtLength(currentLength);
 
     evaluatedPoints.push({
@@ -111,8 +122,6 @@ const analyzePath = (baseScale: number): ContactPoint[] => {
       },
       d: 0, // direction will be computed below
     });
-
-    currentLength += 2 * Math.PI;
   }
 
   // Compute the direction (A.K.A normal line) of each point
@@ -138,7 +147,7 @@ const analyzePath = (baseScale: number): ContactPoint[] => {
     direction = direction - Math.PI / 2;
 
     // Adjust the angle so that it's in the range [0, 2+PI)
-    direction = (direction + 2 * Math.PI) % (2 * Math.PI);
+    direction = (direction + pi2) % pi2;
 
     return {
       ...point,

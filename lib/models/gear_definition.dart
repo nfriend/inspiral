@@ -74,12 +74,10 @@ class GearDefinition {
         contactPointIndexUnrounded.ceil() - contactPointIndexUnrounded;
     double upperWeight = 1 - lowerWeight;
 
-    ContactPoint averagePoint = ContactPoint.weightedAverage([
+    return ContactPoint.weightedAverage([
       Tuple2<ContactPoint, double>(lowerPoint, lowerWeight),
       Tuple2<ContactPoint, double>(upperPoint, upperWeight)
     ]);
-
-    return averagePoint;
   }
 
   /// Returns the "contact point" for the provided angle

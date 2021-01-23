@@ -47,15 +47,24 @@ class ContactPoint {
   static ContactPoint weightedAverage(
       List<Tuple2<ContactPoint, double>> weightedPoints) {
     Offset averagedPosition = Offset.zero;
-    double averagedDirection = 0;
     double totalWeight = 0;
+
+    // To compute the average direction, we treat each direction
+    // as a vector with length `weight`, sum them all up, and
+    // return the angle of the result.
+    // See https://stackoverflow.com/a/491769/1063392.
+    double totalDirectionX = 0;
+    double totalDirectionY = 0;
+
     for (final point in weightedPoints) {
       averagedPosition += point.item1.position * point.item2;
-      averagedDirection += point.item1.direction * point.item2;
+      totalDirectionX += cos(point.item1.direction) * point.item2;
+      totalDirectionY += sin(point.item1.direction) * point.item2;
       totalWeight += point.item2;
     }
+
     averagedPosition /= totalWeight;
-    averagedDirection /= totalWeight;
+    double averagedDirection = atan2(totalDirectionY, totalDirectionX);
 
     return ContactPoint(
         position: averagedPosition, direction: averagedDirection);
