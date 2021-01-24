@@ -4,6 +4,11 @@
 export const toothHeight = 5;
 
 /**
+ * How much breathing room should be added between the gears
+ */
+export const meshSpacing = 1.5;
+
+/**
  * How many pixels should be rendered for each SVG unit
  * while generating the lowest-resolution version
  */

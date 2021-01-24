@@ -5,7 +5,7 @@ import globSync from 'glob';
 import util from 'util';
 import puppeteer from 'puppeteer';
 import { ContactPoint } from './contact_point';
-import { baseScale } from './constants';
+import { baseScale, toothHeight, meshSpacing } from './constants';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
@@ -37,7 +37,11 @@ export const generatePointsFromSvgPaths = async () => {
 
     await page.setContent(getHtmlPageWithInlineSvg({ svgString }));
 
-    const points = await page.evaluate(analyzePath, baseScale);
+    const points = await page.evaluate(analyzePath, {
+      baseScale,
+      toothHeight,
+      meshSpacing,
+    });
 
     // Write the points to a JSON file that matches the naming convention
     // of the original SVG file.
@@ -84,7 +88,15 @@ const getHtmlPageWithInlineSvg = ({
  * NOTE: This function is run in the context of an HTML
  * rendered inside a headless Chrome instance.
  */
-const analyzePath = (baseScale: number): ContactPoint[] => {
+const analyzePath = ({
+  baseScale,
+  toothHeight,
+  meshSpacing,
+}: {
+  baseScale: number;
+  toothHeight: number;
+  meshSpacing: number;
+}): ContactPoint[] => {
   const pi2 = 2 * Math.PI;
 
   const svg = document.querySelector('svg');
@@ -126,7 +138,8 @@ const analyzePath = (baseScale: number): ContactPoint[] => {
 
   // Compute the direction (A.K.A normal line) of each point
   // by computing the angle perpendicular to the line between
-  // the previous and next points,
+  // the previous and next points. Also, update the position
+  // of each point to take into acccount the tooth height.
   evaluatedPoints = evaluatedPoints.map((point, index) => {
     // The previous point, or the last point if this is the first point
     const previousPoint =
@@ -149,8 +162,15 @@ const analyzePath = (baseScale: number): ContactPoint[] => {
     // Adjust the angle so that it's in the range [0, 2+PI)
     direction = (direction + pi2) % pi2;
 
+    // Update the position to take the tooth height into account
+    const gearSpacing = toothHeight / 2 + meshSpacing / 2;
+    const toothPoint = {
+      x: point.p.x + Math.cos(direction) * gearSpacing * baseScale,
+      y: point.p.y + Math.sin(direction) * gearSpacing * baseScale * -1,
+    };
+
     return {
-      ...point,
+      p: toothPoint,
       d: direction,
     };
   });

@@ -15,11 +15,6 @@ final Offset canvasCenter = canvasSize.center(canvasOrigin);
 /// The size of the debug dots
 final Size debugDotSize = Size(2, 2) * scaleFactor;
 
-/// The distance between gears when they are meshing.
-/// This value is slightly larger than the actual length of each tooth in order
-/// to add some breathing room between the gears.
-const double meshSpacing = 6;
-
 /// The length of each gear tooth
 const double toothLength = 5;
 
