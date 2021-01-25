@@ -32,11 +32,8 @@ export const analyzePath = ({
   // The total length of the path
   const totalLength = path.getTotalLength();
 
-  // The number of segments we will break this path into
-  const segmentCount = Math.floor(totalLength / pi2);
-
   // How long each segment will be
-  const segmentLength = totalLength / segmentCount;
+  const segmentLength = totalLength / toothCount;
 
   // While iterating below, keep track of the biggest and
   // smallest x and y values, so we know how big
@@ -55,7 +52,7 @@ export const analyzePath = ({
   // Step around the path bit by bit, recording
   // the coordinates of each point as we go
   let evaluatedPoints: ContactPoint[] = [];
-  for (let i = 0; i < segmentCount; i++) {
+  for (let i = 0; i < toothCount; i++) {
     const currentLength = i * segmentLength;
 
     const { x, y } = path.getPointAtLength(currentLength);
