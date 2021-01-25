@@ -39,9 +39,6 @@ const toothSideLength = Math.sqrt(
 // at which the side points down to the tooth's "valley"
 const toothSideAngle = Math.asin((toothLength * (4 / 12)) / toothSideLength);
 
-// The length of the "valley" between each tooth
-const toothValleyLength = toothTopLength;
-
 /**
  * Builds an SVG representation of a gear based on the points
  * of the provided `GearDefinition`, and writes the
@@ -102,7 +99,7 @@ export const generateSvg = async (
     ),
     pngPath: path.resolve(
       __dirname,
-      '../tmp',
+      '../../images',
       `${gearDefinition.gearName}.png`,
     ),
     width: gearDefinition.size.width,

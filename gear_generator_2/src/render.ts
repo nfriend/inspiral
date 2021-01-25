@@ -1,8 +1,8 @@
+import path from 'path';
 import puppeteer from 'puppeteer';
 import chalk from 'chalk';
 import { ImageInfo } from './image_info';
-import { circleGearSizes } from './constants';
-import { generateCircleGear } from './generate_circle_gear';
+import { scalesToGenerate } from './constants';
 
 /**
  * Renders SVG images (hosted inside HTML pages) to PNGs
@@ -28,10 +28,31 @@ export const renderHtmlToPng = async (
 
     const svgElement = await page.$('#gear');
 
-    await svgElement.screenshot({
-      path: info.pngPath,
-      omitBackground: true,
-    });
+    // Generate 1 screenshot per scaling factor,
+    // and save the PNG in the appropriate directory
+    // for use in the Flutter app.
+    for (const scale of scalesToGenerate) {
+      await page.setViewport({
+        // 800x600 is the default width/height.
+        // As far as I can tell, these dimensions
+        // don't matter for our purposes.
+        width: 800,
+        height: 600,
+        deviceScaleFactor: scale,
+      });
+
+      let pngPath = info.pngPath;
+      if (scale != 1) {
+        const imagesDir = path.dirname(pngPath);
+        const fileName = path.basename(pngPath);
+        pngPath = path.resolve(imagesDir, `${scale.toFixed(1)}x`, fileName);
+      }
+
+      await svgElement.screenshot({
+        path: pngPath,
+        omitBackground: true,
+      });
+    }
   }
 
   await browser.close();

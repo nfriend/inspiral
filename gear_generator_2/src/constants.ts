@@ -41,3 +41,6 @@ export const circleGearSizes = [
   80,
   84,
 ];
+
+/** The scale factors to generate when rendering PNGs */
+export const scalesToGenerate = [1, 2, 3];
