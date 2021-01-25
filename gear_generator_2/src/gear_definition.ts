@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import util from 'util';
 import camelCase from 'camelcase';
 import { ContactPoint } from './contact_point';
@@ -73,8 +72,10 @@ export const writeAsDartGearDefinitionInstance = async (
 
   for (const point of gearDefinition.points) {
     contents.push(`      ContactPoint(`);
-    contents.push(`          position: Offset(${point.p.x}, ${point.p.y}),`);
-    contents.push(`          direction: ${point.d}),`);
+    contents.push(
+      `          position: Offset(${point.position.x}, ${point.position.y}),`,
+    );
+    contents.push(`          direction: ${point.direction}),`);
   }
 
   contents.push(`    ]);`);

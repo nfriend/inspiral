@@ -4,24 +4,21 @@ import { ImageInfo } from './image_info';
 import { circleGearSizes } from './constants';
 import { generateCircleGear } from './generate_circle_gear';
 
-// TODO: This file will need to read points from gears/*.json,
-// create new SVG files from these point definitions (with teeth!)
-// and then render the results to PNG.
-
-(async () => {
-  const htmlFilesToRender: ImageInfo[] = [];
-
-  for (const size of circleGearSizes) {
-    htmlFilesToRender.push(await generateCircleGear({ toothCount: size }));
-  }
-
+/**
+ * Renders SVG images (hosted inside HTML pages) to PNGs
+ *
+ * @param htmlFilesToRender The list of `ImageInfo` files to render to PNG
+ */
+export const renderHtmlToPng = async (
+  htmlFilesToRender: ImageInfo[],
+): Promise<void> => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   for (const [i, info] of htmlFilesToRender.entries()) {
     console.info(
       chalk.blueBright(
-        `Rendering ${chalk.white(i + 1)} of ${chalk.white(
+        `Rendering PNG ${chalk.white(i + 1)} of ${chalk.white(
           htmlFilesToRender.length,
         )}: ${info.pngPath}`,
       ),
@@ -41,12 +38,7 @@ import { generateCircleGear } from './generate_circle_gear';
 
   console.info(
     chalk.greenBright(
-      `Successfully rendered ${htmlFilesToRender.length} images 👍`,
+      `Successfully rendered ${htmlFilesToRender.length} PNGs 👍`,
     ),
   );
-})().catch((e) => {
-  console.error(
-    chalk.redBright('⚠️  Something went wrong while rendering PNGs!'),
-  );
-  console.error(e);
-});
+};

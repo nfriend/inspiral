@@ -2,8 +2,8 @@ import { Point } from './point';
 
 export interface ContactPoint {
   /** The position of this contact point */
-  p: Point;
+  position: Point;
 
   /** The direction of this contact point */
-  d: number;
+  direction: number;
 }

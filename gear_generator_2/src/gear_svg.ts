@@ -1,5 +1,6 @@
 import { GearPath } from './gear_path';
 import { create } from 'xmlbuilder2';
+import { baseScale } from './constants';
 
 interface GearSvgConstructorParams {
   path: GearPath;
@@ -26,8 +27,9 @@ GearSvg.prototype.toString = function (): string {
         g: {
           path: {
             '@d': this.params.path.toString(),
-            '@style':
-              'fill:#000000; fill-opacity:0.3; stroke:#000000; stroke-width:0.25;',
+            '@style': `fill:#000000; fill-opacity:0.3; stroke:#000000; stroke-width:${
+              0.25 * baseScale
+            };`,
           },
         },
       },

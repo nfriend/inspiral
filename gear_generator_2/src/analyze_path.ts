@@ -58,8 +58,8 @@ export const analyzePath = ({
     const { x, y } = path.getPointAtLength(currentLength);
 
     evaluatedPoints.push({
-      p: { x, y },
-      d: 0, // direction will be computed below
+      position: { x, y },
+      direction: 0, // direction will be computed below
     });
 
     // Update the boundaries if any of these points
@@ -107,8 +107,8 @@ export const analyzePath = ({
 
     // Compute the angle between the two points
     let direction = Math.atan2(
-      (nextPoint.p.y - previousPoint.p.y) * -1,
-      nextPoint.p.x - previousPoint.p.x,
+      (nextPoint.position.y - previousPoint.position.y) * -1,
+      nextPoint.position.x - previousPoint.position.x,
     );
 
     // Rotate the angle by a right angle so that it's perpendicular to the two points
@@ -119,8 +119,8 @@ export const analyzePath = ({
 
     // Move the origin to the center of the gear and apply scaling
     let adjustedPoint = {
-      x: (point.p.x - centerPoint.x) * baseScale,
-      y: (point.p.y - centerPoint.y) * baseScale,
+      x: (point.position.x - centerPoint.x) * baseScale,
+      y: (point.position.y - centerPoint.y) * baseScale,
     };
 
     // Update the position to take the tooth height into account
@@ -131,8 +131,8 @@ export const analyzePath = ({
     };
 
     return {
-      p: adjustedPoint,
-      d: direction,
+      position: adjustedPoint,
+      direction,
     };
   });
 

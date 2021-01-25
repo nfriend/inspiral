@@ -11,6 +11,9 @@ import {
   writeAsDartGearDefinitionInstance,
   writeDartProxyExportFile,
 } from './gear_definition';
+import { generateSvg } from './generate_svg';
+import { ImageInfo } from './image_info';
+import { renderHtmlToPng } from './render';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
@@ -39,6 +42,9 @@ export const generatePointsFromSvgPaths = async () => {
   // A list of all export statements that should be written to the
   // main `gears.dart` proxy export file.
   const allGearExports: string[] = [];
+
+  // A list of all HTML/SVG files to render to PNG
+  const htmlFilesToRender: ImageInfo[] = [];
 
   for (const [i, svgFile] of files.entries()) {
     console.info(
@@ -80,7 +86,15 @@ export const generatePointsFromSvgPaths = async () => {
       await writeAsDartGearDefinitionInstance(gearDefinition, dartFilePath),
     );
 
-    console.info(chalk.gray(`  └─ Wrote gear definition to: ${dartFilePath}`));
+    console.info(chalk.gray(`  ├─ Wrote gear definition to: ${dartFilePath}`));
+
+    const imageInfo = await generateSvg(gearDefinition);
+
+    htmlFilesToRender.push(imageInfo);
+
+    console.info(
+      chalk.gray(`  └─ Wrote rendered SVG to: ${imageInfo.svgPath}`),
+    );
   }
 
   await browser.close();
@@ -99,6 +113,8 @@ export const generatePointsFromSvgPaths = async () => {
   console.info(
     chalk.greenBright(`Successfully analyzed ${files.length} SVG files 👍`),
   );
+
+  await renderHtmlToPng(htmlFilesToRender);
 };
 
 /**
