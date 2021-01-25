@@ -39,7 +39,7 @@ Future<void> initState(BuildContext context) async {
       RotatingGearState.init(initialAngle: pi / 2, initialDefinition: square40);
   final dragLine = DragLineState.init(initialPosition: canvasCenter);
   final fixedGear = FixedGearState.init(
-      initialPosition: canvasCenter, initialDefinition: lens60);
+      initialPosition: canvasCenter, initialDefinition: square40);
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
