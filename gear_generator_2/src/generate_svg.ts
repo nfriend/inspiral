@@ -22,7 +22,7 @@ const toothHeight = unscaledToothHeight * baseScale;
 // The height of each tooth + the breashing space
 // added for nice gear meshing, after being scaled
 const toothAndMeshHeight =
-  (unscaledToothHeight + unscaledMeshSpacing) * baseScale;
+  (unscaledToothHeight - unscaledMeshSpacing) * baseScale;
 
 // The total arc length each tooth occupies
 const toothLength = Math.PI * 2 * baseScale;

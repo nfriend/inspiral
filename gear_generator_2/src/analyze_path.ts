@@ -140,9 +140,6 @@ export const analyzePath = ({
     gearName,
     image: `images/${gearName}.png`,
     size: {
-      // Note: this height and width is slightly larger than the final PNG
-      // image that the app will use. However, as long as this size is
-      // _larger_ than the actual image, it doesn't seem to matter :shrug:
       width: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
       height: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
     },
