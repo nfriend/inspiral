@@ -8,3 +8,5 @@
 
 export 'package:inspiral/models/gears/circle_24.dart';
 export 'package:inspiral/models/gears/circle_84.dart';
+export 'package:inspiral/models/gears/lens_60.dart';
+export 'package:inspiral/models/gears/square_40.dart';
