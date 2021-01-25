@@ -1,0 +1,157 @@
+import { ContactPoint } from './contact_point';
+import { GearDefinition } from './gear_definition';
+
+/**
+ * Finds the <path> element in the page, breaks it into chunks
+ * of equal-sized length, and returns each line segment and
+ * its direction (A.K.A. normal line).
+ *
+ * NOTE: This function is run in the context of an HTML
+ * rendered inside a headless Chrome instance. Because of this,
+ * all variables it uses must be accepted as a parameter
+ * (top-level `import`s won't work).
+ */
+export const analyzePath = ({
+  baseScale,
+  toothCount,
+  toothHeight,
+  meshSpacing,
+  gearName,
+}: {
+  baseScale: number;
+  toothCount: number;
+  toothHeight: number;
+  meshSpacing: number;
+  gearName: string;
+}): GearDefinition => {
+  const pi2 = 2 * Math.PI;
+
+  const svg = document.querySelector('svg');
+  const path = svg.querySelector('path');
+
+  // The total length of the path
+  const totalLength = path.getTotalLength();
+
+  // The number of segments we will break this path into
+  const segmentCount = Math.floor(totalLength / pi2);
+
+  // How long each segment will be
+  const segmentLength = totalLength / segmentCount;
+
+  // While iterating below, keep track of the biggest and
+  // smallest x and y values, so we know how big
+  // the final image should be
+  let boundaries = {
+    x: {
+      min: Infinity,
+      max: -Infinity,
+    },
+    y: {
+      min: Infinity,
+      max: -Infinity,
+    },
+  };
+
+  // Step around the path bit by bit, recording
+  // the coordinates of each point as we go
+  let evaluatedPoints: ContactPoint[] = [];
+  for (let i = 0; i < segmentCount; i++) {
+    const currentLength = i * segmentLength;
+
+    const { x, y } = path.getPointAtLength(currentLength);
+
+    evaluatedPoints.push({
+      p: { x, y },
+      d: 0, // direction will be computed below
+    });
+
+    // Update the boundaries if any of these points
+    // were the most extreme we've seen so far.
+    boundaries = {
+      x: {
+        min: Math.min(boundaries.x.min, x),
+        max: Math.max(boundaries.x.max, x),
+      },
+      y: {
+        min: Math.min(boundaries.y.min, y),
+        max: Math.max(boundaries.y.max, y),
+      },
+    };
+  }
+
+  // Compute the final image size and the center point of the
+  // image from the boundary points we found above.
+  const svgSize = {
+    width: Math.round(boundaries.x.max - boundaries.x.min),
+    height: Math.round(boundaries.y.max - boundaries.y.min),
+  };
+  const centerPoint = {
+    x: svgSize.width / 2,
+    y: svgSize.height / 2,
+  };
+
+  // Update each point so that:
+  //   1. each point has the correct direction (A.K.A normal line)
+  //      by computing the angle perpendicular to the line between
+  //      the previous and next points
+  //   2. each point's position is expanded to take into account
+  //      the tooth and mesh heights
+  //   3. the origin is moved to the center of the gear and the
+  //      correct scaling is applied
+  evaluatedPoints = evaluatedPoints.map((point, index) => {
+    // The previous point, or the last point if this is the first point
+    const previousPoint =
+      evaluatedPoints[
+        (evaluatedPoints.length + index - 1) % evaluatedPoints.length
+      ];
+
+    // The next point, or the first point if this is the last point
+    const nextPoint = evaluatedPoints[(index + 1) % evaluatedPoints.length];
+
+    // Compute the angle between the two points
+    let direction = Math.atan2(
+      (nextPoint.p.y - previousPoint.p.y) * -1,
+      nextPoint.p.x - previousPoint.p.x,
+    );
+
+    // Rotate the angle by a right angle so that it's perpendicular to the two points
+    direction = direction - Math.PI / 2;
+
+    // Adjust the angle so that it's in the range [0, 2+PI)
+    direction = (direction + pi2) % pi2;
+
+    // Move the origin to the center of the gear and apply scaling
+    let adjustedPoint = {
+      x: (point.p.x - centerPoint.x) * baseScale,
+      y: (point.p.y - centerPoint.y) * baseScale,
+    };
+
+    // Update the position to take the tooth height into account
+    const gearSpacing = toothHeight / 2 + meshSpacing / 2;
+    adjustedPoint = {
+      x: adjustedPoint.x + Math.cos(direction) * gearSpacing * baseScale,
+      y: adjustedPoint.y + Math.sin(direction) * gearSpacing * baseScale * -1,
+    };
+
+    return {
+      p: adjustedPoint,
+      d: direction,
+    };
+  });
+
+  const gearDefinition: GearDefinition = {
+    gearName,
+    image: `images/${gearName}.png`,
+    size: {
+      // Note: this height and width is slightly larger than the final PNG
+      // image that the app will use. However, as long as this size is
+      // _larger_ than the actual image, it doesn't seem to matter :shrug:
+      width: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
+      height: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
+    },
+    toothCount,
+    points: evaluatedPoints,
+  };
+
+  return gearDefinition;
+};

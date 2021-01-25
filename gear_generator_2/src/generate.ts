@@ -4,8 +4,13 @@ import chalk from 'chalk';
 import globSync from 'glob';
 import util from 'util';
 import puppeteer from 'puppeteer';
-import { ContactPoint } from './contact_point';
 import { baseScale, toothHeight, meshSpacing } from './constants';
+import { analyzePath } from './analyze_path';
+import {
+  GearDefinition,
+  writeAsDartGearDefinitionInstance,
+  writeDartProxyExportFile,
+} from './gear_definition';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
@@ -24,6 +29,17 @@ export const generatePointsFromSvgPaths = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
+  // Redirect any log output in the headless browser into this process
+  page.on('console', (message) =>
+    console.log(
+      `${message.type().substr(0, 3).toUpperCase()} ${message.text()}`,
+    ),
+  );
+
+  // A list of all export statements that should be written to the
+  // main `gears.dart` proxy export file.
+  const allGearExports: string[] = [];
+
   for (const [i, svgFile] of files.entries()) {
     console.info(
       chalk.blueBright(
@@ -37,26 +53,48 @@ export const generatePointsFromSvgPaths = async () => {
 
     await page.setContent(getHtmlPageWithInlineSvg({ svgString }));
 
-    const points = await page.evaluate(analyzePath, {
+    // The gear name is the name of the SVG file (with the extension)
+    const gearName = path.basename(svgFile, path.extname(svgFile));
+
+    // The tooth count is the number found in the filename.
+    // For example `circle_24.svg` = 24 teeth.
+    const toothCount = parseInt(/^.*_([0-9]+$)/.exec(gearName)[1], 10);
+
+    const gearDefinition: GearDefinition = await page.evaluate(analyzePath, {
       baseScale,
       toothHeight,
       meshSpacing,
+      gearName,
+      toothCount,
     });
 
     // Write the points to a JSON file that matches the naming convention
     // of the original SVG file.
-    const jsonFileName = path.basename(svgFile, path.extname(svgFile));
-    const jsonFilePath = path.resolve(
+    const dartFilePath = path.resolve(
       __dirname,
-      '../../gears',
-      `${jsonFileName}.json`,
+      '../../lib/models/gears',
+      `${gearName}.dart`,
     );
-    await writeFile(jsonFilePath, JSON.stringify(points, null, 2));
 
-    console.info(chalk.gray(`  └─ Wrote points to: ${jsonFilePath}`));
+    allGearExports.push(
+      await writeAsDartGearDefinitionInstance(gearDefinition, dartFilePath),
+    );
+
+    console.info(chalk.gray(`  └─ Wrote gear definition to: ${dartFilePath}`));
   }
 
   await browser.close();
+
+  console.info(chalk.blueBright('Writing proxy export file'));
+
+  const proxyFilePath = path.resolve(
+    __dirname,
+    '../../lib/models/gears/gears.dart',
+  );
+
+  await writeDartProxyExportFile(allGearExports, proxyFilePath);
+
+  console.info(chalk.gray(`  └─ Wrote proxy export file to: ${proxyFilePath}`));
 
   console.info(
     chalk.greenBright(`Successfully analyzed ${files.length} SVG files 👍`),
@@ -78,102 +116,4 @@ const getHtmlPageWithInlineSvg = ({
       ${svgString}
     </body>
   </html>`;
-};
-
-/**
- * Finds the <path> element in the page, breaks it into chunks
- * of equal-sized length, and returns each line segment and
- * its direction (A.K.A. normal line).
- *
- * NOTE: This function is run in the context of an HTML
- * rendered inside a headless Chrome instance.
- */
-const analyzePath = ({
-  baseScale,
-  toothHeight,
-  meshSpacing,
-}: {
-  baseScale: number;
-  toothHeight: number;
-  meshSpacing: number;
-}): ContactPoint[] => {
-  const pi2 = 2 * Math.PI;
-
-  const svg = document.querySelector('svg');
-  const svgSize = {
-    width: parseInt(svg.getAttribute('width'), 10),
-    height: parseInt(svg.getAttribute('height'), 10),
-  };
-  const centerPoint = {
-    x: svgSize.width / 2,
-    y: svgSize.height / 2,
-  };
-  const path = svg.querySelector('path');
-
-  // The total length of the path
-  const totalLength = path.getTotalLength();
-
-  // The number of segments we will break this path into
-  const segmentCount = Math.floor(totalLength / pi2);
-
-  // How long each segment will be
-  const segmentLength = totalLength / segmentCount;
-
-  // Step around the path bit by bit, recording
-  // the coordinates of each point as we go
-  let evaluatedPoints: ContactPoint[] = [];
-  for (let i = 0; i < segmentCount; i++) {
-    const currentLength = i * segmentLength;
-
-    const { x, y } = path.getPointAtLength(currentLength);
-
-    evaluatedPoints.push({
-      p: {
-        x: (x - centerPoint.x) * baseScale,
-        y: (y - centerPoint.y) * baseScale,
-      },
-      d: 0, // direction will be computed below
-    });
-  }
-
-  // Compute the direction (A.K.A normal line) of each point
-  // by computing the angle perpendicular to the line between
-  // the previous and next points. Also, update the position
-  // of each point to take into acccount the tooth height.
-  evaluatedPoints = evaluatedPoints.map((point, index) => {
-    // The previous point, or the last point if this is the first point
-    const previousPoint =
-      evaluatedPoints[
-        (evaluatedPoints.length + index - 1) % evaluatedPoints.length
-      ];
-
-    // The next point, or the first point if this is the last point
-    const nextPoint = evaluatedPoints[(index + 1) % evaluatedPoints.length];
-
-    // Compute the angle between the two points
-    let direction = Math.atan2(
-      (nextPoint.p.y - previousPoint.p.y) * -1,
-      nextPoint.p.x - previousPoint.p.x,
-    );
-
-    // Rotate the angle by a right angle so that it's perpendicular to the two points
-    direction = direction - Math.PI / 2;
-
-    // Adjust the angle so that it's in the range [0, 2+PI)
-    direction = (direction + pi2) % pi2;
-
-    // Update the position to take the tooth height into account
-    const gearSpacing = toothHeight / 2 + meshSpacing / 2;
-    const toothPoint = {
-      x: point.p.x + Math.cos(direction) * gearSpacing * baseScale,
-      y: point.p.y + Math.sin(direction) * gearSpacing * baseScale * -1,
-    };
-
-    return {
-      p: toothPoint,
-      d: direction,
-    };
-  });
-
-  return evaluatedPoints;
 };

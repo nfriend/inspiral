@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:inspiral/models/models.dart';
+import 'package:inspiral/models/gears/gears.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
@@ -9,12 +9,6 @@ import 'package:inspiral/extensions/extensions.dart';
 /// Initializes all state singletons. This method must be called early in the
 /// application lifecycle, and it must only be called once.
 Future<void> initState(BuildContext context) async {
-  Stopwatch sw = Stopwatch()..start();
-  // Load all the gear definitions
-  await GearDefinitions.loadGearDefinitions(context);
-  sw.stop();
-  print("Gear loading took ${sw.elapsedMilliseconds} ms");
-
   // Compute an initial canvas translation that will place the
   // center point of the canvas directly in the center of the screen
   // By default, the canvas's top-left corner is lined up with
@@ -41,14 +35,11 @@ Future<void> initState(BuildContext context) async {
   SettingsState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
-  final rotatingGear = RotatingGearState.init(
-      initialAngle: pi / 2,
-      initialDefinition:
-          GearDefinitions.getGearDefinition(Gear.defaultRotating));
+  final rotatingGear =
+      RotatingGearState.init(initialAngle: pi / 2, initialDefinition: circle24);
   final dragLine = DragLineState.init(initialPosition: canvasCenter);
   final fixedGear = FixedGearState.init(
-      initialPosition: canvasCenter,
-      initialDefinition: GearDefinitions.getGearDefinition(Gear.defaultFixed));
+      initialPosition: canvasCenter, initialDefinition: circle84);
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
