@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/widgets/inspiral_providers.dart';
-import 'package:statsfl/statsfl.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/widgets/inspiral_canvas.dart';
 

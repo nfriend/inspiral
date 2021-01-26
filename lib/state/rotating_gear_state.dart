@@ -45,8 +45,6 @@ class RotatingGearState extends BaseGearState {
   FixedGearState fixedGear;
   DragLineState dragLine;
 
-  double currentAngle = 0;
-
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
   }

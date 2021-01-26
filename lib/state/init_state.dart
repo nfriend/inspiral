@@ -31,15 +31,19 @@ Future<void> initState(BuildContext context) async {
       (MediaQuery.of(context).size / 2).toVector3() * (1 / initialZoom);
   initialCanvasTransform.translate(centerTranslation);
 
+  // The initial angle of the rotating gear, relative to the fixed gear
+  double initialAngle = pi / 2;
+
   // Initialize all the state singletons
   SettingsState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
-  final rotatingGear =
-      RotatingGearState.init(initialAngle: pi / 2, initialDefinition: square40);
-  final dragLine = DragLineState.init(initialPosition: canvasCenter);
+  final rotatingGear = RotatingGearState.init(
+      initialAngle: initialAngle, initialDefinition: circle84);
+  final dragLine = DragLineState.init(
+      initialPosition: canvasCenter, initialAngle: initialAngle);
   final fixedGear = FixedGearState.init(
-      initialPosition: canvasCenter, initialDefinition: square40);
+      initialPosition: canvasCenter, initialDefinition: circle24);
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;

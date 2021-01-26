@@ -6,9 +6,10 @@ import 'package:inspiral/state/state.dart';
 class DragLineState extends ChangeNotifier {
   static DragLineState _instance;
 
-  factory DragLineState.init({@required Offset initialPosition}) {
-    return _instance =
-        DragLineState._internal(initialPosition: initialPosition);
+  factory DragLineState.init(
+      {@required Offset initialPosition, @required double initialAngle}) {
+    return _instance = DragLineState._internal(
+        initialPosition: initialPosition, initialAngle: initialAngle);
   }
 
   factory DragLineState() {
@@ -17,10 +18,10 @@ class DragLineState extends ChangeNotifier {
     return _instance;
   }
 
-  DragLineState._internal({
-    @required Offset initialPosition,
-  }) {
+  DragLineState._internal(
+      {@required Offset initialPosition, @required double initialAngle}) {
     _pivotPositionInCanvasCoordinates = initialPosition;
+    _angle = initialAngle;
   }
 
   CanvasState canvas;
@@ -52,7 +53,15 @@ class DragLineState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Keeps track of the difference between the angle between the gears
+  /// and the angle between the fixed gear and the pointer when the
+  /// gear was first dragged. This prevents the gear from "jumping" when
+  /// the drag begins.
+  double _angleDragOffset = 0;
+
   gearPointerDown(PointerDownEvent event) {
+    double pointerAngle = _getPointerAngle(event);
+    _angleDragOffset = pointerAngle - angle;
     _updatePointerPositionAndAngle(event);
   }
 
@@ -64,11 +73,16 @@ class DragLineState extends ChangeNotifier {
     pivotPosition -= rotatingGearDelta;
   }
 
-  _updatePointerPositionAndAngle(PointerEvent event) {
+  void _updatePointerPositionAndAngle(PointerEvent event) {
+    pointerPosition = canvas.pixelToCanvasPosition(event.position);
+    angle = _getPointerAngle(event) - _angleDragOffset;
+  }
+
+  double _getPointerAngle(PointerEvent event) {
     pointerPosition = canvas.pixelToCanvasPosition(event.position);
     final lineAngle = Line(pivotPosition, pointerPosition).angle();
 
-    // Translate the angle into the range [0, 2)
-    angle = (lineAngle * -1 + (2 * pi)) % (2 * pi);
+    // Translate the angle into the range [0, 2pi)
+    return -lineAngle % (2 * pi);
   }
 }
