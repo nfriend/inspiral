@@ -5,8 +5,6 @@ class SettingsState extends ChangeNotifier {
   static SettingsState _instance;
 
   factory SettingsState.init() {
-    assert(_instance == null,
-        'The SettingsState.init() factory constructor should not be called more than once.');
     return _instance = SettingsState._internal();
   }
 

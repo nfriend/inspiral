@@ -8,8 +8,6 @@ class CanvasState extends ChangeNotifier {
   static CanvasState _instance;
 
   factory CanvasState.init({@required Matrix4 initialTransform}) {
-    assert(_instance == null,
-        'The CanvasState.init() factory constructor should not be called more than once.');
     return _instance =
         CanvasState._internal(initialTransform: initialTransform);
   }

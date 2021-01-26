@@ -7,8 +7,6 @@ class DragLineState extends ChangeNotifier {
   static DragLineState _instance;
 
   factory DragLineState.init({@required Offset initialPosition}) {
-    assert(_instance == null,
-        'The DragLineState.init() factory constructor should not be called more than once.');
     return _instance =
         DragLineState._internal(initialPosition: initialPosition);
   }

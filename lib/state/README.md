@@ -12,8 +12,6 @@ All state objects should be implemented with a constructor pattern like this:
 static MyState _instance;
 
 factory MyState.init({@required int myParam}) {
-  assert(_instance == null,
-      'The MyState.init() factory constructor should not be called more than once.');
   return _instance =
       MyState._internal(myParam: myParam);
 }

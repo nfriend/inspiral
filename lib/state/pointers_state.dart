@@ -4,8 +4,6 @@ class PointersState extends ChangeNotifier {
   static PointersState _instance;
 
   factory PointersState.init() {
-    assert(_instance == null,
-        'The PointersState.init() factory constructor should not be called more than once.');
     return _instance = PointersState._internal();
   }
 

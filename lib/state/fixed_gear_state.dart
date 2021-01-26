@@ -8,8 +8,6 @@ class FixedGearState extends BaseGearState {
   factory FixedGearState.init(
       {@required Offset initialPosition,
       @required GearDefinition initialDefinition}) {
-    assert(_instance == null,
-        'The FixedGearState.init() factory constructor should not be called more than once.');
     return _instance = FixedGearState._internal(
         initialPosition: initialPosition, initialDefinition: initialDefinition);
   }

@@ -10,8 +10,6 @@ class RotatingGearState extends BaseGearState {
   factory RotatingGearState.init(
       {@required double initialAngle,
       @required GearDefinition initialDefinition}) {
-    assert(_instance == null,
-        'The RotatingGearState.init() factory constructor should not be called more than once.');
     return _instance = RotatingGearState._internal(
         initialAngle: initialAngle, initialDefinition: initialDefinition);
   }
