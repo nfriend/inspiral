@@ -31,12 +31,9 @@ const readFile = util.promisify(fs.readFile);
     ),
   );
 
-  // A list of all export statements that should be written to the
-  // main `gears.dart` proxy export file.
-  const allGearExports: string[] = [];
-
-  // A list of all HTML/SVG files to render to PNG
-  const htmlFilesToRender: ImageInfo[] = [];
+  // Lists of all HTML/SVG files to render to PNG
+  const allImageInfos: ImageInfo[] = [];
+  const allGearDefinitions: GearDefinition[] = [];
 
   for (const [i, svgFile] of files.entries()) {
     console.info(
@@ -74,15 +71,15 @@ const readFile = util.promisify(fs.readFile);
       `${gearName}.dart`,
     );
 
-    allGearExports.push(
-      await writeGearDefinitionAsDartFile(gearDefinition, dartFilePath),
-    );
-
-    console.info(chalk.gray(`  ├─ Wrote gear definition to: ${dartFilePath}`));
+    await writeGearDefinitionAsDartFile(gearDefinition, dartFilePath),
+      console.info(
+        chalk.gray(`  ├─ Wrote gear definition to: ${dartFilePath}`),
+      );
 
     const imageInfo = await generateSvg(gearDefinition);
 
-    htmlFilesToRender.push(imageInfo);
+    allImageInfos.push(imageInfo);
+    allGearDefinitions.push(gearDefinition);
 
     console.info(
       chalk.gray(`  └─ Wrote rendered SVG to: ${imageInfo.svgPath}`),
@@ -98,7 +95,7 @@ const readFile = util.promisify(fs.readFile);
     '../../lib/models/gears/gears.dart',
   );
 
-  await writeDartProxyExportFile(allGearExports, proxyFilePath);
+  await writeDartProxyExportFile(allGearDefinitions, proxyFilePath);
 
   console.info(chalk.gray(`  └─ Wrote proxy export file to: ${proxyFilePath}`));
 
@@ -106,7 +103,7 @@ const readFile = util.promisify(fs.readFile);
     chalk.greenBright(`Successfully analyzed ${files.length} SVG files 👍`),
   );
 
-  await renderHtmlToPng(htmlFilesToRender);
+  await renderHtmlToPng(allImageInfos);
 })().catch((e) => {
   console.error(chalk.redBright('⚠️  Something went wrong!'));
   console.error(e);

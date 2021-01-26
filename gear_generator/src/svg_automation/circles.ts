@@ -6,7 +6,6 @@ import ejs from 'ejs';
 import { circleGearSizes } from '../constants';
 
 const writeFile = util.promisify(fs.writeFile);
-
 const renderFile: any = util.promisify(ejs.renderFile);
 
 (async () => {

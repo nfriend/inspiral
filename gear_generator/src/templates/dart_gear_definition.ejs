@@ -1,0 +1,16 @@
+<%- include('auto_generate_warning_comment') %>
+import 'dart:ui';
+import 'package:inspiral/models/contact_point.dart';
+import 'package:inspiral/models/gear_definition.dart';
+
+final <%= camelCasedGearName %> = GearDefinition(
+    image: '<%= gearDefinition.image %>',
+    size: Size(<%= gearDefinition.size.width %>, <%= gearDefinition.size.height %>),
+    toothCount: <%= gearDefinition.toothCount %>,
+    points: [
+      <%_ for (const point of gearDefinition.points) { _%>
+      ContactPoint(
+          position: Offset(<%= point.position.x %>, <%= point.position.y %>),
+          direction: <%= point.direction %>),
+      <%_ } _%>
+    ]);
