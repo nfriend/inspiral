@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg">
   <g>
-    <path
-      d="M 90 45
-         A 45 45 0 1 0 0 45
-         A 45 45 0 0 0 90 45
-         Z"
-    />
+    <path d="M 90 45
+             A 45 45 0 1 0 0 45
+             A 45 45 0 0 0 90 45
+             Z" />
   </g>
 </svg>
