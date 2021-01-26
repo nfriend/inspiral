@@ -1,4 +1,4 @@
-import { Point } from '../point';
+import { Point } from '../models/point';
 
 export interface GetCirclePointParams {
   center: Point;

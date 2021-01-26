@@ -1,5 +1,5 @@
-import { ContactPoint } from './contact_point';
-import { GearDefinition } from './gear_definition';
+import { ContactPoint } from './models/contact_point';
+import { GearDefinition } from './models/gear_definition';
 
 /**
  * Finds the <path> element in the page, breaks it into chunks

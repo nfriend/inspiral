@@ -1,6 +1,6 @@
 import { GearPath } from './gear_path';
 import { create } from 'xmlbuilder2';
-import { baseScale } from './constants';
+import { baseScale } from '../constants';
 
 interface GearSvgConstructorParams {
   path: GearPath;
@@ -8,6 +8,9 @@ interface GearSvgConstructorParams {
   height: number;
 }
 
+/**
+ * A class that represents an SVG image
+ */
 export class GearSvg {
   public params;
 

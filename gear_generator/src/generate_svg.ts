@@ -1,18 +1,18 @@
 import path from 'path';
 import fs from 'fs';
 import util from 'util';
-import { GearDefinition } from './gear_definition';
-import { GearPath } from './gear_path';
-import { GearSvg } from './gear_svg';
-import { ImageInfo } from './image_info';
+import { GearDefinition } from './models/gear_definition';
+import { GearPath } from './models/gear_path';
+import { GearSvg } from './models/gear_svg';
+import { ImageInfo } from './models/image_info';
 import {
   baseScale,
   meshSpacing as unscaledMeshSpacing,
   toothHeight as unscaledToothHeight,
 } from './constants';
 import { hostSvgInHTml } from './util/host_svg_in_html';
-import { ContactPoint } from './contact_point';
-import { Point } from './point';
+import { ContactPoint } from './models/contact_point';
+import { Point } from './models/point';
 
 const writeFile = util.promisify(fs.writeFile);
 

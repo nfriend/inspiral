@@ -1,7 +1,7 @@
 import path from 'path';
 import puppeteer from 'puppeteer';
 import chalk from 'chalk';
-import { ImageInfo } from './image_info';
+import { ImageInfo } from './models/image_info';
 import { scalesToGenerate } from './constants';
 
 /**
