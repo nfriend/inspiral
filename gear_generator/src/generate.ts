@@ -20,12 +20,12 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 /**
- * Reads all SVG files in `gear_generator_2/src/svg`, breaks
+ * Reads all SVG files in `gear_generator/src/svg`, breaks
  * its path down into a number of segments, and saves the
  * result in the `gears` directory.
  */
 export const generatePointsFromSvgPaths = async () => {
-  // Read all SVG files found in gear_generator_2/src/svg
+  // Read all SVG files found in gear_generator/src/svg
   const svgFilePattern = path.resolve(__dirname, 'svg/**/*.svg');
   const files = await glob(svgFilePattern);
 
