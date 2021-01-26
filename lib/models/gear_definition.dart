@@ -32,9 +32,9 @@ class GearDefinition {
   // Returns the "contact point" - i.e. the position and normal line - of the
   // gear at the provided tooth.
   ContactPoint toothToContactPoint(double tooth, {bool isRotating = false}) {
-    // Rotating gears with an even number of teeth also need to be offset
-    // by half a tooth in order to mesh with the fixed gear
-    if (isRotating && toothCount % 2 == 0) {
+    // Rotating gears need to be offset by half a tooth
+    // in order to mesh with the fixed gear
+    if (isRotating) {
       tooth += 0.5;
     }
 

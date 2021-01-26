@@ -66,15 +66,16 @@ class RotatingGearState extends BaseGearState {
         definition.toothToContactPoint(fixedGearTooth, isRotating: true);
 
     rotation = rotatingGearRelativeContactPoint.direction -
-        fixedGear.contactPoint.direction;
+        fixedGear.contactPoint.direction +
+        pi;
 
     Offset rotatingGearPosition = (fixedGear.contactPoint.position +
             rotatingGearRelativeContactPoint.position)
-        .rotated(rotation, fixedGear.contactPoint.position);
+        .rotated(rotation - pi, fixedGear.contactPoint.position);
 
     contactPoint = rotatingGearRelativeContactPoint
         .translated(rotatingGearPosition)
-        .rotated(-rotation + pi, fixedGear.contactPoint.position);
+        .rotated(-rotation, fixedGear.contactPoint.position);
 
     return rotatingGearPosition;
   }

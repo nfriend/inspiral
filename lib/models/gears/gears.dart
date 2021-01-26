@@ -41,3 +41,4 @@ export 'package:inspiral/models/gears/oval_75.dart';
 export 'package:inspiral/models/gears/oval_80.dart';
 export 'package:inspiral/models/gears/oval_84.dart';
 export 'package:inspiral/models/gears/square_40.dart';
+export 'package:inspiral/models/gears/squiggle.dart';
