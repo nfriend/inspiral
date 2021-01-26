@@ -5,8 +5,10 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "svg:circles": "ts-node src/svg_automation/circles.ts"
+    "start": "yarn svg:circles && yarn svg:ovals && yarn render",
+    "render": "ts-node src/index.ts",
+    "svg:circles": "ts-node src/svg_automation/circles.ts",
+    "svg:ovals": "ts-node src/svg_automation/ovals.ts"
   },
   "devDependencies": {
     "@tsconfig/node14": "1.0.0",

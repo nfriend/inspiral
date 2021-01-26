@@ -51,16 +51,11 @@ const readFile = util.promisify(fs.readFile);
     // The gear name is the name of the SVG file (with the extension)
     const gearName = path.basename(svgFile, path.extname(svgFile));
 
-    // The tooth count is the number found in the filename.
-    // For example `circle_24.svg` = 24 teeth.
-    const toothCount = parseInt(/^.*_([0-9]+$)/.exec(gearName)[1], 10);
-
     const gearDefinition: GearDefinition = await page.evaluate(analyzePath, {
       baseScale,
       toothHeight,
       meshSpacing,
       gearName,
-      toothCount,
     });
 
     // Write the points to a JSON file that matches the naming convention

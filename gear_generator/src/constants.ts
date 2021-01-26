@@ -42,5 +42,27 @@ export const circleGearSizes = [
   84,
 ];
 
+/**
+ * All the sizes of oval gears that should be generated
+ */
+const xToYRatio = 2 / 3;
+export const ovalGearSizes = [
+  { xRadius: 24, yRadius: 24 * xToYRatio },
+  { xRadius: 30, yRadius: 30 * xToYRatio },
+  { xRadius: 32, yRadius: 32 * xToYRatio },
+  { xRadius: 40, yRadius: 40 * xToYRatio },
+  { xRadius: 42, yRadius: 42 * xToYRatio },
+  { xRadius: 45, yRadius: 45 * xToYRatio },
+  { xRadius: 48, yRadius: 48 * xToYRatio },
+  { xRadius: 52, yRadius: 52 * xToYRatio },
+  { xRadius: 56, yRadius: 56 * xToYRatio },
+  { xRadius: 60, yRadius: 60 * xToYRatio },
+  { xRadius: 63, yRadius: 63 * xToYRatio },
+  { xRadius: 72, yRadius: 72 * xToYRatio },
+  { xRadius: 75, yRadius: 75 * xToYRatio },
+  { xRadius: 80, yRadius: 80 * xToYRatio },
+  { xRadius: 84, yRadius: 84 * xToYRatio },
+];
+
 /** The scale factors to generate when rendering PNGs */
 export const scalesToGenerate = [1, 2, 3];

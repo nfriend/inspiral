@@ -13,13 +13,11 @@ import { GearDefinition } from './models/gear_definition';
  */
 export const analyzePath = ({
   baseScale,
-  toothCount,
   toothHeight,
   meshSpacing,
   gearName,
 }: {
   baseScale: number;
-  toothCount: number;
   toothHeight: number;
   meshSpacing: number;
   gearName: string;
@@ -31,6 +29,10 @@ export const analyzePath = ({
 
   // The total length of the path
   const totalLength = path.getTotalLength();
+
+  // Compute the number of teeth that will fit on this gear.
+  // By convention, each tooth takes 2*pi of arc length.
+  const toothCount = Math.round(path.getTotalLength() / pi2);
 
   // How long each segment will be
   const segmentLength = totalLength / toothCount;
