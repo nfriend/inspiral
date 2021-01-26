@@ -7,6 +7,19 @@
 // in the `gear_generator` directory.
 
 export 'package:inspiral/models/gears/circle_24.dart';
+export 'package:inspiral/models/gears/circle_30.dart';
+export 'package:inspiral/models/gears/circle_32.dart';
+export 'package:inspiral/models/gears/circle_40.dart';
+export 'package:inspiral/models/gears/circle_42.dart';
+export 'package:inspiral/models/gears/circle_45.dart';
+export 'package:inspiral/models/gears/circle_48.dart';
+export 'package:inspiral/models/gears/circle_52.dart';
+export 'package:inspiral/models/gears/circle_56.dart';
+export 'package:inspiral/models/gears/circle_60.dart';
+export 'package:inspiral/models/gears/circle_63.dart';
+export 'package:inspiral/models/gears/circle_72.dart';
+export 'package:inspiral/models/gears/circle_75.dart';
+export 'package:inspiral/models/gears/circle_80.dart';
 export 'package:inspiral/models/gears/circle_84.dart';
 export 'package:inspiral/models/gears/lens_60.dart';
 export 'package:inspiral/models/gears/square_40.dart';
