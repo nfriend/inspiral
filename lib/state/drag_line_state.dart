@@ -63,7 +63,7 @@ class DragLineState extends ChangeNotifier {
 
   gearPointerDown(PointerDownEvent event) {
     double pointerAngle = _getPointerAngle(event);
-    _angleDragOffset = pointerAngle - angle;
+    _angleDragOffset = pointerAngle - _translateToRange(angle);
     _updatePointerPositionAndAngle(event);
   }
 
