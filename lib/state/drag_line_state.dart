@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
 import 'package:inspiral/state/state.dart';
 
+final double pi2 = 2 * pi;
+
 class DragLineState extends ChangeNotifier {
   static DragLineState _instance;
 
@@ -75,14 +77,42 @@ class DragLineState extends ChangeNotifier {
 
   void _updatePointerPositionAndAngle(PointerEvent event) {
     pointerPosition = canvas.pixelToCanvasPosition(event.position);
-    angle = _getPointerAngle(event) - _angleDragOffset;
+    double newAngle = _getPointerAngle(event);
+    double translatedAngle = _translateToRange(angle);
+    double translatedNewAngle = _translateToRange(newAngle);
+
+    // This is how many times we've fully rotated (in the positive direction)
+    // around the fixed gear. Can be positive or negative.
+    int rotationCount = (angle / pi2).floor();
+    newAngle += rotationCount * pi2;
+
+    // Detect when we wrap around from 0 to 2*pi or vice versa,
+    // and update the angle accordingly
+    if ((translatedNewAngle - translatedAngle).abs() > pi) {
+      if (translatedNewAngle > translatedAngle) {
+        // We crossed over the X axis in the negative direction
+        // (e.g. from 0.1 to 6.1)
+        newAngle -= pi2;
+      } else {
+        // We crossed over the X axis in the positive direction
+        // (e.g. from 6.1 to 0.1)
+        newAngle += pi2;
+      }
+    }
+
+    angle = newAngle - _angleDragOffset;
   }
 
+  /// Gets the angle between the pointer and the pivot position
   double _getPointerAngle(PointerEvent event) {
-    pointerPosition = canvas.pixelToCanvasPosition(event.position);
-    final lineAngle = Line(pivotPosition, pointerPosition).angle();
+    Offset eventPosition = canvas.pixelToCanvasPosition(event.position);
+    final lineAngle = Line(pivotPosition, eventPosition).angle();
 
-    // Translate the angle into the range [0, 2pi)
-    return -lineAngle % (2 * pi);
+    return -_translateToRange(lineAngle);
+  }
+
+  /// Translates an angle (in radians) into the range [0, 2pi)
+  double _translateToRange(double angle) {
+    return angle % pi2;
   }
 }
