@@ -77,14 +77,19 @@ class DragLineState extends ChangeNotifier {
 
   void _updatePointerPositionAndAngle(PointerEvent event) {
     pointerPosition = canvas.pixelToCanvasPosition(event.position);
-    double newAngle = _getPointerAngle(event);
+
+    // The current angle, translated in the range [0, 2*pi)
     double translatedAngle = _translateToRange(angle);
-    double translatedNewAngle = _translateToRange(newAngle);
+
+    // The new angle, translated into the same range
+    double translatedNewAngle =
+        _translateToRange(_getPointerAngle(event) - _angleDragOffset);
 
     // This is how many times we've fully rotated (in the positive direction)
     // around the fixed gear. Can be positive or negative.
     int rotationCount = (angle / pi2).floor();
-    newAngle += rotationCount * pi2;
+
+    double newAngle = translatedNewAngle + rotationCount * pi2;
 
     // Detect when we wrap around from 0 to 2*pi or vice versa,
     // and update the angle accordingly
@@ -100,7 +105,7 @@ class DragLineState extends ChangeNotifier {
       }
     }
 
-    angle = newAngle - _angleDragOffset;
+    angle = newAngle;
   }
 
   /// Gets the angle between the pointer and the pivot position
