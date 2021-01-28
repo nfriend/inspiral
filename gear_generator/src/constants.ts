@@ -66,3 +66,6 @@ export const ovalGearSizes = [
 
 /** The scale factors to generate when rendering PNGs */
 export const scalesToGenerate = [1, 2, 3];
+
+/** The radius of each hole */
+export const holeSize = 2;

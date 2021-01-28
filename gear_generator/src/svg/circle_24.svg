@@ -1,7 +1,45 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <style>
+    text {
+      font-family: monospace;
+      font-size: 4px;
+    }
+  </style>
   <g>
-    <path d="M 48 24
+    <mask id="holes">
+			<rect width="100%" height="100%" fill="white" />
+			<circle cx="24" cy="24" r="2" inspiral:hole-name="0" />
+      <text x="21" y="25" text-anchor="end">0</text>
+			<circle cx="24" cy="18" r="2" inspiral:hole-name="6" />
+      <text x="21" y="19" text-anchor="end">6</text>
+			<circle cx="24" cy="12" r="2" inspiral:hole-name="12" />
+      <text x="21" y="13" text-anchor="end">12</text>
+			<circle cx="24" cy="6" r="2" inspiral:hole-name="18" />
+      <text x="21" y="7" text-anchor="end">18</text>
+			<circle cx="17.93782217350893" cy="20.499999999999996" r="2" inspiral:hole-name="7" />
+      <text x="14.93782217350893" y="21.499999999999996" text-anchor="end">7</text>
+			<circle cx="12.7416697508023" cy="17.499999999999996" r="2" inspiral:hole-name="13" />
+      <text x="9.7416697508023" y="18.499999999999996" text-anchor="end">13</text>
+			<circle cx="17.07179676972449" cy="27.999999999999996" r="2" inspiral:hole-name="8" />
+      <text x="14.07179676972449" y="28.999999999999996" text-anchor="end">8</text>
+			<circle cx="11.875644347017857" cy="30.999999999999996" r="2" inspiral:hole-name="14" />
+      <text x="8.875644347017857" y="31.999999999999996" text-anchor="end">14</text>
+			<circle cx="24" cy="33" r="2" inspiral:hole-name="9" />
+      <text x="21" y="34" text-anchor="end">9</text>
+			<circle cx="23.999999999999996" cy="39" r="2" inspiral:hole-name="15" />
+      <text x="20.999999999999996" y="40" text-anchor="end">15</text>
+			<circle cx="32.66025403784438" cy="29.000000000000004" r="2" inspiral:hole-name="10" />
+      <text x="29.660254037844382" y="30.000000000000004" text-anchor="end">10</text>
+			<circle cx="37.856406460551014" cy="32.00000000000001" r="2" inspiral:hole-name="16" />
+      <text x="34.856406460551014" y="33.00000000000001" text-anchor="end">16</text>
+			<circle cx="33.52627944162883" cy="18.500000000000007" r="2" inspiral:hole-name="11" />
+      <text x="30.52627944162883" y="19.500000000000007" text-anchor="end">11</text>
+			<circle cx="38.72243186433546" cy="15.500000000000012" r="2" inspiral:hole-name="17" />
+      <text x="35.72243186433546" y="16.500000000000014" text-anchor="end">17</text>
+		</mask>
+    <path mask="url(#holes)"
+          d="M 48 24
              A 24 24 0 1 0 0 24
              A 24 24 0 0 0 48 24
              Z" />

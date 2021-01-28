@@ -1,7 +1,123 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <style>
+    text {
+      font-family: monospace;
+      font-size: 4px;
+    }
+  </style>
   <g>
-    <path d="M 126 63
+    <mask id="holes">
+			<rect width="100%" height="100%" fill="white" />
+			<circle cx="63" cy="63" r="2" inspiral:hole-name="0" />
+      <text x="60" y="64" text-anchor="end">0</text>
+			<circle cx="63" cy="57" r="2" inspiral:hole-name="6" />
+      <text x="60" y="58" text-anchor="end">6</text>
+			<circle cx="63" cy="51" r="2" inspiral:hole-name="12" />
+      <text x="60" y="52" text-anchor="end">12</text>
+			<circle cx="63" cy="45" r="2" inspiral:hole-name="18" />
+      <text x="60" y="46" text-anchor="end">18</text>
+			<circle cx="63" cy="39" r="2" inspiral:hole-name="24" />
+      <text x="60" y="40" text-anchor="end">24</text>
+			<circle cx="63" cy="33" r="2" inspiral:hole-name="30" />
+      <text x="60" y="34" text-anchor="end">30</text>
+			<circle cx="63" cy="27" r="2" inspiral:hole-name="36" />
+      <text x="60" y="28" text-anchor="end">36</text>
+			<circle cx="63" cy="21" r="2" inspiral:hole-name="42" />
+      <text x="60" y="22" text-anchor="end">42</text>
+			<circle cx="63" cy="15" r="2" inspiral:hole-name="48" />
+      <text x="60" y="16" text-anchor="end">48</text>
+			<circle cx="63" cy="9" r="2" inspiral:hole-name="54" />
+      <text x="60" y="10" text-anchor="end">54</text>
+			<circle cx="56.937822173508934" cy="59.5" r="2" inspiral:hole-name="7" />
+      <text x="53.937822173508934" y="60.5" text-anchor="end">7</text>
+			<circle cx="51.7416697508023" cy="56.49999999999999" r="2" inspiral:hole-name="13" />
+      <text x="48.7416697508023" y="57.49999999999999" text-anchor="end">13</text>
+			<circle cx="46.54551732809567" cy="53.49999999999999" r="2" inspiral:hole-name="19" />
+      <text x="43.54551732809567" y="54.49999999999999" text-anchor="end">19</text>
+			<circle cx="41.34936490538904" cy="50.49999999999999" r="2" inspiral:hole-name="25" />
+      <text x="38.34936490538904" y="51.49999999999999" text-anchor="end">25</text>
+			<circle cx="36.153212482682406" cy="47.499999999999986" r="2" inspiral:hole-name="31" />
+      <text x="33.153212482682406" y="48.499999999999986" text-anchor="end">31</text>
+			<circle cx="30.957060059975774" cy="44.499999999999986" r="2" inspiral:hole-name="37" />
+      <text x="27.957060059975774" y="45.499999999999986" text-anchor="end">37</text>
+			<circle cx="25.760907637269142" cy="41.499999999999986" r="2" inspiral:hole-name="43" />
+      <text x="22.760907637269142" y="42.499999999999986" text-anchor="end">43</text>
+			<circle cx="20.564755214562517" cy="38.499999999999986" r="2" inspiral:hole-name="49" />
+      <text x="17.564755214562517" y="39.499999999999986" text-anchor="end">49</text>
+			<circle cx="15.368602791855885" cy="35.499999999999986" r="2" inspiral:hole-name="55" />
+      <text x="12.368602791855885" y="36.499999999999986" text-anchor="end">55</text>
+			<circle cx="56.071796769724486" cy="67" r="2" inspiral:hole-name="8" />
+      <text x="53.071796769724486" y="68" text-anchor="end">8</text>
+			<circle cx="50.875644347017854" cy="70" r="2" inspiral:hole-name="14" />
+      <text x="47.875644347017854" y="71" text-anchor="end">14</text>
+			<circle cx="45.67949192431122" cy="73" r="2" inspiral:hole-name="20" />
+      <text x="42.67949192431122" y="74" text-anchor="end">20</text>
+			<circle cx="40.48333950160459" cy="76" r="2" inspiral:hole-name="26" />
+      <text x="37.48333950160459" y="77" text-anchor="end">26</text>
+			<circle cx="35.28718707889796" cy="78.99999999999999" r="2" inspiral:hole-name="32" />
+      <text x="32.28718707889796" y="79.99999999999999" text-anchor="end">32</text>
+			<circle cx="30.091034656191326" cy="81.99999999999999" r="2" inspiral:hole-name="38" />
+      <text x="27.091034656191326" y="82.99999999999999" text-anchor="end">38</text>
+			<circle cx="24.894882233484694" cy="84.99999999999999" r="2" inspiral:hole-name="44" />
+      <text x="21.894882233484694" y="85.99999999999999" text-anchor="end">44</text>
+			<circle cx="19.69872981077806" cy="87.99999999999999" r="2" inspiral:hole-name="50" />
+      <text x="16.69872981077806" y="88.99999999999999" text-anchor="end">50</text>
+			<circle cx="14.50257738807143" cy="90.99999999999999" r="2" inspiral:hole-name="56" />
+      <text x="11.50257738807143" y="91.99999999999999" text-anchor="end">56</text>
+			<circle cx="63" cy="72" r="2" inspiral:hole-name="9" />
+      <text x="60" y="73" text-anchor="end">9</text>
+			<circle cx="63" cy="78" r="2" inspiral:hole-name="15" />
+      <text x="60" y="79" text-anchor="end">15</text>
+			<circle cx="62.99999999999999" cy="84" r="2" inspiral:hole-name="21" />
+      <text x="59.99999999999999" y="85" text-anchor="end">21</text>
+			<circle cx="62.99999999999999" cy="90" r="2" inspiral:hole-name="27" />
+      <text x="59.99999999999999" y="91" text-anchor="end">27</text>
+			<circle cx="62.99999999999999" cy="96" r="2" inspiral:hole-name="33" />
+      <text x="59.99999999999999" y="97" text-anchor="end">33</text>
+			<circle cx="62.99999999999999" cy="102" r="2" inspiral:hole-name="39" />
+      <text x="59.99999999999999" y="103" text-anchor="end">39</text>
+			<circle cx="62.99999999999999" cy="108" r="2" inspiral:hole-name="45" />
+      <text x="59.99999999999999" y="109" text-anchor="end">45</text>
+			<circle cx="62.99999999999999" cy="114" r="2" inspiral:hole-name="51" />
+      <text x="59.99999999999999" y="115" text-anchor="end">51</text>
+			<circle cx="62.99999999999999" cy="120" r="2" inspiral:hole-name="57" />
+      <text x="59.99999999999999" y="121" text-anchor="end">57</text>
+			<circle cx="71.66025403784438" cy="68" r="2" inspiral:hole-name="10" />
+      <text x="68.66025403784438" y="69" text-anchor="end">10</text>
+			<circle cx="76.85640646055101" cy="71" r="2" inspiral:hole-name="16" />
+      <text x="73.85640646055101" y="72" text-anchor="end">16</text>
+			<circle cx="82.05255888325765" cy="74.00000000000001" r="2" inspiral:hole-name="22" />
+      <text x="79.05255888325765" y="75.00000000000001" text-anchor="end">22</text>
+			<circle cx="87.24871130596428" cy="77.00000000000001" r="2" inspiral:hole-name="28" />
+      <text x="84.24871130596428" y="78.00000000000001" text-anchor="end">28</text>
+			<circle cx="92.4448637286709" cy="80.00000000000001" r="2" inspiral:hole-name="34" />
+      <text x="89.4448637286709" y="81.00000000000001" text-anchor="end">34</text>
+			<circle cx="97.64101615137753" cy="83.00000000000001" r="2" inspiral:hole-name="40" />
+      <text x="94.64101615137753" y="84.00000000000001" text-anchor="end">40</text>
+			<circle cx="102.83716857408416" cy="86.00000000000003" r="2" inspiral:hole-name="46" />
+      <text x="99.83716857408416" y="87.00000000000003" text-anchor="end">46</text>
+			<circle cx="108.03332099679079" cy="89.00000000000003" r="2" inspiral:hole-name="52" />
+      <text x="105.03332099679079" y="90.00000000000003" text-anchor="end">52</text>
+			<circle cx="72.52627944162883" cy="57.50000000000001" r="2" inspiral:hole-name="11" />
+      <text x="69.52627944162883" y="58.50000000000001" text-anchor="end">11</text>
+			<circle cx="77.72243186433546" cy="54.500000000000014" r="2" inspiral:hole-name="17" />
+      <text x="74.72243186433546" y="55.500000000000014" text-anchor="end">17</text>
+			<circle cx="82.9185842870421" cy="51.500000000000014" r="2" inspiral:hole-name="23" />
+      <text x="79.9185842870421" y="52.500000000000014" text-anchor="end">23</text>
+			<circle cx="88.11473670974874" cy="48.50000000000002" r="2" inspiral:hole-name="29" />
+      <text x="85.11473670974874" y="49.50000000000002" text-anchor="end">29</text>
+			<circle cx="93.31088913245537" cy="45.50000000000003" r="2" inspiral:hole-name="35" />
+      <text x="90.31088913245537" y="46.50000000000003" text-anchor="end">35</text>
+			<circle cx="98.507041555162" cy="42.50000000000003" r="2" inspiral:hole-name="41" />
+      <text x="95.507041555162" y="43.50000000000003" text-anchor="end">41</text>
+			<circle cx="103.70319397786864" cy="39.500000000000036" r="2" inspiral:hole-name="47" />
+      <text x="100.70319397786864" y="40.500000000000036" text-anchor="end">47</text>
+			<circle cx="108.89934640057527" cy="36.50000000000004" r="2" inspiral:hole-name="53" />
+      <text x="105.89934640057527" y="37.50000000000004" text-anchor="end">53</text>
+		</mask>
+    <path mask="url(#holes)"
+          d="M 126 63
              A 63 63 0 1 0 0 63
              A 63 63 0 0 0 126 63
              Z" />

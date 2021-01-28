@@ -1,9 +1,5 @@
-import fs from 'fs';
-import util from 'util';
-import camelCase from 'camelcase';
 import { ContactPoint } from './contact_point';
-
-const writeFile = util.promisify(fs.writeFile);
+import { GearHole } from './gear_hole';
 
 /**
  * A class that holds all the data necessary to
@@ -28,4 +24,7 @@ export interface GearDefinition {
 
   /** The points that define the shape of this gear */
   points: ContactPoint[];
+
+  /** The holes in the gear */
+  holes: GearHole[];
 }
