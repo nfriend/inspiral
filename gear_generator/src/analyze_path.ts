@@ -147,6 +147,7 @@ export const analyzePath = ({
     },
     toothCount,
     points: evaluatedPoints,
+    holes: [], // TODO: populate holes here
   };
 
   return gearDefinition;

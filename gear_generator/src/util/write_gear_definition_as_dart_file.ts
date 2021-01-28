@@ -23,7 +23,7 @@ export const writeGearDefinitionAsDartFile = async (
 ): Promise<void> => {
   const templateFilePath = path.resolve(
     __dirname,
-    '../templates/dart_gear_definition.ejs',
+    '../templates/dart/dart_gear_definition.ejs',
   );
 
   const camelCasedGearName = camelCase(gearDefinition.gearName);

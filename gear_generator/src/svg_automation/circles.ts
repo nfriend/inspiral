@@ -10,7 +10,10 @@ const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
 
 (async () => {
-  const templateFilePath = path.resolve(__dirname, '../templates/circle.ejs');
+  const templateFilePath = path.resolve(
+    __dirname,
+    '../templates/svgs_for_analysis/circle.ejs',
+  );
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, radius] of circleGearSizes.entries()) {
