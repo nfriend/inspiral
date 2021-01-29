@@ -7,29 +7,60 @@ export class GearPath {
   public commands: string[] = [];
 
   /** Moves the pen to the provided point */
-  moveTo(point: Point, absolute = true): GearPath {
+  moveTo({
+    point,
+    absolute = true,
+  }: {
+    point: Point;
+    absolute?: boolean;
+  }): GearPath {
     this.commands.push(`${absolute ? 'M' : 'm'} ${point.x} ${point.y}`);
     return this;
   }
 
   /** Draws a line to the provided point */
-  lineTo(point: Point, absolute = true): GearPath {
+  lineTo({
+    point,
+    absolute = true,
+  }: {
+    point: Point;
+    absolute?: boolean;
+  }): GearPath {
     this.commands.push(`${absolute ? 'L' : 'l'} ${point.x} ${point.y}`);
     return this;
   }
 
   /** Draws an elliptical arc curve */
-  arc(
-    radiusX: number,
-    radiusY: number,
-    newPosition: Point,
+  arc({
+    radiusX,
+    radiusY,
+    newPosition,
+    xAxisRotation = 0,
+    largeArcFlag = false,
+    sweepFlag = false,
     absolute = true,
-  ): GearPath {
-    this.commands.push(
-      `${absolute ? 'A' : 'a'} ${radiusX} ${radiusY} 0 0 1 ${newPosition.x} ${
-        newPosition.y
-      }`,
-    );
+  }: {
+    radiusX: number;
+    radiusY: number;
+    newPosition: Point;
+    xAxisRotation?: number;
+    largeArcFlag?: boolean;
+    sweepFlag?: boolean;
+    absolute?: boolean;
+  }): GearPath {
+    const commandPieces = [
+      absolute ? 'A' : 'a',
+      radiusX,
+      radiusY,
+      xAxisRotation,
+      largeArcFlag ? 1 : 0,
+      sweepFlag ? 1 : 0,
+      newPosition.x,
+      newPosition.y,
+    ];
+
+    this.commands.push(commandPieces.join(' '));
+
     return this;
   }
 

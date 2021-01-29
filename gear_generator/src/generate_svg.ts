@@ -7,12 +7,14 @@ import { GearPath } from './models/gear_path';
 import { ImageInfo } from './models/image_info';
 import {
   baseScale,
+  holeSize,
   meshSpacing as unscaledMeshSpacing,
   toothHeight as unscaledToothHeight,
 } from './constants';
 import { hostSvgInHTml } from './util/host_svg_in_html';
 import { ContactPoint } from './models/contact_point';
 import { Point } from './models/point';
+import { AngleGearHole } from './models/gear_hole';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -51,16 +53,12 @@ const toothSideAngle = Math.asin((toothLength * (4 / 12)) / toothSideLength);
 export const generateSvg = async (
   gearDefinition: GearDefinition,
 ): Promise<ImageInfo> => {
-  const centerPoint = {
+  const centerPoint: Point = {
     x: gearDefinition.size.width / 2,
     y: gearDefinition.size.height / 2,
   };
 
-  const svgPath: GearPath = new GearPath().moveTo({
-    // TODO: What's the correct starting point?
-    x: centerPoint.x,
-    y: centerPoint.y,
-  });
+  const svgPath: GearPath = new GearPath();
 
   for (let i = 0; i < gearDefinition.points.length; i++) {
     // Generate the "left" side of the current tooth
@@ -110,7 +108,9 @@ export const generateSvg = async (
     height: gearDefinition.size.height,
     baseScale,
     gearPath: svgPath,
-    holePaths: [],
+    holePaths: gearDefinition.holes.map((h) =>
+      generateHole({ hole: h, centerPoint }),
+    ),
   });
 
   await writeFile(imageInfo.svgPath, rendered);
@@ -125,9 +125,11 @@ export const generateSvg = async (
 /**
  * Generates the "second" half of a gear tooth, i.e. the "left" side of a tooth
  *
- * @param point The point to use as a reference when generating the tooth
- * @param path The `GearPath` object to mutate
- * @param includeInitialMoveCommand Whether or not to begin the path with a "move"
+ * @param params
+ * @param params.point The point to use as a reference when generating the tooth
+ * @param params.path The `GearPath` object to mutate
+ * @param params.centerPoint The center point of the SVG image
+ * @param params.includeInitialMoveCommand Whether or not to begin the path with a "move"
  * command to the starting point of the tooth. This is used only to initialize
  * the cursor for the very first tooth.
  */
@@ -164,7 +166,7 @@ const generateSecondHalfOfTooth = ({
   };
 
   if (includeInitialMoveCommand) {
-    path.moveTo(toothTopCenter);
+    path.moveTo({ point: toothTopCenter });
   }
 
   const toothTopLeft: Point = {
@@ -176,7 +178,7 @@ const generateSecondHalfOfTooth = ({
       Math.sin(point.direction + Math.PI / 2) * (toothTopLength / 2) * -1,
   };
 
-  path.lineTo(toothTopLeft);
+  path.lineTo({ point: toothTopLeft });
 
   const toothBottomLeft: Point = {
     x:
@@ -189,14 +191,16 @@ const generateSecondHalfOfTooth = ({
         -1,
   };
 
-  path.lineTo(toothBottomLeft);
+  path.lineTo({ point: toothBottomLeft });
 };
 
 /**
  * Generates the "first" half of a gear tooth, i.e. the "right" side of a tooth
  *
- * @param point The point to use as a reference when generating the tooth
- * @param path The `GearPath` object to mutate
+ * @param params
+ * @param params.point The point to use as a reference when generating the tooth
+ * @param params.path The `GearPath` object to mutate
+ * @param params.centerPoint The center point of the SVG image
  */
 const generateFirstHalfOfTooth = ({
   point,
@@ -243,6 +247,44 @@ const generateFirstHalfOfTooth = ({
         -1,
   };
 
-  path.lineTo(toothBottomRight);
-  path.lineTo(toothTopRight);
+  path.lineTo({ point: toothBottomRight });
+  path.lineTo({ point: toothTopRight });
+};
+
+/**
+ * Returns a `GearPath` object that represents a single hole
+ *
+ * @param params
+ * @param params.hole The hole to draw
+ * @param params.centerPoint The center point of the SVG image
+ */
+const generateHole = ({
+  hole,
+  centerPoint,
+}: {
+  hole: AngleGearHole;
+  centerPoint: Point;
+}): GearPath => {
+  const scaledRadius = holeSize * baseScale;
+  const x =
+    Math.cos(hole.angle) * hole.distance * baseScale +
+    centerPoint.x +
+    scaledRadius;
+  const y =
+    -1 * Math.sin(hole.angle) * hole.distance * baseScale + centerPoint.y;
+
+  return new GearPath()
+    .moveTo({ point: { x, y } })
+    .arc({
+      radiusX: scaledRadius,
+      radiusY: scaledRadius,
+      largeArcFlag: true,
+      newPosition: { x: x - 2 * scaledRadius, y },
+    })
+    .arc({
+      radiusX: scaledRadius,
+      radiusY: scaledRadius,
+      newPosition: { x: x, y },
+    })
+    .closePath();
 };
