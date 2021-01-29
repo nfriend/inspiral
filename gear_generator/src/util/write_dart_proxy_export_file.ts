@@ -20,7 +20,7 @@ export const writeDartProxyExportFile = async (
 ): Promise<void> => {
   const templateFilePath = path.resolve(
     __dirname,
-    '../templates/dart/dart_proxy_export.ejs',
+    '../templates/dart/dart_proxy_export.dart.ejs',
   );
 
   const gearNames = gearDefinitions.map((gd) => gd.gearName);

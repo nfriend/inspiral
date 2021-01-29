@@ -1,9 +1,9 @@
 import path from 'path';
 import fs from 'fs';
 import util from 'util';
+import ejs from 'ejs';
 import { GearDefinition } from './models/gear_definition';
 import { GearPath } from './models/gear_path';
-import { GearSvg } from './models/gear_svg';
 import { ImageInfo } from './models/image_info';
 import {
   baseScale,
@@ -15,6 +15,7 @@ import { ContactPoint } from './models/contact_point';
 import { Point } from './models/point';
 
 const writeFile = util.promisify(fs.writeFile);
+const renderFile: any = util.promisify(ejs.renderFile);
 
 // The height of each tooth, after being scaled
 const toothHeight = unscaledToothHeight * baseScale;
@@ -80,12 +81,6 @@ export const generateSvg = async (
 
   svgPath.closePath();
 
-  const svg = new GearSvg({
-    path: svgPath,
-    width: gearDefinition.size.width,
-    height: gearDefinition.size.height,
-  });
-
   const imageInfo: ImageInfo = {
     svgPath: path.resolve(
       __dirname,
@@ -106,7 +101,19 @@ export const generateSvg = async (
     height: gearDefinition.size.height,
   };
 
-  await writeFile(imageInfo.svgPath, svg.toString());
+  const templateFilePath = path.resolve(
+    __dirname,
+    './templates/svgs_for_rendering/gear.svg.ejs',
+  );
+  const rendered = await renderFile(templateFilePath, {
+    width: gearDefinition.size.width,
+    height: gearDefinition.size.height,
+    baseScale,
+    gearPath: svgPath,
+    holePaths: [],
+  });
+
+  await writeFile(imageInfo.svgPath, rendered);
   await writeFile(
     imageInfo.htmlPath,
     hostSvgInHTml({ svgFilePath: imageInfo.svgPath, width: imageInfo.width }),

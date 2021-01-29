@@ -1,5 +1,5 @@
 import { ContactPoint } from './contact_point';
-import { GearHole } from './gear_hole';
+import { AngleGearHole } from './gear_hole';
 
 /**
  * A class that holds all the data necessary to
@@ -26,5 +26,5 @@ export interface GearDefinition {
   points: ContactPoint[];
 
   /** The holes in the gear */
-  holes: GearHole[];
+  holes: AngleGearHole[];
 }

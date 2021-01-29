@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
 import { circleGearSizes, holeSize } from '../constants';
-import { GearHole } from '../models/gear_hole';
+import { PointGearHole } from '../models/gear_hole';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -12,7 +12,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
 (async () => {
   const templateFilePath = path.resolve(
     __dirname,
-    '../templates/svgs_for_analysis/circle.ejs',
+    '../templates/svgs_for_analysis/circle.svg.ejs',
   );
   const svgBasePath = path.resolve(__dirname, '../svg');
 
@@ -27,21 +27,33 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ),
     );
 
-    const holes: GearHole[] = [];
+    const holes: PointGearHole[] = [];
 
     // Create 6 straight lines of holes from the center of the gear to the edge
     const holeSpacing = 4;
     const holeAndSpacing = holeSize + holeSpacing;
     const maximumDistance = radius - holeAndSpacing;
+    const toothCount = radius;
+    const anglePerTooth = (Math.PI * 2) / toothCount;
     for (let lineIndex = 0; lineIndex < 6; lineIndex++) {
       for (
         let distance = lineIndex === 0 ? 0 : lineIndex + holeAndSpacing;
         distance <= maximumDistance;
         distance += holeAndSpacing
       ) {
+        // The lines of holes will approximately divide the gear into
+        // six equal parts, but we move the lines slightly so that the
+        // line always align with a tooth.
+
+        // This angle is the exact angle that divides the gear into sixths
+        let angle = Math.PI * (1 / 2) + Math.PI * (1 / 3) * lineIndex;
+
+        // This angle is the "adjusted" angle that matches up with a nearby tooth
+        angle = anglePerTooth * Math.round(angle / anglePerTooth);
+
         holes.push(
           getHole({
-            angle: Math.PI * (1 / 2) + Math.PI * (1 / 3) * lineIndex,
+            angle,
             distanceFromCenter: distance,
             gearRadius: radius,
           }),
@@ -82,12 +94,14 @@ function getHole({
   angle: number;
   distanceFromCenter: number;
   gearRadius: number;
-}): GearHole {
+}): PointGearHole {
   return {
     name: distanceFromCenter.toString(),
     point: {
       x: gearRadius + Math.cos(angle) * distanceFromCenter,
       y: gearRadius + -1 * Math.sin(angle) * distanceFromCenter,
     },
+    textPositionAngle: angle + Math.PI * (1 / 2),
+    textRotationAngle: angle - Math.PI * (1 / 2),
   };
 }

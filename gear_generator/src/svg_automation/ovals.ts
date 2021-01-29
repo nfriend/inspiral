@@ -11,7 +11,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
 (async () => {
   const templateFilePath = path.resolve(
     __dirname,
-    '../templates/svgs_for_analysis/oval.ejs',
+    '../templates/svgs_for_analysis/oval.svg.ejs',
   );
   const svgBasePath = path.resolve(__dirname, '../svg');
 

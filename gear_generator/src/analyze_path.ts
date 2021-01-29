@@ -1,5 +1,6 @@
 import { ContactPoint } from './models/contact_point';
 import { GearDefinition } from './models/gear_definition';
+import { AngleGearHole } from './models/gear_hole';
 
 /**
  * Finds the <path> element in the page, breaks it into chunks
@@ -138,6 +139,33 @@ export const analyzePath = ({
     };
   });
 
+  // Read each hole definition from the SVG
+  const holes: AngleGearHole[] = Array.from(
+    document.querySelectorAll('#holes circle'),
+  )
+    .map((circle) => {
+      const x = parseFloat(circle.getAttribute('cx')) - centerPoint.x;
+      const y = parseFloat(circle.getAttribute('cy')) - centerPoint.y;
+
+      const angle = Math.atan2(-y, x);
+      const distance = Math.sqrt(x ** 2 + y ** 2);
+
+      const hole: AngleGearHole = {
+        name: circle.getAttribute('inspiral:hole-name'),
+        angle,
+        distance,
+        textPositionAngle: parseFloat(
+          circle.getAttribute('inspiral:hole-text-position-angle'),
+        ),
+        textRotationAngle: parseFloat(
+          circle.getAttribute('inspiral:hole-text-rotation-angle'),
+        ),
+      };
+
+      return hole;
+    })
+    .sort((a, b) => a.distance - b.distance);
+
   const gearDefinition: GearDefinition = {
     gearName,
     image: `images/${gearName}.png`,
@@ -147,7 +175,7 @@ export const analyzePath = ({
     },
     toothCount,
     points: evaluatedPoints,
-    holes: [], // TODO: populate holes here
+    holes,
   };
 
   return gearDefinition;
