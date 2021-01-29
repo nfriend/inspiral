@@ -30,12 +30,13 @@ const renderFile: any = util.promisify(ejs.renderFile);
     const holes: PointGearHole[] = [];
 
     // Create 6 straight lines of holes from the center of the gear to the edge
-    const holeSpacing = 4;
-    const holeAndSpacing = holeSize + holeSpacing;
+    const holeSpacing = holeSize * 2;
+    const holeAndSpacing = Math.ceil(holeSize + holeSpacing);
     const maximumDistance = radius - holeAndSpacing;
     const toothCount = radius;
     const anglePerTooth = (Math.PI * 2) / toothCount;
-    for (let lineIndex = 0; lineIndex < 6; lineIndex++) {
+    const lineCount = 8;
+    for (let lineIndex = 0; lineIndex < lineCount; lineIndex++) {
       for (
         let distance = lineIndex === 0 ? 0 : lineIndex + holeAndSpacing;
         distance <= maximumDistance;
@@ -46,7 +47,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
         // line always align with a tooth.
 
         // This angle is the exact angle that divides the gear into sixths
-        let angle = Math.PI * (1 / 2) + Math.PI * (1 / 3) * lineIndex;
+        let angle = Math.PI * (1 / 2) + Math.PI * (2 / lineCount) * lineIndex;
 
         // This angle is the "adjusted" angle that matches up with a nearby tooth
         angle = anglePerTooth * Math.round(angle / anglePerTooth);

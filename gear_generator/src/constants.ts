@@ -68,4 +68,4 @@ export const ovalGearSizes = [
 export const scalesToGenerate = [1, 2, 3];
 
 /** The radius of each hole */
-export const holeSize = 2;
+export const holeSize = 2.5;
