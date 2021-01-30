@@ -111,6 +111,8 @@ function getHole({
     13: { position: -0.4, rotation: 0 },
     14: { position: -0.2, rotation: 0 },
     15: { position: -0.2, rotation: 0 },
+    16: { position: -0.4, rotation: 0 },
+    17: { position: -0.4, rotation: 0 },
   };
 
   return {
