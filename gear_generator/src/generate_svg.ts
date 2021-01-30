@@ -15,6 +15,7 @@ import { hostSvgInHTml } from './util/host_svg_in_html';
 import { ContactPoint } from './models/contact_point';
 import { Point } from './models/point';
 import { AngleGearHole } from './models/gear_hole';
+import { radiansToDegrees } from './util/radians_to_degrees';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -108,7 +109,7 @@ export const generateSvg = async (
     height: gearDefinition.size.height,
     baseScale,
     gearPath: svgPath,
-    holePaths: gearDefinition.holes.map((h) =>
+    holes: gearDefinition.holes.map((h) =>
       generateHole({ hole: h, centerPoint }),
     ),
   });
@@ -252,7 +253,8 @@ const generateFirstHalfOfTooth = ({
 };
 
 /**
- * Returns a `GearPath` object that represents a single hole
+ * Returns all the information needed to render a hole in
+ * the final SVG.
  *
  * @param params
  * @param params.hole The hole to draw
@@ -264,27 +266,59 @@ const generateHole = ({
 }: {
   hole: AngleGearHole;
   centerPoint: Point;
-}): GearPath => {
-  const scaledRadius = holeSize * baseScale;
-  const x =
-    Math.cos(hole.angle) * hole.distance * baseScale +
-    centerPoint.x +
-    scaledRadius;
-  const y =
-    -1 * Math.sin(hole.angle) * hole.distance * baseScale + centerPoint.y;
+}): {
+  path: GearPath;
+  text: {
+    position: Point;
+    content: string;
+    rotation: number;
+  };
+} => {
+  const holeCenter: Point = {
+    x: Math.cos(hole.angle) * hole.distance * baseScale + centerPoint.x,
+    y: -1 * Math.sin(hole.angle) * hole.distance * baseScale + centerPoint.y,
+  };
 
-  return new GearPath()
-    .moveTo({ point: { x, y } })
+  const scaledRadius = holeSize * baseScale;
+
+  const path = new GearPath()
+    .moveTo({
+      point: {
+        x: holeCenter.x + scaledRadius,
+        y: holeCenter.y,
+      },
+    })
     .arc({
       radiusX: scaledRadius,
       radiusY: scaledRadius,
       largeArcFlag: true,
-      newPosition: { x: x - 2 * scaledRadius, y },
+      newPosition: {
+        x: holeCenter.x - scaledRadius,
+        y: holeCenter.y,
+      },
     })
     .arc({
       radiusX: scaledRadius,
       radiusY: scaledRadius,
-      newPosition: { x: x, y },
+      newPosition: {
+        x: holeCenter.x + scaledRadius,
+        y: holeCenter.y,
+      },
     })
     .closePath();
+
+  const textPosition: Point = {
+    x: holeCenter.x + Math.cos(hole.textPositionAngle) * 2.1 * scaledRadius,
+    y:
+      holeCenter.y + -1 * Math.sin(hole.textPositionAngle) * 2.1 * scaledRadius,
+  };
+
+  return {
+    path,
+    text: {
+      position: textPosition,
+      content: hole.name,
+      rotation: radiansToDegrees(hole.textRotationAngle),
+    },
+  };
 };

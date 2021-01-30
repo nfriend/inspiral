@@ -5,6 +5,7 @@ import util from 'util';
 import ejs from 'ejs';
 import { circleGearSizes, holeSize } from '../constants';
 import { PointGearHole } from '../models/gear_hole';
+import { Point } from '../models/point';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -96,13 +97,35 @@ function getHole({
   distanceFromCenter: number;
   gearRadius: number;
 }): PointGearHole {
+  // Some special handling for the text for
+  // especially cramped numbers
+  const specialCases: {
+    [key: number]: { position: number; rotation: number };
+  } = {
+    0: { position: -Math.PI, rotation: 0 },
+    8: { position: -0.8, rotation: -0.7 },
+    9: { position: -0.8, rotation: -0.7 },
+    10: { position: -0.4, rotation: 0 },
+    11: { position: -0.5, rotation: 0 },
+    12: { position: -0.2, rotation: 0 },
+    13: { position: -0.4, rotation: 0 },
+    14: { position: -0.2, rotation: 0 },
+    15: { position: -0.2, rotation: 0 },
+  };
+
   return {
     name: distanceFromCenter.toString(),
     point: {
       x: gearRadius + Math.cos(angle) * distanceFromCenter,
       y: gearRadius + -1 * Math.sin(angle) * distanceFromCenter,
     },
-    textPositionAngle: angle + Math.PI * (1 / 2),
-    textRotationAngle: angle - Math.PI * (1 / 2),
+    textPositionAngle:
+      angle +
+      Math.PI * (1 / 2) +
+      (specialCases[distanceFromCenter]?.position || 0),
+    textRotationAngle:
+      Math.PI * (1 / 2) -
+      angle +
+      (specialCases[distanceFromCenter]?.rotation || 0),
   };
 }

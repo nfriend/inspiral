@@ -5,19 +5,37 @@
      viewbow="0 0 <%= width %> <%= height %>">
   <style>
     #gear {
-      fill:#000000;
-      fill-opacity:0.3;
-      stroke:#000000;
+      fill: #000000;
+      fill-opacity: 0.3;
+      stroke: #000000;
       stroke-width: <%= 0.5 * baseScale %>;
+    }
+
+    text {
+      font-family: Tahoma, Verdana, Segoe, sans-serif;
+      fill: #000000;
+      fill-opacity: 0.5;
+      filter: drop-shadow(2px 2px 0px rgb(255, 255, 255));
+      text-shadow: 2px 2px 0px rgb(255, 255, 255);
     }
   </style>
   <g>
     <path id="gear"
           fill-rule="evenodd"
           d="<%= gearPath.toString() %>
-             <%_ for (const holePath of holePaths) { _%>
-             <%= holePath.toString() %>
+             <%_ for (const { path } of holes) { _%>
+             <%= path.toString() %>
              <%_ } _%>
             " />
+    <%_ for (const { text } of holes) { _%>
+    <text text-anchor="middle"
+          dominant-baseline="middle"
+          letter-spacing="-0.5"
+          transform="rotate(<%= text.rotation %>, <%= text.position.x %>, <%= text.position.y %>)"
+          x="<%= text.position.x %>"
+          y="<%= text.position.y %>">
+      <%= text.content %>
+    </text>
+    <%_ } _%>
   </g>
 </svg>
