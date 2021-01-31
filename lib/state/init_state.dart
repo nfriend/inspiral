@@ -37,7 +37,8 @@ Future<void> initState(BuildContext context) async {
 
   // Initialize all the state singletons
   SettingsState.init();
-  BackgroundState.init(initialColor: Color(0xFF364959));
+  // BackgroundState.init(initialColor: Color(0xFF364959));
+  BackgroundState.init(initialColor: Color(0xFFF7EFDA));
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(

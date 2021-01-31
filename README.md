@@ -2,6 +2,8 @@
 
 Create beautiful spirals with gears.
 
+<img alt="A screenshot of Inspiral" src="screenshot.png" height="840" />
+
 ## Developing
 
 This app is built using [Flutter](https://flutter.dev/).
