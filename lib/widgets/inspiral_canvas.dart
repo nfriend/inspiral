@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
@@ -12,17 +11,7 @@ import 'package:statsfl/statsfl.dart';
 class _TempGearTestPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    var rect = Offset.zero & size;
-    var gradient = RadialGradient(
-      center: const Alignment(0.7, -0.6),
-      radius: 0.2,
-      colors: [const Color(0xFFFFFF00), const Color(0xFF0099FF)],
-      stops: [0.4, 1.0],
-    );
-    canvas.drawRect(
-      rect,
-      Paint()..shader = gradient.createShader(rect),
-    );
+    canvas.drawColor(Color(0xFFFFFFFF), BlendMode.color);
   }
 
   @override

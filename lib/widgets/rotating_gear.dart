@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/widgets/color_filters.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -23,9 +24,11 @@ class RotatingGear extends StatelessWidget {
                 gear.gearPointerMove(event);
               },
               onPointerUp: gear.gearPointerUp,
-              child: Image.asset(gear.definition.image,
-                  width: gear.definition.size.width,
-                  height: gear.definition.size.height)),
+              child: ColorFiltered(
+                  colorFilter: noFilterColorFilter,
+                  child: Image.asset(gear.definition.image,
+                      width: gear.definition.size.width,
+                      height: gear.definition.size.height))),
         ));
   }
 }

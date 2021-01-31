@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/widgets/color_filters.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -16,9 +17,11 @@ class FixedGear extends StatelessWidget {
               onPointerDown: gear.gearPointerDown,
               onPointerMove: gear.gearPointerMove,
               onPointerUp: gear.gearPointerUp,
-              child: Image.asset(gear.definition.image,
-                  width: gear.definition.size.width,
-                  height: gear.definition.size.height)),
+              child: ColorFiltered(
+                  colorFilter: fixedGearColorFilter,
+                  child: Image.asset(gear.definition.image,
+                      width: gear.definition.size.width,
+                      height: gear.definition.size.height))),
         ));
   }
 }
