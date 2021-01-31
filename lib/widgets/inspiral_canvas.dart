@@ -73,6 +73,7 @@ class InspiralCanvas extends StatelessWidget {
                         child: Container(
                             decoration: BoxDecoration(
                                 color: canvasColor,
+                                borderRadius: BorderRadius.circular(100),
                                 boxShadow: [
                                   BoxShadow(
                                       color: canvasShadowColor,
