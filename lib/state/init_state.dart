@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:inspiral/models/gears/gears.dart';
+import 'package:inspiral/state/background_state.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
@@ -36,6 +37,7 @@ Future<void> initState(BuildContext context) async {
 
   // Initialize all the state singletons
   SettingsState.init();
+  BackgroundState.init(initialColor: Color(0xFF364959));
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(

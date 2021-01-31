@@ -9,6 +9,10 @@ class RotatingGear extends StatelessWidget {
   Widget build(BuildContext context) {
     final gear = context.watch<RotatingGearState>();
     final dragLine = Provider.of<DragLineState>(context, listen: false);
+    final background = context.watch<BackgroundState>();
+
+    final ColorFilter colorFilter =
+        background.color.isDark() ? invertColorFilter : noFilterColorFilter;
 
     return Transform.translate(
         offset: gear.position - gear.definition.size.toOffset() / 2,
@@ -25,7 +29,7 @@ class RotatingGear extends StatelessWidget {
               },
               onPointerUp: gear.gearPointerUp,
               child: ColorFiltered(
-                  colorFilter: noFilterColorFilter,
+                  colorFilter: colorFilter,
                   child: Image.asset(gear.definition.image,
                       width: gear.definition.size.width,
                       height: gear.definition.size.height))),

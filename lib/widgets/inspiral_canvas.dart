@@ -8,14 +8,14 @@ import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:statsfl/statsfl.dart';
 
-class _TempGearTestPainter extends CustomPainter {
+class InspiralCanvasPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawColor(Color(0xFFFFFFFF), BlendMode.color);
+    // TODO: Draw lines here
   }
 
   @override
-  bool shouldRepaint(_TempGearTestPainter oldDelegate) => false;
+  bool shouldRepaint(InspiralCanvasPainter oldDelegate) => false;
 }
 
 class InspiralCanvas extends StatelessWidget {
@@ -25,7 +25,20 @@ class InspiralCanvas extends StatelessWidget {
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final pointers = Provider.of<PointersState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context);
+    final background = Provider.of<BackgroundState>(context);
     final settings = Provider.of<SettingsState>(context);
+
+    Color appBackground = (background.color.isDark()
+            ? background.color.lighten()
+            : background.color.darken())
+        .color;
+
+    Color canvasShadowColor = (background.color.isDark()
+            ? background.color.lighten(20)
+            : background.color.darken(20))
+        .color;
+
+    Color canvasColor = background.color.color;
 
     return StatsFl(
         isEnabled: settings.debug,
@@ -52,21 +65,31 @@ class InspiralCanvas extends StatelessWidget {
                   minWidth: canvasSize.width,
                   alignment: Alignment.topLeft,
                   child: Container(
+                    decoration: BoxDecoration(color: appBackground),
                     width: canvasSize.width,
                     height: canvasSize.height,
                     child: Transform(
                         transform: canvas.transform,
-                        child: Stack(children: [
-                          CustomPaint(
-                              size: canvasSize,
-                              painter: _TempGearTestPainter()),
-                          FixedGear(),
-                          RotatingGear(),
-                          IgnorePointer(
-                              child: settings.debug
-                                  ? DebugCanvas()
-                                  : Container(width: 0.0, height: 0.0))
-                        ])),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: canvasColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: canvasShadowColor,
+                                      blurRadius: 300,
+                                      spreadRadius: 50)
+                                ]),
+                            child: Stack(children: [
+                              CustomPaint(
+                                  size: canvasSize,
+                                  painter: InspiralCanvasPainter()),
+                              FixedGear(),
+                              RotatingGear(),
+                              IgnorePointer(
+                                  child: settings.debug
+                                      ? DebugCanvas()
+                                      : Container(width: 0.0, height: 0.0))
+                            ]))),
                   ))
             ])));
   }

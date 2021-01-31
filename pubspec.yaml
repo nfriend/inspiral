@@ -32,6 +32,7 @@ dependencies:
   provider: ^4.3.2+3
   vector_math: ^2.0.8
   tuple: ^1.0.3
+  tinycolor: ^1.0.3
 
 dev_dependencies:
   flutter_test:
