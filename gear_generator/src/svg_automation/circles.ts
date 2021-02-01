@@ -5,7 +5,6 @@ import util from 'util';
 import ejs from 'ejs';
 import { circleGearSizes, holeSize } from '../constants';
 import { PointGearHole } from '../models/gear_hole';
-import { Point } from '../models/point';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);

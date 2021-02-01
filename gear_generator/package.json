@@ -5,10 +5,11 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "yarn svg:circles && yarn svg:ovals && yarn render",
+    "start": "yarn svg:circles && yarn svg:ovals && yarn render && yarn png:compress",
     "render": "ts-node src/index.ts",
     "svg:circles": "ts-node src/svg_automation/circles.ts",
     "svg:ovals": "ts-node src/svg_automation/ovals.ts",
+    "png:compress": "ts-node src/compress_png.ts",
     "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
