@@ -24,6 +24,9 @@ class _DebugCanvasPainterParams {
   /// The contact point of the fixed gear
   ContactPoint fixedGearContactPoint;
 
+  /// Log message
+  String logMessage;
+
   @override
   int get hashCode =>
       rotatingGearPosition.hashCode ^
@@ -31,7 +34,8 @@ class _DebugCanvasPainterParams {
       pivotPosition.hashCode ^
       pointerPosition.hashCode ^
       rotatingGearContactPoint.hashCode ^
-      fixedGearContactPoint.hashCode;
+      fixedGearContactPoint.hashCode ^
+      logMessage.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -41,7 +45,8 @@ class _DebugCanvasPainterParams {
       other.pivotPosition == pivotPosition &&
       other.pointerPosition == pointerPosition &&
       other.rotatingGearContactPoint == rotatingGearContactPoint &&
-      other.fixedGearContactPoint == fixedGearContactPoint;
+      other.fixedGearContactPoint == fixedGearContactPoint &&
+      other.logMessage == logMessage;
 }
 
 /// A debugging aid that draws a line between the rotation
@@ -78,6 +83,27 @@ class _DebugCanvasPainter extends CustomPainter {
       ..strokeWidth = 2 * scaleFactor
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(params.pivotPosition, params.pointerPosition, linePaint);
+  }
+
+  void paintLogMessage(Canvas canvas) {
+    final textStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+    );
+    final textSpan = TextSpan(
+      text: params.logMessage,
+      style: textStyle,
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: canvasSize.width,
+    );
+    final offset = canvasCenter + Offset(-100, 200);
+    textPainter.paint(canvas, offset);
   }
 
   void paintFixedGearContactPoint(Canvas canvas) {
@@ -142,6 +168,10 @@ class _DebugCanvasPainter extends CustomPainter {
     if (params.fixedGearContactPoint != null) {
       paintFixedGearContactPoint(canvas);
     }
+
+    if (params.logMessage != null) {
+      paintLogMessage(canvas);
+    }
   }
 
   @override
@@ -161,10 +191,12 @@ class DebugCanvas extends StatelessWidget {
     final rotatingGear = Provider.of<RotatingGearState>(context);
     final fixedGear = Provider.of<FixedGearState>(context);
     final dragLine = Provider.of<DragLineState>(context);
+    final ink = Provider.of<InkState>(context);
 
     final params = _DebugCanvasPainterParams()
       ..fixedGearPosition = fixedGear.position
-      ..rotatingGearPosition = rotatingGear.position;
+      ..rotatingGearPosition = rotatingGear.position
+      ..logMessage = "# of points: ${ink.totalPointCount}";
 
     if (rotatingGear.isDragging) {
       params

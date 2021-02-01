@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
+import 'package:inspiral/widgets/ink_canvas.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -18,7 +19,7 @@ class InspiralCanvasPainter extends CustomPainter {
   bool shouldRepaint(InspiralCanvasPainter oldDelegate) => false;
 }
 
-class InspiralCanvas extends StatelessWidget {
+class InspiralDrawingBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
@@ -81,9 +82,7 @@ class InspiralCanvas extends StatelessWidget {
                                       spreadRadius: 50)
                                 ]),
                             child: Stack(children: [
-                              CustomPaint(
-                                  size: canvasSize,
-                                  painter: InspiralCanvasPainter()),
+                              InkCanvas(),
                               FixedGear(),
                               RotatingGear(),
                               IgnorePointer(

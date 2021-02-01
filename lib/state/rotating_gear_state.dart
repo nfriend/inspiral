@@ -44,6 +44,7 @@ class RotatingGearState extends BaseGearState {
 
   FixedGearState fixedGear;
   DragLineState dragLine;
+  InkState ink;
 
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
@@ -52,6 +53,7 @@ class RotatingGearState extends BaseGearState {
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
       position = _rotateToAngle(dragLine.angle);
+      ink.addPoint(position);
     }
   }
 

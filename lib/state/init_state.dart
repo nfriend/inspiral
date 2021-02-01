@@ -39,6 +39,7 @@ Future<void> initState(BuildContext context) async {
   SettingsState.init();
   // BackgroundState.init(initialColor: Color(0xFF364959));
   BackgroundState.init(initialColor: Color(0xFFF7EFDA));
+  final ink = InkState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(
@@ -53,7 +54,8 @@ Future<void> initState(BuildContext context) async {
   rotatingGear
     ..pointers = pointers
     ..dragLine = dragLine
-    ..fixedGear = fixedGear;
+    ..fixedGear = fixedGear
+    ..ink = ink;
   dragLine
     ..canvas = canvas
     ..rotatingGear = rotatingGear;

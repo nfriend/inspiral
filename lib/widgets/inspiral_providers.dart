@@ -22,6 +22,7 @@ class InspiralProviders extends StatelessWidget {
             return MultiProvider(providers: [
               ChangeNotifierProvider(create: (context) => SettingsState()),
               ChangeNotifierProvider(create: (context) => BackgroundState()),
+              ChangeNotifierProvider(create: (context) => InkState()),
               ChangeNotifierProvider(create: (context) => PointersState()),
               ChangeNotifierProvider(create: (context) => CanvasState()),
               ChangeNotifierProvider(create: (context) => RotatingGearState()),
