@@ -186,4 +186,5 @@ final lens60 = GearDefinition(
       ContactPoint(
           position: Offset(299.340631501916, 28.490715669841254),
           direction: 5.97706880643482),
-    ]);
+    ],
+    holes: []);

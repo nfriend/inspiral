@@ -9,6 +9,7 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/gear_hole.dart';
 
 final circle60 = GearDefinition(
     image: 'images/circle_60.png',
@@ -195,4 +196,67 @@ final circle60 = GearDefinition(
       ContactPoint(
           position: Offset(250.63929600962697, 26.334393469046205),
           direction: 6.17943174148294),
+    ],
+    holes: [
+      GearHole(name: '0', angle: 0, distance: 0),
+      GearHole(name: '8', angle: 1.5707963267948966, distance: 8),
+      GearHole(
+          name: '9', angle: 2.408554367752175, distance: 8.999999999999996),
+      GearHole(name: '10', angle: -3.141592653589793, distance: 10),
+      GearHole(
+          name: '11', angle: -2.303834612632516, distance: 10.999999999999998),
+      GearHole(name: '12', angle: -1.5707963267948966, distance: 12),
+      GearHole(
+          name: '13', angle: -0.733038285837619, distance: 12.999999999999993),
+      GearHole(name: '14', angle: 0, distance: 14),
+      GearHole(name: '15', angle: 0.8377580409572772, distance: 15),
+      GearHole(name: '16', angle: 1.5707963267948966, distance: 16),
+      GearHole(name: '17', angle: 2.4085543677521746, distance: 17),
+      GearHole(name: '18', angle: -3.141592653589793, distance: 18),
+      GearHole(
+          name: '19', angle: -2.3038346126325155, distance: 18.999999999999996),
+      GearHole(name: '20', angle: -1.570796326794897, distance: 20),
+      GearHole(
+          name: '21', angle: -0.7330382858376191, distance: 20.999999999999996),
+      GearHole(name: '22', angle: -3.2297397080004555e-16, distance: 22),
+      GearHole(
+          name: '23', angle: 0.8377580409572772, distance: 23.000000000000004),
+      GearHole(name: '24', angle: 1.5707963267948966, distance: 24),
+      GearHole(
+          name: '25', angle: 2.4085543677521746, distance: 25.000000000000004),
+      GearHole(name: '26', angle: -3.141592653589793, distance: 26),
+      GearHole(
+          name: '27', angle: -2.3038346126325155, distance: 26.999999999999996),
+      GearHole(name: '28', angle: -1.570796326794897, distance: 28),
+      GearHole(name: '29', angle: -0.7330382858376192, distance: 29),
+      GearHole(name: '30', angle: -2.3684757858670006e-16, distance: 30),
+      GearHole(
+          name: '31', angle: 0.8377580409572774, distance: 31.000000000000007),
+      GearHole(name: '32', angle: 1.5707963267948966, distance: 32),
+      GearHole(name: '33', angle: 2.4085543677521746, distance: 33),
+      GearHole(name: '34', angle: 3.141592653589793, distance: 34),
+      GearHole(
+          name: '35', angle: -2.3038346126325155, distance: 34.99999999999999),
+      GearHole(name: '36', angle: -1.570796326794897, distance: 36),
+      GearHole(
+          name: '37', angle: -0.7330382858376192, distance: 37.00000000000001),
+      GearHole(name: '38', angle: -1.8698493046318425e-16, distance: 38),
+      GearHole(
+          name: '39', angle: 0.8377580409572771, distance: 39.00000000000001),
+      GearHole(name: '40', angle: 1.5707963267948966, distance: 40),
+      GearHole(name: '41', angle: 2.4085543677521746, distance: 41),
+      GearHole(name: '42', angle: 3.141592653589793, distance: 42),
+      GearHole(
+          name: '43', angle: -2.3038346126325155, distance: 42.99999999999999),
+      GearHole(name: '44', angle: -1.5707963267948968, distance: 44),
+      GearHole(name: '45', angle: -0.7330382858376194, distance: 45),
+      GearHole(name: '46', angle: -3.089316242435218e-16, distance: 46),
+      GearHole(
+          name: '47', angle: 0.8377580409572772, distance: 47.00000000000001),
+      GearHole(name: '48', angle: 1.5707963267948966, distance: 48),
+      GearHole(name: '49', angle: 2.4085543677521746, distance: 49),
+      GearHole(name: '50', angle: 3.141592653589793, distance: 50),
+      GearHole(
+          name: '51', angle: -2.3038346126325155, distance: 50.99999999999999),
+      GearHole(name: '52', angle: -1.5707963267948968, distance: 52),
     ]);

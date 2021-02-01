@@ -127,12 +127,11 @@ final square40 = GearDefinition(
           position: Offset(137.32740783691406, 100.19464111328125),
           direction: 0),
       ContactPoint(
-          position: Offset(137.32740783691406, 75.0618896484375),
-          direction: 0),
+          position: Offset(137.32740783691406, 75.0618896484375), direction: 0),
       ContactPoint(
-          position: Offset(137.32740783691406, 49.92919921875),
-          direction: 0),
+          position: Offset(137.32740783691406, 49.92919921875), direction: 0),
       ContactPoint(
           position: Offset(137.32740783691406, 24.79644775390625),
           direction: 0),
-    ]);
+    ],
+    holes: []);

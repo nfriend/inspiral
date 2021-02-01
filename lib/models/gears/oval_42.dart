@@ -120,4 +120,5 @@ final oval42 = GearDefinition(
       ContactPoint(
           position: Offset(175.21195167047793, 28.71034070367029),
           direction: 5.9623591103478315),
-    ]);
+    ],
+    holes: []);

@@ -9,6 +9,7 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/gear_hole.dart';
 
 final circle30 = GearDefinition(
     image: 'images/circle_30.png',
@@ -105,4 +106,24 @@ final circle30 = GearDefinition(
       ContactPoint(
           position: Offset(129.1406534387387, 27.44384370615006),
           direction: 6.07433551331642),
+    ],
+    holes: [
+      GearHole(name: '0', angle: 0, distance: 0),
+      GearHole(name: '8', angle: 1.6755160819145563, distance: 8),
+      GearHole(name: '9', angle: 2.3038346126325147, distance: 9),
+      GearHole(name: '10', angle: -3.141592653589793, distance: 10),
+      GearHole(name: '11', angle: -2.3038346126325155, distance: 11),
+      GearHole(
+          name: '12', angle: -1.4660765716752375, distance: 11.999999999999998),
+      GearHole(name: '13', angle: -0.8377580409572788, distance: 13),
+      GearHole(name: '14', angle: -2.5376526277146434e-16, distance: 14),
+      GearHole(name: '15', angle: 0.8377580409572772, distance: 15),
+      GearHole(name: '16', angle: 1.6755160819145563, distance: 16),
+      GearHole(name: '17', angle: 2.3038346126325147, distance: 17),
+      GearHole(name: '18', angle: 3.141592653589793, distance: 18),
+      GearHole(name: '19', angle: -2.3038346126325155, distance: 19),
+      GearHole(name: '20', angle: -1.4660765716752373, distance: 20),
+      GearHole(
+          name: '21', angle: -0.8377580409572788, distance: 21.000000000000004),
+      GearHole(name: '22', angle: -3.2297397080004555e-16, distance: 22),
     ]);

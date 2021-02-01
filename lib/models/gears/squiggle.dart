@@ -168,4 +168,5 @@ final squiggle = GearDefinition(
       ContactPoint(
           position: Offset(211.7363544969891, 35.63610071684674),
           direction: 6.260504355942139),
-    ]);
+    ],
+    holes: []);

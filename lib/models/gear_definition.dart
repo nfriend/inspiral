@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/gear_hole.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:tuple/tuple.dart';
 
@@ -18,11 +19,15 @@ class GearDefinition {
   /// The points that define the shape of this gear
   final List<ContactPoint> points;
 
+  /// The list of all holes in this gear
+  final List<GearHole> holes;
+
   GearDefinition(
       {@required this.image,
       @required this.size,
       @required this.toothCount,
-      @required this.points});
+      @required this.points,
+      @required this.holes});
 
   /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {

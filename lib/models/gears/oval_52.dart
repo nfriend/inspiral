@@ -15,9 +15,7 @@ final oval52 = GearDefinition(
     size: Size(464, 464),
     toothCount: 44,
     points: [
-      ContactPoint(
-          position: Offset(220, 0.6666717529296875),
-          direction: 0),
+      ContactPoint(position: Offset(220, 0.6666717529296875), direction: 0),
       ContactPoint(
           position: Offset(216.30438365965477, -27.12556355735927),
           direction: 0.2595540536880181),
@@ -147,4 +145,5 @@ final oval52 = GearDefinition(
       ContactPoint(
           position: Offset(216.30438403307176, 28.458898027590365),
           direction: 6.023631374738951),
-    ]);
+    ],
+    holes: []);
