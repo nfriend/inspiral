@@ -196,7 +196,7 @@ class DebugCanvas extends StatelessWidget {
     final params = _DebugCanvasPainterParams()
       ..fixedGearPosition = fixedGear.position
       ..rotatingGearPosition = rotatingGear.position
-      ..logMessage = "# of points: ${ink.totalPointCount}";
+      ..logMessage = "# of points: ${ink.currentPointCount}";
 
     if (rotatingGear.isDragging) {
       params

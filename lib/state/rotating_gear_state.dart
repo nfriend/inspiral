@@ -57,6 +57,15 @@ class RotatingGearState extends BaseGearState {
     }
   }
 
+  @override
+  gearPointerUp(PointerUpEvent event) {
+    if (event.device == draggingPointerId && isDragging) {
+      ink.finishLine();
+    }
+
+    super.gearPointerUp(event);
+  }
+
   Offset _rotateToAngle(double angle) {
     double fixedGearTooth = fixedGear.definition.angleToTooth(angle);
 

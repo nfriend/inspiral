@@ -12,6 +12,18 @@ const Offset canvasOrigin = Offset.zero;
 /// The canvas's center point
 final Offset canvasCenter = canvasSize.center(canvasOrigin);
 
+/// The number of columns to use when dividing the canvas into tiles
+/// It's important that this number evenly divides `canvasSize.width`
+const int tileColumnCount = 10;
+
+/// The number of rows to use when dividing the canvas into tiles
+/// It's important that this number evenly divides `canvasSize.height`
+const int tileRowCount = 10;
+
+/// The size of each tile
+final Size tileSize = new Size(
+    canvasSize.width / tileColumnCount, canvasSize.height / tileRowCount);
+
 /// The size of the debug dots
 final Size debugDotSize = Size(2, 2) * scaleFactor;
 

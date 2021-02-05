@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
-import 'package:inspiral/widgets/ink_canvas.dart';
+import 'package:inspiral/widgets/dry_ink_canvas.dart';
+import 'package:inspiral/widgets/fresh_ink_canvas.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -82,7 +83,8 @@ class InspiralDrawingBoard extends StatelessWidget {
                                       spreadRadius: 50)
                                 ]),
                             child: Stack(children: [
-                              InkCanvas(),
+                              DryInkCanvas(),
+                              FreshInkCanvas(),
                               FixedGear(),
                               RotatingGear(),
                               IgnorePointer(
