@@ -63,7 +63,6 @@ class InkState extends ChangeNotifier {
       _lines.add(InkLine()
         ..color = getRandomColor()
         ..strokeWidth = getRandomStrokeWidth());
-      print("color: ${_lines.last.color}");
       _bakeImage();
     }
   }
