@@ -4,6 +4,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
+import 'package:quiver/core.dart';
 
 class _DebugCanvasPainterParams {
   /// The position of the rotating gear
@@ -28,14 +29,15 @@ class _DebugCanvasPainterParams {
   String logMessage;
 
   @override
-  int get hashCode =>
-      rotatingGearPosition.hashCode ^
-      fixedGearPosition.hashCode ^
-      pivotPosition.hashCode ^
-      pointerPosition.hashCode ^
-      rotatingGearContactPoint.hashCode ^
-      fixedGearContactPoint.hashCode ^
-      logMessage.hashCode;
+  int get hashCode => hashObjects([
+        rotatingGearPosition,
+        fixedGearPosition,
+        pivotPosition,
+        pointerPosition,
+        rotatingGearContactPoint,
+        fixedGearContactPoint,
+        logMessage
+      ]);
 
   @override
   bool operator ==(Object other) =>

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 
 class InkState extends ChangeNotifier {
@@ -19,12 +20,13 @@ class InkState extends ChangeNotifier {
 
   InkState._internal();
 
-  List<Offset> _points = [];
+  List<InkLine> _lines = [];
   bool _isBaking = false;
   Map<Offset, Image> _tileImages = {};
 
   /// The total number of points included in the the drawing.
-  int get currentPointCount => _points.length;
+  int get currentPointCount =>
+      _lines.fold(0, (sum, line) => sum + line.points.length);
 
   /// All tile images that make up the "dried" ink.
   /// Each tile image is accessed by a key, which is
@@ -32,12 +34,16 @@ class InkState extends ChangeNotifier {
   Map<Offset, Image> get tileImages => _tileImages;
 
   /// A list of Path objects that describe the lines drawn on the Canvas
-  List<Offset> get points => _points;
+  List<InkLine> get lines => _lines;
 
-  /// Add a point to the current line.
-  /// If there is no current line, a new line is started.
-  void addPoint(Offset point) {
-    _points.add(point);
+  /// Add points to the current line.
+  /// If there is no current line, a new one is created.
+  void addPoints(List<Offset> points) {
+    if (_lines.isEmpty) {
+      _lines.add(InkLine());
+    }
+
+    _lines.last.points.addAll(points);
 
     if (currentPointCount > 1000) {
       _bakeImage();
@@ -49,7 +55,10 @@ class InkState extends ChangeNotifier {
   /// Finish the current line.
   /// Does nothing if there is no current line.
   void finishLine() {
-    _bakeImage();
+    if (_lines.isNotEmpty) {
+      _lines.add(InkLine());
+      _bakeImage();
+    }
   }
 
   Future<void> _bakeImage() async {
@@ -62,13 +71,15 @@ class InkState extends ChangeNotifier {
     // Operate on a shallow clone of the points, because the baking process
     // is asynchronous, and more points may be added to `_points` while
     // this method is running
-    List<Offset> bakedPoints = List<Offset>.from(_points);
+    List<InkLine> bakedLines = _lines.map((line) => line.clone()).toList();
     var tilesToUpdate = HashSet<Offset>();
-    for (Offset point in bakedPoints) {
-      Offset containingTile = Offset(
-          (point.dx / tileSize.width).floor() * tileSize.width,
-          (point.dy / tileSize.height).floor() * tileSize.height);
-      tilesToUpdate.add(containingTile);
+    for (InkLine line in bakedLines) {
+      for (Offset point in line.points) {
+        Offset containingTile = Offset(
+            (point.dx / tileSize.width).floor() * tileSize.width,
+            (point.dy / tileSize.height).floor() * tileSize.height);
+        tilesToUpdate.add(containingTile);
+      }
     }
 
     Size renderedSize = tileSize;
@@ -79,7 +90,7 @@ class InkState extends ChangeNotifier {
       InkTileCanvasPainter(
               position: tilePosition,
               tileImage: tileImages[tilePosition],
-              points: points)
+              lines: lines)
           .paint(canvas, renderedSize);
 
       Picture picture = recorder.endRecording();
@@ -93,7 +104,14 @@ class InkState extends ChangeNotifier {
 
     await Future.wait(allUpdates);
 
-    _points.removeRange(0, bakedPoints.length);
+    // Remove all the completed lines
+    if (bakedLines.length > 1) {
+      _lines.removeRange(0, bakedLines.length - 1);
+    }
+
+    // Remove all the baked points from the current line
+    _lines.first.points.removeRange(0, bakedLines.last.points.length);
+
     notifyListeners();
     _isBaking = false;
   }

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
 
@@ -10,17 +11,17 @@ Random rand = Random();
 class InkTileCanvasPainter extends CustomPainter {
   final Offset _position;
   final Image _tileImage;
-  final List<Offset> _points;
+  final List<InkLine> _lines;
   final bool _showGridLines;
 
   InkTileCanvasPainter(
       {@required Offset position,
       @required Image tileImage,
-      @required List<Offset> points,
+      @required List<InkLine> lines,
       bool showGridLines = false})
       : _position = position,
         _tileImage = tileImage,
-        _points = points,
+        _lines = lines,
         _showGridLines = showGridLines;
 
   @override
@@ -28,12 +29,12 @@ class InkTileCanvasPainter extends CustomPainter {
     if (_tileImage != null) {
       // TEMP: draws a random color as the background of this tile
       // so that we can visualize how often the tile gets repainted
-      Color tempColor = Color.fromARGB(
-          128, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
-      canvas.drawRect(
-          Offset.zero &
-              Size(_tileImage.width.toDouble(), _tileImage.height.toDouble()),
-          Paint()..color = tempColor);
+      // Color tempColor = Color.fromARGB(
+      //     128, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+      // canvas.drawRect(
+      //     Offset.zero &
+      //         Size(_tileImage.width.toDouble(), _tileImage.height.toDouble()),
+      //     Paint()..color = tempColor);
 
       canvas.drawImageRect(
           _tileImage,
@@ -43,15 +44,18 @@ class InkTileCanvasPainter extends CustomPainter {
           Paint());
     }
 
-    final paint = Paint()
-      ..color = Color(0x77FF0000)
-      ..strokeWidth = 10
-      ..style = PaintingStyle.stroke
-      ..strokeJoin = StrokeJoin.round;
+    for (InkLine line in _lines) {
+      final paint = Paint()
+        ..color = line.color
+        ..strokeWidth = line.strokeWidth
+        ..style = PaintingStyle.stroke
+        ..strokeJoin = StrokeJoin.round;
 
-    List<Offset> translatedPoints = _points.map((p) => p - _position).toList();
+      List<Offset> translatedPoints =
+          line.points.map((p) => p - _position).toList();
 
-    canvas.drawPoints(PointMode.polygon, translatedPoints, paint);
+      canvas.drawPoints(PointMode.polygon, translatedPoints, paint);
+    }
 
     if (_showGridLines) {
       final gridPaint = Paint()
@@ -85,7 +89,7 @@ class DryInkCanvas extends StatelessWidget {
                   painter: InkTileCanvasPainter(
                       position: position,
                       tileImage: tileImage,
-                      points: [],
+                      lines: [],
                       showGridLines: settings.debug))));
     }).toList();
 

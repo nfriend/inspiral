@@ -33,3 +33,15 @@ const double toothLength = 5;
 /// The amount of padding added around each gear
 /// to avoid lines being clipped
 const double imagePadding = 0.25;
+
+/// The smallest length of line segment to draw
+const double minLineSegmentLength = 10;
+
+/// The largest length of line segment to draw
+const double maxLineSegmentLength = 20;
+
+/// The default width of the line
+const double defaultStokeWidth = 5;
+
+/// The default color of the line
+const Color defaultLineColor = Color(0x66FF0000);

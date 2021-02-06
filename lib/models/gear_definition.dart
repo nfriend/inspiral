@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/gear_hole.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:quiver/core.dart';
 import 'package:tuple/tuple.dart';
 
 @immutable
@@ -91,11 +92,8 @@ class GearDefinition {
   }
 
   @override
-  int get hashCode =>
-      image.hashCode ^
-      size.hashCode ^
-      angleToTooth.hashCode ^
-      toothToContactPoint.hashCode;
+  int get hashCode => hash4(image.hashCode, size.hashCode,
+      angleToTooth.hashCode, toothToContactPoint.hashCode);
 
   @override
   bool operator ==(Object other) =>

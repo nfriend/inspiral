@@ -33,6 +33,7 @@ dependencies:
   vector_math: ^2.0.8
   tuple: ^1.0.3
   tinycolor: ^1.0.3
+  quiver: ^2.1.5
 
 dev_dependencies:
   flutter_test:

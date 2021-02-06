@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:quiver/core.dart';
 import 'package:tuple/tuple.dart';
 
 @immutable
@@ -35,7 +36,7 @@ class ContactPoint {
   }
 
   @override
-  int get hashCode => position.hashCode ^ direction.hashCode;
+  int get hashCode => hash2(position.hashCode, direction.hashCode);
 
   @override
   bool operator ==(Object other) =>
