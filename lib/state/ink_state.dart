@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/util/util.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 class InkState extends ChangeNotifier {
   static InkState _instance;
@@ -40,7 +42,9 @@ class InkState extends ChangeNotifier {
   /// If there is no current line, a new one is created.
   void addPoints(List<Offset> points) {
     if (_lines.isEmpty) {
-      _lines.add(InkLine());
+      _lines.add(InkLine()
+        ..color = getRandomColor()
+        ..strokeWidth = getRandomStrokeWidth());
     }
 
     _lines.last.points.addAll(points);
@@ -56,7 +60,10 @@ class InkState extends ChangeNotifier {
   /// Does nothing if there is no current line.
   void finishLine() {
     if (_lines.isNotEmpty) {
-      _lines.add(InkLine());
+      _lines.add(InkLine()
+        ..color = getRandomColor()
+        ..strokeWidth = getRandomStrokeWidth());
+      print("color: ${_lines.last.color}");
       _bakeImage();
     }
   }
@@ -103,6 +110,9 @@ class InkState extends ChangeNotifier {
     }
 
     await Future.wait(allUpdates);
+
+    // TEMP: To make sure we're handling this async process correctly
+    await Future.delayed(Duration(seconds: 3));
 
     // Remove all the completed lines
     if (bakedLines.length > 1) {
