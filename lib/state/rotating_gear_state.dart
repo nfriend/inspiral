@@ -175,8 +175,6 @@ class RotatingGearState extends BaseGearState {
       pointsToAdd.add(incrementalResult.rotatingGearPosition);
     }
 
-    pointsToAdd.add(result.rotatingGearPosition);
-
     ink.addPoints(pointsToAdd);
     _lastAngle = angle;
     _lastPoint = result.rotatingGearPosition;

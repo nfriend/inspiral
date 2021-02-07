@@ -27,7 +27,7 @@ class InkState extends ChangeNotifier {
 
   /// The total number of points included in the the drawing.
   int get currentPointCount =>
-      _lines.fold(0, (sum, line) => sum + line.points.length);
+      _lines.fold(0, (sum, line) => sum + line.pointCount);
 
   /// All tile images that make up the "dried" ink.
   /// Each tile image is accessed by a key, which is
@@ -113,7 +113,7 @@ class InkState extends ChangeNotifier {
     }
 
     // Remove all the baked points from the current line
-    _lines.first.removePointRange(0, bakedLines.last.points.length);
+    _lines.first.removePointRange(0, bakedLines.last.paths.length);
 
     notifyListeners();
     _isBaking = false;
@@ -125,28 +125,30 @@ class InkState extends ChangeNotifier {
     var tilesToUpdate = HashSet<Offset>();
 
     for (InkLine line in linesToBake) {
-      for (Offset point in line.points) {
-        double surroundingPointDistance =
-            max(maxStrokeWidth, maxLineSegmentLength);
+      for (List<Offset> lineSegment in line.points) {
+        for (Offset point in lineSegment) {
+          double surroundingPointDistance =
+              max(maxStrokeWidth, maxLineSegmentLength);
 
-        // Expand the search radius slightly. Otherwise a line with a very
-        // wide stroke might brush a corner or edge of another tile, but
-        // because the point itself isn't in the tile, the tile wouldn't
-        // be considered as needing updating.
-        List<Offset> surroundingPoints = [
-          point + Offset(-surroundingPointDistance, 0),
-          point + Offset(surroundingPointDistance, 0),
-          point + Offset(0, -surroundingPointDistance),
-          point + Offset(0, surroundingPointDistance)
-        ];
+          // Expand the search radius slightly. Otherwise a line with a very
+          // wide stroke might brush a corner or edge of another tile, but
+          // because the point itself isn't in the tile, the tile wouldn't
+          // be considered as needing updating.
+          List<Offset> surroundingPoints = [
+            point + Offset(-surroundingPointDistance, 0),
+            point + Offset(surroundingPointDistance, 0),
+            point + Offset(0, -surroundingPointDistance),
+            point + Offset(0, surroundingPointDistance)
+          ];
 
-        // Find the correct tile for each point
-        // (Each tile is keyed by the position of its top-left corner)
-        for (Offset nearbyPoint in surroundingPoints) {
-          Offset containingTile = Offset(
-              (nearbyPoint.dx / tileSize.width).floor() * tileSize.width,
-              (nearbyPoint.dy / tileSize.height).floor() * tileSize.height);
-          tilesToUpdate.add(containingTile);
+          // Find the correct tile for each point
+          // (Each tile is keyed by the position of its top-left corner)
+          for (Offset nearbyPoint in surroundingPoints) {
+            Offset containingTile = Offset(
+                (nearbyPoint.dx / tileSize.width).floor() * tileSize.width,
+                (nearbyPoint.dy / tileSize.height).floor() * tileSize.height);
+            tilesToUpdate.add(containingTile);
+          }
         }
       }
     }

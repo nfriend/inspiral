@@ -21,16 +21,17 @@ abstract class BaseInkPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeJoin = StrokeJoin.round;
 
-      Path translatedPath = line.path;
+      Iterable<Path> translatedPaths = line.paths;
 
       // If `position` was passed in, translate the points to create the effect
       // that the canvas itself is positioned at `position`
       if (_position != null) {
-        translatedPath = translatedPath.translate(-_position);
+        translatedPaths = translatedPaths.map((p) => p.translate(-_position));
       }
 
-      // canvas.drawPoints(PointMode.polygon, translatedPoints, paint);
-      canvas.drawPath(translatedPath, paint);
+      for (Path path in translatedPaths) {
+        canvas.drawPath(path, paint);
+      }
     }
   }
 
