@@ -11,6 +11,7 @@ class InkLine {
   final List<Path> _paths;
   UnmodifiableListView<Path> _unmodifiablePaths;
   int _pointCount;
+  int _mark = 0;
 
   /// The color of this line
   Color color = defaultLineColor;
@@ -35,8 +36,7 @@ class InkLine {
       // If we haven't yet start a line segment, start one now.
       // Side note: because of this, it's always safe to call `.last` below.
       if (_points.isEmpty) {
-        _paths.add(Path());
-        _points.add([]);
+        startNewPath();
       }
 
       // In order to simulate the "overlapping" effect of a real marker
@@ -62,15 +62,13 @@ class InkLine {
         // In either case, begin a new line.
         if (isTransitioningFromNegativeToPositiveHorizontalMotion ||
             isTransitioningFromPositiveToNegativeHorizontalMotion) {
-          _paths.add(Path());
-          _points.add([]);
+          startNewPath();
         }
       }
 
       List<Offset> previousPointList =
           _points.length > 1 ? _points[_points.length - 2] : [];
       List<Offset> currentPointList = _points.last;
-      Path previousPath = _paths.length > 1 ? _paths[_paths.length - 2] : null;
       Path currentPath = _paths.last;
 
       if (currentPointList.isEmpty) {
@@ -79,27 +77,23 @@ class InkLine {
         if (previousPointList.isNotEmpty) {
           // There is a previous line segment, and it has at least one point.
           // In this case, we want to make sure the current line connects
-          // the previous one. We do this by adding an intermediate point
-          // between the last point of the previous line and the current point,
-          // which ensures there's no disconnect between the two line segments.
+          // the previous one. We do this by moving the start of the new line
+          // to the end of the previous line.
+          // This isn't _quite_ perfect - in lines with really thick strokes,
+          // this causes a minor gap between the connections. To fix this,
+          // we _could_ try and add an intermediate point between the last
+          // and current points in order to force the "angle" of the stroke
+          // to perfectly align with the previous line. But this is such
+          // a small issue, it doesn't seem worth the extra complexity.
+
           Offset lastPointOfPreviousLine = previousPointList.last;
-          Offset pointBetweenLastAndCurrent =
-              (lastPointOfPreviousLine + point) / 2;
 
-          previousPointList.add(pointBetweenLastAndCurrent);
-          previousPath.lineTo(
-              pointBetweenLastAndCurrent.dx, pointBetweenLastAndCurrent.dy);
-
-          currentPointList.add(pointBetweenLastAndCurrent);
+          currentPointList.add(lastPointOfPreviousLine);
           currentPath.moveTo(
-              pointBetweenLastAndCurrent.dx, pointBetweenLastAndCurrent.dy);
+              lastPointOfPreviousLine.dx, lastPointOfPreviousLine.dy);
 
           currentPointList.add(point);
           currentPath.lineTo(point.dx, point.dy);
-
-          // Add one extra point to keep track of the intermediate point
-          // we created and added above.
-          _pointCount += 1;
         } else {
           // The current line is empty, and there is no previous line to connect
           // to, so just move to the position in preparation for drawing the
@@ -118,10 +112,28 @@ class InkLine {
     _pointCount += pointsToAdd.length;
   }
 
-  /// Removes points from this line, from `startIndex` (inclusive) to
-  /// `endIndex` (exclusive).
-  void removePointRange(int startIndex, int endIndex) {
-    this._points.removeRange(startIndex, endIndex);
+  /// Causes the current Path to be ended; and new points added
+  /// will be added to a new `Path` instance.
+  void startNewPath() {
+    _paths.add(Path());
+    _points.add([]);
+  }
+
+  /// Causes the current path to be ended; any new drawing will happen in a
+  /// new `Path`. This "location" in the line is marked, and is used
+  /// to determine which parts of the path to discard
+  /// during `removePointsUpToMarkedSplit`.
+  void markAndSplitCurrentPath() {
+    _mark = _paths.length;
+    startNewPath();
+  }
+
+  /// Discards all points before the "mark" created
+  /// with `markAndSplitCurrentPath`
+  void removePointsUpToMarkedSplit() {
+    _points.removeRange(0, _mark);
+    _paths.removeRange(0, _mark);
+    _pointCount = _points.fold(0, (sum, points) => sum + points.length);
   }
 
   InkLine()

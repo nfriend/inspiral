@@ -76,13 +76,19 @@ class InkState extends ChangeNotifier {
     // Operate on a shallow clone of the points, because the baking process
     // is asynchronous, and more points may be added to `_points` while
     // this method is running
-    List<InkLine> bakedLines =
+    List<InkLine> linesToBake =
         _lines.map((line) => InkLine.from(line)).toList();
 
+    // Indicate to the current line that it should "split" the current path
+    // right now and mark the location of the split, so that we can remove
+    // all points prior to this split after the points have been baked.
+    _lines.last.markAndSplitCurrentPath();
+
     // Determine which tiles need to update
-    var tilesToUpdate = _getTilesToUpdate(bakedLines);
+    var tilesToUpdate = _getTilesToUpdate(linesToBake);
 
     Size renderedSize = tileSize;
+    Map<Offset, Image> updatedTileImages = {};
     List<Future> allUpdates = [];
     for (Offset tilePosition in tilesToUpdate) {
       var recorder = PictureRecorder();
@@ -90,33 +96,35 @@ class InkState extends ChangeNotifier {
       DryInkTilePainter(
               position: tilePosition,
               tileImage: tileImages[tilePosition],
-              lines: lines)
+              lines: linesToBake)
           .paint(canvas, renderedSize);
 
       Picture picture = recorder.endRecording();
       allUpdates.add(picture
           .toImage(renderedSize.width.ceil(), renderedSize.height.ceil())
           .then((Image newImage) {
-        tileImages[tilePosition]?.dispose();
-        tileImages[tilePosition] = newImage;
+        updatedTileImages[tilePosition] = newImage;
       }));
     }
 
     await Future.wait(allUpdates);
 
-    // TEMP: To make sure we're handling this async process correctly
-    await Future.delayed(Duration(seconds: 3));
+    // Update all the tile images with the new ones generated above
+    for (var entry in updatedTileImages.entries) {
+      tileImages[entry.key]?.dispose();
+      tileImages[entry.key] = entry.value;
+    }
 
-    // Remove all the completed lines
-    if (bakedLines.length > 1) {
-      _lines.removeRange(0, bakedLines.length - 1);
+    // Remove all the completed lines (all lines except the last)
+    if (linesToBake.length > 1) {
+      _lines.removeRange(0, linesToBake.length - 1);
     }
 
     // Remove all the baked points from the current line
-    _lines.first.removePointRange(0, bakedLines.last.paths.length);
+    _lines.first.removePointsUpToMarkedSplit();
 
-    notifyListeners();
     _isBaking = false;
+    notifyListeners();
   }
 
   /// Determines which tiles need to update by matching each point up

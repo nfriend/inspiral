@@ -19,7 +19,7 @@ abstract class BaseInkPainter extends CustomPainter {
         ..color = line.color
         ..strokeWidth = line.strokeWidth
         ..style = PaintingStyle.stroke
-        ..strokeJoin = StrokeJoin.round;
+        ..strokeJoin = StrokeJoin.bevel;
 
       Iterable<Path> translatedPaths = line.paths;
 
