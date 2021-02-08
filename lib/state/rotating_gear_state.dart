@@ -20,11 +20,15 @@ class RotationResult {
   /// The rotation of the rotating gear
   final double rotatingGearRotation;
 
+  /// The position of the pen
+  final Offset penPosition;
+
   const RotationResult(
       {@required this.fixedGearContactPoint,
       @required this.rotatingGearContactPoint,
       @required this.rotatingGearPosition,
-      @required this.rotatingGearRotation});
+      @required this.rotatingGearRotation,
+      @required this.penPosition});
 }
 
 class RotatingGearState extends BaseGearState {
@@ -75,6 +79,9 @@ class RotatingGearState extends BaseGearState {
   DragLineState dragLine;
   InkState ink;
 
+  // Temporarily hardcoding a specific hole
+  GearHole get activeHole => definition.holes.last;
+
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
   }
@@ -124,6 +131,11 @@ class RotatingGearState extends BaseGearState {
             rotatingGearRelativeContactPoint.position)
         .rotated(rotatingGearRotation - pi, fixedGearContactPoint.position);
 
+    double penAngle = rotatingGearRotation + activeHole.angle;
+    Offset penPosition =
+        Offset(cos(penAngle), -sin(penAngle)) * activeHole.distance +
+            rotatingGearPosition;
+
     ContactPoint rotatingGearContactPoint = rotatingGearRelativeContactPoint
         .translated(rotatingGearPosition)
         .rotated(-rotatingGearRotation, fixedGearContactPoint.position);
@@ -132,7 +144,8 @@ class RotatingGearState extends BaseGearState {
         rotatingGearContactPoint: rotatingGearContactPoint,
         fixedGearContactPoint: fixedGearContactPoint,
         rotatingGearPosition: rotatingGearPosition,
-        rotatingGearRotation: rotatingGearRotation);
+        rotatingGearRotation: rotatingGearRotation,
+        penPosition: penPosition);
   }
 
   /// Draws points to the canvas based on the provided angle.
@@ -142,8 +155,7 @@ class RotatingGearState extends BaseGearState {
   /// from the previous point, a number of intermediate points are drawn
   /// to keep the drawn line from appearing choppy.
   void _drawPoints(RotationResult result, double angle) {
-    double segmentLength =
-        Line(result.rotatingGearPosition, _lastPoint).length();
+    double segmentLength = Line(result.penPosition, _lastPoint).length();
 
     // If the point is too close to the last drawn point, don't draw a new one
     if (segmentLength < minLineSegmentLength) {
@@ -152,9 +164,9 @@ class RotatingGearState extends BaseGearState {
 
     // If the point is in the correct range from the last point, draw it
     if (segmentLength <= maxLineSegmentLength) {
-      ink.addPoints([result.rotatingGearPosition]);
+      ink.addPoints([result.penPosition]);
       _lastAngle = angle;
-      _lastPoint = result.rotatingGearPosition;
+      _lastPoint = result.penPosition;
       return;
     }
 
@@ -172,11 +184,11 @@ class RotatingGearState extends BaseGearState {
     for (int i = 1; i <= segmentsToDraw; i++) {
       RotationResult incrementalResult =
           _getRotationForAngle(_lastAngle + angleDelta * i);
-      pointsToAdd.add(incrementalResult.rotatingGearPosition);
+      pointsToAdd.add(incrementalResult.penPosition);
     }
 
     ink.addPoints(pointsToAdd);
     _lastAngle = angle;
-    _lastPoint = result.rotatingGearPosition;
+    _lastPoint = result.penPosition;
   }
 }
