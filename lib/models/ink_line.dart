@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:quiver/core.dart';
 
 /// Represents a line if ink on the canvas
@@ -13,11 +12,45 @@ class InkLine {
   int _pointCount;
   int _mark = 0;
 
+  InkLine({@required Color color, @required double strokeWidth})
+      : this._internal(
+            color: color,
+            strokeWidth: strokeWidth,
+            initialPoints: [],
+            initialPaths: [],
+            initialPointCount: 0);
+
+  /// An internal constructor, used to create an instance with points and path
+  /// already set.
+  InkLine._internal(
+      {@required this.color,
+      @required this.strokeWidth,
+      @required List<List<Offset>> initialPoints,
+      @required List<Path> initialPaths,
+      @required int initialPointCount})
+      : _points = initialPoints,
+        _paths = initialPaths {
+    _unmodifiablePoints = UnmodifiableListView(_points);
+    _unmodifiablePaths = UnmodifiableListView(_paths);
+    _pointCount = initialPointCount;
+  }
+
+  /// Returns a deep copy of this InkLine
+  factory InkLine.from(InkLine source) {
+    return InkLine._internal(
+        color: source.color,
+        strokeWidth: source.strokeWidth,
+        initialPoints:
+            source.points.map((p) => List<Offset>.from(p).toList()).toList(),
+        initialPaths: source.paths.map((p) => Path.from(p)).toList(),
+        initialPointCount: source.pointCount);
+  }
+
   /// The color of this line
-  Color color = defaultLineColor;
+  final Color color;
 
   /// The stroke width of this line
-  double strokeWidth = defaultStokeWidth;
+  final double strokeWidth;
 
   /// The list of points that define this line. This list is kept in sync
   /// with the `paths` property below.
@@ -134,34 +167,6 @@ class InkLine {
     _points.removeRange(0, _mark);
     _paths.removeRange(0, _mark);
     _pointCount = _points.fold(0, (sum, points) => sum + points.length);
-  }
-
-  InkLine()
-      : this._internal(
-            initialPoints: [], initialPaths: [], initialPointCount: 0);
-
-  /// An internal constructor, used to create an instance with points and path
-  /// already set.
-  InkLine._internal(
-      {@required List<List<Offset>> initialPoints,
-      @required List<Path> initialPaths,
-      @required int initialPointCount})
-      : _points = initialPoints,
-        _paths = initialPaths {
-    _unmodifiablePoints = UnmodifiableListView(_points);
-    _unmodifiablePaths = UnmodifiableListView(_paths);
-    _pointCount = initialPointCount;
-  }
-
-  /// Returns a deep copy of this InkLine
-  factory InkLine.from(InkLine source) {
-    return InkLine._internal(
-        initialPoints:
-            source.points.map((p) => List<Offset>.from(p).toList()).toList(),
-        initialPaths: source.paths.map((p) => Path.from(p)).toList(),
-        initialPointCount: source.pointCount)
-      ..color = source.color
-      ..strokeWidth = source.strokeWidth;
   }
 
   bool operator ==(Object other) =>

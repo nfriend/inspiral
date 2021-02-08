@@ -9,10 +9,11 @@ class RotatingGear extends StatelessWidget {
   Widget build(BuildContext context) {
     final gear = context.watch<RotatingGearState>();
     final dragLine = Provider.of<DragLineState>(context, listen: false);
-    final background = context.watch<BackgroundState>();
+    final colors = context.watch<ColorState>();
 
-    final ColorFilter colorFilter =
-        background.color.isDark() ? invertColorFilter : noFilterColorFilter;
+    final ColorFilter colorFilter = colors.backgroundColor.isDark()
+        ? invertColorFilter
+        : noFilterColorFilter;
 
     return Transform.translate(
         offset: gear.position - gear.definition.size.toOffset() / 2,

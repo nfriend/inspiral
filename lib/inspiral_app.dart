@@ -8,9 +8,6 @@ class InspiralApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inspiral',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       routes: {
         InspiralRoutes.canvas: (context) =>
             InspiralProviders(child: InspiralDrawingBoard())

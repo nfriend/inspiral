@@ -8,11 +8,10 @@ class FixedGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gear = context.watch<FixedGearState>();
-    final background = context.watch<BackgroundState>();
+    final colors = context.watch<ColorState>();
 
-    final ColorFilter colorFilter = background.color.isDark()
-        ? fixedGearInvertedColorFilter
-        : fixedGearColorFilter;
+    final ColorFilter colorFilter =
+        colors.isDark ? fixedGearInvertedColorFilter : fixedGearColorFilter;
 
     return Transform.translate(
         offset: gear.position - gear.definition.size.toOffset() / 2,

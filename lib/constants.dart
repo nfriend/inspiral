@@ -45,6 +45,3 @@ const double defaultStokeWidth = 5;
 
 /// The maximum allowed stroke width
 const double maxStrokeWidth = 50;
-
-/// The default color of the line
-const Color defaultLineColor = Color(0x66FF0000);

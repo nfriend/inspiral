@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:inspiral/models/gears/gears.dart';
-import 'package:inspiral/state/background_state.dart';
+import 'package:tinycolor/tinycolor.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
@@ -37,8 +37,12 @@ Future<void> initState(BuildContext context) async {
 
   // Initialize all the state singletons
   SettingsState.init();
-  // BackgroundState.init(initialColor: Color(0xFF364959));
-  BackgroundState.init(initialColor: Color(0xFFF7EFDA));
+  ColorState.init(
+      initialBackgroundColor: TinyColor(Color(0xFFF7EFDA)),
+      initialPenColor: TinyColor(Color(0x66FF0000)));
+  // ColorState.init(
+  //     initialBackgroundColor: TinyColor(Color(0xFF364959)),
+  //     initialPenColor: TinyColor(Color(0xFFFFFF00)));
   final ink = InkState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);

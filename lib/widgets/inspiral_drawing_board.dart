@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:inspiral/widgets/bottom_tabs.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
@@ -10,16 +11,6 @@ import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:statsfl/statsfl.dart';
 
-class InspiralCanvasPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // TODO: Draw lines here
-  }
-
-  @override
-  bool shouldRepaint(InspiralCanvasPainter oldDelegate) => false;
-}
-
 class InspiralDrawingBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,20 +18,8 @@ class InspiralDrawingBoard extends StatelessWidget {
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final pointers = Provider.of<PointersState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context);
-    final background = Provider.of<BackgroundState>(context);
+    final colors = Provider.of<ColorState>(context);
     final settings = Provider.of<SettingsState>(context);
-
-    Color appBackground = (background.color.isDark()
-            ? background.color.lighten()
-            : background.color.darken())
-        .color;
-
-    Color canvasShadowColor = (background.color.isDark()
-            ? background.color.lighten(20)
-            : background.color.darken(20))
-        .color;
-
-    Color canvasColor = background.color.color;
 
     return StatsFl(
         isEnabled: settings.debug,
@@ -67,18 +46,19 @@ class InspiralDrawingBoard extends StatelessWidget {
                   minWidth: canvasSize.width,
                   alignment: Alignment.topLeft,
                   child: Container(
-                    decoration: BoxDecoration(color: appBackground),
+                    decoration:
+                        BoxDecoration(color: colors.appBackgroundColor.color),
                     width: canvasSize.width,
                     height: canvasSize.height,
                     child: Transform(
                         transform: canvas.transform,
                         child: Container(
                             decoration: BoxDecoration(
-                                color: canvasColor,
+                                color: colors.backgroundColor.color,
                                 borderRadius: BorderRadius.circular(100),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: canvasShadowColor,
+                                      color: colors.canvasShadowColor.color,
                                       blurRadius: 300,
                                       spreadRadius: 50)
                                 ]),
@@ -92,7 +72,8 @@ class InspiralDrawingBoard extends StatelessWidget {
                                       ? DebugCanvas()
                                       : Container(width: 0.0, height: 0.0))
                             ]))),
-                  ))
+                  )),
+              Positioned(left: 0, right: 0, bottom: 0, child: BottomTabs())
             ])));
   }
 }
