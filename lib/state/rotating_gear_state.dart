@@ -131,10 +131,11 @@ class RotatingGearState extends BaseGearState {
             rotatingGearRelativeContactPoint.position)
         .rotated(rotatingGearRotation - pi, fixedGearContactPoint.position);
 
-    double penAngle = rotatingGearRotation + activeHole.angle;
-    Offset penPosition =
-        Offset(cos(penAngle), -sin(penAngle)) * activeHole.distance +
-            rotatingGearPosition;
+    double penAngle = rotatingGearRotation - activeHole.angle;
+    Offset penPosition = Offset(cos(penAngle), sin(penAngle)) *
+            activeHole.distance *
+            scaleFactor +
+        rotatingGearPosition;
 
     ContactPoint rotatingGearContactPoint = rotatingGearRelativeContactPoint
         .translated(rotatingGearPosition)

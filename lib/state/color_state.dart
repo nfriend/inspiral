@@ -77,22 +77,24 @@ class ColorState extends ChangeNotifier {
 
   /// Updates all dependt colors based on the background and pen colors
   void _updateDependentColors() {
-    double penHue = penColor.toHsl().h;
+    HslColor penHsl = penColor.toHsl();
+    double penHue = penHsl.h;
+    double penSaturation = penHsl.s;
 
-    double luminance = isDark ? 0.25 : 0.7;
+    // Reduce the bottom range of the luminance to avoid complete black
+    double luminance = penHsl.l * .9 + 0.1;
 
-    _uiBackgroundColor =
-        TinyColor.fromHSL(HslColor(h: penHue, s: 0.8, l: luminance, a: 200.0));
+    _uiBackgroundColor = TinyColor.fromHSL(
+        HslColor(h: penHue, s: penSaturation, l: luminance, a: 180.0));
 
-    _primaryColor =
-        TinyColor.fromHSL(HslColor(h: penHue, s: 0.8, l: luminance, a: 255.0));
+    _primaryColor = _uiBackgroundColor;
 
     _splashColor =
-        isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(30);
+        isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(10);
     _highlightColor =
         isDark ? _uiBackgroundColor.lighten(5) : _uiBackgroundColor.darken(5);
 
-    _accentColor = _primaryColor.complement();
+    _accentColor = _primaryColor.spin(240);
 
     _appBackgroundColor =
         isDark ? backgroundColor.lighten() : backgroundColor.darken();
