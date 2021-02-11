@@ -3,7 +3,7 @@ import 'package:inspiral/widgets/dynamic_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 
-class BottomTabs extends StatelessWidget {
+class DrawingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
