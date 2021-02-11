@@ -36,9 +36,12 @@ class RotatingGearState extends BaseGearState {
 
   factory RotatingGearState.init(
       {@required double initialAngle,
-      @required GearDefinition initialDefinition}) {
+      @required GearDefinition initialDefinition,
+      @required GearHole initialActiveHole}) {
     return _instance = RotatingGearState._internal(
-        initialAngle: initialAngle, initialDefinition: initialDefinition);
+        initialAngle: initialAngle,
+        initialDefinition: initialDefinition,
+        initialActiveHole: initialActiveHole);
   }
 
   factory RotatingGearState() {
@@ -49,10 +52,12 @@ class RotatingGearState extends BaseGearState {
 
   RotatingGearState._internal(
       {@required double initialAngle,
-      @required GearDefinition initialDefinition}) {
+      @required GearDefinition initialDefinition,
+      @required GearHole initialActiveHole}) {
     definition = initialDefinition;
     _initialAngle = initialAngle;
     _lastAngle = initialAngle;
+    activeHole = initialActiveHole;
   }
 
   // This weird initialization logic is necessary because
@@ -74,22 +79,27 @@ class RotatingGearState extends BaseGearState {
 
   double _lastAngle;
   Offset _lastPoint;
+  Offset _relativePenPosition;
 
   FixedGearState fixedGear;
   DragLineState dragLine;
   InkState ink;
 
-  // Temporarily hardcoding a specific hole
-  GearHole get activeHole => definition.holes.last;
+  GearHole _activeHole;
+  GearHole get activeHole => _activeHole;
+  set activeHole(GearHole value) {
+    _activeHole = value;
 
-  // Temporary implemented as a `get` until the hole is configurable above
-  // TODO: implement this as a private/public field
-  // to avoid recomputing this every access.
-  Offset get relativePenPosition {
-    return Offset(cos(activeHole.angle), -sin(activeHole.angle)) *
-        activeHole.distance *
-        scaleFactor;
+    _relativePenPosition =
+        Offset(cos(_activeHole.angle), -sin(_activeHole.angle)) *
+            _activeHole.distance *
+            scaleFactor;
+
+    notifyListeners();
   }
+
+  /// The position of the pen, relative to the center of the rotating gear
+  Offset get relativePenPosition => _relativePenPosition;
 
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;

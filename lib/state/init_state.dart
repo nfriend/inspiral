@@ -47,7 +47,9 @@ Future<void> initState(BuildContext context) async {
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(
-      initialAngle: initialAngle, initialDefinition: circle63);
+      initialAngle: initialAngle,
+      initialDefinition: circle63,
+      initialActiveHole: circle63.holes.last);
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);
   final fixedGear = FixedGearState.init(
