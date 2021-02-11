@@ -25,7 +25,10 @@ final Size tileSize = new Size(
     canvasSize.width / tileColumnCount, canvasSize.height / tileRowCount);
 
 /// The size of the debug dots
-final Size debugDotSize = Size(2, 2) * scaleFactor;
+final Size debugDotSize = Size(4, 4) * scaleFactor;
+
+/// The size of the ink dot that renders inside the active gear hole
+final Size inkDotSize = debugDotSize;
 
 /// The length of each gear tooth
 const double toothLength = 5;

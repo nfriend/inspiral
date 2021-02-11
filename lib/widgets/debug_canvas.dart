@@ -63,7 +63,7 @@ class _DebugCanvasPainter extends CustomPainter {
       ..color = Color(0xCC3446EB)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
-        params.fixedGearPosition, debugDotSize.width, circlePaint);
+        params.fixedGearPosition, debugDotSize.width / 2, circlePaint);
   }
 
   void paintRotatingGearCenter(Canvas canvas) {
@@ -71,14 +71,15 @@ class _DebugCanvasPainter extends CustomPainter {
       ..color = Color(0xCCEB4034)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
-        params.rotatingGearPosition, debugDotSize.width, circlePaint);
+        params.rotatingGearPosition, debugDotSize.width / 2, circlePaint);
   }
 
   void paintDragLine(Canvas canvas) {
     final circlePaint = Paint()
       ..color = Color(0xCCE9EB75)
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(params.pointerPosition, debugDotSize.width, circlePaint);
+    canvas.drawCircle(
+        params.pointerPosition, debugDotSize.width / 2, circlePaint);
 
     final linePaint = Paint()
       ..color = Color(0x88262626)
@@ -151,13 +152,14 @@ class _DebugCanvasPainter extends CustomPainter {
     //   ..style = PaintingStyle.fill;
     // canvas.drawRect(Offset.zero & size, rectPaint);
 
-    if (params.rotatingGearPosition != null) {
-      paintRotatingGearCenter(canvas);
-    }
+    // Uncomment below to place a dot at the center of each gear
+    // if (params.rotatingGearPosition != null) {
+    //   paintRotatingGearCenter(canvas);
+    // }
 
-    if (params.fixedGearPosition != null) {
-      paintFixedGearCenter(canvas);
-    }
+    // if (params.fixedGearPosition != null) {
+    //   paintFixedGearCenter(canvas);
+    // }
 
     if (params.pivotPosition != null && params.pointerPosition != null) {
       paintDragLine(canvas);

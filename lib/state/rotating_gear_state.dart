@@ -20,7 +20,7 @@ class RotationResult {
   /// The rotation of the rotating gear
   final double rotatingGearRotation;
 
-  /// The position of the pen
+  /// The position of the pen, relative to the canvas
   final Offset penPosition;
 
   const RotationResult(
@@ -66,7 +66,7 @@ class RotatingGearState extends BaseGearState {
     if (_hasInitializedPosition) return;
 
     RotationResult result = _getRotationForAngle(_initialAngle);
-    _updateGears(result);
+    _updateGearState(result);
     _lastPoint = result.rotatingGearPosition;
 
     _hasInitializedPosition = true;
@@ -82,6 +82,15 @@ class RotatingGearState extends BaseGearState {
   // Temporarily hardcoding a specific hole
   GearHole get activeHole => definition.holes.last;
 
+  // Temporary implemented as a `get` until the hole is configurable above
+  // TODO: implement this as a private/public field
+  // to avoid recomputing this every access.
+  Offset get relativePenPosition {
+    return Offset(cos(activeHole.angle), -sin(activeHole.angle)) *
+        activeHole.distance *
+        scaleFactor;
+  }
+
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
   }
@@ -89,7 +98,7 @@ class RotatingGearState extends BaseGearState {
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
       RotationResult result = _getRotationForAngle(dragLine.angle);
-      _updateGears(result);
+      _updateGearState(result);
       _drawPoints(result, dragLine.angle);
     }
   }
@@ -104,7 +113,7 @@ class RotatingGearState extends BaseGearState {
   }
 
   /// Updates all state variables with the provide rotation calculation results
-  void _updateGears(RotationResult result) {
+  void _updateGearState(RotationResult result) {
     rotation = result.rotatingGearRotation;
     position = result.rotatingGearPosition;
 

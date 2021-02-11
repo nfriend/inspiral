@@ -3,6 +3,7 @@ import 'package:inspiral/widgets/color_filters.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:inspiral/constants.dart';
 
 class RotatingGear extends StatelessWidget {
   @override
@@ -15,8 +16,15 @@ class RotatingGear extends StatelessWidget {
         ? invertColorFilter
         : noFilterColorFilter;
 
+    final Offset gearCenter = gear.definition.size.toOffset() / 2;
+
+    // Compute the location of the ink dot (the pen). Multiplying by 1.5
+    // due to the margin of the `Container` dot.
+    final Offset penPosition =
+        gear.relativePenPosition + gearCenter - (inkDotSize.toOffset() * 1.5);
+
     return Transform.translate(
-        offset: gear.position - gear.definition.size.toOffset() / 2,
+        offset: gear.position - gearCenter,
         child: Transform.rotate(
           angle: gear.rotation,
           child: Listener(
@@ -29,11 +37,22 @@ class RotatingGear extends StatelessWidget {
                 gear.gearPointerMove(event);
               },
               onPointerUp: gear.gearPointerUp,
-              child: ColorFiltered(
-                  colorFilter: colorFilter,
-                  child: Image.asset(gear.definition.image,
-                      width: gear.definition.size.width,
-                      height: gear.definition.size.height))),
+              child: Stack(children: [
+                ColorFiltered(
+                    colorFilter: colorFilter,
+                    child: Image.asset(gear.definition.image,
+                        width: gear.definition.size.width,
+                        height: gear.definition.size.height)),
+                Transform.translate(
+                    offset: penPosition,
+                    child: Container(
+                      margin: EdgeInsets.all(inkDotSize.width),
+                      width: inkDotSize.width,
+                      height: inkDotSize.height,
+                      decoration: BoxDecoration(
+                          color: colors.penColor.color, shape: BoxShape.circle),
+                    ))
+              ])),
         ));
   }
 }
