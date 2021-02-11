@@ -18,18 +18,18 @@ class BottomTabs extends StatelessWidget {
                   indicatorWeight: 4.0,
                   tabs: [
                     Tab(
-                      text: "FIXED",
-                      icon: Icon(Icons.push_pin),
-                      iconMargin: iconMargin,
-                    ),
-                    Tab(
-                      text: "ROTATING",
-                      icon: Icon(Icons.flip_camera_android),
-                      iconMargin: iconMargin,
-                    ),
-                    Tab(
                       text: "PEN",
                       icon: Icon(Icons.edit),
+                      iconMargin: iconMargin,
+                    ),
+                    Tab(
+                      text: "COLORS",
+                      icon: Icon(Icons.palette),
+                      iconMargin: iconMargin,
+                    ),
+                    Tab(
+                      text: "GEARS",
+                      icon: Icon(Icons.settings),
                       iconMargin: iconMargin,
                     ),
                   ],
