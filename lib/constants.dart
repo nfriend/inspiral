@@ -48,3 +48,6 @@ const double defaultStokeWidth = 5;
 
 /// The maximum allowed stroke width
 const double maxStrokeWidth = 50;
+
+/// The standard animation length for UI animations
+const Duration uiAnimationDuration = Duration(milliseconds: 200);

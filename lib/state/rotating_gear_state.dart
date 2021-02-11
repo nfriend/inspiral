@@ -120,6 +120,8 @@ class RotatingGearState extends BaseGearState {
     }
 
     super.gearPointerUp(event);
+
+    notifyListeners();
   }
 
   /// Updates all state variables with the provide rotation calculation results

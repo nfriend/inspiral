@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inspiral/widgets/drawing_tools.dart';
+import 'package:inspiral/widgets/drawing_tools_container.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
@@ -73,7 +73,8 @@ class InspiralDrawingBoard extends StatelessWidget {
                                       : Container(width: 0.0, height: 0.0))
                             ]))),
                   )),
-              Positioned(left: 0, right: 0, bottom: 0, child: DrawingTools())
+              Positioned(
+                  left: 0, right: 0, bottom: 0, child: DrawingToolsContainer())
             ])));
   }
 }
