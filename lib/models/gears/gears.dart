@@ -17,6 +17,7 @@ export 'package:inspiral/models/gears/circle_52.dart';
 export 'package:inspiral/models/gears/circle_56.dart';
 export 'package:inspiral/models/gears/circle_60.dart';
 export 'package:inspiral/models/gears/circle_63.dart';
+export 'package:inspiral/models/gears/circle_64.dart';
 export 'package:inspiral/models/gears/circle_72.dart';
 export 'package:inspiral/models/gears/circle_75.dart';
 export 'package:inspiral/models/gears/circle_80.dart';

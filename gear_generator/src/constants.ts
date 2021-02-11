@@ -36,6 +36,7 @@ export const circleGearSizes = [
   56,
   60,
   63,
+  64,
   72,
   75,
   80,

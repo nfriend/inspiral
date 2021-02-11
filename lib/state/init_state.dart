@@ -47,11 +47,11 @@ Future<void> initState(BuildContext context) async {
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(
-      initialAngle: initialAngle, initialDefinition: circle60);
+      initialAngle: initialAngle, initialDefinition: circle63);
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);
   final fixedGear = FixedGearState.init(
-      initialPosition: canvasCenter, initialDefinition: circle63);
+      initialPosition: canvasCenter, initialDefinition: circle64);
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
