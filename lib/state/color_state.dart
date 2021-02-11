@@ -47,9 +47,13 @@ class ColorState extends ChangeNotifier {
 
   bool get isDark => _backgroundColor.isDark();
 
-  /// The background color of UI elements (tabs, modals, etc)
+  /// The background color of UI elements (buttons, tabs, modals, etc)
   TinyColor get uiBackgroundColor => _uiBackgroundColor;
   TinyColor _uiBackgroundColor;
+
+  /// The color of the text in the UI
+  TinyColor get uiTextColor => _uiTextColor;
+  TinyColor _uiTextColor;
 
   /// The primary color for the current theme
   TinyColor get primaryColor => _primaryColor;
@@ -86,6 +90,10 @@ class ColorState extends ChangeNotifier {
 
     _uiBackgroundColor = TinyColor.fromHSL(
         HslColor(h: penHue, s: penSaturation, l: luminance, a: 180.0));
+
+    _uiTextColor = _uiBackgroundColor.isDark()
+        ? TinyColor(Colors.white70)
+        : TinyColor(Colors.black87);
 
     _primaryColor = _uiBackgroundColor;
 

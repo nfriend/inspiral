@@ -17,12 +17,24 @@ class DynamicTheme extends StatelessWidget {
         ? Typography.whiteHelsinki
         : Typography.blackHelsinki;
 
+    TextButtonThemeData textButtonTheme = TextButtonThemeData(
+        style: ButtonStyle(
+            shape:
+                MaterialStateProperty.resolveWith((states) => StadiumBorder()),
+            backgroundColor: MaterialStateProperty.resolveWith(
+                (states) => colors.uiBackgroundColor.color),
+            foregroundColor: MaterialStateProperty.resolveWith(
+                (states) => colors.uiTextColor.color),
+            overlayColor: MaterialStateProperty.resolveWith(
+                (states) => colors.splashColor.color)));
+
     return Theme(
         data: ThemeData(
             accentColor: colors.accentColor.color,
             splashColor: colors.splashColor.color,
             primaryColor: colors.primaryColor.color,
             highlightColor: colors.highlightColor.color,
+            textButtonTheme: textButtonTheme,
             primaryTextTheme: textTheme),
         child: child);
   }

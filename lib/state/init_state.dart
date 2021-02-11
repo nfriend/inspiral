@@ -39,7 +39,7 @@ Future<void> initState(BuildContext context) async {
   SettingsState.init();
   ColorState.init(
       initialBackgroundColor: TinyColor(Color(0xFFF7EFDA)),
-      initialPenColor: TinyColor(Color(0xAAF33F3A)));
+      initialPenColor: TinyColor(Color(0xFF775599)));
   // ColorState.init(
   //     initialBackgroundColor: TinyColor(Color(0xFF364959)),
   //     initialPenColor: TinyColor(Color(0xAA0044FF)));

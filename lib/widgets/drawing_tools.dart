@@ -7,31 +7,38 @@ class DrawingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
-    EdgeInsetsGeometry iconMargin = EdgeInsets.only(bottom: 7.0);
+    double margin = 2.5;
+    double iconSize = 18;
 
-    return DefaultTabController(
-        length: 3,
-        child: DynamicTheme(
-            child: Material(
-                color: colors.uiBackgroundColor.color,
-                child: TabBar(
-                  indicatorWeight: 4.0,
-                  tabs: [
-                    Tab(
-                      text: "PEN",
-                      icon: Icon(Icons.edit),
-                      iconMargin: iconMargin,
-                    ),
-                    Tab(
-                      text: "COLORS",
-                      icon: Icon(Icons.palette),
-                      iconMargin: iconMargin,
-                    ),
-                    Tab(
-                      text: "GEARS",
-                      icon: Icon(Icons.settings),
-                      iconMargin: iconMargin,
-                    ),
+    return DynamicTheme(
+        child: Container(
+            color: colors.uiBackgroundColor.color,
+            child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: margin * 2),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: margin),
+                            child: TextButton.icon(
+                                onPressed: () {},
+                                icon: Icon(Icons.edit, size: iconSize),
+                                label: Text("PEN")))),
+                    Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: margin),
+                            child: TextButton.icon(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(),
+                                icon: Icon(Icons.palette, size: iconSize),
+                                label: Text("COLORS")))),
+                    Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: margin),
+                            child: TextButton.icon(
+                                onPressed: () {},
+                                icon: Icon(Icons.settings, size: iconSize),
+                                label: Text("GEARS"))))
                   ],
                 ))));
   }
