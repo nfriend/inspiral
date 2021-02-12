@@ -28,6 +28,6 @@ class DryInkCanvas extends StatelessWidget {
                       showGridLines: settings.debug))));
     }).toList();
 
-    return Stack(children: tiles);
+    return RepaintBoundary(key: canvasGlobalKey, child: Stack(children: tiles));
   }
 }

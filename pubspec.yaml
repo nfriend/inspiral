@@ -34,6 +34,11 @@ dependencies:
   tuple: ^1.0.3
   tinycolor: ^1.0.3
   quiver: ^2.1.5
+  path_provider: ^1.6.27
+  uuid: ^2.2.2
+  image_gallery_saver: "^1.6.7"
+  path: ^1.7.0
+  permission_handler: ^5.1.0+2
 
 dev_dependencies:
   flutter_test:

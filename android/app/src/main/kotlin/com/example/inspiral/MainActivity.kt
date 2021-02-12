@@ -1,4 +1,4 @@
-package com.example.inspiral
+package io.nathanfriend.inspiral
 
 import io.flutter.embedding.android.FlutterActivity
 

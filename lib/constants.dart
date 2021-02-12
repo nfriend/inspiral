@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 /// The global scaling factor for all sizes and position calculations
 const double scaleFactor = 4;
@@ -51,3 +52,13 @@ const double maxStrokeWidth = 50;
 
 /// The standard animation length for UI animations
 const Duration uiAnimationDuration = Duration(milliseconds: 200);
+
+/// The key used to fetch the instance of the canvas.
+/// Used for screenshotting purposes.
+final GlobalKey canvasGlobalKey =
+    GlobalKey(debugLabel: 'CanvasRepaintBoundary');
+
+/// The key used to fetch the instance of the ScaffoldMessenger
+/// Used for showing snack bars.
+final GlobalKey<ScaffoldMessengerState> scaffoldGlobalKey =
+    GlobalKey(debugLabel: 'ScaffoldMessenger');
