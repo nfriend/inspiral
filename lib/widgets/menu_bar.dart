@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/dynamic_theme.dart';
 
+@immutable
 class _ManuBarButtonParams {
   final Icon icon;
   final Function onPressed;
