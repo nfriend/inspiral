@@ -8,6 +8,11 @@ class FixedGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gear = context.watch<FixedGearState>();
+
+    if (!gear.isVisible) {
+      return Container();
+    }
+
     final colors = context.watch<ColorState>();
 
     final ColorFilter colorFilter =

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/widgets/helpers/save_share_image.dart';
+import 'package:inspiral/widgets/helpers/toggle_gear_visibility.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/dynamic_theme.dart';
@@ -16,15 +17,22 @@ class MenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
+    var rotatingGear = Provider.of<RotatingGearState>(context);
+
     double margin = 2.5;
     double iconSize = 26;
+
+    final Icon visibilityIcon = rotatingGear.isVisible
+        ? Icon(Icons.visibility)
+        : Icon(Icons.visibility_off);
 
     List<_ManuBarButtonParams> buttons = [
       _ManuBarButtonParams(
           icon: Icon(Icons.save), onPressed: () => saveImage(context)),
       _ManuBarButtonParams(
           icon: Icon(Icons.share), onPressed: () => shareImage(context)),
-      _ManuBarButtonParams(icon: Icon(Icons.remove_red_eye), onPressed: () {}),
+      _ManuBarButtonParams(
+          icon: visibilityIcon, onPressed: () => toggleGearVisiblity(context)),
       _ManuBarButtonParams(icon: Icon(Icons.undo), onPressed: () {}),
       _ManuBarButtonParams(icon: Icon(Icons.menu), onPressed: () {})
     ];

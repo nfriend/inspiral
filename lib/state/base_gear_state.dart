@@ -36,6 +36,14 @@ abstract class BaseGearState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Whether or not this gear is visible in the UI
+  bool get isVisible => _isVisible;
+  bool _isVisible = true;
+  set isVisible(bool value) {
+    _isVisible = value;
+    notifyListeners();
+  }
+
   PointersState pointers;
 
   CanvasState canvas;

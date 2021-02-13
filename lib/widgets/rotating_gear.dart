@@ -9,6 +9,11 @@ class RotatingGear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gear = context.watch<RotatingGearState>();
+
+    if (!gear.isVisible) {
+      return Container();
+    }
+
     final dragLine = Provider.of<DragLineState>(context, listen: false);
     final colors = context.watch<ColorState>();
 
