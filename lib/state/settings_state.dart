@@ -16,12 +16,19 @@ class SettingsState extends ChangeNotifier {
 
   SettingsState._internal();
 
-  bool _debug = !kReleaseMode;
-
   /// Whether or not to show various debugging aids
   bool get debug => _debug;
+  bool _debug = !kReleaseMode;
   set debug(bool value) {
     _debug = value;
+    notifyListeners();
+  }
+
+  /// Whether or not to include the background color when saving images
+  bool get includeBackgroundWhenSaving => _includeBackgroundWhenSaving;
+  bool _includeBackgroundWhenSaving = true;
+  set includeBackgroundWhenSaving(bool value) {
+    _includeBackgroundWhenSaving = value;
     notifyListeners();
   }
 }
