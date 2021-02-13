@@ -30,6 +30,7 @@ class _InspiralProvidersState extends State<InspiralProviders> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             return MultiProvider(providers: [
               ChangeNotifierProvider(create: (context) => SettingsState()),
+              ChangeNotifierProvider(create: (context) => ProgressState()),
               ChangeNotifierProvider(create: (context) => ColorState()),
               ChangeNotifierProvider(create: (context) => InkState()),
               ChangeNotifierProvider(create: (context) => PointersState()),

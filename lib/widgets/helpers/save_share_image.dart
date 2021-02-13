@@ -5,6 +5,7 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/settings_state.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -13,47 +14,37 @@ import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
 
-/// Hides the current SnackBar message
-void _hideMessage() {
-  scaffoldGlobalKey.currentState.hideCurrentSnackBar();
-}
-
 /// Shows a SnackBar message
-void _showMessage(String message,
-    {Duration duration = const Duration(seconds: 4)}) {
-  _hideMessage();
-  scaffoldGlobalKey.currentState.showSnackBar(SnackBar(
-      content: Text(message),
-      behavior: SnackBarBehavior.fixed,
-      duration: duration));
+void _showSnackBarMessage(String message) {
+  scaffoldGlobalKey.currentState.showSnackBar(
+      SnackBar(content: Text(message), behavior: SnackBarBehavior.fixed));
 }
 
 /// Shares the current drawing using the OS's "share" feature
 Future<void> shareImage(BuildContext context) async {
-  _showMessage('Sharing...', duration: const Duration(minutes: 10));
+  var progress = Provider.of<ProgressState>(context, listen: false);
+  progress.showModalProgress(message: 'Sharing...');
 
   String filePath = await _saveToTempFile(context);
   await Share.shareFiles([filePath]);
 
-  _hideMessage();
+  progress.hideModalPropress();
 }
 
 /// Saves the current drawing as an image in the OS's image gallery
 Future<void> saveImage(BuildContext context) async {
   if (!(await Permission.storage.request().isGranted)) {
-    _showMessage('You must grant storage permission to save');
-
+    _showSnackBarMessage('You must grant storage permission to save');
     return;
   }
 
-  /// Show this message until the saving process is done
-  _showMessage('Saving to the gallery...',
-      duration: const Duration(minutes: 10));
+  var progress = Provider.of<ProgressState>(context, listen: false);
+  progress.showModalProgress(message: 'Saving to the gallery...');
 
   String filePath = await _saveToTempFile(context);
   await ImageGallerySaver.saveFile(filePath);
 
-  _showMessage('Done!');
+  progress.hideModalPropress();
 }
 
 /// Saves the canvas as an image in a temporary location,

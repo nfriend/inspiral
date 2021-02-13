@@ -6,6 +6,7 @@ import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
 import 'package:inspiral/widgets/menu_bar_container.dart';
+import 'package:inspiral/widgets/modal_progress.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -75,8 +76,9 @@ class InspiralDrawingBoard extends StatelessWidget {
           Positioned(left: 0, right: 0, top: 0, child: MenuBarContainer()),
         ]));
 
-    return Scaffold(
-        body: settings.debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
-        bottomNavigationBar: DrawingToolsContainer());
+    return ModalProgress(
+        child: Scaffold(
+            body: settings.debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
+            bottomNavigationBar: DrawingToolsContainer()));
   }
 }

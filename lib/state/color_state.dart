@@ -51,6 +51,10 @@ class ColorState extends ChangeNotifier {
   TinyColor get uiBackgroundColor => _uiBackgroundColor;
   TinyColor _uiBackgroundColor;
 
+  /// The pen color without any transparency
+  TinyColor get penColorWithoutAlpha => _penColorWithoutAlpha;
+  TinyColor _penColorWithoutAlpha;
+
   /// The color of the text in the UI
   TinyColor get uiTextColor => _uiTextColor;
   TinyColor _uiTextColor;
@@ -94,6 +98,9 @@ class ColorState extends ChangeNotifier {
     _uiTextColor = _uiBackgroundColor.isDark()
         ? TinyColor(Colors.white70)
         : TinyColor(Colors.black87);
+
+    _penColorWithoutAlpha = TinyColor.fromHSL(
+        HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
 
     _primaryColor = _uiBackgroundColor;
 
