@@ -39,6 +39,7 @@ dependencies:
   image_gallery_saver: "^1.6.7"
   path: ^1.7.0
   permission_handler: ^5.1.0+2
+  share: ">=0.6.5+4 <2.0.0"
 
 dev_dependencies:
   flutter_test:
@@ -46,7 +47,6 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   xml: ^4.5.1
-  path: ^1.7.0
   ansicolor: ^1.1.1
   test: ^1.15.7
 

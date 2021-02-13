@@ -3,18 +3,27 @@ import 'package:inspiral/state/init_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 
-class InspiralProviders extends StatelessWidget {
+class InspiralProviders extends StatefulWidget {
+  final Widget child;
+
   InspiralProviders({@required this.child});
 
-  final Widget child;
+  @override
+  _InspiralProvidersState createState() => _InspiralProvidersState();
+}
+
+class _InspiralProvidersState extends State<InspiralProviders> {
+  Future<void> _stateFuture;
 
   @override
   Widget build(BuildContext context) {
     // Initialize all the singletons that will be provided below
-    Future<void> stateFuture = initState(context);
+    if (_stateFuture == null) {
+      _stateFuture = initState(context);
+    }
 
     return FutureBuilder(
-        future: stateFuture,
+        future: _stateFuture,
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.hasError) {
             throw ("Something went wrong while initializing state! ${snapshot.error}");
@@ -28,7 +37,7 @@ class InspiralProviders extends StatelessWidget {
               ChangeNotifierProvider(create: (context) => RotatingGearState()),
               ChangeNotifierProvider(create: (context) => DragLineState()),
               ChangeNotifierProvider(create: (context) => FixedGearState())
-            ], child: child);
+            ], child: this.widget.child);
           } else {
             // TODO: Do we need a real loading state here?
             // If the startup time is slow enough, consider

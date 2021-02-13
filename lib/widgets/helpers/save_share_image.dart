@@ -11,24 +11,55 @@ import 'package:uuid/uuid.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share/share.dart';
+
+/// Hides the current SnackBar message
+void _hideMessage() {
+  scaffoldGlobalKey.currentState.hideCurrentSnackBar();
+}
 
 /// Shows a SnackBar message
-void _showMessage(BuildContext context, String message) {
-  scaffoldGlobalKey.currentState.showSnackBar(
-      SnackBar(content: Text(message), behavior: SnackBarBehavior.fixed));
+void _showMessage(String message,
+    {Duration duration = const Duration(seconds: 4)}) {
+  _hideMessage();
+  scaffoldGlobalKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.fixed,
+      duration: duration));
+}
+
+/// Shares the current drawing using the OS's "share" feature
+Future<void> shareImage(BuildContext context) async {
+  _showMessage('Sharing...', duration: const Duration(minutes: 10));
+
+  String filePath = await _saveToTempFile(context);
+  await Share.shareFiles([filePath]);
+
+  _hideMessage();
 }
 
 /// Saves the current drawing as an image in the OS's image gallery
 Future<void> saveImage(BuildContext context) async {
-  var settings = Provider.of<SettingsState>(context, listen: false);
-
   if (!(await Permission.storage.request().isGranted)) {
-    _showMessage(context, 'You must grant storage permission to save');
+    _showMessage('You must grant storage permission to save');
 
     return;
   }
 
-  _showMessage(context, 'Saving to the gallery...');
+  /// Show this message until the saving process is done
+  _showMessage('Saving to the gallery...',
+      duration: const Duration(minutes: 10));
+
+  String filePath = await _saveToTempFile(context);
+  await ImageGallerySaver.saveFile(filePath);
+
+  _showMessage('Done!');
+}
+
+/// Saves the canvas as an image in a temporary location,
+/// and returns the file path
+Future<String> _saveToTempFile(BuildContext context) async {
+  var settings = Provider.of<SettingsState>(context, listen: false);
 
   GlobalKey canvasKey = settings.includeBackgroundWhenSaving
       ? canvasWithBackgroundGlobalKey
@@ -44,8 +75,7 @@ Future<void> saveImage(BuildContext context) async {
   String filePath = p.join(directory.path, '${Uuid().v4()}.png');
 
   await File(filePath).writeAsBytes(pngBytes, flush: true);
-  await ImageGallerySaver.saveFile(filePath);
   screenshot.dispose();
 
-  _showMessage(context, 'Done!');
+  return filePath;
 }

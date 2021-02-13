@@ -37,23 +37,23 @@ Future<void> initState(BuildContext context) async {
 
   // Initialize all the state singletons
   SettingsState.init();
-  ColorState.init(
-      initialBackgroundColor: TinyColor(Color(0xFFF7EFDA)),
-      initialPenColor: TinyColor(Color(0xFF775599)));
   // ColorState.init(
-  //     initialBackgroundColor: TinyColor(Color(0xFF364959)),
-  //     initialPenColor: TinyColor(Color(0xAA0044FF)));
+  //     initialBackgroundColor: TinyColor(Color(0xFFF7EFDA)),
+  //     initialPenColor: TinyColor(Color(0xFF775599)));
+  ColorState.init(
+      initialBackgroundColor: TinyColor(Color(0xFF364959)),
+      initialPenColor: TinyColor(Color(0xAA0044FF)));
   final ink = InkState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(
       initialAngle: initialAngle,
-      initialDefinition: circle63,
-      initialActiveHole: circle63.holes.last);
+      initialDefinition: circle64,
+      initialActiveHole: circle64.holes.last);
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);
   final fixedGear = FixedGearState.init(
-      initialPosition: canvasCenter, initialDefinition: circle64);
+      initialPosition: canvasCenter, initialDefinition: oval63);
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
