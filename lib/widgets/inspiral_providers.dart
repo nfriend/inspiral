@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/state/init_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class InspiralProviders extends StatefulWidget {
   final Widget child;
@@ -17,9 +18,12 @@ class _InspiralProvidersState extends State<InspiralProviders> {
 
   @override
   Widget build(BuildContext context) {
+    TinyColor initialCanvasColor =
+        TinyColor(Color(0xFFF7EFDA)); //TinyColor(Color(0xFF364959))
+
     // Initialize all the singletons that will be provided below
     if (_stateFuture == null) {
-      _stateFuture = initState(context);
+      _stateFuture = initState(context, initialCanvasColor: initialCanvasColor);
     }
 
     return FutureBuilder(
@@ -43,7 +47,7 @@ class _InspiralProvidersState extends State<InspiralProviders> {
             // TODO: Do we need a real loading state here?
             // If the startup time is slow enough, consider
             // showing a splash screen of some kind here.
-            return Container(color: Colors.white);
+            return Container(color: initialCanvasColor.color);
           }
         });
   }

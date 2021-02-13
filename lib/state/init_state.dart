@@ -9,7 +9,8 @@ import 'package:inspiral/extensions/extensions.dart';
 
 /// Initializes all state singletons. This method must be called early in the
 /// application lifecycle, and it must only be called once.
-Future<void> initState(BuildContext context) async {
+Future<void> initState(BuildContext context,
+    {@required TinyColor initialCanvasColor}) async {
   // Compute an initial canvas translation that will place the
   // center point of the canvas directly in the center of the screen
   // By default, the canvas's top-left corner is lined up with
@@ -39,10 +40,10 @@ Future<void> initState(BuildContext context) async {
   SettingsState.init();
   ProgressState.init();
   ColorState.init(
-      initialBackgroundColor: TinyColor(Color(0xFFF7EFDA)),
+      initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0xFF775599)));
   // ColorState.init(
-  //     initialBackgroundColor: TinyColor(Color(0xFF364959)),
+  //     initialBackgroundColor: canvasColor,
   //     initialPenColor: TinyColor(Color(0xAA0044FF)));
   final ink = InkState.init();
   final pointers = PointersState.init();
