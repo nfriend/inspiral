@@ -25,7 +25,7 @@ Future<void> saveImage(BuildContext context) async {
   _showMessage(context, 'Saving to the gallery...');
 
   RenderRepaintBoundary canvasBoundary =
-      canvasGlobalKey.currentContext.findRenderObject();
+      canvasWithBackgroundGlobalKey.currentContext.findRenderObject();
   Image screenshot = await canvasBoundary.toImage();
   ByteData byteData = await screenshot.toByteData(format: ImageByteFormat.png);
   Uint8List pngBytes = byteData.buffer.asUint8List();

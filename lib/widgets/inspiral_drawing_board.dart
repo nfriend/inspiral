@@ -59,7 +59,6 @@ class InspiralDrawingBoard extends StatelessWidget {
                             transform: canvas.transform,
                             child: Container(
                                 decoration: BoxDecoration(
-                                    color: colors.backgroundColor.color,
                                     borderRadius: BorderRadius.circular(100),
                                     boxShadow: [
                                       BoxShadow(

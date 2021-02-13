@@ -53,10 +53,12 @@ const double maxStrokeWidth = 50;
 /// The standard animation length for UI animations
 const Duration uiAnimationDuration = Duration(milliseconds: 200);
 
-/// The key used to fetch the instance of the canvas.
-/// Used for screenshotting purposes.
-final GlobalKey canvasGlobalKey =
-    GlobalKey(debugLabel: 'CanvasRepaintBoundary');
+/// These keys are used to fetch the RepaintBoundary parents of
+/// the ink canvases. Used for screenshotting purposes.
+final GlobalKey canvasWithoutBackgroundGlobalKey =
+    GlobalKey(debugLabel: 'CanvasWithoutBackground');
+final GlobalKey canvasWithBackgroundGlobalKey =
+    GlobalKey(debugLabel: 'CanvasWithBackground');
 
 /// The key used to fetch the instance of the ScaffoldMessenger
 /// Used for showing snack bars.

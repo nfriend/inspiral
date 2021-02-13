@@ -10,6 +10,7 @@ class DryInkCanvas extends StatelessWidget {
   Widget build(BuildContext context) {
     final ink = Provider.of<InkState>(context);
     final settings = Provider.of<SettingsState>(context);
+    final colors = Provider.of<ColorState>(context);
 
     List<Positioned> tiles = ink.tileImages.entries.map((entry) {
       Offset position = entry.key;
@@ -28,6 +29,12 @@ class DryInkCanvas extends StatelessWidget {
                       showGridLines: settings.debug))));
     }).toList();
 
-    return RepaintBoundary(key: canvasGlobalKey, child: Stack(children: tiles));
+    return RepaintBoundary(
+        key: canvasWithBackgroundGlobalKey,
+        child: Container(
+            color: colors.backgroundColor.color,
+            child: RepaintBoundary(
+                key: canvasWithoutBackgroundGlobalKey,
+                child: Stack(children: tiles))));
   }
 }
