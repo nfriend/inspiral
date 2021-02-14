@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <path d="M 168 56
-             A 84 56 0 1 0 0 56
-             A 84 56 0 0 0 168 56
-             Z" />
-  </g>
-</svg>
