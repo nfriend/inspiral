@@ -59,6 +59,10 @@ class ColorState extends ChangeNotifier {
   TinyColor get uiTextColor => _uiTextColor;
   TinyColor _uiTextColor;
 
+  /// The color of the text in the UI when appearing on the accent background
+  TinyColor get uiTextAccentColor => _uiTextAccentColor;
+  TinyColor _uiTextAccentColor;
+
   /// The primary color for the current theme
   TinyColor get primaryColor => _primaryColor;
   TinyColor _primaryColor;
@@ -70,6 +74,10 @@ class ColorState extends ChangeNotifier {
   /// The splash color for ink effects
   TinyColor get splashColor => _splashColor;
   TinyColor _splashColor;
+
+  /// The splash color for ink effects on the accent color
+  TinyColor get accentSplashColor => _accentSplashColor;
+  TinyColor _accentSplashColor;
 
   /// The highlight color for the current theme
   TinyColor get highlightColor => _highlightColor;
@@ -102,14 +110,22 @@ class ColorState extends ChangeNotifier {
     _penColorWithoutAlpha = TinyColor.fromHSL(
         HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
 
-    _primaryColor = _uiBackgroundColor;
+    _primaryColor = TinyColor.fromHSL(
+        HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
 
     _splashColor =
         isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(10);
     _highlightColor =
         isDark ? _uiBackgroundColor.lighten(5) : _uiBackgroundColor.darken(5);
 
-    _accentColor = _primaryColor.spin(240);
+    _accentColor = _primaryColor.spin(240).lighten();
+
+    _uiTextAccentColor = _accentColor.isDark()
+        ? TinyColor(Colors.white70)
+        : TinyColor(Colors.black87);
+
+    _accentSplashColor =
+        isDark ? _accentColor.lighten(30) : _accentColor.darken(10);
 
     _appBackgroundColor =
         isDark ? backgroundColor.lighten() : backgroundColor.darken();

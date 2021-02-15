@@ -8,16 +8,16 @@ class _DrawingToolsButton {
   final Icon icon;
   final String text;
   final Function onPressed;
+  final DrawerTab tab;
 
-  _DrawingToolsButton({this.icon, this.text, this.onPressed});
+  _DrawingToolsButton({this.icon, this.text, this.onPressed, this.tab});
 }
 
 class DrawingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ColorState>(context);
-    final selectorDrawer =
-        Provider.of<SelectorDrawerState>(context, listen: false);
+    final selectorDrawer = Provider.of<SelectorDrawerState>(context);
 
     double margin = 2.5;
     double iconSize = 18;
@@ -26,19 +26,28 @@ class DrawingTools extends StatelessWidget {
       _DrawingToolsButton(
           icon: Icon(Icons.edit, size: iconSize),
           text: 'PEN',
+          tab: DrawerTab.pen,
           onPressed: () =>
               selectorDrawer.toggleOrSelectDrawer(tabToSelect: DrawerTab.pen)),
       _DrawingToolsButton(
           icon: Icon(Icons.palette, size: iconSize),
           text: 'COLORS',
+          tab: DrawerTab.colors,
           onPressed: () => selectorDrawer.toggleOrSelectDrawer(
               tabToSelect: DrawerTab.colors)),
       _DrawingToolsButton(
           icon: Icon(Icons.settings, size: iconSize),
           text: 'GEARS',
+          tab: DrawerTab.gears,
           onPressed: () => selectorDrawer.toggleOrSelectDrawer(
               tabToSelect: DrawerTab.gears)),
     ];
+
+    ButtonStyle activeStyle = ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith(
+            (states) => colors.accentColor.color),
+        foregroundColor: MaterialStateProperty.resolveWith(
+            (states) => colors.uiTextAccentColor.color));
 
     return DynamicTheme(
       child: Container(
@@ -51,6 +60,10 @@ class DrawingTools extends StatelessWidget {
                       child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: margin),
                           child: TextButton.icon(
+                              style: selectorDrawer.activeTab == button.tab &&
+                                      selectorDrawer.isOpen
+                                  ? activeStyle
+                                  : null,
                               onPressed: button.onPressed,
                               icon: button.icon,
                               label: Text(button.text))))

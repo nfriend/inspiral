@@ -42,7 +42,7 @@ Future<void> initState(BuildContext context,
   final selectorDrawer = SelectorDrawerState.init();
   ColorState.init(
       initialBackgroundColor: initialCanvasColor,
-      initialPenColor: TinyColor(Color(0xFF775599)));
+      initialPenColor: TinyColor(Color(0xAA088020)));
   // ColorState.init(
   //     initialBackgroundColor: canvasColor,
   //     initialPenColor: TinyColor(Color(0xAA0044FF)));
