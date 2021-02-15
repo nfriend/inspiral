@@ -35,6 +35,8 @@ class _InspiralProvidersState extends State<InspiralProviders> {
             return MultiProvider(providers: [
               ChangeNotifierProvider(create: (context) => SettingsState()),
               ChangeNotifierProvider(create: (context) => ProgressState()),
+              ChangeNotifierProvider(
+                  create: (context) => SelectorDrawerState()),
               ChangeNotifierProvider(create: (context) => ColorState()),
               ChangeNotifierProvider(create: (context) => InkState()),
               ChangeNotifierProvider(create: (context) => PointersState()),

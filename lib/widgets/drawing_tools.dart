@@ -15,7 +15,10 @@ class _DrawingToolsButton {
 class DrawingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colors = context.watch<ColorState>();
+    final colors = Provider.of<ColorState>(context);
+    final selectorDrawer =
+        Provider.of<SelectorDrawerState>(context, listen: false);
+
     double margin = 2.5;
     double iconSize = 18;
 
@@ -23,34 +26,35 @@ class DrawingTools extends StatelessWidget {
       _DrawingToolsButton(
           icon: Icon(Icons.edit, size: iconSize),
           text: 'PEN',
-          onPressed: () {}),
+          onPressed: () =>
+              selectorDrawer.toggleOrSelectDrawer(tabToSelect: DrawerTab.pen)),
       _DrawingToolsButton(
           icon: Icon(Icons.palette, size: iconSize),
           text: 'COLORS',
-          onPressed: () {}),
+          onPressed: () => selectorDrawer.toggleOrSelectDrawer(
+              tabToSelect: DrawerTab.colors)),
       _DrawingToolsButton(
           icon: Icon(Icons.settings, size: iconSize),
           text: 'GEARS',
-          onPressed: () {}),
+          onPressed: () => selectorDrawer.toggleOrSelectDrawer(
+              tabToSelect: DrawerTab.gears)),
     ];
 
-    List<Widget> rowChildren = buttons
-        .map((button) => Expanded(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: margin),
-                child: TextButton.icon(
-                    onPressed: button.onPressed,
-                    icon: button.icon,
-                    label: Text(button.text)))))
-        .toList();
-
     return DynamicTheme(
-        child: Container(
-            color: colors.uiBackgroundColor.color,
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: margin * 2),
-                child: Row(
-                  children: rowChildren,
-                ))));
+      child: Container(
+          color: colors.uiBackgroundColor.color,
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: margin * 2),
+              child: Row(children: [
+                for (var button in buttons)
+                  Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: margin),
+                          child: TextButton.icon(
+                              onPressed: button.onPressed,
+                              icon: button.icon,
+                              label: Text(button.text))))
+              ]))),
+    );
   }
 }

@@ -39,6 +39,7 @@ Future<void> initState(BuildContext context,
   // Initialize all the state singletons
   SettingsState.init();
   ProgressState.init();
+  SelectorDrawerState.init();
   ColorState.init(
       initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0xFF775599)));
