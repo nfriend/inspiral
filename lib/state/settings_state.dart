@@ -31,4 +31,13 @@ class SettingsState extends ChangeNotifier {
     _includeBackgroundWhenSaving = value;
     notifyListeners();
   }
+
+  /// Whether or not to close the drawing tools drawer (and keep it closed)
+  /// when either gear is dragged
+  bool get closeDrawingToolsDrawerOnDrag => _closeDrawingToolsDrawerOnDrag;
+  bool _closeDrawingToolsDrawerOnDrag = false;
+  set closeDrawingToolsDrawerOnDrag(bool value) {
+    _closeDrawingToolsDrawerOnDrag = value;
+    notifyListeners();
+  }
 }

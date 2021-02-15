@@ -45,8 +45,9 @@ abstract class BaseGearState extends ChangeNotifier {
   }
 
   PointersState pointers;
-
   CanvasState canvas;
+  SettingsState settings;
+  SelectorDrawerState selectorDrawer;
 
   Offset dragOffset = Offset.zero;
 
@@ -61,18 +62,26 @@ abstract class BaseGearState extends ChangeNotifier {
       draggingPointerId = event.device;
 
       dragOffset = event.localPosition - position;
+
+      if (settings.closeDrawingToolsDrawerOnDrag) {
+        selectorDrawer.closeDrawer();
+      }
+
+      notifyListeners();
     }
   }
 
   globalPointerDown(PointerDownEvent event) {
     if (pointers.count == 2) {
       draggingPointerId = -1;
+      notifyListeners();
     }
   }
 
   gearPointerUp(PointerUpEvent event) {
     if (event.device == draggingPointerId) {
       draggingPointerId = -1;
+      notifyListeners();
     }
   }
 }

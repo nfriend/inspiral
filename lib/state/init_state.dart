@@ -37,9 +37,9 @@ Future<void> initState(BuildContext context,
   double initialAngle = pi / 2;
 
   // Initialize all the state singletons
-  SettingsState.init();
   ProgressState.init();
-  SelectorDrawerState.init();
+  final settings = SettingsState.init();
+  final selectorDrawer = SelectorDrawerState.init();
   ColorState.init(
       initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0xFF775599)));
@@ -64,14 +64,18 @@ Future<void> initState(BuildContext context,
     ..pointers = pointers
     ..dragLine = dragLine
     ..fixedGear = fixedGear
-    ..ink = ink;
+    ..ink = ink
+    ..settings = settings
+    ..selectorDrawer = selectorDrawer;
   dragLine
     ..canvas = canvas
     ..rotatingGear = rotatingGear;
   fixedGear
     ..pointers = pointers
     ..rotatingGear = rotatingGear
-    ..dragLine = dragLine;
+    ..dragLine = dragLine
+    ..settings = settings
+    ..selectorDrawer = selectorDrawer;
 
   // Run any initialization logic
   rotatingGear.initializePosition();

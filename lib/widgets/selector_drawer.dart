@@ -27,14 +27,17 @@ class _SelectorDrawerState extends State<SelectorDrawer>
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
-    final selectorDrawer = context.watch<SelectorDrawerState>();
-    final rotatingGear = context.watch<RotatingGearState>();
+    final selectorDrawer = Provider.of<SelectorDrawerState>(context);
+    final rotatingGear = Provider.of<RotatingGearState>(context);
+    final fixedGear = Provider.of<FixedGearState>(context);
 
     Matrix4 transform = Matrix4.identity();
     double opacity = 1.0;
     double height = 200;
 
-    if (!selectorDrawer.isOpen || rotatingGear.isDragging) {
+    if (!selectorDrawer.isOpen ||
+        rotatingGear.isDragging ||
+        fixedGear.isDragging) {
       transform.translate(0.0, height);
       opacity = 0.0;
     }

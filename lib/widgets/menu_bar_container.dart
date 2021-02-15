@@ -8,9 +8,10 @@ class MenuBarContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rotatingGear = Provider.of<RotatingGearState>(context);
+    final fixedGear = Provider.of<FixedGearState>(context);
 
     Matrix4 transform = Matrix4.identity();
-    if (rotatingGear.isDragging) {
+    if (rotatingGear.isDragging || fixedGear.isDragging) {
       transform.translate(0.0, -42.0);
     }
 
