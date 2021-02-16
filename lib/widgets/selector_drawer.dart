@@ -30,6 +30,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
     final selectorDrawer = Provider.of<SelectorDrawerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context);
     final fixedGear = Provider.of<FixedGearState>(context);
+    final canvas = Provider.of<CanvasState>(context);
 
     Matrix4 transform = Matrix4.identity();
     double opacity = 1.0;
@@ -37,7 +38,8 @@ class _SelectorDrawerState extends State<SelectorDrawer>
 
     if (!selectorDrawer.isOpen ||
         rotatingGear.isDragging ||
-        fixedGear.isDragging) {
+        fixedGear.isDragging ||
+        canvas.isTransforming) {
       transform.translate(0.0, height);
       opacity = 0.0;
     }

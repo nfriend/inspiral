@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:inspiral/widgets/drawing_tools_container.dart';
+import 'package:inspiral/widgets/animated_toolbar_container.dart';
+import 'package:inspiral/widgets/drawing_tools.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
-import 'package:inspiral/widgets/menu_bar_container.dart';
+import 'package:inspiral/widgets/menu_bar.dart';
 import 'package:inspiral/widgets/modal_progress.dart';
 import 'package:inspiral/widgets/selector_drawer.dart';
 import 'package:provider/provider.dart';
@@ -74,13 +75,19 @@ class InspiralDrawingBoard extends StatelessWidget {
                                   : Container(width: 0.0, height: 0.0))
                         ]))),
               )),
-          Positioned(left: 0, right: 0, top: 0, child: MenuBarContainer()),
+          Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              child: AnimatedToolbarContainer(
+                  translateY: -42.0, child: MenuBar())),
           Positioned(left: 0, right: 0, bottom: 0, child: SelectorDrawer())
         ]));
 
     return ModalProgress(
         child: Scaffold(
             body: settings.debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
-            bottomNavigationBar: DrawingToolsContainer()));
+            bottomNavigationBar: AnimatedToolbarContainer(
+                translateY: 42.0, child: DrawingTools())));
   }
 }
