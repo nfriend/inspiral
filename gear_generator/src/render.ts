@@ -43,9 +43,10 @@ export const renderHtmlToPng = async (
 
       let pngPath = info.pngPath;
       if (scale != 1) {
-        const imagesDir = path.dirname(pngPath);
-        const fileName = path.basename(pngPath);
-        pngPath = path.resolve(imagesDir, `${scale.toFixed(1)}x`, fileName);
+        pngPath = pngPath.replace(
+          'images',
+          path.join('images', `${scale.toFixed(1)}x`),
+        );
       }
 
       await svgElement.screenshot({

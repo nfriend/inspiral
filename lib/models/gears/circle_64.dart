@@ -12,7 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/gear_hole.dart';
 
 final circle64 = GearDefinition(
-    image: 'images/circle_64.png',
+    image: 'images/gears/circle_64.png',
     size: Size(560, 560),
     toothCount: 64,
     points: [

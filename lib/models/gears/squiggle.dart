@@ -11,7 +11,7 @@ import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 
 final squiggle = GearDefinition(
-    image: 'images/squiggle.png',
+    image: 'images/gears/squiggle.png',
     size: Size(448, 448),
     toothCount: 51,
     points: [

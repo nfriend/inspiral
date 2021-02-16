@@ -2,7 +2,6 @@ import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import ejs from 'ejs';
-import camelCase from 'camelcase';
 import { GearDefinition } from '../models/gear_definition';
 
 const writeFile = util.promisify(fs.writeFile);
@@ -26,12 +25,7 @@ export const writeGearDefinitionAsDartFile = async (
     '../templates/dart/dart_gear_definition.dart.ejs',
   );
 
-  const camelCasedGearName = camelCase(gearDefinition.gearName);
-
-  const rendered = await renderFile(templateFilePath, {
-    gearDefinition,
-    camelCasedGearName,
-  });
+  const rendered = await renderFile(templateFilePath, { gearDefinition });
 
   await writeFile(filePath, rendered);
 };

@@ -6,7 +6,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/gear_hole.dart';
 <%_ } _%>
 
-final <%= camelCasedGearName %> = GearDefinition(
+final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
     image: '<%= gearDefinition.image %>',
     size: Size(<%= gearDefinition.size.width %>, <%= gearDefinition.size.height %>),
     toothCount: <%= gearDefinition.toothCount %>,

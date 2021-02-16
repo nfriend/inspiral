@@ -17,11 +17,13 @@ export const analyzePath = ({
   toothHeight,
   meshSpacing,
   gearName,
+  camelCasedGearName,
 }: {
   baseScale: number;
   toothHeight: number;
   meshSpacing: number;
   gearName: string;
+  camelCasedGearName: string;
 }): GearDefinition => {
   const pi2 = 2 * Math.PI;
 
@@ -168,7 +170,9 @@ export const analyzePath = ({
 
   const gearDefinition: GearDefinition = {
     gearName,
-    image: `images/${gearName}.png`,
+    camelCasedGearName,
+    image: `images/gears/${gearName}.png`,
+    thumbnailImage: `images/gears/${gearName}_thumb.png`,
     size: {
       width: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
       height: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,

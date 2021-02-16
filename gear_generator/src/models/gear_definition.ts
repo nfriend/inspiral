@@ -10,8 +10,14 @@ export interface GearDefinition {
   /** The name of this gear */
   gearName: string;
 
+  /** The name of this gear in camelCased format */
+  camelCasedGearName: string;
+
   /** The asset path to the gear's image */
   image: string;
+
+  /** The asset path to the gear's thumbnail image */
+  thumbnailImage: string;
 
   /** The size of the gear, in logical pixels */
   size: {

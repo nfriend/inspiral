@@ -11,7 +11,7 @@ import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 
 final oval32 = GearDefinition(
-    image: 'images/oval_32.png',
+    image: 'images/gears/oval_32.png',
     size: Size(304, 304),
     toothCount: 27,
     points: [

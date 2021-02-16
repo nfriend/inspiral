@@ -11,7 +11,7 @@ import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 
 final heart = GearDefinition(
-    image: 'images/heart.png',
+    image: 'images/gears/heart.png',
     size: Size(664, 664),
     toothCount: 75,
     points: [

@@ -93,7 +93,7 @@ export const generateSvg = async (
     ),
     pngPath: path.resolve(
       __dirname,
-      '../../images',
+      '../../images/gears',
       `${gearDefinition.gearName}.png`,
     ),
     width: gearDefinition.size.width,

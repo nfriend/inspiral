@@ -11,7 +11,7 @@ import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 
 final square40 = GearDefinition(
-    image: 'images/square_40.png',
+    image: 'images/gears/square_40.png',
     size: Size(300, 300),
     toothCount: 40,
     points: [

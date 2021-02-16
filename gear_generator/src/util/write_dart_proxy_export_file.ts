@@ -3,7 +3,6 @@ import util from 'util';
 import path from 'path';
 import ejs from 'ejs';
 import { GearDefinition } from '../models/gear_definition';
-import camelcase from 'camelcase';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -24,15 +23,7 @@ export const writeDartProxyExportFile = async (
     '../templates/dart/dart_proxy_export.dart.ejs',
   );
 
-  // Should we just build the camel-cased name into `GearDefinition`? :thinking:
-  const gearDefinitionsWithCamelCasedName = gearDefinitions.map((gd) => {
-    const camelCasedGearName = camelcase(gd.gearName);
-    return { ...gd, camelCasedGearName };
-  });
-
-  const rendered = await renderFile(templateFilePath, {
-    gearDefinitions: gearDefinitionsWithCamelCasedName,
-  });
+  const rendered = await renderFile(templateFilePath, { gearDefinitions });
 
   await writeFile(filePath, rendered);
 };

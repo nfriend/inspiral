@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import globSync from 'glob';
 import util from 'util';
 import puppeteer from 'puppeteer';
+import camelcase from 'camelcase';
 import { baseScale, toothHeight, meshSpacing } from './constants';
 import { analyzePath } from './analyze_path';
 import { GearDefinition } from './models/gear_definition';
@@ -56,6 +57,7 @@ const readFile = util.promisify(fs.readFile);
       toothHeight,
       meshSpacing,
       gearName,
+      camelCasedGearName: camelcase(gearName),
     });
 
     // Write the points to a JSON file that matches the naming convention
