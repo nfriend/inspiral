@@ -42,7 +42,16 @@ class _SelectorDrawerState extends State<SelectorDrawer>
       opacity = 0.0;
     }
 
-    _tabController.index = selectorDrawer.activeTab.index;
+    _tabController.animateTo(selectorDrawer.activeTab.index);
+
+    // Listen for changes to the active tab due to swipes, and update
+    // our provider state to keep them in sync.
+    _tabController.addListener(() {
+      if (_tabController.index != selectorDrawer.activeTab.index) {
+        selectorDrawer.syncActiveTab(
+            newActiveTab: DrawerTab.values[_tabController.index]);
+      }
+    });
 
     return AnimatedContainer(
         duration: uiAnimationDuration,

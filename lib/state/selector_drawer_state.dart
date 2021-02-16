@@ -48,6 +48,15 @@ class SelectorDrawerState extends ChangeNotifier {
     }
   }
 
+  /// Syncs this state's active tab with the TabController's active tab.
+  /// This is used to keep the TabController and this state object in sync
+  /// when the tab change is triggered by the tab itself (e.g. due
+  /// to the user changing tab with a swipe gesture).
+  void syncActiveTab({@required DrawerTab newActiveTab}) {
+    _activeTab = newActiveTab;
+    notifyListeners();
+  }
+
   /// The currently active drawer tab
   DrawerTab get activeTab => _activeTab;
   DrawerTab _activeTab = DrawerTab.pen;
