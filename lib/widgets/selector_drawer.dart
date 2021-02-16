@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/widgets/gear_selector.dart';
 import 'package:provider/provider.dart';
 
 class SelectorDrawer extends StatefulWidget {
@@ -65,7 +66,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
             opacity: opacity,
             child: Container(
                 color: colors.uiBackgroundColor.color,
-                height: 200,
+                height: 168,
                 child: TabBarView(controller: _tabController, children: [
                   Center(
                       child: ElevatedButton(
@@ -75,10 +76,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
                       child: ElevatedButton(
                           onPressed: () {},
                           child: Text("This is the Colors tab"))),
-                  Center(
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("This is the Gears tab"))),
+                  GearSelector(),
                 ]))));
   }
 }

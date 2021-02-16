@@ -1,4 +1,16 @@
 <%- include('auto_generate_warning_comment') %>
-<%_ for (const name of gearNames) { _%>
-export 'package:inspiral/models/gears/<%= name %>.dart';
+import 'package:inspiral/models/gear_definition.dart';
+
+<%_ for (const { gearName } of gearDefinitions) { _%>
+import 'package:inspiral/models/gears/<%= gearName %>.dart';
 <%_ } _%>
+
+<%_ for (const { gearName } of gearDefinitions) { _%>
+export 'package:inspiral/models/gears/<%= gearName %>.dart';
+<%_ } _%>
+
+Map<String, GearDefinition> allGears = {
+<%_ for (const { camelCasedGearName } of gearDefinitions) { _%>
+  '<%= camelCasedGearName %>': <%= camelCasedGearName %>,
+<%_ } _%>
+};

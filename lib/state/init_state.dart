@@ -51,8 +51,8 @@ Future<void> initState(BuildContext context,
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
   final rotatingGear = RotatingGearState.init(
       initialAngle: initialAngle,
-      initialDefinition: circle64,
-      initialActiveHole: circle64.holes.last);
+      initialDefinition: circle24,
+      initialActiveHole: circle24.holes.last);
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);
   final fixedGear = FixedGearState.init(
