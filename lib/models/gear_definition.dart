@@ -11,6 +11,9 @@ class GearDefinition {
   /// The asset path to the gear's image
   final String image;
 
+  /// The asset path to the gear's thumbnail image
+  final String thumbnailImage;
+
   /// The size of the gear, in logical pixels
   final Size size;
 
@@ -25,6 +28,7 @@ class GearDefinition {
 
   GearDefinition(
       {@required this.image,
+      @required this.thumbnailImage,
       @required this.size,
       @required this.toothCount,
       @required this.points,

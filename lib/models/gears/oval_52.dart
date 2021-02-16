@@ -12,6 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 
 final oval52 = GearDefinition(
     image: 'images/gears/oval_52.png',
+    thumbnailImage: 'images/gears/oval_52_thumb.png',
     size: Size(464, 464),
     toothCount: 44,
     points: [

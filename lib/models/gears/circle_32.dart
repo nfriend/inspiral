@@ -13,6 +13,7 @@ import 'package:inspiral/models/gear_hole.dart';
 
 final circle32 = GearDefinition(
     image: 'images/gears/circle_32.png',
+    thumbnailImage: 'images/gears/circle_32_thumb.png',
     size: Size(304, 304),
     toothCount: 32,
     points: [

@@ -12,6 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 
 final lens60 = GearDefinition(
     image: 'images/gears/lens_60.png',
+    thumbnailImage: 'images/gears/lens_60_thumb.png',
     size: Size(628, 628),
     toothCount: 57,
     points: [
