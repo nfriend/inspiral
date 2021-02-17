@@ -44,8 +44,8 @@ export const renderHtmlToPng = async (
       let pngPath = info.pngPath;
       if (scale != 1) {
         pngPath = pngPath.replace(
-          'images',
-          path.join('images', `${scale.toFixed(1)}x`),
+          path.join('images', 'gears'),
+          path.join('images', 'gears', `${scale.toFixed(1)}x`),
         );
       }
 
