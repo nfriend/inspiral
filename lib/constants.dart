@@ -68,4 +68,4 @@ final GlobalKey<ScaffoldMessengerState> scaffoldGlobalKey =
 /// The size of thumbnail gear images (in logical pixels).
 /// Thumbnail images are square, so only one dimension is needed.
 /// This constant should equal its counterpart in `constants.ts`.
-final double thumbnailSize = 75.0;
+final double thumbnailSize = 65.0;

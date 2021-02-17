@@ -76,4 +76,4 @@ export const holeSize = 2.5;
  * Thumbnail images are square, so only one dimension is needed.
  * This constant should equal its counterpart in `constants.dart`.
  */
-export const thumbnailSize = 75;
+export const thumbnailSize = 65;

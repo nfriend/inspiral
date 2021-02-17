@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 final noFilterColorFilter = ColorFilter.matrix([
   1,
   0,
@@ -89,5 +91,28 @@ final fixedGearInvertedColorFilter = ColorFilter.matrix([
   0,
   0,
   2,
+  0,
+]);
+
+final activeThumbnailGearColorFilter = ColorFilter.matrix([
+  1.3,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1.3,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1.3,
+  0,
+  0,
+  0,
+  0,
+  0,
+  2.0,
   0,
 ]);

@@ -67,16 +67,19 @@ class _SelectorDrawerState extends State<SelectorDrawer>
             child: Container(
                 color: colors.uiBackgroundColor.color,
                 height: 168,
-                child: TabBarView(controller: _tabController, children: [
-                  Center(
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("This is the Pen tab"))),
-                  Center(
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("This is the Colors tab"))),
-                  GearSelector(),
-                ]))));
+                child: TabBarView(
+                    controller: _tabController,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      Center(
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text("This is the Pen tab"))),
+                      Center(
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text("This is the Colors tab"))),
+                      GearSelector(),
+                    ]))));
   }
 }

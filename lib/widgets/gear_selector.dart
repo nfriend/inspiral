@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/widgets/gear_selector_thumbnail.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/models/gears/gears.dart';
 
@@ -8,6 +9,8 @@ class GearSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ColorState>(context);
+    final rotatingGear = Provider.of<RotatingGearState>(context);
+    final fixedGear = Provider.of<FixedGearState>(context);
     final double padding = 10.0;
 
     TextStyle textStyle =
@@ -26,10 +29,12 @@ class GearSelector extends StatelessWidget {
           Expanded(
               child: ListView(
                   scrollDirection: Axis.horizontal,
-                  itemExtent: thumbnailSize,
+                  itemExtent: thumbnailSize + 5.0,
                   children: [
                 for (var gear in allGears.values)
-                  Image.asset(gear.thumbnailImage)
+                  GearSelectorThumbnail(
+                      isActive: rotatingGear.definition == gear,
+                      assetPath: gear.thumbnailImage)
               ]))
         ]);
 
