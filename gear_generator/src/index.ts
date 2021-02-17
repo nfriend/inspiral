@@ -8,7 +8,7 @@ import camelcase from 'camelcase';
 import { baseScale, toothHeight, meshSpacing } from './constants';
 import { analyzePath } from './analyze_path';
 import { GearDefinition } from './models/gear_definition';
-import { generateSvg } from './generate_svg';
+import { generateSvgs } from './generate_svg';
 import { ImageInfo } from './models/image_info';
 import { renderHtmlToPng } from './render';
 import { writeGearDefinitionAsDartFile } from './util/write_gear_definition_as_dart_file';
@@ -73,13 +73,17 @@ const readFile = util.promisify(fs.readFile);
         chalk.gray(`  ├─ Wrote gear definition to: ${dartFilePath}`),
       );
 
-    const imageInfo = await generateSvg(gearDefinition);
+    const imageInfos = await generateSvgs(gearDefinition);
 
-    allImageInfos.push(imageInfo);
+    allImageInfos.push(...imageInfos);
     allGearDefinitions.push(gearDefinition);
 
     console.info(
-      chalk.gray(`  └─ Wrote rendered SVG to: ${imageInfo.svgPath}`),
+      chalk.gray(
+        `  └─ Wrote rendered SVGs to: ${imageInfos
+          .map((ii) => ii.svgPath)
+          .join(', ')}`,
+      ),
     );
   }
 

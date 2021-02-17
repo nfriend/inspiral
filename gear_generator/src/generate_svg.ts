@@ -9,6 +9,7 @@ import {
   baseScale,
   holeSize,
   meshSpacing as unscaledMeshSpacing,
+  thumbnailSize,
   toothHeight as unscaledToothHeight,
 } from './constants';
 import { hostSvgInHTml } from './util/host_svg_in_html';
@@ -44,16 +45,16 @@ const toothSideLength = Math.sqrt(
 const toothSideAngle = Math.asin((toothLength * (4 / 12)) / toothSideLength);
 
 /**
- * Builds an SVG representation of a gear based on the points
- * of the provided `GearDefinition`, and writes the
- * result to a file.
+ * Build SVG representations (regular and thumbnail) of a gear based
+ * on the points of the provided `GearDefinition`, and writes the
+ * results to files.
  *
  * @param gearDefinition The definition of the gear to generate
- * @returns The file path to the SVG
+ * @returns The file paths to the SVGs
  */
-export const generateSvg = async (
+export const generateSvgs = async (
   gearDefinition: GearDefinition,
-): Promise<ImageInfo> => {
+): Promise<ImageInfo[]> => {
   const centerPoint: Point = {
     x: gearDefinition.size.width / 2,
     y: gearDefinition.size.height / 2,
@@ -80,47 +81,76 @@ export const generateSvg = async (
 
   svgPath.closePath();
 
-  const imageInfo: ImageInfo = {
-    svgPath: path.resolve(
-      __dirname,
-      '../tmp',
-      `${gearDefinition.gearName}.svg`,
-    ),
-    htmlPath: path.resolve(
-      __dirname,
-      '../tmp',
-      `${gearDefinition.gearName}.html`,
-    ),
-    pngPath: path.resolve(
-      __dirname,
-      '../../images/gears',
-      `${gearDefinition.gearName}.png`,
-    ),
-    width: gearDefinition.size.width,
-    height: gearDefinition.size.height,
-  };
+  const imageInfos: ImageInfo[] = [];
+
+  const allOptions = [
+    {
+      postfix: '',
+      imageSize: {
+        width: gearDefinition.size.width,
+        height: gearDefinition.size.height,
+      },
+      transparency: 'lots',
+    },
+    {
+      postfix: '_thumb',
+      imageSize: {
+        width: thumbnailSize,
+        height: thumbnailSize,
+      },
+      transparency: 'just a little',
+    },
+  ];
 
   const templateFilePath = path.resolve(
     __dirname,
     './templates/svgs_for_rendering/gear.svg.ejs',
   );
-  const rendered = await renderFile(templateFilePath, {
-    width: gearDefinition.size.width,
-    height: gearDefinition.size.height,
-    baseScale,
-    gearPath: svgPath,
-    holes: gearDefinition.holes.map((h) =>
-      generateHole({ hole: h, centerPoint }),
-    ),
-  });
 
-  await writeFile(imageInfo.svgPath, rendered);
-  await writeFile(
-    imageInfo.htmlPath,
-    hostSvgInHTml({ svgFilePath: imageInfo.svgPath, width: imageInfo.width }),
+  const holes = gearDefinition.holes.map((h) =>
+    generateHole({ hole: h, centerPoint }),
   );
 
-  return imageInfo;
+  for (const options of allOptions) {
+    const imageInfo: ImageInfo = {
+      svgPath: path.resolve(
+        __dirname,
+        '../tmp',
+        `${gearDefinition.gearName}${options.postfix}.svg`,
+      ),
+      htmlPath: path.resolve(
+        __dirname,
+        '../tmp',
+        `${gearDefinition.gearName}${options.postfix}.html`,
+      ),
+      pngPath: path.resolve(
+        __dirname,
+        '../../images/gears',
+        `${gearDefinition.gearName}${options.postfix}.png`,
+      ),
+      width: options.imageSize.width,
+      height: options.imageSize.height,
+    };
+
+    const rendered = await renderFile(templateFilePath, {
+      imageSize: options.imageSize,
+      viewBox: gearDefinition.size,
+      baseScale,
+      transparency: options.transparency,
+      gearPath: svgPath,
+      holes,
+    });
+
+    await writeFile(imageInfo.svgPath, rendered);
+    await writeFile(
+      imageInfo.htmlPath,
+      hostSvgInHTml({ svgFilePath: imageInfo.svgPath, width: imageInfo.width }),
+    );
+
+    imageInfos.push(imageInfo);
+  }
+
+  return imageInfos;
 };
 
 /**

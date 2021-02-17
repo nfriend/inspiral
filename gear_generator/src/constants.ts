@@ -70,3 +70,10 @@ export const scalesToGenerate = [1, 2, 3];
 
 /** The radius of each hole */
 export const holeSize = 2.5;
+
+/**
+ * The size of thumbnail gear images (in logical pixels).
+ * Thumbnail images are square, so only one dimension is needed.
+ * This constant should equal its counterpart in `constants.dart`.
+ */
+export const thumbnailSize = 75;

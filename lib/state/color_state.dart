@@ -101,7 +101,7 @@ class ColorState extends ChangeNotifier {
     double luminance = penHsl.l * .9 + 0.1;
 
     _uiBackgroundColor = TinyColor.fromHSL(
-        HslColor(h: penHue, s: penSaturation, l: luminance, a: 180.0));
+        HslColor(h: penHue, s: penSaturation, l: luminance, a: 220.0));
 
     _uiTextColor = _uiBackgroundColor.isDark()
         ? TinyColor(Colors.white70)

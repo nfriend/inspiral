@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="<%= width %>"
-     height="<%= height %>"
-     viewbow="0 0 <%= width %> <%= height %>">
+     width="<%= imageSize.width %>"
+     height="<%= imageSize.height %>"
+     viewBox="0 0 <%= viewBox.width %> <%= viewBox.height %>">
   <style>
     #gear {
+      <%_ if (transparency === 'lots') { _%>
       fill: #000000;
       fill-opacity: 0.2;
+      <%_ } else if (transparency === 'just a little') { _%>
+      fill: #C0C0C0;
+      fill-opacity: 0.8;
+      <%_ } _%>
       stroke: #000000;
       stroke-width: <%= 0.5 * baseScale %>;
     }

@@ -64,3 +64,8 @@ final GlobalKey canvasWithBackgroundGlobalKey =
 /// Used for showing snack bars.
 final GlobalKey<ScaffoldMessengerState> scaffoldGlobalKey =
     GlobalKey(debugLabel: 'ScaffoldMessenger');
+
+/// The size of thumbnail gear images (in logical pixels).
+/// Thumbnail images are square, so only one dimension is needed.
+/// This constant should equal its counterpart in `constants.ts`.
+final double thumbnailSize = 75.0;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/models/gears/gears.dart';
@@ -25,9 +26,10 @@ class GearSelector extends StatelessWidget {
           Expanded(
               child: ListView(
                   scrollDirection: Axis.horizontal,
-                  itemExtent: 75,
+                  itemExtent: thumbnailSize,
                   children: [
-                for (var gear in allGears.values) Image.asset(gear.image)
+                for (var gear in allGears.values)
+                  Image.asset(gear.thumbnailImage)
               ]))
         ]);
 
