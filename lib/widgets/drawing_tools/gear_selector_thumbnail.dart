@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/color_filters.dart';
+import 'package:provider/provider.dart';
 
 class GearSelectorThumbnail extends StatelessWidget {
   final String assetPath;
@@ -14,22 +16,27 @@ class GearSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Center(
-          child: ColorFiltered(
-              colorFilter: isActive
-                  ? activeThumbnailGearColorFilter
-                  : noFilterColorFilter,
-              child: Image.asset(assetPath,
-                  width: thumbnailSize, height: thumbnailSize))),
-      Positioned.fill(
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
+    var colors = Provider.of<ColorState>(context);
+
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Stack(children: [
+          Positioned.fill(
+              child: Container(
+                  color: isActive ? colors.accentColor.color : null,
+                  child: Center(
+                      child: ColorFiltered(
+                          colorFilter: isActive
+                              ? activeThumbnailGearColorFilter
+                              : noFilterColorFilter,
+                          child: Image.asset(assetPath,
+                              width: thumbnailSize, height: thumbnailSize))))),
+          Positioned.fill(
               child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
                     onTap: onGearTap,
-                  ))))
-    ]);
+                  )))
+        ]));
   }
 }

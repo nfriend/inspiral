@@ -29,7 +29,7 @@ class SelectionRow extends StatelessWidget {
           Expanded(
               child: ListView(
                   scrollDirection: Axis.horizontal,
-                  itemExtent: thumbnailSize + 5.0,
+                  itemExtent: thumbnailSize + 10.0,
                   children: children))
         ]);
   }

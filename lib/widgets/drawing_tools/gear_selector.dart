@@ -47,26 +47,30 @@ class GearSelector extends StatelessWidget {
           }),
     ];
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        for (var def in rowDefs)
-          Expanded(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: SelectionRow(
-                    label: def.label,
-                    children: [
-                      for (var gear in def.gearsToShow)
-                        GearSelectorThumbnail(
-                            isActive: gear == def.activeGear,
-                            assetPath: gear.thumbnailImage,
-                            onGearTap: () {
-                              def.onGearSelect(gear);
-                            })
-                    ],
-                  ))),
-      ],
-    );
+    final double padding = 2.5;
+
+    return Padding(
+        padding: EdgeInsets.all(2.5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            for (var def in rowDefs)
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(padding),
+                      child: SelectionRow(
+                        label: def.label,
+                        children: [
+                          for (var gear in def.gearsToShow)
+                            GearSelectorThumbnail(
+                                isActive: gear == def.activeGear,
+                                assetPath: gear.thumbnailImage,
+                                onGearTap: () {
+                                  def.onGearSelect(gear);
+                                })
+                        ],
+                      ))),
+          ],
+        ));
   }
 }
