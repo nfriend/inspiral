@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/widgets/gear_selector.dart';
+import 'package:inspiral/widgets/drawing_tools/gear_selector.dart';
 import 'package:provider/provider.dart';
 
 class SelectorDrawer extends StatefulWidget {

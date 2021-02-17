@@ -5,8 +5,12 @@ import 'package:inspiral/widgets/color_filters.dart';
 class GearSelectorThumbnail extends StatelessWidget {
   final String assetPath;
   final bool isActive;
+  final Function onGearTap;
 
-  GearSelectorThumbnail({this.assetPath, this.isActive});
+  GearSelectorThumbnail(
+      {@required this.assetPath,
+      @required this.isActive,
+      @required this.onGearTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class GearSelectorThumbnail extends StatelessWidget {
               child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: onGearTap,
                   ))))
     ]);
   }

@@ -55,26 +55,15 @@ class RotatingGearState extends BaseGearState {
       @required GearDefinition initialDefinition,
       @required GearHole initialActiveHole}) {
     definition = initialDefinition;
-    _initialAngle = initialAngle;
     _lastAngle = initialAngle;
     activeHole = initialActiveHole;
   }
 
-  // This weird initialization logic is necessary because
-  // RotatingGearProvider and FixedGearProvider have references to each other,
-  // so the gear's initial position can't be computed in this class's
-  // constructor. So instead, this method is called by a consumer when
-  // we know all dependencies have been resolved.
-  bool _hasInitializedPosition = false;
-  double _initialAngle;
+  /// Initializes the position of the gear
   void initializePosition() {
-    if (_hasInitializedPosition) return;
-
-    RotationResult result = _getRotationForAngle(_initialAngle);
+    RotationResult result = _getRotationForAngle(_lastAngle);
     _updateGearState(result);
     _lastPoint = result.rotatingGearPosition;
-
-    _hasInitializedPosition = true;
   }
 
   double _lastAngle;
@@ -122,6 +111,17 @@ class RotatingGearState extends BaseGearState {
     super.gearPointerUp(event);
 
     notifyListeners();
+  }
+
+  /// Swaps the current rotating gear for a new one
+  void selectNewGear(GearDefinition newGear) {
+    this.definition = newGear;
+
+    // TODO: select (closest?) gear hole here.
+    // Right now we're just re-using the
+    // previously-selected hole on the last gear
+
+    initializePosition();
   }
 
   /// Updates all state variables with the provide rotation calculation results

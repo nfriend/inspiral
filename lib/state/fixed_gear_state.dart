@@ -38,4 +38,10 @@ class FixedGearState extends BaseGearState {
       position = newPosition;
     }
   }
+
+  /// Swaps the current fixed gear for a new one
+  void selectNewGear(GearDefinition newGear) {
+    this.definition = newGear;
+    this.rotatingGear.initializePosition();
+  }
 }
