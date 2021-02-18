@@ -7,10 +7,18 @@ import 'package:inspiral/extensions/extensions.dart';
 abstract class BaseInkPainter extends CustomPainter {
   final List<InkLine> _lines;
   final Offset _position;
+  final bool _stencilEffect;
+  final Image _inkImage;
 
-  BaseInkPainter({@required List<InkLine> lines, Offset position})
+  BaseInkPainter(
+      {@required List<InkLine> lines,
+      Offset position,
+      bool stencilEffect = false,
+      Image inkImage})
       : this._lines = lines,
-        this._position = position;
+        this._position = position,
+        this._stencilEffect = stencilEffect,
+        this._inkImage = inkImage;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -20,6 +28,16 @@ abstract class BaseInkPainter extends CustomPainter {
         ..strokeWidth = line.strokeWidth
         ..style = PaintingStyle.stroke
         ..strokeJoin = StrokeJoin.bevel;
+
+      if (_stencilEffect) {
+        paint.maskFilter = MaskFilter.blur(BlurStyle.outer, 10.0);
+      }
+
+      if (_inkImage != null) {
+        Matrix4 m = Matrix4.identity();
+        paint.shader =
+            ImageShader(_inkImage, TileMode.mirror, TileMode.mirror, m.storage);
+      }
 
       Iterable<Path> translatedPaths = line.paths;
 
