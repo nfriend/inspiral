@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/util.dart';
 
 class InkState extends ChangeNotifier {
@@ -20,6 +21,8 @@ class InkState extends ChangeNotifier {
   }
 
   InkState._internal();
+
+  ColorState colors;
 
   List<InkLine> _lines = [];
   bool _isBaking = false;
@@ -42,7 +45,7 @@ class InkState extends ChangeNotifier {
   void addPoints(List<Offset> points) {
     if (_lines.isEmpty) {
       _lines.add(InkLine(
-          color: getRandomColor(), strokeWidth: getRandomStrokeWidth()));
+          color: colors.penColor.color, strokeWidth: getRandomStrokeWidth()));
     }
 
     _lines.last.addPoints(points);
@@ -59,7 +62,7 @@ class InkState extends ChangeNotifier {
   void finishLine() {
     if (_lines.isNotEmpty) {
       _lines.add(InkLine(
-          color: getRandomColor(), strokeWidth: getRandomStrokeWidth()));
+          color: colors.penColor.color, strokeWidth: getRandomStrokeWidth()));
       _bakeImage();
     }
   }

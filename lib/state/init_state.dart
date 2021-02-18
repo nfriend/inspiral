@@ -40,7 +40,7 @@ Future<void> initState(BuildContext context,
   ProgressState.init();
   final settings = SettingsState.init();
   final selectorDrawer = SelectorDrawerState.init();
-  ColorState.init(
+  final colors = ColorState.init(
       initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0xAA088020)));
   // ColorState.init(
@@ -60,6 +60,7 @@ Future<void> initState(BuildContext context,
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
+  ink.colors = colors;
   rotatingGear
     ..pointers = pointers
     ..dragLine = dragLine
