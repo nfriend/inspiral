@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum DrawerTab { pen, colors, gears }
+enum DrawerTab { tools, pen, gears }
 
 class SelectorDrawerState extends ChangeNotifier {
   static SelectorDrawerState _instance;

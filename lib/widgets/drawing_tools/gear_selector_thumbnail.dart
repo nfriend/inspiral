@@ -23,7 +23,7 @@ class GearSelectorThumbnail extends StatelessWidget {
         child: Stack(children: [
           Positioned.fill(
               child: Container(
-                  color: isActive ? colors.accentColor.color : null,
+                  color: isActive ? colors.activeColor.color : null,
                   child: Center(
                       child: ColorFiltered(
                           colorFilter: isActive

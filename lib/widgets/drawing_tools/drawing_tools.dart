@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:inspiral/widgets/dynamic_theme.dart';
 import 'package:provider/provider.dart';
@@ -24,17 +25,17 @@ class DrawingTools extends StatelessWidget {
 
     List<_DrawingToolsButton> buttons = [
       _DrawingToolsButton(
+          icon: Icon(Icons.build, size: iconSize),
+          text: 'TOOLS',
+          tab: DrawerTab.tools,
+          onPressed: () => selectorDrawer.toggleOrSelectDrawer(
+              tabToSelect: DrawerTab.tools)),
+      _DrawingToolsButton(
           icon: Icon(Icons.edit, size: iconSize),
           text: 'PEN',
           tab: DrawerTab.pen,
           onPressed: () =>
               selectorDrawer.toggleOrSelectDrawer(tabToSelect: DrawerTab.pen)),
-      _DrawingToolsButton(
-          icon: Icon(Icons.palette, size: iconSize),
-          text: 'COLORS',
-          tab: DrawerTab.colors,
-          onPressed: () => selectorDrawer.toggleOrSelectDrawer(
-              tabToSelect: DrawerTab.colors)),
       _DrawingToolsButton(
           icon: Icon(Icons.settings, size: iconSize),
           text: 'GEARS',
@@ -45,9 +46,9 @@ class DrawingTools extends StatelessWidget {
 
     ButtonStyle activeStyle = ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith(
-            (states) => colors.accentColor.color),
+            (states) => colors.activeColor.color),
         foregroundColor: MaterialStateProperty.resolveWith(
-            (states) => colors.uiTextAccentColor.color));
+            (states) => colors.activeTextColor.color));
 
     return DynamicTheme(
       child: Container(

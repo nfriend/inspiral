@@ -18,8 +18,7 @@ class _InspiralProvidersState extends State<InspiralProviders> {
 
   @override
   Widget build(BuildContext context) {
-    TinyColor initialCanvasColor =
-        TinyColor(Color(0xFFF7EFDA)); //TinyColor(Color(0xFF364959))
+    TinyColor initialCanvasColor = TinyColor(Colors.white);
 
     // Initialize all the singletons that will be provided below
     if (_stateFuture == null) {

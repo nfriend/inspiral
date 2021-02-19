@@ -18,7 +18,7 @@ class ModalProgress extends StatelessWidget {
     }
 
     Animation<Color> indicatorColor =
-        AlwaysStoppedAnimation<Color>(colors.penColorWithoutAlpha.color);
+        AlwaysStoppedAnimation<Color>(colors.primaryColor.color);
 
     List<Widget> columnChildren = [];
 

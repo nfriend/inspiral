@@ -20,7 +20,7 @@ class DynamicTheme extends StatelessWidget {
     ButtonStyle buttonStyle = ButtonStyle(
         shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
         backgroundColor: MaterialStateProperty.resolveWith(
-            (states) => colors.uiBackgroundColor.color),
+            (states) => colors.buttonColor.color),
         foregroundColor: MaterialStateProperty.resolveWith(
             (states) => colors.uiTextColor.color),
         overlayColor: MaterialStateProperty.resolveWith(

@@ -51,17 +51,21 @@ class ColorState extends ChangeNotifier {
   TinyColor get uiBackgroundColor => _uiBackgroundColor;
   TinyColor _uiBackgroundColor;
 
-  /// The pen color without any transparency
-  TinyColor get penColorWithoutAlpha => _penColorWithoutAlpha;
-  TinyColor _penColorWithoutAlpha;
-
   /// The color of the text in the UI
   TinyColor get uiTextColor => _uiTextColor;
   TinyColor _uiTextColor;
 
-  /// The color of the text in the UI when appearing on the accent background
-  TinyColor get uiTextAccentColor => _uiTextAccentColor;
-  TinyColor _uiTextAccentColor;
+  /// The color of the buttons in the UI
+  TinyColor get buttonColor => _buttonColor;
+  TinyColor _buttonColor;
+
+  /// The color of "active" (selected) UI elements
+  TinyColor get activeColor => _activeColor;
+  TinyColor _activeColor;
+
+  /// The color of text on "active" (selected) UI elements
+  TinyColor get activeTextColor => _activeTextColor;
+  TinyColor _activeTextColor;
 
   /// The primary color for the current theme
   TinyColor get primaryColor => _primaryColor;
@@ -100,29 +104,31 @@ class ColorState extends ChangeNotifier {
     // Reduce the bottom range of the luminance to avoid complete black
     double luminance = penHsl.l * .9 + 0.1;
 
-    _uiBackgroundColor = TinyColor.fromHSL(
-        HslColor(h: penHue, s: penSaturation, l: luminance, a: 220.0));
+    _uiBackgroundColor =
+        isDark ? TinyColor(Color(0xCC555555)) : TinyColor(Color(0xCCCCCCCC));
 
-    _uiTextColor = _uiBackgroundColor.isDark()
-        ? TinyColor(Colors.white70)
-        : TinyColor(Colors.black87);
+    _uiTextColor =
+        isDark ? TinyColor(Colors.white70) : TinyColor(Colors.black87);
 
-    _penColorWithoutAlpha = TinyColor.fromHSL(
-        HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
+    _buttonColor =
+        isDark ? _uiBackgroundColor.lighten() : _uiBackgroundColor.darken();
+
+    _activeColor =
+        isDark ? TinyColor(Color(0xCCFFFFFF)) : TinyColor(Color(0xAA333333));
+
+    _activeTextColor =
+        isDark ? TinyColor(Colors.black) : TinyColor(Colors.white);
 
     _primaryColor = TinyColor.fromHSL(
         HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
 
     _splashColor =
         isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(10);
+
     _highlightColor =
         isDark ? _uiBackgroundColor.lighten(5) : _uiBackgroundColor.darken(5);
 
     _accentColor = _primaryColor.spin(240).lighten();
-
-    _uiTextAccentColor = _accentColor.isDark()
-        ? TinyColor(Colors.white70)
-        : TinyColor(Colors.black87);
 
     _accentSplashColor =
         isDark ? _accentColor.lighten(30) : _accentColor.darken(10);

@@ -3,6 +3,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector.dart';
+import 'package:inspiral/widgets/drawing_tools/tools_selector.dart';
 import 'package:provider/provider.dart';
 
 class SelectorDrawer extends StatefulWidget {
@@ -72,10 +73,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
                     controller: _tabController,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      Center(
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text("This is the Pen tab"))),
+                      ToolsSelector(),
                       ColorSelector(),
                       GearSelector(),
                     ]))));
