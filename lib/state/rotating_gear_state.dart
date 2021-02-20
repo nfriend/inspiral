@@ -4,6 +4,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:inspiral/util/calculate_rotation_count.dart';
 
 /// A utility class to hold the results of a rotation calculation
 @immutable
@@ -69,6 +70,7 @@ class RotatingGearState extends BaseGearState {
   double _lastAngle;
   Offset _lastPoint;
   Offset _relativePenPosition;
+  int toothOffset = 0;
 
   FixedGearState fixedGear;
   DragLineState dragLine;
@@ -124,6 +126,65 @@ class RotatingGearState extends BaseGearState {
     initializePosition();
   }
 
+  /// Rotates the rotating gear in place (without drawing)
+  /// by the provided number of teeth
+  void rotateInPlace({int teethToRotate}) {
+    this.toothOffset += teethToRotate;
+    initializePosition();
+  }
+
+  /// Keeps track of whether we're in the process of drawing a rotation.
+  /// If we are, we ignore requests to draw another rotation.
+  bool _isDrawingRotation = false;
+
+  /// Draws one complete rotation, so that the rotating gears
+  /// ends where it starts
+  Future<void> drawOneRotation() async {
+    if (_isDrawingRotation) {
+      return;
+    }
+
+    _isDrawingRotation = true;
+
+    int intervalsToDraw = 10;
+    double intervalAmount = 2 * pi / intervalsToDraw;
+    for (int i = 1; i <= intervalsToDraw; i++) {
+      double amountToAdd = intervalAmount * i;
+      RotationResult result =
+          _getRotationForAngle(dragLine.angle + amountToAdd);
+      _updateGearState(result);
+      _drawPoints(result, dragLine.angle + amountToAdd);
+
+      await Future.delayed(Duration(milliseconds: 16));
+    }
+
+    dragLine.angle += 2 * pi;
+    _isDrawingRotation = false;
+  }
+
+  /// Keeps track of whether we're in the process of drawing a complete pattern.
+  /// If we are, we ignore requests to draw another complete pattern
+  bool _isDrawingCompletePattern = false;
+
+  /// Draws a complete pattern
+  Future<void> drawCompletePattern() async {
+    if (_isDrawingCompletePattern) {
+      return;
+    }
+
+    _isDrawingCompletePattern = true;
+
+    int rotationsToComplete = calculateRotationCount(
+        fixedGearTeeth: fixedGear.definition.toothCount,
+        rotatingGearTeeth: definition.toothCount);
+
+    for (int i = 0; i < rotationsToComplete; i++) {
+      await drawOneRotation();
+    }
+
+    _isDrawingCompletePattern = false;
+  }
+
   /// Updates all state variables with the provide rotation calculation results
   void _updateGearState(RotationResult result) {
     rotation = result.rotatingGearRotation;
@@ -141,8 +202,8 @@ class RotatingGearState extends BaseGearState {
         .toothToContactPoint(fixedGearTooth)
         .translated(fixedGear.position);
 
-    ContactPoint rotatingGearRelativeContactPoint =
-        definition.toothToContactPoint(fixedGearTooth, isRotating: true);
+    ContactPoint rotatingGearRelativeContactPoint = definition
+        .toothToContactPoint(fixedGearTooth + toothOffset, isRotating: true);
 
     double rotatingGearRotation = rotatingGearRelativeContactPoint.direction -
         fixedGearContactPoint.direction +

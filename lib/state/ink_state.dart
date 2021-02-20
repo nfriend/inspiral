@@ -44,8 +44,7 @@ class InkState extends ChangeNotifier {
   /// If there is no current line, a new one is created.
   void addPoints(List<Offset> points) {
     if (_lines.isEmpty) {
-      _lines.add(InkLine(
-          color: colors.penColor.color, strokeWidth: getRandomStrokeWidth()));
+      _lines.add(InkLine(color: colors.penColor.color, strokeWidth: 3.0));
     }
 
     _lines.last.addPoints(points);
@@ -61,8 +60,7 @@ class InkState extends ChangeNotifier {
   /// Does nothing if there is no current line.
   void finishLine() {
     if (_lines.isNotEmpty) {
-      _lines.add(InkLine(
-          color: colors.penColor.color, strokeWidth: getRandomStrokeWidth()));
+      _lines.add(InkLine(color: colors.penColor.color, strokeWidth: 3.0));
       _bakeImage();
     }
   }

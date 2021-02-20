@@ -11,6 +11,7 @@ class ToolsSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ColorState>(context);
+    final rotatingGear = Provider.of<RotatingGearState>(context);
 
     final List<TinyColor> penColors = [
       TinyColor(Colors.white),
@@ -29,28 +30,28 @@ class ToolsSelector extends StatelessWidget {
           icon: InspiralCustomIcons.forward_1,
           tooltipMessage: "Rotate in place clockwise by one tooth",
           onButtonTap: () {
-            print("tapped");
+            rotatingGear.rotateInPlace(teethToRotate: 1);
           },
         ),
         ActionButton(
           icon: InspiralCustomIcons.backwards_1,
           tooltipMessage: "Rotate in place counterclockwise by one tooth",
           onButtonTap: () {
-            print("tapped");
+            rotatingGear.rotateInPlace(teethToRotate: -1);
           },
         ),
         ActionButton(
           icon: Icons.refresh,
           tooltipMessage: "Draw one rotation",
           onButtonTap: () {
-            print("tapped");
+            rotatingGear.drawOneRotation();
           },
         ),
         ActionButton(
           icon: InspiralCustomIcons.rotate_complete,
-          tooltipMessage: "Draw until complete",
+          tooltipMessage: "Draw complete pattern",
           onButtonTap: () {
-            print("tapped");
+            rotatingGear.drawCompletePattern();
           },
         ),
       ]),
