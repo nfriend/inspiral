@@ -17,26 +17,21 @@ class GearSelectorThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var colors = Provider.of<ColorState>(context);
+    final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10.0));
 
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Stack(children: [
-          Positioned.fill(
-              child: Container(
-                  color: isActive ? colors.activeColor.color : null,
-                  child: Center(
-                      child: ColorFiltered(
-                          colorFilter: isActive
-                              ? activeThumbnailGearColorFilter
-                              : noFilterColorFilter,
-                          child: Image.asset(assetPath,
-                              width: thumbnailSize, height: thumbnailSize))))),
-          Positioned.fill(
-              child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: onGearTap,
-                  )))
-        ]));
+    return Padding(
+        padding: EdgeInsets.all(2.5),
+        child: Material(
+            borderRadius: borderRadius,
+            color: isActive ? colors.activeColor.color : Colors.transparent,
+            child: InkWell(
+                onTap: onGearTap,
+                borderRadius: borderRadius,
+                child: ColorFiltered(
+                    colorFilter: isActive
+                        ? activeThumbnailGearColorFilter
+                        : noFilterColorFilter,
+                    child: Image.asset(assetPath,
+                        width: thumbnailSize, height: thumbnailSize)))));
   }
 }

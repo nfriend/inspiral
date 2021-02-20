@@ -5,6 +5,7 @@ import 'package:inspiral/widgets/animated_toolbar_container.dart';
 import 'package:inspiral/widgets/drawing_tools/drawing_tools.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
+import 'package:inspiral/widgets/dynamic_theme.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
 import 'package:inspiral/widgets/menu_bar.dart';
 import 'package:inspiral/widgets/modal_progress.dart';
@@ -84,10 +85,13 @@ class InspiralDrawingBoard extends StatelessWidget {
           Positioned(left: 0, right: 0, bottom: 0, child: SelectorDrawer())
         ]));
 
-    return ModalProgress(
-        child: Scaffold(
-            body: settings.debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
-            bottomNavigationBar: AnimatedToolbarContainer(
-                translateY: 42.0, child: DrawingTools())));
+    return DynamicTheme(
+        child: ModalProgress(
+            child: Scaffold(
+                body: settings.debug
+                    ? StatsFl(child: scaffoldBody)
+                    : scaffoldBody,
+                bottomNavigationBar: AnimatedToolbarContainer(
+                    translateY: 42.0, child: DrawingTools()))));
   }
 }

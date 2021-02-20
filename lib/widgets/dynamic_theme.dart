@@ -31,6 +31,7 @@ class DynamicTheme extends StatelessWidget {
 
     return Theme(
         data: ThemeData(
+            brightness: colors.isDark ? Brightness.dark : Brightness.light,
             accentColor: colors.accentColor.color,
             splashColor: colors.splashColor.color,
             primaryColor: colors.primaryColor.color,

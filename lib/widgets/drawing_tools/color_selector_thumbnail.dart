@@ -16,33 +16,28 @@ class ColorSelectorThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var colors = Provider.of<ColorState>(context);
+    final BorderRadius outerBorderRadius =
+        BorderRadius.all(Radius.circular(10.0));
+    final BorderRadius innerBorderRadius =
+        BorderRadius.all(Radius.circular(5.0));
 
-    return Stack(children: [
-      Positioned.fill(
-          child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 5.0,
-                  color:
-                      isActive ? colors.activeColor.color : Colors.transparent,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              ),
-              child: Center(
-                  child: Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Container(
-                    decoration: BoxDecoration(
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+              width: 5.0,
+              color: isActive ? colors.activeColor.color : Colors.transparent,
+            ),
+            borderRadius: outerBorderRadius),
+        child: Center(
+          child: Padding(
+              padding: EdgeInsets.all(5.0),
+              child: Material(
                   color: color.color,
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                )),
-              )))),
-      Positioned.fill(
-          child: Material(
-              type: MaterialType.transparency,
-              child: InkWell(
-                onTap: onColorTap,
-              )))
-    ]);
+                  borderRadius: innerBorderRadius,
+                  child: InkWell(
+                    borderRadius: innerBorderRadius,
+                    onTap: onColorTap,
+                  ))),
+        ));
   }
 }

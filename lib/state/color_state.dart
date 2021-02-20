@@ -123,10 +123,9 @@ class ColorState extends ChangeNotifier {
         HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
 
     _splashColor =
-        isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(10);
+        isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(30);
 
-    _highlightColor =
-        isDark ? _uiBackgroundColor.lighten(5) : _uiBackgroundColor.darken(5);
+    _highlightColor = TinyColor(Colors.transparent);
 
     _accentColor = _primaryColor.spin(240).lighten();
 

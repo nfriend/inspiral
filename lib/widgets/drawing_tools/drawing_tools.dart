@@ -50,25 +50,24 @@ class DrawingTools extends StatelessWidget {
         foregroundColor: MaterialStateProperty.resolveWith(
             (states) => colors.activeTextColor.color));
 
-    return DynamicTheme(
-      child: Container(
-          color: colors.uiBackgroundColor.color,
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: margin * 2),
-              child: Row(children: [
-                for (var button in buttons)
-                  Expanded(
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: margin),
-                          child: TextButton.icon(
-                              style: selectorDrawer.activeTab == button.tab &&
-                                      selectorDrawer.isOpen
-                                  ? activeStyle
-                                  : null,
-                              onPressed: button.onPressed,
-                              icon: button.icon,
-                              label: Text(button.text))))
-              ]))),
+    return Container(
+      color: colors.uiBackgroundColor.color,
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: margin * 2),
+          child: Row(children: [
+            for (var button in buttons)
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: margin),
+                      child: TextButton.icon(
+                          style: selectorDrawer.activeTab == button.tab &&
+                                  selectorDrawer.isOpen
+                              ? activeStyle
+                              : null,
+                          onPressed: button.onPressed,
+                          icon: button.icon,
+                          label: Text(button.text))))
+          ])),
     );
   }
 }

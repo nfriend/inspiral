@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/widgets/drawing_tools/action_button.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:inspiral/util/custom_icons.dart';
 
 class ToolsSelector extends StatelessWidget {
   @override
@@ -22,6 +24,36 @@ class ToolsSelector extends StatelessWidget {
     ];
 
     return SelectionRows(rowDefs: [
+      SelectionrRowDefinition(label: 'TOOLS', children: [
+        ActionButton(
+          icon: InspiralCustomIcons.forward_1,
+          tooltipMessage: "Rotate in place clockwise by one tooth",
+          onButtonTap: () {
+            print("tapped");
+          },
+        ),
+        ActionButton(
+          icon: InspiralCustomIcons.backwards_1,
+          tooltipMessage: "Rotate in place counterclockwise by one tooth",
+          onButtonTap: () {
+            print("tapped");
+          },
+        ),
+        ActionButton(
+          icon: Icons.refresh,
+          tooltipMessage: "Draw one rotation",
+          onButtonTap: () {
+            print("tapped");
+          },
+        ),
+        ActionButton(
+          icon: InspiralCustomIcons.rotate_complete,
+          tooltipMessage: "Draw until complete",
+          onButtonTap: () {
+            print("tapped");
+          },
+        ),
+      ]),
       SelectionrRowDefinition(label: 'CANVAS', children: [
         for (TinyColor color in penColors)
           ColorSelectorThumbnail(
