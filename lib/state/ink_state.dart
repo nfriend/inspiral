@@ -5,7 +5,6 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/util/util.dart';
 
 class InkState extends ChangeNotifier {
   static InkState _instance;
@@ -27,6 +26,7 @@ class InkState extends ChangeNotifier {
   List<InkLine> _lines = [];
   bool _isBaking = false;
   Map<Offset, Image> _tileImages = {};
+  Offset _lastPoint;
 
   /// The total number of points included in the the drawing.
   int get currentPointCount =>
@@ -40,6 +40,10 @@ class InkState extends ChangeNotifier {
   /// A list of Path objects that describe the lines drawn on the Canvas
   List<InkLine> get lines => _lines;
 
+  /// Returns the last point of the current line, or `null`
+  /// if there is no current line
+  Offset get lastPoint => _lastPoint;
+
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
   void addPoints(List<Offset> points) {
@@ -48,6 +52,10 @@ class InkState extends ChangeNotifier {
     }
 
     _lines.last.addPoints(points);
+
+    if (points.isNotEmpty) {
+      _lastPoint = points.last;
+    }
 
     if (currentPointCount > 1000) {
       _bakeImage();
@@ -63,6 +71,8 @@ class InkState extends ChangeNotifier {
       _lines.add(InkLine(color: colors.penColor.color, strokeWidth: 3.0));
       _bakeImage();
     }
+
+    _lastPoint = null;
   }
 
   Future<void> _bakeImage() async {

@@ -64,11 +64,9 @@ class RotatingGearState extends BaseGearState {
   void initializePosition() {
     RotationResult result = _getRotationForAngle(_lastAngle);
     _updateGearState(result);
-    _lastPoint = result.rotatingGearPosition;
   }
 
   double _lastAngle;
-  Offset _lastPoint;
   Offset _relativePenPosition;
   int toothOffset = 0;
 
@@ -161,7 +159,7 @@ class RotatingGearState extends BaseGearState {
 
     int intervalsToDraw = 10;
     double intervalAmount = 2 * pi / intervalsToDraw;
-    for (int i = 1; i <= intervalsToDraw; i++) {
+    for (int i = 0; i <= intervalsToDraw; i++) {
       double amountToAdd = intervalAmount * i;
       RotationResult result =
           _getRotationForAngle(dragLine.angle + amountToAdd);
@@ -251,7 +249,15 @@ class RotatingGearState extends BaseGearState {
   /// from the previous point, a number of intermediate points are drawn
   /// to keep the drawn line from appearing choppy.
   void _drawPoints(RotationResult result, double angle) {
-    double segmentLength = Line(result.penPosition, _lastPoint).length();
+    // If `lastPoint` is `null`, this means there is no last point to compare
+    // to, so we should just draw the current point immediately.
+    if (ink.lastPoint == null) {
+      ink.addPoints([result.penPosition]);
+      _lastAngle = angle;
+      return;
+    }
+
+    double segmentLength = Line(result.penPosition, ink.lastPoint).length();
 
     // If the point is too close to the last drawn point, don't draw a new one
     if (segmentLength < minLineSegmentLength) {
@@ -262,7 +268,6 @@ class RotatingGearState extends BaseGearState {
     if (segmentLength <= maxLineSegmentLength) {
       ink.addPoints([result.penPosition]);
       _lastAngle = angle;
-      _lastPoint = result.penPosition;
       return;
     }
 
@@ -285,6 +290,5 @@ class RotatingGearState extends BaseGearState {
 
     ink.addPoints(pointsToAdd);
     _lastAngle = angle;
-    _lastPoint = result.penPosition;
   }
 }
