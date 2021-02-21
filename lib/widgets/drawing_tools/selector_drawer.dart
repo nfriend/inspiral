@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/widgets/drawing_tools/color_selector.dart';
+import 'package:inspiral/widgets/drawing_tools/pen_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/tools_selector.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +74,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
                     physics: NeverScrollableScrollPhysics(),
                     children: [
                       ToolsSelector(),
-                      ColorSelector(),
+                      PenSelector(),
                       GearSelector(),
                     ]))));
   }

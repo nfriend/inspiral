@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/init_state.dart';
+import 'package:inspiral/state/stroke_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -37,6 +38,7 @@ class _InspiralProvidersState extends State<InspiralProviders> {
               ChangeNotifierProvider(
                   create: (context) => SelectorDrawerState()),
               ChangeNotifierProvider(create: (context) => ColorState()),
+              ChangeNotifierProvider(create: (context) => StrokeState()),
               ChangeNotifierProvider(create: (context) => InkState()),
               ChangeNotifierProvider(create: (context) => PointersState()),
               ChangeNotifierProvider(create: (context) => CanvasState()),

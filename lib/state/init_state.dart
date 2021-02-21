@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:inspiral/models/gears/gears.dart';
+import 'package:inspiral/state/stroke_state.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ Future<void> initState(BuildContext context,
   final colors = ColorState.init(
       initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0x66FF0000)));
+  final stroke = StrokeState.init(initialWidth: 5.0);
   final ink = InkState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
@@ -57,8 +59,11 @@ Future<void> initState(BuildContext context,
 
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
-  ink.colors = colors;
   colors.ink = ink;
+  stroke.ink = ink;
+  ink
+    ..colors = colors
+    ..stroke = stroke;
   rotatingGear
     ..pointers = pointers
     ..dragLine = dragLine

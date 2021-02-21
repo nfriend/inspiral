@@ -7,5 +7,6 @@ export 'package:inspiral/state/settings_state.dart';
 export 'package:inspiral/state/drag_line_state.dart';
 export 'package:inspiral/state/color_state.dart';
 export 'package:inspiral/state/ink_state.dart';
+export 'package:inspiral/state/stroke_state.dart';
 export 'package:inspiral/state/progress_state.dart';
 export 'package:inspiral/state/selector_drawer_state.dart';
