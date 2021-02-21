@@ -13,6 +13,7 @@ class FixedGear extends StatelessWidget {
       return Container();
     }
 
+    final pointers = Provider.of<PointersState>(context, listen: false);
     final colors = context.watch<ColorState>();
 
     final ColorFilter colorFilter =
@@ -23,9 +24,15 @@ class FixedGear extends StatelessWidget {
         child: Transform.rotate(
           angle: gear.rotation,
           child: Listener(
-              onPointerDown: gear.gearPointerDown,
+              onPointerDown: (event) {
+                pointers.pointerDown(event);
+                gear.gearPointerDown(event);
+              },
               onPointerMove: gear.gearPointerMove,
-              onPointerUp: gear.gearPointerUp,
+              onPointerUp: (event) {
+                pointers.pointerUp(event);
+                gear.gearPointerUp(event);
+              },
               child: ColorFiltered(
                   colorFilter: colorFilter,
                   child: Image.asset(gear.definition.image,

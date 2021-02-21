@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class ColorState extends ChangeNotifier {
@@ -27,6 +28,8 @@ class ColorState extends ChangeNotifier {
     _updateDependentColors();
   }
 
+  InkState ink;
+
   /// The current background color of the canvas
   TinyColor _backgroundColor;
   TinyColor get backgroundColor => _backgroundColor;
@@ -42,6 +45,7 @@ class ColorState extends ChangeNotifier {
   set penColor(TinyColor value) {
     _penColor = value;
     _updateDependentColors();
+    ink.finishLine();
     notifyListeners();
   }
 

@@ -58,6 +58,7 @@ Future<void> initState(BuildContext context,
   // Link up dependencies between the singletons
   canvas.pointers = pointers;
   ink.colors = colors;
+  colors.ink = ink;
   rotatingGear
     ..pointers = pointers
     ..dragLine = dragLine
@@ -71,6 +72,7 @@ Future<void> initState(BuildContext context,
   fixedGear
     ..pointers = pointers
     ..rotatingGear = rotatingGear
+    ..ink = ink
     ..dragLine = dragLine
     ..settings = settings
     ..selectorDrawer = selectorDrawer;

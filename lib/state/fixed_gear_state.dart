@@ -28,6 +28,7 @@ class FixedGearState extends BaseGearState {
 
   RotatingGearState rotatingGear;
   DragLineState dragLine;
+  InkState ink;
 
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
@@ -43,5 +44,6 @@ class FixedGearState extends BaseGearState {
   void selectNewGear(GearDefinition newGear) {
     this.definition = newGear;
     this.rotatingGear.initializePosition();
+    ink.finishLine();
   }
 }

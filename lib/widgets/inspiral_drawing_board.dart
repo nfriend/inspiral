@@ -32,7 +32,7 @@ class InspiralDrawingBoard extends StatelessWidget {
     final Widget scaffoldBody = Listener(
         behavior: HitTestBehavior.translucent,
         onPointerDown: (event) {
-          pointers.globalPointerDown(event);
+          pointers.pointerDown(event);
           canvas.globalPointerDown(event);
           fixedGear.globalPointerDown(event);
           rotatingGear.globalPointerDown(event);
@@ -41,7 +41,7 @@ class InspiralDrawingBoard extends StatelessWidget {
           canvas.globalPointerMove(event);
         },
         onPointerUp: (event) {
-          pointers.globalPointerUp(event);
+          pointers.pointerUp(event);
           canvas.globalPointerUp(event);
         },
         child: Stack(children: [

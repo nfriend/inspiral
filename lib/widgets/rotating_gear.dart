@@ -15,6 +15,7 @@ class RotatingGear extends StatelessWidget {
     }
 
     final dragLine = Provider.of<DragLineState>(context, listen: false);
+    final pointers = Provider.of<PointersState>(context, listen: false);
     final colors = context.watch<ColorState>();
 
     final ColorFilter colorFilter = colors.backgroundColor.isDark()
@@ -34,6 +35,7 @@ class RotatingGear extends StatelessWidget {
           angle: gear.rotation,
           child: Listener(
               onPointerDown: (event) {
+                pointers.pointerDown(event);
                 dragLine.gearPointerDown(event);
                 gear.gearPointerDown(event);
               },
@@ -41,7 +43,10 @@ class RotatingGear extends StatelessWidget {
                 dragLine.gearPointerMove(event);
                 gear.gearPointerMove(event);
               },
-              onPointerUp: gear.gearPointerUp,
+              onPointerUp: (event) {
+                pointers.pointerUp(event);
+                gear.gearPointerUp(event);
+              },
               child: Stack(children: [
                 ColorFiltered(
                     colorFilter: colorFilter,

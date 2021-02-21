@@ -94,6 +94,17 @@ class RotatingGearState extends BaseGearState {
 
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
+    ink.finishLine();
+  }
+
+  @override
+  gearPointerDown(PointerDownEvent event) {
+    super.gearPointerDown(event);
+
+    if (event.device == draggingPointerId && isDragging) {
+      RotationResult result = _getRotationForAngle(dragLine.angle);
+      ink.addPoints([result.penPosition]);
+    }
   }
 
   gearPointerMove(PointerMoveEvent event) {
@@ -124,6 +135,7 @@ class RotatingGearState extends BaseGearState {
     // previously-selected hole on the last gear
 
     initializePosition();
+    ink.finishLine();
   }
 
   /// Rotates the rotating gear in place (without drawing)
@@ -131,6 +143,7 @@ class RotatingGearState extends BaseGearState {
   void rotateInPlace({int teethToRotate}) {
     this.toothOffset += teethToRotate;
     initializePosition();
+    ink.finishLine();
   }
 
   /// Keeps track of whether we're in the process of drawing a rotation.
