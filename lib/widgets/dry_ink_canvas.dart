@@ -33,6 +33,8 @@ class DryInkCanvas extends StatelessWidget {
         key: canvasWithBackgroundGlobalKey,
         child: Container(
             color: colors.backgroundColor.color,
+            width: canvasSize.width,
+            height: canvasSize.height,
             child: RepaintBoundary(
                 key: canvasWithoutBackgroundGlobalKey,
                 child: Stack(children: tiles))));

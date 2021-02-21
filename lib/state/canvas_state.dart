@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
@@ -67,7 +68,12 @@ class CanvasState extends ChangeNotifier {
       return Offset.zero;
     }
 
-    return PointerEvent.transformPosition(unprojection, pixelPosition);
+    // Subtracting `canvasCenter` accounts for the fact that the canvas
+    // is offset in its parent by `canvasCenter`. This is to allow pointer
+    // events to work even when the gears are outside of the bounds of the
+    // canvas.
+    return PointerEvent.transformPosition(unprojection, pixelPosition) -
+        canvasCenter;
   }
 
   void globalPointerDown(PointerDownEvent event) {

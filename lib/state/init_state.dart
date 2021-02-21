@@ -23,8 +23,9 @@ Future<void> initState(BuildContext context,
   initialCanvasTransform.scale(initialZoom, initialZoom, 0);
 
   // Move the center of the canvas to the
-  // top-left of the screen
-  Vector3 originTranslation = -(canvasCenter.toVector3());
+  // top-left of the screen. Multiplied by 2, because the
+  // canvas itself is offset by `canvasCenter` from its parent.
+  Vector3 originTranslation = -(canvasCenter.toVector3() * 2);
   initialCanvasTransform.translate(originTranslation);
 
   // Then, move the canvas back by half the screen dimensions
