@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/extensions/extensions.dart';
+
+// An arbitrary number that allows even the biggest gear
+// combination to always be draggable.
+final double allowedDistanceFromCanvasEdge = 900.0;
+final Rect dragBounds = Rect.fromLTRB(
+    -allowedDistanceFromCanvasEdge,
+    -allowedDistanceFromCanvasEdge,
+    canvasSize.width + allowedDistanceFromCanvasEdge,
+    canvasSize.height + allowedDistanceFromCanvasEdge);
 
 class FixedGearState extends BaseGearState {
   static FixedGearState _instance;
@@ -32,7 +43,8 @@ class FixedGearState extends BaseGearState {
 
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
-      final newPosition = event.localPosition - dragOffset;
+      final Offset newPosition =
+          (event.localPosition - dragOffset).clamp(dragBounds);
 
       rotatingGear.fixedGearDrag(position - newPosition);
       dragLine.fixedGearDrag(position - newPosition);

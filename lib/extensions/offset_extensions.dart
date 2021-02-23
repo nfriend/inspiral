@@ -26,4 +26,12 @@ extension OffsetExtensions on Offset {
 
     return rotatedPosition;
   }
+
+  /// Returns a new Offset, clamped within the provided bounds
+  Offset clamp(Rect bounds) {
+    return Offset(
+      this.dx.clamp(bounds.left, bounds.right),
+      this.dy.clamp(bounds.top, bounds.bottom),
+    );
+  }
 }
