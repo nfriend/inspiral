@@ -10,7 +10,8 @@ class FreshInkCanvas extends StatelessWidget {
     final ink = Provider.of<InkState>(context);
 
     return RepaintBoundary(
-        child: CustomPaint(
-            size: canvasSize, painter: FreshInkPainter(lines: ink.lines)));
+        child: ClipRect(
+            child: CustomPaint(
+                size: canvasSize, painter: FreshInkPainter(lines: ink.lines))));
   }
 }
