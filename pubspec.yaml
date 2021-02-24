@@ -49,6 +49,7 @@ dev_dependencies:
   xml: ^4.5.1
   ansicolor: ^1.1.1
   test: ^1.15.7
+  flutter_launcher_icons: ^0.8.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -93,3 +94,8 @@ flutter:
     - family: InspiralCustomIcons
       fonts:
         - asset: fonts/InspiralCustomIcons.ttf
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/inspiral_logo.png"
