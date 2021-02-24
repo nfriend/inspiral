@@ -3,8 +3,17 @@ import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:inspiral/widgets/drawing_tools/stroke_selector_thumbnail.dart';
+import 'package:inspiral/models/ink_line.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
+
+@immutable
+class _StrokeAndStyle {
+  final double width;
+  final StrokeStyle style;
+
+  _StrokeAndStyle({this.width, this.style});
+}
 
 class PenSelector extends StatelessWidget {
   @override
@@ -12,7 +21,7 @@ class PenSelector extends StatelessWidget {
     final colors = Provider.of<ColorState>(context);
     final stroke = Provider.of<StrokeState>(context);
 
-    final List<TinyColor> penColors = [
+    List<TinyColor> penColors = [
       TinyColor(Color(0x66FF0000)),
       TinyColor(Color(0xB3FF9500)),
       TinyColor(Color(0xB3FFFF00)),
@@ -25,25 +34,28 @@ class PenSelector extends StatelessWidget {
       TinyColor(Color(0xCC646464)),
     ];
 
-    final List<double> strokeWidths = [
-      1.0,
-      3.0,
-      5.0,
-      7.5,
-      10.0,
-      12.5,
-      15.0,
-      20.0
+    // TODO: Move all of these out into some kind of constants file
+    final List<_StrokeAndStyle> strokeOptions = [];
+    final List<double> allWidths = [1.0, 3.0, 5.0, 7.5, 10.0, 12.5, 15.0, 20.0];
+    final List<StrokeStyle> allStyles = [
+      StrokeStyle.normal,
+      StrokeStyle.airbrush
     ];
+    for (StrokeStyle style in allStyles) {
+      for (double width in allWidths) {
+        strokeOptions.add(_StrokeAndStyle(width: width, style: style));
+      }
+    }
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(label: 'STYLE', children: [
-        for (double width in strokeWidths)
+        for (_StrokeAndStyle options in strokeOptions)
           StrokeSelectorThumbnail(
-              width: width,
-              isActive: width == stroke.width,
+              width: options.width,
+              isActive: options.width == stroke.width &&
+                  options.style == stroke.style,
               onStrokeTap: () {
-                stroke.width = width;
+                stroke.setStroke(width: options.width, style: options.style);
               })
       ]),
       SelectionrRowDefinition(label: 'COLOR', children: [

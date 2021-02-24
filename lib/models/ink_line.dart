@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/core.dart';
 
+enum StrokeStyle { normal, airbrush }
+
 /// Represents a line if ink on the canvas
 class InkLine {
   final List<List<Offset>> _points;
@@ -12,10 +14,14 @@ class InkLine {
   int _pointCount;
   int _mark = 0;
 
-  InkLine({@required Color color, @required double strokeWidth})
+  InkLine(
+      {@required Color color,
+      @required double strokeWidth,
+      @required StrokeStyle strokeStyle})
       : this._internal(
             color: color,
             strokeWidth: strokeWidth,
+            strokeStyle: strokeStyle,
             initialPoints: [],
             initialPaths: [],
             initialPointCount: 0);
@@ -25,6 +31,7 @@ class InkLine {
   InkLine._internal(
       {@required this.color,
       @required this.strokeWidth,
+      @required this.strokeStyle,
       @required List<List<Offset>> initialPoints,
       @required List<Path> initialPaths,
       @required int initialPointCount})
@@ -40,6 +47,7 @@ class InkLine {
     return InkLine._internal(
         color: source.color,
         strokeWidth: source.strokeWidth,
+        strokeStyle: source.strokeStyle,
         initialPoints:
             source.points.map((p) => List<Offset>.from(p).toList()).toList(),
         initialPaths: source.paths.map((p) => Path.from(p)).toList(),
@@ -51,6 +59,9 @@ class InkLine {
 
   /// The stroke width of this line
   final double strokeWidth;
+
+  /// The stroke style of this line
+  final StrokeStyle strokeStyle;
 
   /// The list of points that define this line. This list is kept in sync
   /// with the `paths` property below.

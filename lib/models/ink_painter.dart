@@ -7,17 +7,12 @@ import 'package:inspiral/extensions/extensions.dart';
 abstract class BaseInkPainter extends CustomPainter {
   final List<InkLine> _lines;
   final Offset _position;
-  final bool _stencilEffect;
   final Image _inkImage;
 
   BaseInkPainter(
-      {@required List<InkLine> lines,
-      Offset position,
-      bool stencilEffect = false,
-      Image inkImage})
+      {@required List<InkLine> lines, Offset position, Image inkImage})
       : this._lines = lines,
         this._position = position,
-        this._stencilEffect = stencilEffect,
         this._inkImage = inkImage;
 
   @override
@@ -29,7 +24,7 @@ abstract class BaseInkPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeJoin = StrokeJoin.bevel;
 
-      if (_stencilEffect) {
+      if (line.strokeStyle == StrokeStyle.airbrush) {
         paint.maskFilter = MaskFilter.blur(BlurStyle.outer, 10.0);
       }
 
