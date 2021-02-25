@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/constants.dart';
 
 class SelectionrRowDefinition {
   final String label;
@@ -43,10 +43,12 @@ class SelectionRows extends StatelessWidget {
                                       child:
                                           Text(def.label, style: textStyle)))),
                           Expanded(
-                              child: ListView(
+                              child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemExtent: thumbnailSize + 10.0,
-                                  children: def.children))
+                                  itemCount: def.children.length,
+                                  itemBuilder: (context, index) =>
+                                      def.children[index]))
                         ])))
         ]));
   }

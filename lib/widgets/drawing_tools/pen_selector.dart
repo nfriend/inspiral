@@ -15,43 +15,47 @@ class _StrokeAndStyle {
   _StrokeAndStyle({this.width, this.style});
 }
 
+final List<TinyColor> _penColors = [
+  TinyColor(Color(0x66FF0000)),
+  TinyColor(Color(0xB3FF9500)),
+  TinyColor(Color(0xB3FFFF00)),
+  TinyColor(Color(0x80009600)),
+  TinyColor(Color(0x660000FF)),
+  TinyColor(Color(0x80960096)),
+  TinyColor(Color(0xCCFFFFFF)),
+  TinyColor(Color(0xCCC8C8C8)),
+  TinyColor(Color(0xCC969696)),
+  TinyColor(Color(0xCC646464)),
+];
+
+final List<_StrokeAndStyle> _strokeOptions = [
+  _StrokeAndStyle(width: 1.0, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 3.0, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 5.0, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 7.5, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 12.5, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 15.0, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 20.0, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 30.0, style: StrokeStyle.normal),
+  _StrokeAndStyle(width: 5.0, style: StrokeStyle.airbrush),
+  _StrokeAndStyle(width: 7.5, style: StrokeStyle.airbrush),
+  _StrokeAndStyle(width: 12.5, style: StrokeStyle.airbrush),
+  _StrokeAndStyle(width: 15.0, style: StrokeStyle.airbrush),
+  _StrokeAndStyle(width: 20.0, style: StrokeStyle.airbrush),
+];
+
 class PenSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ColorState>(context);
     final stroke = Provider.of<StrokeState>(context);
 
-    List<TinyColor> penColors = [
-      TinyColor(Color(0x66FF0000)),
-      TinyColor(Color(0xB3FF9500)),
-      TinyColor(Color(0xB3FFFF00)),
-      TinyColor(Color(0x80009600)),
-      TinyColor(Color(0x660000FF)),
-      TinyColor(Color(0x80960096)),
-      TinyColor(Color(0xCCFFFFFF)),
-      TinyColor(Color(0xCCC8C8C8)),
-      TinyColor(Color(0xCC969696)),
-      TinyColor(Color(0xCC646464)),
-    ];
-
-    // TODO: Move all of these out into some kind of constants file
-    final List<_StrokeAndStyle> strokeOptions = [];
-    final List<double> allWidths = [1.0, 3.0, 5.0, 7.5, 10.0, 12.5, 15.0, 20.0];
-    final List<StrokeStyle> allStyles = [
-      StrokeStyle.normal,
-      StrokeStyle.airbrush
-    ];
-    for (StrokeStyle style in allStyles) {
-      for (double width in allWidths) {
-        strokeOptions.add(_StrokeAndStyle(width: width, style: style));
-      }
-    }
-
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(label: 'STYLE', children: [
-        for (_StrokeAndStyle options in strokeOptions)
+        for (_StrokeAndStyle options in _strokeOptions)
           StrokeSelectorThumbnail(
               width: options.width,
+              style: options.style,
               isActive: options.width == stroke.width &&
                   options.style == stroke.style,
               onStrokeTap: () {
@@ -59,7 +63,7 @@ class PenSelector extends StatelessWidget {
               })
       ]),
       SelectionrRowDefinition(label: 'COLOR', children: [
-        for (TinyColor color in penColors)
+        for (TinyColor color in _penColors)
           ColorSelectorThumbnail(
               color: color,
               isActive: color.color == colors.penColor.color,
