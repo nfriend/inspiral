@@ -30,14 +30,14 @@ class ToolsSelector extends StatelessWidget {
           icon: InspiralCustomIcons.forward_1,
           tooltipMessage: "Rotate in place clockwise by one tooth",
           onButtonTap: () {
-            rotatingGear.rotateInPlace(teethToRotate: 1);
+            rotatingGear.rotateInPlace(teethToRotate: -1);
           },
         ),
         ActionButton(
           icon: InspiralCustomIcons.backwards_1,
           tooltipMessage: "Rotate in place counterclockwise by one tooth",
           onButtonTap: () {
-            rotatingGear.rotateInPlace(teethToRotate: -1);
+            rotatingGear.rotateInPlace(teethToRotate: 1);
           },
         ),
         ActionButton(

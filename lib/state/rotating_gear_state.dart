@@ -137,7 +137,7 @@ class RotatingGearState extends BaseGearState {
   }
 
   /// Rotates the rotating gear in place (without drawing)
-  /// by the provided number of teeth
+  /// by the provided number of teeth in the positive direction
   void rotateInPlace({int teethToRotate}) {
     this.toothOffset += teethToRotate;
     initializePosition();
@@ -148,7 +148,7 @@ class RotatingGearState extends BaseGearState {
   /// If we are, we ignore requests to draw another rotation.
   bool _isDrawingRotation = false;
 
-  /// Draws one complete rotation, so that the rotating gears
+  /// Draws one complete (clockwise) rotation, so that the rotating gears
   /// ends where it starts
   Future<void> drawOneRotation() async {
     if (_isDrawingRotation) {
@@ -157,8 +157,9 @@ class RotatingGearState extends BaseGearState {
 
     _isDrawingRotation = true;
 
+    double rotationAmount = 2 * pi * -1;
     int intervalsToDraw = 10;
-    double intervalAmount = 2 * pi / intervalsToDraw;
+    double intervalAmount = rotationAmount / intervalsToDraw;
     for (int i = 0; i <= intervalsToDraw; i++) {
       double amountToAdd = intervalAmount * i;
       RotationResult result =
@@ -169,7 +170,7 @@ class RotatingGearState extends BaseGearState {
       await Future.delayed(Duration(milliseconds: 16));
     }
 
-    dragLine.angle += 2 * pi;
+    dragLine.angle += rotationAmount;
     _isDrawingRotation = false;
   }
 
