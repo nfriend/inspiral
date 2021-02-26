@@ -21,14 +21,14 @@ class GearSelector extends StatelessWidget {
         for (var gear in allGears.values)
           GearSelectorThumbnail(
               isActive: gear == fixedGear.definition,
-              assetPath: gear.thumbnailImage,
+              gear: gear,
               onGearTap: () => fixedGear.selectNewGear(gear))
       ]),
       SelectionrRowDefinition(label: 'ROTATING', children: [
         for (var gear in onlyGearsWithHoles)
           GearSelectorThumbnail(
               isActive: gear == rotatingGear.definition,
-              assetPath: gear.thumbnailImage,
+              gear: gear,
               onGearTap: () => rotatingGear.selectNewGear(gear))
       ])
     ]);

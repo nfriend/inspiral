@@ -11,8 +11,10 @@ import 'package:tinycolor/tinycolor.dart';
 class _StrokeAndStyle {
   final double width;
   final StrokeStyle style;
+  final bool isPremium;
 
-  _StrokeAndStyle({this.width, this.style});
+  _StrokeAndStyle(
+      {@required this.width, @required this.style, this.isPremium = false});
 }
 
 final List<TinyColor> _penColors = [
@@ -37,11 +39,11 @@ final List<_StrokeAndStyle> _strokeOptions = [
   _StrokeAndStyle(width: 15.0, style: StrokeStyle.normal),
   _StrokeAndStyle(width: 20.0, style: StrokeStyle.normal),
   _StrokeAndStyle(width: 30.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 5.0, style: StrokeStyle.airbrush),
-  _StrokeAndStyle(width: 7.5, style: StrokeStyle.airbrush),
-  _StrokeAndStyle(width: 12.5, style: StrokeStyle.airbrush),
-  _StrokeAndStyle(width: 15.0, style: StrokeStyle.airbrush),
-  _StrokeAndStyle(width: 20.0, style: StrokeStyle.airbrush),
+  _StrokeAndStyle(width: 5.0, style: StrokeStyle.airbrush, isPremium: true),
+  _StrokeAndStyle(width: 7.5, style: StrokeStyle.airbrush, isPremium: true),
+  _StrokeAndStyle(width: 12.5, style: StrokeStyle.airbrush, isPremium: true),
+  _StrokeAndStyle(width: 15.0, style: StrokeStyle.airbrush, isPremium: true),
+  _StrokeAndStyle(width: 20.0, style: StrokeStyle.airbrush, isPremium: true),
 ];
 
 class PenSelector extends StatelessWidget {
@@ -58,6 +60,7 @@ class PenSelector extends StatelessWidget {
               style: options.style,
               isActive: options.width == stroke.width &&
                   options.style == stroke.style,
+                  isPremium: options.isPremium,
               onStrokeTap: () {
                 stroke.setStroke(width: options.width, style: options.style);
               })

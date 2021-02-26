@@ -1,6 +1,17 @@
 import { ContactPoint } from './models/contact_point';
 import { GearDefinition } from './models/gear_definition';
 import { AngleGearHole } from './models/gear_hole';
+import { ProductId } from './models/product_id';
+
+export interface AnalyzePathParams {
+  baseScale: number;
+  toothHeight: number;
+  meshSpacing: number;
+  gearName: string;
+  camelCasedGearName: string;
+  allProductIds: { [name: string]: ProductId };
+  freeProductIdString: string;
+}
 
 /**
  * Finds the <path> element in the page, breaks it into chunks
@@ -18,17 +29,27 @@ export const analyzePath = ({
   meshSpacing,
   gearName,
   camelCasedGearName,
-}: {
-  baseScale: number;
-  toothHeight: number;
-  meshSpacing: number;
-  gearName: string;
-  camelCasedGearName: string;
-}): GearDefinition => {
+  allProductIds,
+  freeProductIdString,
+}: AnalyzePathParams): GearDefinition => {
   const pi2 = 2 * Math.PI;
 
   const svg = document.querySelector('svg');
   const path = svg.querySelector('path');
+
+  // Find the product ID embeded in the <product-id> element.
+  // If no <product-id> element was provided, the gear is assumed to free.
+  // If an invalid product ID is found, an error is thown.
+  const productIdString = (
+    document.querySelector('svg desc product-id')?.textContent ||
+    freeProductIdString
+  ).trim();
+  const productId = Object.values(allProductIds).find(
+    (pid) => pid.id === productIdString,
+  );
+  if (!productId) {
+    throw new Error(`Unrecognized product id: "${productId}"`);
+  }
 
   // The total length of the path
   const totalLength = path.getTotalLength();
@@ -180,6 +201,7 @@ export const analyzePath = ({
     toothCount,
     points: evaluatedPoints,
     holes,
+    productId,
   };
 
   return gearDefinition;

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/ink_line.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/widgets/drawing_tools/crown_image.dart';
 import 'package:provider/provider.dart';
 
 class StrokeSelectorThumbnail extends StatelessWidget {
   final double width;
   final StrokeStyle style;
   final bool isActive;
+  final bool isPremium;
   final Function onStrokeTap;
 
   StrokeSelectorThumbnail(
       {@required this.width,
       @required this.style,
       @required this.isActive,
-      @required this.onStrokeTap});
+      @required this.onStrokeTap,
+      this.isPremium = false});
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +54,22 @@ class StrokeSelectorThumbnail extends StatelessWidget {
           ));
     }
 
-    return Padding(
-        padding: EdgeInsets.all(10),
-        child: Material(
-            borderRadius: borderRadius,
-            color: buttonColor,
-            child: InkWell(
-                onTap: onStrokeTap,
-                borderRadius: borderRadius,
-                child: Center(
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.0),
-                        child: line)))));
+    final Widget crown = isPremium ? CrownImage() : Container();
+
+    return Stack(children: [
+      Padding(
+          padding: EdgeInsets.all(10),
+          child: Material(
+              borderRadius: borderRadius,
+              color: buttonColor,
+              child: InkWell(
+                  onTap: onStrokeTap,
+                  borderRadius: borderRadius,
+                  child: Center(
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          child: line))))),
+      crown
+    ]);
   }
 }

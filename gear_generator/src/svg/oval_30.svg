@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<product-id>
+			io.nathanfriend.inspiral.ovalGears
+		</product-id>
+	</desc>
   <g>
     <path d="M 60 20
              A 30 20 0 1 0 0 20

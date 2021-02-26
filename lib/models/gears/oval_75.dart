@@ -9,12 +9,14 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/product_id.dart';
 
 final oval75 = GearDefinition(
     image: 'images/gears/oval_75.png',
     thumbnailImage: 'images/gears/oval_75_thumb.png',
     size: Size(648, 648),
     toothCount: 63,
+    productId: ProductId.ovalGears,
     points: [
       ContactPoint(position: Offset(312, 0), direction: 0),
       ContactPoint(

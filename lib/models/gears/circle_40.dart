@@ -9,6 +9,7 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/product_id.dart';
 import 'package:inspiral/models/gear_hole.dart';
 
 final circle40 = GearDefinition(
@@ -16,6 +17,7 @@ final circle40 = GearDefinition(
     thumbnailImage: 'images/gears/circle_40_thumb.png',
     size: Size(368, 368),
     toothCount: 40,
+    productId: ProductId.free,
     points: [
       ContactPoint(position: Offset(172, 0), direction: 0),
       ContactPoint(

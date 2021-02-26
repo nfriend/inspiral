@@ -9,12 +9,14 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/product_id.dart';
 
 final heart = GearDefinition(
     image: 'images/gears/heart.png',
     thumbnailImage: 'images/gears/heart_thumb.png',
     size: Size(664, 664),
     toothCount: 75,
+    productId: ProductId.specialGears,
     points: [
       ContactPoint(
           position: Offset(320.88840384834464, -124.03994940517872),

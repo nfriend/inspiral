@@ -2,6 +2,7 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/product_id.dart';
 <%_ if (gearDefinition.holes.length > 0) { _%>
 import 'package:inspiral/models/gear_hole.dart';
 <%_ } _%>
@@ -11,6 +12,7 @@ final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
     thumbnailImage: '<%= gearDefinition.thumbnailImage %>',
     size: Size(<%= gearDefinition.size.width %>, <%= gearDefinition.size.height %>),
     toothCount: <%= gearDefinition.toothCount %>,
+    productId: <%= gearDefinition.productId.dart %>,
     points: [
       <%_ for (const point of gearDefinition.points) { _%>
       ContactPoint(

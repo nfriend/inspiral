@@ -1,5 +1,6 @@
 import { ContactPoint } from './contact_point';
 import { AngleGearHole } from './gear_hole';
+import { ProductId } from './product_id';
 
 /**
  * A class that holds all the data necessary to
@@ -33,4 +34,7 @@ export interface GearDefinition {
 
   /** The holes in the gear */
   holes: AngleGearHole[];
+
+  // The product ID of this gear.
+  productId: ProductId;
 }

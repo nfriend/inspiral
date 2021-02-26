@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg">
+	<desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<product-id>
+			io.nathanfriend.inspiral.specialGears
+		</product-id>
+	</desc>
 	<g>
 		<path d="M 145.49227,42 C 145.62087,20.33424 102.75644,2.9481907e-7 72.746134,2.9481907e-7 42.735824,2.9481906e-7 -0.04853047,20.174095 0,42 0.11161512,65.026997 42.735824,84 72.746134,84 102.75644,84 145.5408,65.10707 145.49227,42 Z" />
 	</g>

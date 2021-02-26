@@ -9,12 +9,14 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/product_id.dart';
 
 final square40 = GearDefinition(
     image: 'images/gears/square_40.png',
     thumbnailImage: 'images/gears/square_40_thumb.png',
     size: Size(300, 300),
     toothCount: 40,
+    productId: ProductId.squareGears,
     points: [
       ContactPoint(
           position: Offset(137.32740783691406, -0.33629608154296875),

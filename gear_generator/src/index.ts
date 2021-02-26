@@ -6,13 +6,14 @@ import util from 'util';
 import puppeteer from 'puppeteer';
 import camelcase from 'camelcase';
 import { baseScale, toothHeight, meshSpacing } from './constants';
-import { analyzePath } from './analyze_path';
+import { analyzePath, AnalyzePathParams } from './analyze_path';
 import { GearDefinition } from './models/gear_definition';
 import { generateSvgs } from './generate_svg';
 import { ImageInfo } from './models/image_info';
 import { renderHtmlToPng } from './render';
 import { writeGearDefinitionAsDartFile } from './util/write_gear_definition_as_dart_file';
 import { writeDartProxyExportFile } from './util/write_dart_proxy_export_file';
+import { allProductIds } from './models/product_id';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
@@ -52,13 +53,20 @@ const readFile = util.promisify(fs.readFile);
     // The gear name is the name of the SVG file (with the extension)
     const gearName = path.basename(svgFile, path.extname(svgFile));
 
-    const gearDefinition: GearDefinition = await page.evaluate(analyzePath, {
+    const analyzePathParams: AnalyzePathParams = {
       baseScale,
       toothHeight,
       meshSpacing,
       gearName,
       camelCasedGearName: camelcase(gearName),
-    });
+      allProductIds: allProductIds,
+      freeProductIdString: allProductIds.free.id,
+    };
+
+    const gearDefinition: GearDefinition = await page.evaluate(
+      analyzePath,
+      analyzePathParams as any,
+    );
 
     // Write the points to a JSON file that matches the naming convention
     // of the original SVG file.
