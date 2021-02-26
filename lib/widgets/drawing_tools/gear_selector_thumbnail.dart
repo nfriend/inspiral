@@ -20,21 +20,58 @@ class GearSelectorThumbnail extends StatelessWidget {
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10.0));
     final Widget crown = gear.isPremium ? CrownImage() : Container();
 
+    Color toothCountTextColor;
+    Color toothCountBubbleBackgroundColor;
+    Color toothCountBubbleBorderColor;
+    if (isActive) {
+      toothCountTextColor = colors.isDark ? Colors.white : Colors.black;
+      toothCountBubbleBackgroundColor =
+          colors.isDark ? Color(0xFF222222) : Colors.white;
+      toothCountBubbleBorderColor =
+          colors.isDark ? Color(0xFFF0F0F0) : Color(0xFF666666);
+    } else {
+      toothCountTextColor = colors.uiTextColor.color;
+      toothCountBubbleBackgroundColor =
+          colors.isDark ? Color(0xFF333333) : Color(0xFFF3F3F3);
+      toothCountBubbleBorderColor =
+          colors.isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
+    }
+
+    TextStyle toothCountTextStyle =
+        TextStyle(fontWeight: FontWeight.bold, color: toothCountTextColor);
+
     return Stack(children: [
-      Padding(
-          padding: EdgeInsets.all(2.5),
-          child: Material(
-              borderRadius: borderRadius,
-              color: isActive ? colors.activeColor.color : Colors.transparent,
-              child: InkWell(
-                  onTap: onGearTap,
+      Positioned.fill(
+          child: Padding(
+              padding: EdgeInsets.all(2.5),
+              child: Material(
                   borderRadius: borderRadius,
-                  child: ColorFiltered(
-                      colorFilter: isActive
-                          ? activeThumbnailGearColorFilter
-                          : noFilterColorFilter,
-                      child: Image.asset(gear.thumbnailImage,
-                          width: thumbnailSize, height: thumbnailSize))))),
+                  color:
+                      isActive ? colors.activeColor.color : Colors.transparent,
+                  child: InkWell(
+                      onTap: onGearTap,
+                      borderRadius: borderRadius,
+                      child: ColorFiltered(
+                          colorFilter: isActive
+                              ? activeThumbnailGearColorFilter
+                              : noFilterColorFilter,
+                          child: Image.asset(gear.thumbnailImage,
+                              width: thumbnailSize, height: thumbnailSize)))))),
+      Positioned(
+          bottom: 0,
+          left: 0,
+          child: Container(
+              decoration: BoxDecoration(
+                  color: toothCountBubbleBackgroundColor,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      width: 2.0, color: toothCountBubbleBorderColor)),
+              child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    gear.toothCount.toString(),
+                    style: toothCountTextStyle,
+                  )))),
       crown
     ]);
   }
