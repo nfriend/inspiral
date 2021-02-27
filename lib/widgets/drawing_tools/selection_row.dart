@@ -10,13 +10,25 @@ class SelectionrRowDefinition {
   SelectionrRowDefinition({@required this.label, @required this.children});
 }
 
-class SelectionRows extends StatelessWidget {
+class SelectionRows extends StatefulWidget {
   final Iterable<SelectionrRowDefinition> rowDefs;
 
   SelectionRows({this.rowDefs});
 
   @override
+  _SelectionRowsState createState() => _SelectionRowsState();
+}
+
+class _SelectionRowsState extends State<SelectionRows>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    // Required by AutomaticKeepAliveClientMixin
+    super.build(context);
+
     final colors = Provider.of<ColorState>(context);
     final double padding = 2.5;
 
@@ -27,7 +39,7 @@ class SelectionRows extends StatelessWidget {
         padding: EdgeInsets.all(padding),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          for (var def in rowDefs)
+          for (var def in this.widget.rowDefs)
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.all(padding),
