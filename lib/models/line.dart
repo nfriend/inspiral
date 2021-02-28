@@ -21,7 +21,7 @@ class Line {
 
   /// The angle between this line and another
   double angleTo(Line other) {
-    return other.angle() - angle();
+    return (other.angle() - angle() + pi) % (2 * pi) - pi;
   }
 
   /// The point exactly between point1 and point2

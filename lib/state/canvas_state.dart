@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
-import 'package:inspiral/util/get_center_of_mass.dart';
 import 'package:vector_math/vector_math_64.dart';
-import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/extensions/extensions.dart';
 
 class CanvasState extends ChangeNotifier {
   static CanvasState _instance;
@@ -72,77 +69,22 @@ class CanvasState extends ChangeNotifier {
   /// Notifies this state object when either the app background
   /// or the canvas is pressed
   void appBackgroundOrCanvasDown(PointerDownEvent event) {
-    _isTransforming = true;
+    isTransforming = true;
   }
 
   /// Translates the view when either the app background or the
   /// empty canvas is moved.
   void appBackgroundOrCanvasMove(PointerMoveEvent event) {
-    if (pointers.count == 1) {
-      _applyTranslationTransform(event.delta);
-    } else if (pointers.count == 2) {
-      int pointer1 = pointers.activePointerIds.elementAt(0);
-      int pointer2 = pointers.activePointerIds.elementAt(1);
-
-      Line previousLine = Line(
-          pointers.pointerPreviousPositions[pointer1].global,
-          pointers.pointerPreviousPositions[pointer2].global);
-      Line currentLine = Line(pointers.pointerPositions[pointer1].global,
-          pointers.pointerPositions[pointer2].global);
-
-      _applyTwoPointerTransform(previousLine, currentLine);
-    } else {
-      Offset previousCenterOfMass = getCenterOfMass(
-          pointers.pointerPreviousPositions.values.map((p) => p.global));
-      Offset currentCenterOfMass = getCenterOfMass(
-          pointers.pointerPositions.values.map((p) => p.global));
-
-      Offset delta = currentCenterOfMass - previousCenterOfMass;
-
-      _applyTranslationTransform(delta);
+    if (pointers.count > 0) {
+      transform = pointers.getTransform() * transform;
     }
   }
 
   /// Notifies this state object when a pointer is lifted from
   /// either the app background or the canvas
   void appBackgroundOrCanvasUp(PointerUpEvent event) {
-    if (pointers.count > 0) {
-      _isTransforming = true;
+    if (pointers.count == 0) {
+      isTransforming = false;
     }
-  }
-
-  /// Translates the view by the provided offset
-  void _applyTranslationTransform(Offset delta) {
-    var transformUpdate = Matrix4.identity()..translate(delta.toVector3());
-    transform = transformUpdate * transform;
-  }
-
-  /// Given two lines, computes and applies the transformation that should be
-  /// applied to the canvas based on the difference between the two lines.
-  void _applyTwoPointerTransform(Line previousLine, Line currentLine) {
-    final pivotVector = previousLine.centerPoint().toVector3();
-
-    var transformUpdate = Matrix4.identity();
-
-    // Translate the pivot point to the origin
-    transformUpdate.translate(pivotVector);
-
-    // Scale
-    double newScaleFactor = currentLine.length() / previousLine.length();
-    transformUpdate.scale(newScaleFactor, newScaleFactor, 0);
-
-    // Rotate
-    transformUpdate.rotateZ(previousLine.angleTo(currentLine));
-
-    // Put the origin back in the right spot
-    transformUpdate.translate(-pivotVector);
-
-    // Translate
-    var translationVector =
-        (currentLine.centerPoint() - previousLine.centerPoint()).toVector3();
-    transformUpdate.translate(translationVector);
-
-    // Apply the update to the current transformation
-    transform = transformUpdate * transform;
   }
 }

@@ -1,7 +1,10 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/line.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/extensions/extensions.dart';
+import 'package:inspiral/util/get_center_of_mass.dart' as util;
+import 'package:vector_math/vector_math_64.dart';
 
 /// A class to hold a position in two coordinate systems
 @immutable
@@ -132,6 +135,100 @@ class PointersState extends ChangeNotifier {
       _pointerDeltas[event.pointer] = newLocation - originalLocation;
 
       notifyListeners();
+    }
+  }
+
+  /// Returns the center of mass for all currently active pointers
+  Positions getCenterOfMass() {
+    return new Positions(
+        global:
+            util.getCenterOfMass(_pointerPositions.values.map((e) => e.global)),
+        canvas: util
+            .getCenterOfMass(_pointerPositions.values.map((e) => e.canvas)));
+  }
+
+  /// Returns the center of mass for the previous position of all
+  /// currently active pointers
+  Positions getPreviousCenterOfMass() {
+    return new Positions(
+        global: util.getCenterOfMass(
+            _pointerPreviousPositions.values.map((e) => e.global)),
+        canvas: util.getCenterOfMass(
+            _pointerPreviousPositions.values.map((e) => e.canvas)));
+  }
+
+  /// Returns a `Vector3` that represents the translation from the previous
+  /// positions of the active pointers to the current positions
+  Vector3 _getTranslation(
+      {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
+    return (centerOfMass - previousCenterOfMass).toVector3();
+  }
+
+  /// Returns a rotation (in radians, around the Z axis) that represents the
+  /// rotation from the positions of the active pointers
+  /// to the current positions
+  double _getRotation(
+      {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
+    double totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
+      return sum +
+          Line(previousCenterOfMass,
+                  _pointerPreviousPositions[pointerId].global)
+              .angleTo(Line(centerOfMass, _pointerPositions[pointerId].global));
+    });
+
+    return totalDelta / count;
+  }
+
+  /// Returns a scale factor that represents the scale transform from the
+  /// scale of the previous positions of the active pointers
+  /// to the current positions
+  double _getScale(
+      {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
+    double totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
+      return sum +
+          Line(centerOfMass, _pointerPositions[pointerId].global).length() /
+              Line(previousCenterOfMass,
+                      _pointerPreviousPositions[pointerId].global)
+                  .length();
+    });
+
+    return totalDelta / count;
+  }
+
+  /// Returns a transform that should be applied to the canvas based on the
+  /// previous and current positions of all active pointers
+  Matrix4 getTransform() {
+    if (count == 1) {
+      return Matrix4.identity()
+        ..translate(_pointerDeltas[_activePointerIds.first].global.toVector3());
+    } else {
+      Offset previousCoM = getPreviousCenterOfMass().global;
+      Offset currentCoM = getCenterOfMass().global;
+
+      final pivotVector = previousCoM.toVector3();
+
+      var transform = Matrix4.identity();
+
+      // Translate the pivot point to the origin
+      transform.translate(pivotVector);
+
+      // Scale
+      double scale = _getScale(
+          centerOfMass: currentCoM, previousCenterOfMass: previousCoM);
+      transform.scale(scale, scale, 0);
+
+      // Rotate
+      transform.rotateZ(_getRotation(
+          centerOfMass: currentCoM, previousCenterOfMass: previousCoM));
+
+      // Put the origin back in the right spot
+      transform.translate(-pivotVector);
+
+      // Translate
+      transform.translate(_getTranslation(
+          centerOfMass: currentCoM, previousCenterOfMass: previousCoM));
+
+      return transform;
     }
   }
 }
