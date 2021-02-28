@@ -21,7 +21,6 @@ class DrawingBoard extends StatelessWidget {
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final pointers = Provider.of<PointersState>(context, listen: false);
-    final canvas = Provider.of<CanvasState>(context, listen: false);
     final colors = Provider.of<ColorState>(context);
     final settings = Provider.of<SettingsState>(context);
 
@@ -29,16 +28,14 @@ class DrawingBoard extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onPointerDown: (event) {
           pointers.pointerDown(event);
-          canvas.globalPointerDown(event);
           fixedGear.globalPointerDown(event);
           rotatingGear.globalPointerDown(event);
         },
         onPointerMove: (event) {
-          canvas.globalPointerMove(event);
+          pointers.pointerMove(event);
         },
         onPointerUp: (event) {
           pointers.pointerUp(event);
-          canvas.globalPointerUp(event);
         },
         child: Stack(children: [
           // This `OverflowBox` should be twice the size of the canvas.

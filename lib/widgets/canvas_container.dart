@@ -14,31 +14,64 @@ class CanvasContainer extends StatelessWidget {
     final canvas = Provider.of<CanvasState>(context);
     final settings = Provider.of<SettingsState>(context);
     final colors = Provider.of<ColorState>(context);
+    final pointers = Provider.of<PointersState>(context, listen: false);
 
-    return Transform(
-        transform: canvas.transform,
-        child: Stack(children: [
-          _wrapInPositioned(
-              child: Container(
-            width: canvasSize.width,
-            height: canvasSize.height,
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                  color: colors.canvasShadowColor.color,
-                  blurRadius: 300,
-                  spreadRadius: 50)
-            ]),
-          )),
-          _wrapInPositioned(child: DryInkCanvas()),
-          _wrapInPositioned(child: FreshInkCanvas()),
-          _wrapInPositioned(child: FixedGear()),
-          _wrapInPositioned(child: RotatingGear()),
-          _wrapInPositioned(
-              child: IgnorePointer(
-                  child: settings.debug
-                      ? DebugCanvas()
-                      : Container(width: 0.0, height: 0.0)))
-        ]));
+    return Stack(children: [
+      Listener(
+          behavior: HitTestBehavior.translucent,
+          onPointerDown: (event) {
+            pointers.pointerDown(event);
+            canvas.appBackgroundOrCanvasDown(event);
+          },
+          onPointerMove: (event) {
+            pointers.pointerMove(event);
+            canvas.appBackgroundOrCanvasMove(event);
+          },
+          onPointerUp: (event) {
+            pointers.pointerUp(event);
+            canvas.appBackgroundOrCanvasUp(event);
+          }),
+      Transform(
+          transform: canvas.transform,
+          child: Stack(children: [
+            _wrapInPositioned(Container(
+              width: canvasSize.width,
+              height: canvasSize.height,
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    color: colors.canvasShadowColor.color,
+                    blurRadius: 300,
+                    spreadRadius: 50)
+              ]),
+            )),
+            _wrapInPositioned(DryInkCanvas()),
+            _wrapInPositioned(FreshInkCanvas()),
+            _wrapInPositioned(Container(
+              width: canvasSize.width,
+              height: canvasSize.height,
+              child: Listener(
+                  behavior: HitTestBehavior.translucent,
+                  onPointerDown: (event) {
+                    pointers.pointerDown(event);
+                    canvas.appBackgroundOrCanvasDown(event);
+                  },
+                  onPointerMove: (event) {
+                    pointers.pointerMove(event);
+                    canvas.appBackgroundOrCanvasMove(event);
+                  },
+                  onPointerUp: (event) {
+                    pointers.pointerUp(event);
+                    canvas.appBackgroundOrCanvasUp(event);
+                  }),
+            )),
+            _wrapInPositioned(FixedGear()),
+            _wrapInPositioned(RotatingGear()),
+            _wrapInPositioned(IgnorePointer(
+                child: settings.debug
+                    ? DebugCanvas()
+                    : Container(width: 0.0, height: 0.0)))
+          ]))
+    ]);
   }
 
   /// Wraps the provided child in a `Positioned` that offsets
@@ -48,7 +81,7 @@ class CanvasContainer extends StatelessWidget {
   /// between the edge of the canvas and the actual parent widget. This is
   /// because children don't respond to events if the event happens outside
   /// of the parent.
-  Widget _wrapInPositioned({Widget child}) {
+  Widget _wrapInPositioned(Widget child) {
     return Positioned(
         top: canvasSize.height / 2, left: canvasSize.width / 2, child: child);
   }

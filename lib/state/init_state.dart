@@ -59,6 +59,7 @@ Future<void> initState(BuildContext context,
       initialPosition: canvasCenter, initialDefinition: oval30);
 
   // Link up dependencies between the singletons
+  pointers.canvas = canvas;
   canvas.pointers = pointers;
   colors.ink = ink;
   stroke.ink = ink;

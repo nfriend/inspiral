@@ -18,7 +18,7 @@ class SettingsState extends ChangeNotifier {
 
   /// Whether or not to show various debugging aids
   bool get debug => _debug;
-  bool _debug = !kReleaseMode;
+  bool _debug = !kReleaseMode && !kProfileMode;
   set debug(bool value) {
     _debug = value;
     notifyListeners();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/util/get_center_of_mass.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
@@ -34,21 +35,13 @@ class CanvasState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// The "device ID" of the first pointer
-  int pointer1Id = -1;
-
-  /// The "device ID" of the second pointer
-  int pointer2Id = -1;
-
-  /// The last location of pointer 1
-  Offset pointer1Position = Offset.zero;
-
-  /// The last location of pointer 2
-  Offset pointer2Position = Offset.zero;
-
   /// Whether or not the canvas is being panned/rotated/zoomed
-  bool get isTransforming =>
-      pointer1Id > -1 && pointer2Id > -1 && pointers.count == 2;
+  bool get isTransforming => _isTransforming;
+  bool _isTransforming = false;
+  set isTransforming(bool value) {
+    _isTransforming = value;
+    notifyListeners();
+  }
 
   /// Translates a coordinate in logical pixels to coordinates on the drawing
   /// canvas. If for some reason this isn't possible (i.e., if the inverse
@@ -76,61 +69,57 @@ class CanvasState extends ChangeNotifier {
         canvasCenter;
   }
 
-  void globalPointerDown(PointerDownEvent event) {
+  /// Notifies this state object when either the app background
+  /// or the canvas is pressed
+  void appBackgroundOrCanvasDown(PointerDownEvent event) {
+    _isTransforming = true;
+  }
+
+  /// Translates the view when either the app background or the
+  /// empty canvas is moved.
+  void appBackgroundOrCanvasMove(PointerMoveEvent event) {
     if (pointers.count == 1) {
-      pointer1Id = event.device;
-      pointer1Position = event.position;
+      _applyTranslationTransform(event.delta);
     } else if (pointers.count == 2) {
-      pointer2Id = event.device;
-      pointer2Position = event.position;
+      int pointer1 = pointers.activePointerIds.elementAt(0);
+      int pointer2 = pointers.activePointerIds.elementAt(1);
+
+      Line previousLine = Line(
+          pointers.pointerPreviousPositions[pointer1].global,
+          pointers.pointerPreviousPositions[pointer2].global);
+      Line currentLine = Line(pointers.pointerPositions[pointer1].global,
+          pointers.pointerPositions[pointer2].global);
+
+      _applyTwoPointerTransform(previousLine, currentLine);
+    } else {
+      Offset previousCenterOfMass = getCenterOfMass(
+          pointers.pointerPreviousPositions.values.map((p) => p.global));
+      Offset currentCenterOfMass = getCenterOfMass(
+          pointers.pointerPositions.values.map((p) => p.global));
+
+      Offset delta = currentCenterOfMass - previousCenterOfMass;
+
+      _applyTranslationTransform(delta);
     }
   }
 
-  void globalPointerMove(PointerMoveEvent event) {
-    if (isTransforming &&
-        (event.device == pointer1Id || event.device == pointer2Id)) {
-      final previousLine = Line(pointer1Position, pointer2Position);
-      Line currentLine;
-
-      if (event.device == pointer1Id) {
-        currentLine = Line(event.position, pointer2Position);
-      } else {
-        currentLine = Line(pointer1Position, event.position);
-      }
-
-      _updateTransform(previousLine, currentLine);
-    }
-
-    // Always update the last coordinates of the pointers,
-    // even if we're not currently transforming.
-    if (event.device == pointer1Id) {
-      pointer1Position = event.position;
-    } else if (event.device == pointer2Id) {
-      pointer2Position = event.position;
+  /// Notifies this state object when a pointer is lifted from
+  /// either the app background or the canvas
+  void appBackgroundOrCanvasUp(PointerUpEvent event) {
+    if (pointers.count > 0) {
+      _isTransforming = true;
     }
   }
 
-  void globalPointerUp(PointerUpEvent event) {
-    if (pointers.count == 1) {
-      // If we're transitioning from two fingers down to one
-
-      if (event.device == pointer1Id) {
-        // If the finder that was lifted was pointer1, reassign pointer2 to pointer1
-        pointer1Id = pointer2Id;
-        pointer1Position = pointer2Position;
-      }
-
-      pointer2Id = -1;
-    } else if (pointers.count == 0) {
-      // If we're transitioning from one finger down to none
-
-      pointer1Id = -1;
-    }
+  /// Translates the view by the provided offset
+  void _applyTranslationTransform(Offset delta) {
+    var transformUpdate = Matrix4.identity()..translate(delta.toVector3());
+    transform = transformUpdate * transform;
   }
 
   /// Given two lines, computes and applies the transformation that should be
   /// applied to the canvas based on the difference between the two lines.
-  void _updateTransform(Line previousLine, Line currentLine) {
+  void _applyTwoPointerTransform(Line previousLine, Line currentLine) {
     final pivotVector = previousLine.centerPoint().toVector3();
 
     var transformUpdate = Matrix4.identity();
