@@ -80,9 +80,8 @@ class CanvasState extends ChangeNotifier {
     }
   }
 
-  /// Notifies this state object when a pointer is lifted from
-  /// either the app background or the canvas
-  void appBackgroundOrCanvasUp(PointerUpEvent event) {
+  /// Notifies this state object when a pointer is lifted from anywhere
+  void globalPointerUp(PointerUpEvent event) {
     if (pointers.count == 0) {
       isTransforming = false;
     }

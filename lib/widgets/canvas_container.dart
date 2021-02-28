@@ -26,10 +26,6 @@ class CanvasContainer extends StatelessWidget {
           onPointerMove: (event) {
             pointers.pointerMove(event);
             canvas.appBackgroundOrCanvasMove(event);
-          },
-          onPointerUp: (event) {
-            pointers.pointerUp(event);
-            canvas.appBackgroundOrCanvasUp(event);
           }),
       Transform(
           transform: canvas.transform,
@@ -58,10 +54,6 @@ class CanvasContainer extends StatelessWidget {
                   onPointerMove: (event) {
                     pointers.pointerMove(event);
                     canvas.appBackgroundOrCanvasMove(event);
-                  },
-                  onPointerUp: (event) {
-                    pointers.pointerUp(event);
-                    canvas.appBackgroundOrCanvasUp(event);
                   }),
             )),
             _wrapInPositioned(FixedGear()),
