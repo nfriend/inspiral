@@ -17,20 +17,26 @@ class GearSelector extends StatelessWidget {
         allGears.values.where((gear) => gear.holes.length > 0);
 
     return SelectionRows(rowDefs: [
-      SelectionrRowDefinition(label: 'FIXED', children: [
-        for (var gear in allGears.values)
-          GearSelectorThumbnail(
-              isActive: gear == fixedGear.definition,
-              gear: gear,
-              onGearTap: () => fixedGear.selectNewGear(gear))
-      ]),
-      SelectionrRowDefinition(label: 'ROTATING', children: [
-        for (var gear in onlyGearsWithHoles)
-          GearSelectorThumbnail(
-              isActive: gear == rotatingGear.definition,
-              gear: gear,
-              onGearTap: () => rotatingGear.selectNewGear(gear))
-      ])
+      SelectionrRowDefinition(
+          storageKey: "fixedGears",
+          label: 'FIXED',
+          children: [
+            for (var gear in allGears.values)
+              GearSelectorThumbnail(
+                  isActive: gear == fixedGear.definition,
+                  gear: gear,
+                  onGearTap: () => fixedGear.selectNewGear(gear))
+          ]),
+      SelectionrRowDefinition(
+          storageKey: "rotatingGears",
+          label: 'ROTATING',
+          children: [
+            for (var gear in onlyGearsWithHoles)
+              GearSelectorThumbnail(
+                  isActive: gear == rotatingGear.definition,
+                  gear: gear,
+                  onGearTap: () => rotatingGear.selectNewGear(gear))
+          ])
     ]);
   }
 }

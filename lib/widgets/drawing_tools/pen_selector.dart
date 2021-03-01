@@ -53,25 +53,32 @@ class PenSelector extends StatelessWidget {
     final stroke = Provider.of<StrokeState>(context);
 
     return SelectionRows(rowDefs: [
-      SelectionrRowDefinition(label: 'STYLE', children: [
-        for (_StrokeAndStyle options in _strokeOptions)
-          StrokeSelectorThumbnail(
-              width: options.width,
-              style: options.style,
-              isActive: options.width == stroke.width &&
-                  options.style == stroke.style,
+      SelectionrRowDefinition(
+          storageKey: "penStyle",
+          label: 'STYLE',
+          children: [
+            for (_StrokeAndStyle options in _strokeOptions)
+              StrokeSelectorThumbnail(
+                  width: options.width,
+                  style: options.style,
+                  isActive: options.width == stroke.width &&
+                      options.style == stroke.style,
                   isPremium: options.isPremium,
-              onStrokeTap: () {
-                stroke.setStroke(width: options.width, style: options.style);
-              })
-      ]),
-      SelectionrRowDefinition(label: 'COLOR', children: [
-        for (TinyColor color in _penColors)
-          ColorSelectorThumbnail(
-              color: color,
-              isActive: color.color == colors.penColor.color,
-              onColorTap: () => colors.penColor = color)
-      ]),
+                  onStrokeTap: () {
+                    stroke.setStroke(
+                        width: options.width, style: options.style);
+                  })
+          ]),
+      SelectionrRowDefinition(
+          storageKey: "penColor",
+          label: 'COLOR',
+          children: [
+            for (TinyColor color in _penColors)
+              ColorSelectorThumbnail(
+                  color: color,
+                  isActive: color.color == colors.penColor.color,
+                  onColorTap: () => colors.penColor = color)
+          ]),
     ]);
   }
 }

@@ -25,7 +25,7 @@ class ToolsSelector extends StatelessWidget {
     ];
 
     return SelectionRows(rowDefs: [
-      SelectionrRowDefinition(label: 'TOOLS', children: [
+      SelectionrRowDefinition(storageKey: "tools", label: 'TOOLS', children: [
         ActionButton(
           icon: InspiralCustomIcons.forward_1,
           tooltipMessage: "Rotate in place clockwise by one tooth",
@@ -55,13 +55,16 @@ class ToolsSelector extends StatelessWidget {
           },
         ),
       ]),
-      SelectionrRowDefinition(label: 'CANVAS', children: [
-        for (TinyColor color in penColors)
-          ColorSelectorThumbnail(
-              color: color,
-              isActive: color.color == colors.backgroundColor.color,
-              onColorTap: () => colors.backgroundColor = color)
-      ]),
+      SelectionrRowDefinition(
+          storageKey: "canvasColor",
+          label: 'CANVAS',
+          children: [
+            for (TinyColor color in penColors)
+              ColorSelectorThumbnail(
+                  color: color,
+                  isActive: color.color == colors.backgroundColor.color,
+                  onColorTap: () => colors.backgroundColor = color)
+          ]),
     ]);
   }
 }

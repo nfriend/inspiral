@@ -6,29 +6,21 @@ import 'package:inspiral/state/state.dart';
 class SelectionrRowDefinition {
   final String label;
   final List<Widget> children;
+  final String storageKey;
 
-  SelectionrRowDefinition({@required this.label, @required this.children});
+  SelectionrRowDefinition(
+      {@required this.label,
+      @required this.children,
+      @required this.storageKey});
 }
 
-class SelectionRows extends StatefulWidget {
+class SelectionRows extends StatelessWidget {
   final Iterable<SelectionrRowDefinition> rowDefs;
 
-  SelectionRows({this.rowDefs});
-
-  @override
-  _SelectionRowsState createState() => _SelectionRowsState();
-}
-
-class _SelectionRowsState extends State<SelectionRows>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+  SelectionRows({@required this.rowDefs});
 
   @override
   Widget build(BuildContext context) {
-    // Required by AutomaticKeepAliveClientMixin
-    super.build(context);
-
     final colors = Provider.of<ColorState>(context);
     final double padding = 2.5;
 
@@ -39,7 +31,7 @@ class _SelectionRowsState extends State<SelectionRows>
         padding: EdgeInsets.all(padding),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          for (var def in this.widget.rowDefs)
+          for (var def in rowDefs)
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.all(padding),
@@ -56,6 +48,7 @@ class _SelectionRowsState extends State<SelectionRows>
                                           Text(def.label, style: textStyle)))),
                           Expanded(
                               child: ListView.builder(
+                                  key: PageStorageKey(def.storageKey),
                                   scrollDirection: Axis.horizontal,
                                   itemExtent: thumbnailSize + 10.0,
                                   itemCount: def.children.length,
