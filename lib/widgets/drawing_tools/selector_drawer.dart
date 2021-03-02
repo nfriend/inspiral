@@ -69,13 +69,19 @@ class _SelectorDrawerState extends State<SelectorDrawer>
             child: Container(
                 color: colors.uiBackgroundColor.color,
                 height: 168,
-                child: TabBarView(
-                    controller: _tabController,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      ToolsSelector(),
-                      PenSelector(),
-                      GearSelector(),
-                    ]))));
+                child: GestureDetector(
+                    onPanUpdate: (details) {
+                      if (details.delta.dy > 0) {
+                        selectorDrawer.closeDrawer();
+                      }
+                    },
+                    child: TabBarView(
+                        controller: _tabController,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          ToolsSelector(),
+                          PenSelector(),
+                          GearSelector(),
+                        ])))));
   }
 }

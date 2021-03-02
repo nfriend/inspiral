@@ -1,6 +1,4 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:inspiral/widgets/dynamic_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 
