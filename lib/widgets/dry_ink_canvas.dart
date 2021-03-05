@@ -4,13 +4,16 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class DryInkCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ink = Provider.of<InkState>(context);
-    final settings = Provider.of<SettingsState>(context);
-    final colors = Provider.of<ColorState>(context);
+    final bool debug =
+        context.select<SettingsState, bool>((settings) => settings.debug);
+    final TinyColor backgroundColor = context
+        .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
 
     List<Positioned> tiles = ink.tileImages.entries.map((entry) {
       Offset position = entry.key;
@@ -26,13 +29,13 @@ class DryInkCanvas extends StatelessWidget {
                       position: position,
                       tileImage: tileImage,
                       lines: [],
-                      showGridLines: settings.debug))));
+                      showGridLines: debug))));
     }).toList();
 
     return RepaintBoundary(
         key: canvasWithBackgroundGlobalKey,
         child: Container(
-            color: colors.backgroundColor.color,
+            color: backgroundColor.color,
             width: canvasSize.width,
             height: canvasSize.height,
             child: RepaintBoundary(

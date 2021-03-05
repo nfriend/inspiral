@@ -3,6 +3,7 @@ import 'package:inspiral/models/ink_line.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/crown_image.dart';
 import 'package:provider/provider.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class StrokeSelectorThumbnail extends StatelessWidget {
   final double width;
@@ -20,23 +21,29 @@ class StrokeSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var colors = Provider.of<ColorState>(context);
+    final TinyColor themeButtonColor =
+        context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
+    final TinyColor uiTextColor =
+        context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
+    final TinyColor activeColor =
+        context.select<ColorState, TinyColor>((colors) => colors.activeColor);
+    final bool isDark =
+        context.select<ColorState, bool>((colors) => colors.isDark);
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(5.0));
 
-    Color buttonColor =
-        isActive ? colors.activeColor.color : colors.buttonColor.color;
+    Color buttonColor = isActive ? activeColor.color : themeButtonColor.color;
 
     Widget line;
     if (style == StrokeStyle.normal) {
-      Color lineColor = colors.uiTextColor.color;
+      Color lineColor = uiTextColor.color;
       if (isActive) {
-        lineColor = colors.isDark ? Colors.black : Colors.white;
+        lineColor = isDark ? Colors.black : Colors.white;
       }
 
       line = Container(width: width, color: lineColor);
     } else {
       Color airbrushColor = Colors.black87;
-      if ((colors.isDark && !isActive) || (!colors.isDark && isActive)) {
+      if ((isDark && !isActive) || (!isDark && isActive)) {
         airbrushColor = Colors.white70;
       }
 

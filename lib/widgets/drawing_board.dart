@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:statsfl/statsfl.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class DrawingBoard extends StatelessWidget {
   @override
@@ -22,8 +23,10 @@ class DrawingBoard extends StatelessWidget {
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final pointers = Provider.of<PointersState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context, listen: false);
-    final colors = Provider.of<ColorState>(context);
-    final settings = Provider.of<SettingsState>(context);
+    final TinyColor appBackgroundColor = context
+        .select<ColorState, TinyColor>((colors) => colors.appBackgroundColor);
+    final bool debug =
+        context.select<SettingsState, bool>((settings) => settings.debug);
 
     final Widget scaffoldBody = Listener(
         behavior: HitTestBehavior.translucent,
@@ -51,8 +54,7 @@ class DrawingBoard extends StatelessWidget {
             minWidth: canvasSize.width * 2,
             alignment: Alignment.topLeft,
             child: Container(
-                color: colors.appBackgroundColor.color,
-                child: CanvasContainer()),
+                color: appBackgroundColor.color, child: CanvasContainer()),
           ),
           Positioned(
               left: 0,
@@ -66,9 +68,7 @@ class DrawingBoard extends StatelessWidget {
     return DynamicTheme(
         child: ModalProgress(
             child: Scaffold(
-                body: settings.debug
-                    ? StatsFl(child: scaffoldBody)
-                    : scaffoldBody,
+                body: debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
                 bottomNavigationBar: AnimatedToolbarContainer(
                     translateY: 42.0, child: DrawingTools()))));
   }

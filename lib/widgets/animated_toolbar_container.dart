@@ -11,14 +11,15 @@ class AnimatedToolbarContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rotatingGear = Provider.of<RotatingGearState>(context);
-    final fixedGear = Provider.of<FixedGearState>(context);
-    final canvas = Provider.of<CanvasState>(context);
+    final bool rotatingGearIsDragging = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isDragging);
+    final bool fixedGearIsDragging = context
+        .select<FixedGearState, bool>((fixedGear) => fixedGear.isDragging);
+    final bool canvasIsTransforming =
+        context.select<CanvasState, bool>((canvas) => canvas.isTransforming);
 
     Matrix4 transform = Matrix4.identity();
-    if (rotatingGear.isDragging ||
-        fixedGear.isDragging ||
-        canvas.isTransforming) {
+    if (rotatingGearIsDragging || fixedGearIsDragging || canvasIsTransforming) {
       transform.translate(0.0, translateY);
     }
 

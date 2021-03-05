@@ -10,8 +10,10 @@ import 'package:inspiral/util/custom_icons.dart';
 class ToolsSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colors = Provider.of<ColorState>(context);
-    final rotatingGear = Provider.of<RotatingGearState>(context);
+    final TinyColor backgroundColor = context
+        .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
+    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+    final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
 
     final List<TinyColor> penColors = [
       TinyColor(Colors.white),
@@ -62,7 +64,7 @@ class ToolsSelector extends StatelessWidget {
             for (TinyColor color in penColors)
               ColorSelectorThumbnail(
                   color: color,
-                  isActive: color.color == colors.backgroundColor.color,
+                  isActive: color.color == backgroundColor.color,
                   onColorTap: () => colors.backgroundColor = color)
           ]),
     ]);

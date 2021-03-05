@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class SelectionrRowDefinition {
   final String label;
@@ -21,11 +22,12 @@ class SelectionRows extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Provider.of<ColorState>(context);
+    final TinyColor uiTextColor =
+        context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
     final double padding = 2.5;
 
     TextStyle textStyle =
-        TextStyle(color: colors.uiTextColor.color, fontWeight: FontWeight.bold);
+        TextStyle(color: uiTextColor.color, fontWeight: FontWeight.bold);
 
     return Padding(
         padding: EdgeInsets.all(padding),

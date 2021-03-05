@@ -5,6 +5,7 @@ import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/color_filters.dart';
 import 'package:inspiral/widgets/drawing_tools/crown_image.dart';
 import 'package:provider/provider.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class GearSelectorThumbnail extends StatelessWidget {
   final GearDefinition gear;
@@ -16,7 +17,12 @@ class GearSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var colors = Provider.of<ColorState>(context);
+    final bool isDark =
+        context.select<ColorState, bool>((colors) => colors.isDark);
+    final TinyColor activeColor =
+        context.select<ColorState, TinyColor>((colors) => colors.activeColor);
+    final TinyColor uiTextColor =
+        context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10.0));
     final Widget crown = gear.isPremium ? CrownImage() : Container();
 
@@ -24,17 +30,17 @@ class GearSelectorThumbnail extends StatelessWidget {
     Color toothCountBubbleBackgroundColor;
     Color toothCountBubbleBorderColor;
     if (isActive) {
-      toothCountTextColor = colors.isDark ? Colors.white : Colors.black;
+      toothCountTextColor = isDark ? Colors.white : Colors.black;
       toothCountBubbleBackgroundColor =
-          colors.isDark ? Color(0xFF222222) : Colors.white;
+          isDark ? Color(0xFF222222) : Colors.white;
       toothCountBubbleBorderColor =
-          colors.isDark ? Color(0xFFF0F0F0) : Color(0xFF666666);
+          isDark ? Color(0xFFF0F0F0) : Color(0xFF666666);
     } else {
-      toothCountTextColor = colors.uiTextColor.color;
+      toothCountTextColor = uiTextColor.color;
       toothCountBubbleBackgroundColor =
-          colors.isDark ? Color(0xFF333333) : Color(0xFFF3F3F3);
+          isDark ? Color(0xFF333333) : Color(0xFFF3F3F3);
       toothCountBubbleBorderColor =
-          colors.isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
+          isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
     }
 
     TextStyle toothCountTextStyle =
@@ -46,8 +52,7 @@ class GearSelectorThumbnail extends StatelessWidget {
               padding: EdgeInsets.all(2.5),
               child: Material(
                   borderRadius: borderRadius,
-                  color:
-                      isActive ? colors.activeColor.color : Colors.transparent,
+                  color: isActive ? activeColor.color : Colors.transparent,
                   child: InkWell(
                       onTap: onGearTap,
                       borderRadius: borderRadius,

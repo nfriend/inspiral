@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 @immutable
 class _DrawingToolsButton {
@@ -15,8 +16,18 @@ class _DrawingToolsButton {
 class DrawingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colors = Provider.of<ColorState>(context);
-    final selectorDrawer = Provider.of<SelectorDrawerState>(context);
+    final TinyColor activeColor =
+        context.select<ColorState, TinyColor>((colors) => colors.activeColor);
+    final TinyColor activeTextColor = context
+        .select<ColorState, TinyColor>((colors) => colors.activeTextColor);
+    final TinyColor uiBackgroundColor = context
+        .select<ColorState, TinyColor>((colors) => colors.uiBackgroundColor);
+    final DrawerTab activeTab = context.select<SelectorDrawerState, DrawerTab>(
+        (selectorDrawer) => selectorDrawer.activeTab);
+    final bool selectorDrawerIsOpen = context.select<SelectorDrawerState, bool>(
+        (selectorDrawer) => selectorDrawer.isOpen);
+    final selectorDrawer =
+        Provider.of<SelectorDrawerState>(context, listen: false);
 
     double margin = 2.5;
     double iconSize = 18;
@@ -43,13 +54,13 @@ class DrawingTools extends StatelessWidget {
     ];
 
     ButtonStyle activeStyle = ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith(
-            (states) => colors.activeColor.color),
+        backgroundColor:
+            MaterialStateProperty.resolveWith((states) => activeColor.color),
         foregroundColor: MaterialStateProperty.resolveWith(
-            (states) => colors.activeTextColor.color));
+            (states) => activeTextColor.color));
 
     return Container(
-      color: colors.uiBackgroundColor.color,
+      color: uiBackgroundColor.color,
       child: Padding(
           padding: EdgeInsets.symmetric(horizontal: margin * 2),
           child: Row(children: [
@@ -58,8 +69,7 @@ class DrawingTools extends StatelessWidget {
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: margin),
                       child: TextButton.icon(
-                          style: selectorDrawer.activeTab == button.tab &&
-                                  selectorDrawer.isOpen
+                          style: activeTab == button.tab && selectorDrawerIsOpen
                               ? activeStyle
                               : null,
                           onPressed: button.onPressed,

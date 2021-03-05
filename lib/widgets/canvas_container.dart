@@ -7,13 +7,18 @@ import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:provider/provider.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class CanvasContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final canvas = Provider.of<CanvasState>(context);
-    final settings = Provider.of<SettingsState>(context);
-    final colors = Provider.of<ColorState>(context);
+    final CanvasState canvas = Provider.of<CanvasState>(context, listen: false);
+    final Matrix4 canvasTransform =
+        context.select<CanvasState, Matrix4>((canvas) => canvas.transform);
+    final bool debug =
+        context.select<SettingsState, bool>((settings) => settings.debug);
+    final TinyColor canvasShadowColor = context
+        .select<ColorState, TinyColor>((colors) => colors.canvasShadowColor);
     final pointers = Provider.of<PointersState>(context, listen: false);
 
     return Stack(children: [
@@ -28,14 +33,14 @@ class CanvasContainer extends StatelessWidget {
             canvas.appBackgroundOrCanvasMove(event);
           }),
       Transform(
-          transform: canvas.transform,
+          transform: canvasTransform,
           child: Stack(children: [
             _wrapInPositioned(Container(
               width: canvasSize.width,
               height: canvasSize.height,
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
-                    color: colors.canvasShadowColor.color,
+                    color: canvasShadowColor.color,
                     blurRadius: 300,
                     spreadRadius: 50)
               ]),
@@ -59,9 +64,8 @@ class CanvasContainer extends StatelessWidget {
             _wrapInPositioned(FixedGear()),
             _wrapInPositioned(RotatingGear()),
             _wrapInPositioned(IgnorePointer(
-                child: settings.debug
-                    ? DebugCanvas()
-                    : Container(width: 0.0, height: 0.0)))
+                child:
+                    debug ? DebugCanvas() : Container(width: 0.0, height: 0.0)))
           ]))
     ]);
   }

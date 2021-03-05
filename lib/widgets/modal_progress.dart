@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
 import 'package:quiver/strings.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class ModalProgress extends StatelessWidget {
   final Widget child;
@@ -10,15 +11,16 @@ class ModalProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var progress = Provider.of<ProgressState>(context);
-    var colors = Provider.of<ColorState>(context);
+    final ProgressState progress = Provider.of<ProgressState>(context);
+    final TinyColor primaryColor =
+        context.select<ColorState, TinyColor>((colors) => colors.primaryColor);
 
     if (!progress.isLoading) {
       return child;
     }
 
     Animation<Color> indicatorColor =
-        AlwaysStoppedAnimation<Color>(colors.primaryColor.color);
+        AlwaysStoppedAnimation<Color>(primaryColor.color);
 
     List<Widget> columnChildren = [];
 

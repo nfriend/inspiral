@@ -15,7 +15,8 @@ class ColorSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var colors = Provider.of<ColorState>(context);
+    final TinyColor activeColor =
+        context.select<ColorState, TinyColor>((colors) => colors.activeColor);
     final BorderRadius outerBorderRadius =
         BorderRadius.all(Radius.circular(10.0));
     final BorderRadius innerBorderRadius =
@@ -25,7 +26,7 @@ class ColorSelectorThumbnail extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(
               width: 5.0,
-              color: isActive ? colors.activeColor.color : Colors.transparent,
+              color: isActive ? activeColor.color : Colors.transparent,
             ),
             borderRadius: outerBorderRadius),
         child: Center(

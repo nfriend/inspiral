@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/constants.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class RotatingGear extends StatelessWidget {
   @override
@@ -14,13 +15,17 @@ class RotatingGear extends StatelessWidget {
       return Container();
     }
 
-    final dragLine = Provider.of<DragLineState>(context, listen: false);
-    final pointers = Provider.of<PointersState>(context, listen: false);
-    final colors = context.watch<ColorState>();
+    final DragLineState dragLine =
+        Provider.of<DragLineState>(context, listen: false);
+    final PointersState pointers =
+        Provider.of<PointersState>(context, listen: false);
+    final TinyColor penColor =
+        context.select<ColorState, TinyColor>((colors) => colors.penColor);
+    final TinyColor backgroundColor = context
+        .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
 
-    final ColorFilter colorFilter = colors.backgroundColor.isDark()
-        ? invertColorFilter
-        : noFilterColorFilter;
+    final ColorFilter colorFilter =
+        backgroundColor.isDark() ? invertColorFilter : noFilterColorFilter;
 
     final Offset gearCenter = gear.definition.size.toOffset() / 2;
 
@@ -60,7 +65,7 @@ class RotatingGear extends StatelessWidget {
                       width: inkDotSize.width,
                       height: inkDotSize.height,
                       decoration: BoxDecoration(
-                          color: colors.penColor.color, shape: BoxShape.circle),
+                          color: penColor.color, shape: BoxShape.circle),
                     ))
               ])),
         ));

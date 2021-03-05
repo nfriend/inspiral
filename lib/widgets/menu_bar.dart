@@ -20,12 +20,13 @@ class MenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
-    var rotatingGear = Provider.of<RotatingGearState>(context);
+    final bool rotatingGearIsVisible = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isVisible);
 
     double margin = 2.5;
     double iconSize = 26;
 
-    final Icon visibilityIcon = rotatingGear.isVisible
+    final Icon visibilityIcon = rotatingGearIsVisible
         ? Icon(Icons.visibility)
         : Icon(Icons.visibility_off);
 

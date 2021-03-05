@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:provider/provider.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class ActionButton extends StatelessWidget {
   final IconData icon;
@@ -14,14 +15,17 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var colors = Provider.of<ColorState>(context);
+    final TinyColor buttonColor =
+        context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
+    final TinyColor uiTextColor =
+        context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(5.0));
 
     return Padding(
         padding: EdgeInsets.all(10),
         child: Material(
             borderRadius: borderRadius,
-            color: colors.buttonColor.color,
+            color: buttonColor.color,
             child: InkWell(
                 onTap: onButtonTap,
                 borderRadius: borderRadius,
@@ -30,7 +34,7 @@ class ActionButton extends StatelessWidget {
                     preferBelow: false,
                     child: Icon(
                       icon,
-                      color: colors.uiTextColor.color,
+                      color: uiTextColor.color,
                       size: 40,
                     )))));
   }

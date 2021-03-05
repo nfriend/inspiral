@@ -49,8 +49,14 @@ final List<_StrokeAndStyle> _strokeOptions = [
 class PenSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colors = Provider.of<ColorState>(context);
-    final stroke = Provider.of<StrokeState>(context);
+    final TinyColor penColor =
+        context.select<ColorState, TinyColor>((colors) => colors.penColor);
+    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+    final StrokeStyle strokeStyle =
+        context.select<StrokeState, StrokeStyle>((stroke) => stroke.style);
+    final double strokeWidth =
+        context.select<StrokeState, double>((stroke) => stroke.width);
+    final StrokeState stroke = Provider.of<StrokeState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(
@@ -61,8 +67,8 @@ class PenSelector extends StatelessWidget {
               StrokeSelectorThumbnail(
                   width: options.width,
                   style: options.style,
-                  isActive: options.width == stroke.width &&
-                      options.style == stroke.style,
+                  isActive: options.width == strokeWidth &&
+                      options.style == strokeStyle,
                   isPremium: options.isPremium,
                   onStrokeTap: () {
                     stroke.setStroke(
@@ -76,7 +82,7 @@ class PenSelector extends StatelessWidget {
             for (TinyColor color in _penColors)
               ColorSelectorThumbnail(
                   color: color,
-                  isActive: color.color == colors.penColor.color,
+                  isActive: color.color == penColor.color,
                   onColorTap: () => colors.penColor = color)
           ]),
     ]);

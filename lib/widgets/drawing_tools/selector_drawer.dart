@@ -5,6 +5,7 @@ import 'package:inspiral/widgets/drawing_tools/pen_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/tools_selector.dart';
 import 'package:provider/provider.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class SelectorDrawer extends StatefulWidget {
   @override
@@ -29,20 +30,25 @@ class _SelectorDrawerState extends State<SelectorDrawer>
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.watch<ColorState>();
-    final selectorDrawer = Provider.of<SelectorDrawerState>(context);
-    final rotatingGear = Provider.of<RotatingGearState>(context);
-    final fixedGear = Provider.of<FixedGearState>(context);
-    final canvas = Provider.of<CanvasState>(context);
+    final SelectorDrawerState selectorDrawer =
+        Provider.of<SelectorDrawerState>(context);
+    final TinyColor uiBackgroundColor = context
+        .select<ColorState, TinyColor>((colors) => colors.uiBackgroundColor);
+    final bool rotatingGearIsDragging = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isDragging);
+    final bool fixedGearIsDragging = context
+        .select<FixedGearState, bool>((fixedGear) => fixedGear.isDragging);
+    final bool canvasIsTransforming =
+        context.select<CanvasState, bool>((canvas) => canvas.isTransforming);
 
     Matrix4 transform = Matrix4.identity();
     double opacity = 1.0;
     double height = 200;
 
     if (!selectorDrawer.isOpen ||
-        rotatingGear.isDragging ||
-        fixedGear.isDragging ||
-        canvas.isTransforming) {
+        rotatingGearIsDragging ||
+        fixedGearIsDragging ||
+        canvasIsTransforming) {
       transform.translate(0.0, height);
       opacity = 0.0;
     }
@@ -67,7 +73,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
             curve: Curves.easeOut,
             opacity: opacity,
             child: Container(
-                color: colors.uiBackgroundColor.color,
+                color: uiBackgroundColor.color,
                 height: 168,
                 child: GestureDetector(
                     onPanUpdate: (details) {

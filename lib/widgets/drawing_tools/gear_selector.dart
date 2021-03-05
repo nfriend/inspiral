@@ -10,8 +10,15 @@ import 'package:inspiral/models/gears/gears.dart';
 class GearSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final rotatingGear = Provider.of<RotatingGearState>(context);
-    final fixedGear = Provider.of<FixedGearState>(context);
+    final GearDefinition rotatingGearDefinition =
+        context.select<RotatingGearState, GearDefinition>(
+            (rotatingGear) => rotatingGear.definition);
+    final RotatingGearState rotatingGear =
+        Provider.of<RotatingGearState>(context, listen: false);
+    final GearDefinition fixedGearDefinition =
+        context.select<FixedGearState, GearDefinition>(
+            (fixedGear) => fixedGear.definition);
+    final fixedGear = Provider.of<FixedGearState>(context, listen: false);
 
     final Iterable<GearDefinition> onlyGearsWithHoles =
         allGears.values.where((gear) => gear.holes.length > 0);
@@ -23,7 +30,7 @@ class GearSelector extends StatelessWidget {
           children: [
             for (var gear in allGears.values)
               GearSelectorThumbnail(
-                  isActive: gear == fixedGear.definition,
+                  isActive: gear == fixedGearDefinition,
                   gear: gear,
                   onGearTap: () => fixedGear.selectNewGear(gear))
           ]),
@@ -33,7 +40,7 @@ class GearSelector extends StatelessWidget {
           children: [
             for (var gear in onlyGearsWithHoles)
               GearSelectorThumbnail(
-                  isActive: gear == rotatingGear.definition,
+                  isActive: gear == rotatingGearDefinition,
                   gear: gear,
                   onGearTap: () => rotatingGear.selectNewGear(gear))
           ])
