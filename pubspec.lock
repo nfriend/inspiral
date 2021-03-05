@@ -195,7 +195,7 @@ packages:
       name: image_gallery_saver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.7"
+    version: "1.6.8"
   integration_test:
     dependency: "direct dev"
     description: flutter
@@ -271,6 +271,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.12"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
   package_config:
     dependency: transitive
     description:

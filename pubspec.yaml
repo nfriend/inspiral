@@ -36,10 +36,11 @@ dependencies:
   quiver: ^2.1.5
   path_provider: ^1.6.27
   uuid: ^2.2.2
-  image_gallery_saver: "^1.6.7"
+  image_gallery_saver: "^1.6.8"
   path: ^1.7.0
   permission_handler: ^5.1.0+2
   share: ">=0.6.5+4 <2.0.0"
+  open_file: ^3.0.3
 
 dev_dependencies:
   flutter_test:

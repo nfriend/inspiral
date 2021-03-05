@@ -13,6 +13,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
+import 'package:open_file/open_file.dart';
 
 /// Shows a SnackBar message
 void _showSnackBarMessage(String message) {
@@ -43,6 +44,8 @@ Future<void> saveImage(BuildContext context) async {
 
   String filePath = await _saveToTempFile(context);
   await ImageGallerySaver.saveFile(filePath);
+
+  OpenFile.open(filePath, type: "image/png", uti: "public.png");
 
   progress.hideModalPropress();
 }
