@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/widgets/canvas_transform.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
@@ -13,8 +14,6 @@ class CanvasContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CanvasState canvas = Provider.of<CanvasState>(context, listen: false);
-    final Matrix4 canvasTransform =
-        context.select<CanvasState, Matrix4>((canvas) => canvas.transform);
     final bool debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
     final TinyColor canvasShadowColor = context
@@ -32,41 +31,39 @@ class CanvasContainer extends StatelessWidget {
             pointers.pointerMove(event);
             canvas.appBackgroundOrCanvasMove(event);
           }),
-      Transform(
-          transform: canvasTransform,
+      CanvasTransform(
           child: Stack(children: [
-            _wrapInPositioned(Container(
-              width: canvasSize.width,
-              height: canvasSize.height,
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    color: canvasShadowColor.color,
-                    blurRadius: 300,
-                    spreadRadius: 50)
-              ]),
-            )),
-            _wrapInPositioned(DryInkCanvas()),
-            _wrapInPositioned(FreshInkCanvas()),
-            _wrapInPositioned(Container(
-              width: canvasSize.width,
-              height: canvasSize.height,
-              child: Listener(
-                  behavior: HitTestBehavior.translucent,
-                  onPointerDown: (event) {
-                    pointers.pointerDown(event);
-                    canvas.appBackgroundOrCanvasDown(event);
-                  },
-                  onPointerMove: (event) {
-                    pointers.pointerMove(event);
-                    canvas.appBackgroundOrCanvasMove(event);
-                  }),
-            )),
-            _wrapInPositioned(FixedGear()),
-            _wrapInPositioned(RotatingGear()),
-            _wrapInPositioned(IgnorePointer(
-                child:
-                    debug ? DebugCanvas() : Container(width: 0.0, height: 0.0)))
-          ]))
+        _wrapInPositioned(Container(
+          width: canvasSize.width,
+          height: canvasSize.height,
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+                color: canvasShadowColor.color,
+                blurRadius: 300,
+                spreadRadius: 50)
+          ]),
+        )),
+        _wrapInPositioned(DryInkCanvas()),
+        _wrapInPositioned(FreshInkCanvas()),
+        _wrapInPositioned(Container(
+          width: canvasSize.width,
+          height: canvasSize.height,
+          child: Listener(
+              behavior: HitTestBehavior.translucent,
+              onPointerDown: (event) {
+                pointers.pointerDown(event);
+                canvas.appBackgroundOrCanvasDown(event);
+              },
+              onPointerMove: (event) {
+                pointers.pointerMove(event);
+                canvas.appBackgroundOrCanvasMove(event);
+              }),
+        )),
+        _wrapInPositioned(FixedGear()),
+        _wrapInPositioned(RotatingGear()),
+        _wrapInPositioned(IgnorePointer(
+            child: debug ? DebugCanvas() : Container(width: 0.0, height: 0.0)))
+      ]))
     ]);
   }
 

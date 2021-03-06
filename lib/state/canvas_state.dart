@@ -40,6 +40,16 @@ class CanvasState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Whether or not the user is currently selecting a hole in the rotating
+  /// gear. When this is true, the camera zooms/pans/rotates to exactly fit the
+  /// rotating gear in the available space.
+  bool get isSelectingHole => _isSelectingHole;
+  bool _isSelectingHole = false;
+  set isSelectingHole(bool value) {
+    _isSelectingHole = value;
+    notifyListeners();
+  }
+
   /// Translates a coordinate in logical pixels to coordinates on the drawing
   /// canvas. If for some reason this isn't possible (i.e., if the inverse
   /// of the translate matrix can't be computed), this method returns

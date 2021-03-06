@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/state/canvas_state.dart';
 
 enum DrawerTab { tools, pen, gears }
 
@@ -17,6 +18,8 @@ class SelectorDrawerState extends ChangeNotifier {
 
   SelectorDrawerState._internal();
 
+  CanvasState canvas;
+
   /// Whether or not the selector drawer is open
   bool get isOpen => _isOpen;
   bool _isOpen = false;
@@ -25,12 +28,15 @@ class SelectorDrawerState extends ChangeNotifier {
   void openDrawer({@required DrawerTab activeTab}) {
     _isOpen = true;
     _activeTab = activeTab;
+    _updateIsSelectingHole();
+
     notifyListeners();
   }
 
   /// Closes the drawer
   void closeDrawer() {
     _isOpen = false;
+    _updateIsSelectingHole();
     notifyListeners();
   }
 
@@ -46,6 +52,8 @@ class SelectorDrawerState extends ChangeNotifier {
         notifyListeners();
       }
     }
+
+    _updateIsSelectingHole();
   }
 
   /// Syncs this state's active tab with the TabController's active tab.
@@ -54,7 +62,17 @@ class SelectorDrawerState extends ChangeNotifier {
   /// to the user changing tab with a swipe gesture).
   void syncActiveTab({@required DrawerTab newActiveTab}) {
     _activeTab = newActiveTab;
+    _updateIsSelectingHole();
+
     notifyListeners();
+  }
+
+  /// Updates the canvas's `isSelectingHole` property based on the currently
+  /// selected tab.
+  ///
+  /// TODO: It feels like there should be a more declarative way to do this.
+  void _updateIsSelectingHole() {
+    canvas.isSelectingHole = isOpen && activeTab == DrawerTab.pen;
   }
 
   /// The currently active drawer tab

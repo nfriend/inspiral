@@ -60,6 +60,7 @@ Future<void> initState(BuildContext context,
 
   // Link up dependencies between the singletons
   pointers.canvas = canvas;
+  selectorDrawer.canvas = canvas;
   canvas.pointers = pointers;
   colors.ink = ink;
   stroke.ink = ink;
