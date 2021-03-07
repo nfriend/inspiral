@@ -6,6 +6,7 @@ import 'package:inspiral/widgets/debug_canvas.dart';
 import 'package:inspiral/widgets/dry_ink_canvas.dart';
 import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
+import 'package:inspiral/widgets/hole_selector.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -61,6 +62,7 @@ class CanvasContainer extends StatelessWidget {
         )),
         _wrapInPositioned(FixedGear()),
         _wrapInPositioned(RotatingGear()),
+        _wrapInPositioned(HoleSelector()),
         _wrapInPositioned(IgnorePointer(
             child: debug ? DebugCanvas() : Container(width: 0.0, height: 0.0)))
       ]))

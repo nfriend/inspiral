@@ -67,7 +67,6 @@ class RotatingGearState extends BaseGearState {
   }
 
   double _lastAngle;
-  Offset _relativePenPosition;
   int toothOffset = 0;
 
   FixedGearState fixedGear;
@@ -78,17 +77,13 @@ class RotatingGearState extends BaseGearState {
   GearHole get activeHole => _activeHole;
   set activeHole(GearHole value) {
     _activeHole = value;
-
-    _relativePenPosition =
-        Offset(cos(_activeHole.angle), -sin(_activeHole.angle)) *
-            _activeHole.distance *
-            scaleFactor;
+    ink?.finishLine();
 
     notifyListeners();
   }
 
   /// The position of the pen, relative to the center of the rotating gear
-  Offset get relativePenPosition => _relativePenPosition;
+  Offset get relativePenPosition => _activeHole.relativeOffset;
 
   fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;

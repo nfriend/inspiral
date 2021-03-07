@@ -1,4 +1,6 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 
 class GearHole {
   /// The name of this hole that uniquely identifies it within the gear
@@ -12,4 +14,9 @@ class GearHole {
 
   const GearHole(
       {@required this.name, @required this.angle, @required this.distance});
+
+  // The relative offset from the gear
+  Offset get relativeOffset {
+    return Offset(cos(angle), -sin(angle)) * distance * scaleFactor;
+  }
 }
