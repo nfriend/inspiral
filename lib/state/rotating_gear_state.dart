@@ -5,6 +5,7 @@ import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/util/calculate_rotation_count.dart';
+import 'package:inspiral/util/select_closest_hole.dart';
 
 /// A utility class to hold the results of a rotation calculation
 @immutable
@@ -123,9 +124,8 @@ class RotatingGearState extends BaseGearState {
   void selectNewGear(GearDefinition newGear) {
     this.definition = newGear;
 
-    // TODO: select (closest?) gear hole here.
-    // Right now we're just re-using the
-    // previously-selected hole on the last gear
+    activeHole = selectClosetHole(
+        currentHole: activeHole, availableHoles: definition.holes);
 
     initializePosition();
     ink.finishLine();
