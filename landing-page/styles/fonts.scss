@@ -1,0 +1,39 @@
+/* playfair-display-800 - latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 800;
+  src: url('../public/fonts/playfair-display-v22-latin-800.eot'); /* IE9 Compat Modes */
+  src: local(''),
+    url('../public/fonts/playfair-display-v22-latin-800.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('../public/fonts/playfair-display-v22-latin-800.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */
+      url('../public/fonts/playfair-display-v22-latin-800.woff') format('woff'),
+    /* Modern Browsers */
+      url('../public/fonts/playfair-display-v22-latin-800.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */
+      url('../public/fonts/playfair-display-v22-latin-800.svg#PlayfairDisplay')
+      format('svg'); /* Legacy iOS */
+}
+
+/* lato-regular - latin */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../public/fonts/lato-v17-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+    url('../public/fonts/lato-v17-latin-regular.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('../public/fonts/lato-v17-latin-regular.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */
+      url('../public/fonts/lato-v17-latin-regular.woff') format('woff'),
+    /* Modern Browsers */ url('../public/fonts/lato-v17-latin-regular.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */
+      url('../public/fonts/lato-v17-latin-regular.svg#Lato') format('svg'); /* Legacy iOS */
+}
