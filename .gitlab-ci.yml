@@ -7,7 +7,7 @@ pages:
   stage: deploy
   script:
     - cd landing-page
-    - yarn
+    - yarn install --frozen-lockfile
     - yarn build
     - cd $CI_PROJECT_DIR
     - ci/pages-preparation.sh
