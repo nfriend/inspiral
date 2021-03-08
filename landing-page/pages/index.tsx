@@ -28,6 +28,9 @@ export default function Home() {
                   className="flex-1 app-store-button"
                 />
               </div>
+              <div className="flex justify-center">
+                <img src="images/coming-soon.png" width="200" />
+              </div>
             </div>
           </div>
           <div className="flex-1">
