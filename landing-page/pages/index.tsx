@@ -20,11 +20,11 @@ export default function Home() {
               <p>Relive your childhood in pixel-perfect bliss.</p>
               <div className="flex justify-center">
                 <img
-                  src="inspiral/images/google-play-badge.svg"
+                  src="images/google-play-badge.svg"
                   className="flex-1 app-store-button mr-5"
                 />
                 <img
-                  src="inspiral/images/app-store-badge.svg"
+                  src="images/app-store-badge.svg"
                   className="flex-1 app-store-button"
                 />
               </div>
@@ -34,7 +34,7 @@ export default function Home() {
             <img
               className="sm:flex-1 sm:py-10 max-h-90-screen"
               alt="A screenshot of the Inspiral app"
-              src="inspiral/images/screenshot.png"
+              src="images/screenshot.png"
             />
           </div>
         </div>
