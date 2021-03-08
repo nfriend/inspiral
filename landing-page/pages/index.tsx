@@ -8,7 +8,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen flex flex-col">
+      <main className="sm:h-screen flex flex-col">
         <div className="flex-1 flex flex-col sm:flex-row items-center justify-center min-h-0">
           <div className="sm:flex-1 flex justify-end text-center sm:pb-40">
             <div className="px-10">
