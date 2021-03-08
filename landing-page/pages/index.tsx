@@ -37,7 +37,7 @@ export default function Home() {
             <img
               className="sm:flex-1 sm:py-10 max-h-90-screen"
               alt="A screenshot of the Inspiral app"
-              src="images/screenshot.png"
+              src="images/screenshot.jpg"
             />
           </div>
         </div>
