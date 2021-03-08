@@ -15,6 +15,7 @@ pages:
     key: landing-page-${CI_COMMIT_REF_SLUG}
     paths:
       - landing-page/node_modules/
+      - landing-page/.next/cache/
   artifacts:
     paths:
       - public
