@@ -1,0 +1,22 @@
+image: node:latest
+
+stages:
+  - deploy
+
+pages:
+  stage: deploy
+  script:
+    - cd landing-page
+    - yarn
+    - yarn build
+    - cd $CI_PROJECT_DIR
+    - ci/pages-preparation.sh
+  cache:
+    key: landing-page-${CI_COMMIT_REF_SLUG}
+    paths:
+      - landing-page/node_modules/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
