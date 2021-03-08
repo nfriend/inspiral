@@ -29,7 +29,7 @@ export default function Home() {
                 />
               </div>
               <div className="flex justify-center">
-                <img src="images/coming-soon.png" width="200" />
+                <img src="images/coming-soon.png" className="w-40" />
               </div>
             </div>
           </div>
