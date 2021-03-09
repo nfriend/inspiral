@@ -29,10 +29,10 @@ export default function Home() {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <main className="sm:h-screen flex flex-col sm:bg-spirals bg-left-bottom bg-no-repeat bg-40%">
+      <main className="sm:h-screen flex flex-col sm:bg-spirals bg-left-bottom bg-no-repeat bg-30%">
         <div className="flex-1 flex flex-col sm:flex-row items-center justify-center min-h-0">
           <div className="sm:flex-1 flex justify-end text-center sm:pb-40">
-            <div className="px-10">
+            <div className="px-10 pt-40">
               <header>
                 <h1 className="text-7xl font-display tracking-tight py-10">
                   Get Inspiral-ed

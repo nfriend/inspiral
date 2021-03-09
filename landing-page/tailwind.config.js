@@ -8,7 +8,7 @@ module.exports = {
     },
     extend: {
       backgroundSize: {
-        '40%': '40%',
+        '30%': '30%',
       },
       backgroundImage: {
         spirals: `url("${
