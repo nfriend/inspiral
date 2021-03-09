@@ -37,15 +37,19 @@ class _CanvasTransformState extends State<CanvasTransform>
         context.select<CanvasState, bool>((canvas) => canvas.isSelectingHole);
     final Matrix4 canvasTransform =
         context.select<CanvasState, Matrix4>((canvas) => canvas.transform);
+    final bool areGearsVisible = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isVisible);
 
-    if (!isSelectingHole && _animationController.isDismissed) {
+    bool zoomToRotatingGear = isSelectingHole && areGearsVisible;
+
+    if (!zoomToRotatingGear && _animationController.isDismissed) {
       // If we're not selecting a hole, and any previous animations have
       // finished, just return a basic `Transform` to save us from doing
       // all the extra computation below.
       return Transform(transform: canvasTransform, child: this.widget.child);
     }
 
-    if (isSelectingHole) {
+    if (zoomToRotatingGear) {
       _animationController.forward();
     } else {
       _animationController.reverse();
