@@ -29,6 +29,13 @@ body {
 }
 
 @screen sm {
+  body {
+    background-image: url('/images/landing-page-background.jpg');
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 40%;
+  }
+
   .app-store-button {
     max-width: 10rem;
   }
