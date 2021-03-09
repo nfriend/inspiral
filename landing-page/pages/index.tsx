@@ -33,7 +33,7 @@ export default function Home() {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <main className="sm:h-screen flex flex-col sm:bg-spirals bg-left-bottom bg-no-repeat bg-30%">
+      <main className="sm:h-screen flex flex-col sm:spiral-background">
         <div className="flex-1 flex flex-col sm:flex-row items-center justify-center min-h-0">
           <div className="sm:flex-1 flex justify-end text-center sm:pb-40">
             <div className="px-10 sm:pt-40">
@@ -62,7 +62,7 @@ export default function Home() {
             <img
               className="sm:flex-1 sm:py-10 max-h-90-screen"
               alt="A screenshot of the Inspiral app"
-              src="images/screenshot.jpg"
+              src="images/screenshot.png"
             />
           </div>
         </div>
