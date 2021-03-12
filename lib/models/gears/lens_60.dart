@@ -9,14 +9,14 @@
 import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
-import 'package:inspiral/models/product_id.dart';
+import 'package:inspiral/models/models.dart';
 
 final lens60 = GearDefinition(
     image: 'images/gears/lens_60.png',
     thumbnailImage: 'images/gears/lens_60_thumb.png',
     size: Size(628, 628),
     toothCount: 57,
-    productId: ProductId.specialGears,
+    product: Product.specialGears,
     points: [
       ContactPoint(
           position: Offset(303.96874773064127, -0.0858987126624377),

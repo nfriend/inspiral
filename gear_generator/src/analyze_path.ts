@@ -1,7 +1,7 @@
 import { ContactPoint } from './models/contact_point';
 import { GearDefinition } from './models/gear_definition';
 import { AngleGearHole } from './models/gear_hole';
-import { ProductId } from './models/product_id';
+import { Product } from './models/product';
 
 export interface AnalyzePathParams {
   baseScale: number;
@@ -9,7 +9,7 @@ export interface AnalyzePathParams {
   meshSpacing: number;
   gearName: string;
   camelCasedGearName: string;
-  allProductIds: { [name: string]: ProductId };
+  allProducts: { [name: string]: Product };
   freeProductIdString: string;
 }
 
@@ -29,7 +29,7 @@ export const analyzePath = ({
   meshSpacing,
   gearName,
   camelCasedGearName,
-  allProductIds,
+  allProducts: allProducts,
   freeProductIdString,
 }: AnalyzePathParams): GearDefinition => {
   const pi2 = 2 * Math.PI;
@@ -44,11 +44,11 @@ export const analyzePath = ({
     document.querySelector('svg desc product-id')?.textContent ||
     freeProductIdString
   ).trim();
-  const productId = Object.values(allProductIds).find(
+  const product = Object.values(allProducts).find(
     (pid) => pid.id === productIdString,
   );
-  if (!productId) {
-    throw new Error(`Unrecognized product id: "${productId}"`);
+  if (!product) {
+    throw new Error(`Unrecognized product id: "${productIdString}"`);
   }
 
   // The total length of the path
@@ -201,7 +201,7 @@ export const analyzePath = ({
     toothCount,
     points: evaluatedPoints,
     holes,
-    productId,
+    product,
   };
 
   return gearDefinition;

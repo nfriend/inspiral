@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/gear_hole.dart';
 import 'package:inspiral/models/models.dart';
-import 'package:inspiral/models/product_id.dart';
 import 'package:quiver/core.dart';
 import 'package:tuple/tuple.dart';
 
@@ -27,8 +25,8 @@ class GearDefinition {
   /// The list of all holes in this gear
   final List<GearHole> holes;
 
-  /// The product ID of this gear.
-  final String productId;
+  /// The product that includes this gear.
+  final Product product;
 
   GearDefinition(
       {@required this.image,
@@ -37,10 +35,7 @@ class GearDefinition {
       @required this.toothCount,
       @required this.points,
       @required this.holes,
-      @required this.productId});
-
-  /// Whether or not this gear is a premium gear
-  bool get isPremium => productId != ProductId.free;
+      @required this.product});
 
   /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {

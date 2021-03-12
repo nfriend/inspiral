@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/if_purchased.dart';
 import 'package:inspiral/widgets/color_filters.dart';
 import 'package:inspiral/widgets/drawing_tools/crown_image.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class GearSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final purchases = Provider.of<PurchasesState>(context, listen: false);
     final bool isDark =
         context.select<ColorState, bool>((colors) => colors.isDark);
     final TinyColor activeColor =
@@ -24,7 +26,8 @@ class GearSelectorThumbnail extends StatelessWidget {
     final TinyColor uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10.0));
-    final Widget crown = gear.isPremium ? CrownImage() : Container();
+    final Widget crown =
+        purchases.purchased(gear.product) ? Container() : CrownImage();
 
     Color toothCountTextColor;
     Color toothCountBubbleBackgroundColor;
@@ -54,7 +57,7 @@ class GearSelectorThumbnail extends StatelessWidget {
                   borderRadius: borderRadius,
                   color: isActive ? activeColor.color : Colors.transparent,
                   child: InkWell(
-                      onTap: onGearTap,
+                      onTap: ifPurchased(context, gear.product, onGearTap),
                       borderRadius: borderRadius,
                       child: ColorFiltered(
                           colorFilter: isActive

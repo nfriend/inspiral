@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/ink_line.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/crown_image.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,7 @@ class StrokeSelectorThumbnail extends StatelessWidget {
   final double width;
   final StrokeStyle style;
   final bool isActive;
-  final bool isPremium;
+  final Product product;
   final Function onStrokeTap;
 
   StrokeSelectorThumbnail(
@@ -17,10 +18,11 @@ class StrokeSelectorThumbnail extends StatelessWidget {
       @required this.style,
       @required this.isActive,
       @required this.onStrokeTap,
-      this.isPremium = false});
+      @required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final purchases = Provider.of<PurchasesState>(context, listen: false);
     final TinyColor themeButtonColor =
         context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
     final TinyColor uiTextColor =
@@ -61,7 +63,8 @@ class StrokeSelectorThumbnail extends StatelessWidget {
           ));
     }
 
-    final Widget crown = isPremium ? CrownImage() : Container();
+    final Widget crown =
+        purchases.purchased(product) ? Container() : CrownImage();
 
     return Stack(children: [
       Padding(

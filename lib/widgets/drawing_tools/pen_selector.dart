@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/if_purchased.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:inspiral/widgets/drawing_tools/stroke_selector_thumbnail.dart';
@@ -11,10 +13,12 @@ import 'package:tinycolor/tinycolor.dart';
 class _StrokeAndStyle {
   final double width;
   final StrokeStyle style;
-  final bool isPremium;
+  final Product product;
 
-  _StrokeAndStyle(
-      {@required this.width, @required this.style, this.isPremium = false});
+  const _StrokeAndStyle(
+      {@required this.width,
+      @required this.style,
+      this.product = Product.free});
 }
 
 final List<TinyColor> _penColors = [
@@ -31,19 +35,24 @@ final List<TinyColor> _penColors = [
 ];
 
 final List<_StrokeAndStyle> _strokeOptions = [
-  _StrokeAndStyle(width: 1.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 3.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 5.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 7.5, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 12.5, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 15.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 20.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 30.0, style: StrokeStyle.normal),
-  _StrokeAndStyle(width: 5.0, style: StrokeStyle.airbrush, isPremium: true),
-  _StrokeAndStyle(width: 7.5, style: StrokeStyle.airbrush, isPremium: true),
-  _StrokeAndStyle(width: 12.5, style: StrokeStyle.airbrush, isPremium: true),
-  _StrokeAndStyle(width: 15.0, style: StrokeStyle.airbrush, isPremium: true),
-  _StrokeAndStyle(width: 20.0, style: StrokeStyle.airbrush, isPremium: true),
+  const _StrokeAndStyle(width: 1.0, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 3.0, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 5.0, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 7.5, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 12.5, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 15.0, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 20.0, style: StrokeStyle.normal),
+  const _StrokeAndStyle(width: 30.0, style: StrokeStyle.normal),
+  const _StrokeAndStyle(
+      width: 5.0, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+  const _StrokeAndStyle(
+      width: 7.5, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+  const _StrokeAndStyle(
+      width: 12.5, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+  const _StrokeAndStyle(
+      width: 15.0, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+  const _StrokeAndStyle(
+      width: 20.0, style: StrokeStyle.airbrush, product: Product.airbrushPens),
 ];
 
 class PenSelector extends StatelessWidget {
@@ -69,11 +78,11 @@ class PenSelector extends StatelessWidget {
                   style: options.style,
                   isActive: options.width == strokeWidth &&
                       options.style == strokeStyle,
-                  isPremium: options.isPremium,
-                  onStrokeTap: () {
+                  product: options.product,
+                  onStrokeTap: ifPurchased(context, options.product, () {
                     stroke.setStroke(
                         width: options.width, style: options.style);
-                  })
+                  }))
           ]),
       SelectionrRowDefinition(
           storageKey: "penColor",

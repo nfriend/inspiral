@@ -10,3 +10,4 @@ export 'package:inspiral/state/ink_state.dart';
 export 'package:inspiral/state/stroke_state.dart';
 export 'package:inspiral/state/progress_state.dart';
 export 'package:inspiral/state/selector_drawer_state.dart';
+export 'package:inspiral/state/purchases_state.dart';

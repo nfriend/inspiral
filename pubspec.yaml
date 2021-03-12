@@ -41,6 +41,7 @@ dependencies:
   permission_handler: ^5.1.0+2
   share: ">=0.6.5+4 <2.0.0"
   open_file: ^3.0.3
+  gradient_widgets: ^0.5.1
 
 dev_dependencies:
   flutter_test:
