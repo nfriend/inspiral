@@ -22,7 +22,7 @@ class StrokeSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final purchases = Provider.of<PurchasesState>(context);
     final TinyColor themeButtonColor =
         context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
     final TinyColor uiTextColor =

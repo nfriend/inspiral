@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:inspiral/models/models.dart';
 
 class PurchasesState extends ChangeNotifier {
@@ -24,6 +25,27 @@ class PurchasesState extends ChangeNotifier {
   List<Product> _purchases;
   UnmodifiableListView<Product> _unmodifiablePurchases;
   List<Product> get purchases => _unmodifiablePurchases;
+
+  /// Updates this state's list of `purchases` based on the provided
+  /// list of `PurchaseDetails`
+  void updatePurchases(List<PurchaseDetails> purchaseDetails) {
+    List<Product> newPurchases = [Product.free];
+    purchaseDetails
+        .where((purchaseDetail) =>
+            purchaseDetail.status == PurchaseStatus.purchased)
+        .forEach((purchaseDetail) {
+      Product purchasedProduct = Product.allIndividuallyBuyableProducts
+          .firstWhere((p) => p.id == purchaseDetail.productID,
+              orElse: () => null);
+
+      if (purchasedProduct != null) {
+        newPurchases.add(purchasedProduct);
+      }
+    });
+
+    _purchases = newPurchases;
+    notifyListeners();
+  }
 
   /// Returns a boolean indicating whether or not
   /// the provided `Product` has been purchased

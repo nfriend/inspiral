@@ -3,23 +3,33 @@ import 'package:inspiral/models/models.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:inspiral/widgets/drawing_tools/helpers/purchase_product.dart';
 
-@immutable
-class PurchaseDialog extends StatelessWidget {
+class PurchaseDialog extends StatefulWidget {
   /// The product being purchased
   final Product product;
 
-  PurchaseDialog({@required this.product});
+  /// The function to call if the Product is purchased
+  final Function onPurchased;
 
-  final ButtonStyle buttonStyle = ButtonStyle(
+  PurchaseDialog({@required this.product, @required this.onPurchased});
+
+  @override
+  _PurchaseDialogState createState() => _PurchaseDialogState();
+}
+
+class _PurchaseDialogState extends State<PurchaseDialog> {
+  bool _isWaitingForPurchase = false;
+
+  final ButtonStyle _buttonStyle = ButtonStyle(
       shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
       backgroundColor:
           MaterialStateProperty.resolveWith((states) => Colors.green));
 
-  final ButtonStyle cancelButtonStyle = ButtonStyle(
+  final ButtonStyle _cancelButtonStyle = ButtonStyle(
       shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
       foregroundColor:
           MaterialStateProperty.resolveWith((states) => Colors.black87));
 
+  @override
   Widget build(BuildContext context) {
     return Dialog(
         child: Padding(
@@ -31,7 +41,7 @@ class PurchaseDialog extends StatelessWidget {
                 Text("Unlock", textAlign: TextAlign.center),
                 Padding(
                     padding: EdgeInsets.only(top: 2.0, bottom: 5.0),
-                    child: Text(product.name,
+                    child: Text(widget.product.name,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0))),
@@ -44,17 +54,29 @@ class PurchaseDialog extends StatelessWidget {
                             style: DefaultTextStyle.of(context).style,
                             children: <TextSpan>[
                               TextSpan(
-                                  text: product.displayPrice,
+                                  text: widget.product.displayPrice,
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold)),
                               TextSpan(text: "?")
                             ]))),
                 ElevatedButton(
-                    style: buttonStyle,
-                    onPressed: () {
-                      purchaseProduct(product);
+                    style: _buttonStyle,
+                    onPressed: () async {
+                      setState(() {
+                        _isWaitingForPurchase = true;
+                      });
+                      bool productHasBeenPurchased =
+                          await purchaseProduct(widget.product);
+                      setState(() {
+                        _isWaitingForPurchase = false;
+                      });
+
+                      if (productHasBeenPurchased) {
+                        Navigator.of(context).pop();
+                        widget.onPurchased();
+                      }
                     },
-                    child: Text("Unlock ${product.name}")),
+                    child: Text("Unlock ${widget.product.name}")),
                 Padding(
                     padding: EdgeInsets.all(5.0),
                     child: Row(
@@ -115,8 +137,20 @@ class PurchaseDialog extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   increaseWidthBy: double.infinity,
-                  callback: () {
-                    purchaseProduct(Product.everything);
+                  callback: () async {
+                    setState(() {
+                      _isWaitingForPurchase = true;
+                    });
+                    bool productHasBeenPurchased =
+                        await purchaseProduct(Product.everything);
+                    setState(() {
+                      _isWaitingForPurchase = false;
+                    });
+
+                    if (productHasBeenPurchased) {
+                      Navigator.of(context).pop();
+                      widget.onPurchased();
+                    }
                   },
                   gradient: Gradients.jShine,
                   elevation: 10.0,
@@ -125,7 +159,7 @@ class PurchaseDialog extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.only(top: 10.0),
                     child: OutlinedButton(
-                        style: cancelButtonStyle,
+                        style: _cancelButtonStyle,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

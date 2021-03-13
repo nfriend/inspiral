@@ -54,7 +54,7 @@ class Product {
       price: 99);
   static const Product airbrushPens = Product(
       id: "io.nathanfriend.inspiral.airbrushpens",
-      name: "Airbrush Pen",
+      name: "Airbrush Pens",
       price: 99);
   static const Product customPenColors = Product(
       id: "io.nathanfriend.inspiral.custompencolors",

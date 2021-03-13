@@ -18,7 +18,7 @@ class GearSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final purchases = Provider.of<PurchasesState>(context);
     final bool isDark =
         context.select<ColorState, bool>((colors) => colors.isDark);
     final TinyColor activeColor =
