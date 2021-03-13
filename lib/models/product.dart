@@ -43,25 +43,25 @@ class Product {
   static const Product free =
       Product(id: "io.nathanfriend.inspiral.free", name: "Free", price: 0);
   static const Product ovalGears = Product(
-      id: "io.nathanfriend.inspiral.ovalGears", name: "Oval Gears", price: 99);
+      id: "io.nathanfriend.inspiral.ovalgears", name: "Oval Gears", price: 99);
   static const Product squareGears = Product(
-      id: "io.nathanfriend.inspiral.squareGears",
+      id: "io.nathanfriend.inspiral.squaregears",
       name: "Square Gears",
       price: 99);
   static const Product specialGears = Product(
-      id: "io.nathanfriend.inspiral.specialGears",
+      id: "io.nathanfriend.inspiral.specialgears",
       name: "Special Gears",
       price: 99);
   static const Product airbrushPens = Product(
-      id: "io.nathanfriend.inspiral.airbrushPens",
+      id: "io.nathanfriend.inspiral.airbrushpens",
       name: "Airbrush Pen",
       price: 99);
   static const Product customPenColors = Product(
-      id: "io.nathanfriend.inspiral.customPenColors",
+      id: "io.nathanfriend.inspiral.custompencolors",
       name: "Custom Pen Colors",
       price: 99);
   static const Product customBackgroundColors = Product(
-      id: "io.nathanfriend.inspiral.customBackgroundColors",
+      id: "io.nathanfriend.inspiral.custombackgroundcolors",
       name: "Custom Background Colors",
       price: 99);
   static const Product everything = Product(

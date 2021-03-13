@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:inspiral/widgets/drawing_tools/helpers/purchase_product.dart';
 
 @immutable
 class PurchaseDialog extends StatelessWidget {
@@ -50,7 +51,9 @@ class PurchaseDialog extends StatelessWidget {
                             ]))),
                 ElevatedButton(
                     style: buttonStyle,
-                    onPressed: () {},
+                    onPressed: () {
+                      purchaseProduct(product);
+                    },
                     child: Text("Unlock ${product.name}")),
                 Padding(
                     padding: EdgeInsets.all(5.0),
@@ -112,7 +115,9 @@ class PurchaseDialog extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   increaseWidthBy: double.infinity,
-                  callback: () {},
+                  callback: () {
+                    purchaseProduct(Product.everything);
+                  },
                   gradient: Gradients.jShine,
                   elevation: 10.0,
                   shadowColor: Gradients.jShine.colors.last.withOpacity(0.25),

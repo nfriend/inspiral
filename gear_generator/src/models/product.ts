@@ -17,27 +17,27 @@ export interface Product {
 export const allProducts: { [name: string]: Product } = {
   free: { id: 'io.nathanfriend.inspiral.free', dart: 'Product.free' },
   ovalGears: {
-    id: 'io.nathanfriend.inspiral.ovalGears',
+    id: 'io.nathanfriend.inspiral.ovalgears',
     dart: 'Product.ovalGears',
   },
   squareGears: {
-    id: 'io.nathanfriend.inspiral.squareGears',
+    id: 'io.nathanfriend.inspiral.squaregears',
     dart: 'Product.squareGears',
   },
   specialGears: {
-    id: 'io.nathanfriend.inspiral.specialGears',
+    id: 'io.nathanfriend.inspiral.specialgears',
     dart: 'Product.specialGears',
   },
   airbrushPens: {
-    id: 'io.nathanfriend.inspiral.airbrushPens',
+    id: 'io.nathanfriend.inspiral.airbrushpens',
     dart: 'Product.airbrushPens',
   },
   customPenColors: {
-    id: 'io.nathanfriend.inspiral.customPenColors',
+    id: 'io.nathanfriend.inspiral.custompencolors',
     dart: 'Product.customPenColors',
   },
   customBackgroundColors: {
-    id: 'io.nathanfriend.inspiral.customBackgroundColors',
+    id: 'io.nathanfriend.inspiral.custombackgroundcolors',
     dart: 'Product.customBackgroundColors',
   },
   everything: {
