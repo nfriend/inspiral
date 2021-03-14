@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:inspiral/models/models.dart';
 
@@ -41,9 +42,16 @@ Future<bool> purchaseProduct(Product product) async {
       // The user attempted to purchase the product, but something went
       // wrong. Throw an error.
       completer.completeError(purchasedProduct.error);
+
+      if (Platform.isIOS) {
+        // iOS requires purchases to be completed, even in the event of failure
+        InAppPurchaseConnection.instance.completePurchase(purchasedProduct);
+      }
     } else if (purchasedProduct.status == PurchaseStatus.purchased) {
       // The user purchased the product
       completer.complete(true);
+
+      InAppPurchaseConnection.instance.completePurchase(purchasedProduct);
     } else {
       // We got an update, but it didn't include any details about the
       // product we just purchased.

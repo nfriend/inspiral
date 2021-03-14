@@ -38,14 +38,6 @@ class _PurchasesListenerState extends State<PurchasesListener> {
       }
 
       purchases.updatePurchases(response.pastPurchases);
-
-      if (Platform.isIOS) {
-        response.pastPurchases.forEach((pastPurchase) {
-          // Mark that you've delivered the purchase. Only the App Store requires
-          // this final confirmation.
-          InAppPurchaseConnection.instance.completePurchase(pastPurchase);
-        });
-      }
     });
 
     super.initState();
