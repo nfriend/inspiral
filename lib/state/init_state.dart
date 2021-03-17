@@ -43,7 +43,7 @@ Future<void> initState(BuildContext context,
   ProgressState.init();
   final settings = SettingsState.init();
   final selectorDrawer = SelectorDrawerState.init();
-  PurchasesState.init(initialPurchases: [Product.free]);
+  final purchases = PurchasesState.init(initialPurchases: [Product.free]);
   final colors = ColorState.init(
       initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0x66FF0000)));
@@ -89,4 +89,7 @@ Future<void> initState(BuildContext context,
 
   // Run any initialization logic
   rotatingGear.initializePosition();
+
+  // TODO: how will this work offline?
+  await purchases.updatePurchasedItems();
 }

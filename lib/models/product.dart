@@ -40,32 +40,34 @@ class Product {
 
   /// A list of all available products. This list should be kept in-sync
   /// with `gear_generator/src/models/product_id.ts`
-  static const Product free =
-      Product(id: "io.nathanfriend.inspiral.free", name: "Free", price: 0);
+  static const Product free = Product(
+      id: "io.nathanfriend.inspiral.development.free", name: "Free", price: 0);
   static const Product ovalGears = Product(
-      id: "io.nathanfriend.inspiral.ovalgears", name: "Oval Gears", price: 99);
+      id: "io.nathanfriend.inspiral.development.ovalgears",
+      name: "Oval Gears",
+      price: 99);
   static const Product squareGears = Product(
-      id: "io.nathanfriend.inspiral.squaregears",
+      id: "io.nathanfriend.inspiral.development.squaregears",
       name: "Square Gears",
       price: 99);
   static const Product specialGears = Product(
-      id: "io.nathanfriend.inspiral.specialgears",
+      id: "io.nathanfriend.inspiral.development.specialgears",
       name: "Special Gears",
       price: 99);
   static const Product airbrushPens = Product(
-      id: "io.nathanfriend.inspiral.airbrushpens",
+      id: "io.nathanfriend.inspiral.development.airbrushpens",
       name: "Airbrush Pens",
       price: 99);
   static const Product customPenColors = Product(
-      id: "io.nathanfriend.inspiral.custompencolors",
+      id: "io.nathanfriend.inspiral.development.custompencolors",
       name: "Custom Pen Colors",
       price: 99);
   static const Product customBackgroundColors = Product(
-      id: "io.nathanfriend.inspiral.custombackgroundcolors",
+      id: "io.nathanfriend.inspiral.development.custombackgroundcolors",
       name: "Custom Background Colors",
       price: 99);
   static const Product everything = Product(
-      id: "io.nathanfriend.inspiral.everything",
+      id: "io.nathanfriend.inspiral.development.everything",
       name: "Everything",
       price: 499);
 

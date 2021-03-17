@@ -17,7 +17,9 @@ Function ifPurchased(
           context: context,
           builder: (context) {
             return PurchaseDialog(
-                product: product, onPurchased: callbackIfPurchased);
+                purchases: purchases,
+                product: product,
+                onPurchased: callbackIfPurchased);
           });
     } else {
       return callbackIfPurchased();

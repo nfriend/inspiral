@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 import 'package:inspiral/models/models.dart';
 
 class PurchasesState extends ChangeNotifier {
@@ -26,24 +26,23 @@ class PurchasesState extends ChangeNotifier {
   UnmodifiableListView<Product> _unmodifiablePurchases;
   List<Product> get purchases => _unmodifiablePurchases;
 
-  /// Updates this state's list of `purchases` based on the provided
-  /// list of `PurchaseDetails`
-  void updatePurchases(List<PurchaseDetails> purchaseDetails) {
+  /// Updates this state's list of `purchases` by querying the app store
+  Future<void> updatePurchasedItems() async {
+    await FlutterInappPurchase.instance.initConnection;
+
     List<Product> newPurchases = [Product.free];
-    purchaseDetails
-        .where((purchaseDetail) =>
-            purchaseDetail.status == PurchaseStatus.purchased)
-        .forEach((purchaseDetail) {
+    for (PurchasedItem item
+        in (await FlutterInappPurchase.instance.getPurchaseHistory())) {
       Product purchasedProduct = Product.allIndividuallyBuyableProducts
-          .firstWhere((p) => p.id == purchaseDetail.productID,
-              orElse: () => null);
+          .firstWhere((p) => p.id == item.productId, orElse: () => null);
 
       if (purchasedProduct != null) {
         newPurchases.add(purchasedProduct);
       }
-    });
+    }
 
     _purchases = newPurchases;
+    await FlutterInappPurchase.instance.endConnection;
     notifyListeners();
   }
 

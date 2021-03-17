@@ -15,33 +15,36 @@ export interface Product {
  * with `lib/models/product.dart`
  */
 export const allProducts: { [name: string]: Product } = {
-  free: { id: 'io.nathanfriend.inspiral.free', dart: 'Product.free' },
+  free: {
+    id: 'io.nathanfriend.inspiral.development.free',
+    dart: 'Product.free',
+  },
   ovalGears: {
-    id: 'io.nathanfriend.inspiral.ovalgears',
+    id: 'io.nathanfriend.inspiral.development.ovalgears',
     dart: 'Product.ovalGears',
   },
   squareGears: {
-    id: 'io.nathanfriend.inspiral.squaregears',
+    id: 'io.nathanfriend.inspiral.development.squaregears',
     dart: 'Product.squareGears',
   },
   specialGears: {
-    id: 'io.nathanfriend.inspiral.specialgears',
+    id: 'io.nathanfriend.inspiral.development.specialgears',
     dart: 'Product.specialGears',
   },
   airbrushPens: {
-    id: 'io.nathanfriend.inspiral.airbrushpens',
+    id: 'io.nathanfriend.inspiral.development.airbrushpens',
     dart: 'Product.airbrushPens',
   },
   customPenColors: {
-    id: 'io.nathanfriend.inspiral.custompencolors',
+    id: 'io.nathanfriend.inspiral.development.custompencolors',
     dart: 'Product.customPenColors',
   },
   customBackgroundColors: {
-    id: 'io.nathanfriend.inspiral.custombackgroundcolors',
+    id: 'io.nathanfriend.inspiral.development.custombackgroundcolors',
     dart: 'Product.customBackgroundColors',
   },
   everything: {
-    id: 'io.nathanfriend.inspiral.everything',
+    id: 'io.nathanfriend.inspiral.development.everything',
     dart: 'Product.everything',
   },
 };

@@ -1,67 +1,53 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/state.dart';
 
 /// Prompts the user to purchase the provided product using the OS's native
 /// in-app purchasing functionality.
 /// Returns a `bool` that indicates whether or not the product was purchased.
-Future<bool> purchaseProduct(Product product) async {
-  final bool available = await InAppPurchaseConnection.instance.isAvailable();
-  if (!available) {
-    throw ("unable to connect to the store!");
-  }
-
-  final ProductDetailsResponse response = await InAppPurchaseConnection.instance
-      .queryProductDetails([product.id].toSet());
-  if (response.notFoundIDs.isNotEmpty) {
-    throw ("unable find product '${product.id}' in the store!");
-  }
-
-  final ProductDetails productToBuy =
-      response.productDetails.firstWhere((element) => element.id == product.id);
-  final PurchaseParam purchaseParam =
-      PurchaseParam(productDetails: productToBuy);
-  await InAppPurchaseConnection.instance
-      .buyNonConsumable(purchaseParam: purchaseParam);
+Future<bool> purchaseProduct(PurchasesState purchases, Product product) async {
+  await FlutterInappPurchase.instance.initConnection;
 
   Completer<bool> completer = Completer<bool>();
 
-  final Stream<List<PurchaseDetails>> purchaseUpdates =
-      InAppPurchaseConnection.instance.purchaseUpdatedStream;
-  StreamSubscription<List<PurchaseDetails>> subscription =
-      purchaseUpdates.listen((updates) {
-    PurchaseDetails purchasedProduct = updates.firstWhere(
-        (details) => details.productID == product.id,
-        orElse: () => null);
+  StreamSubscription<PurchasedItem> purchaseUpdatedSubscription =
+      FlutterInappPurchase.purchaseUpdated.listen((productItem) {
+    print('purchase-updated: $productItem');
+    // The user purchased the product
+    completer.complete(true);
+  });
 
-    if (purchasedProduct == null) {
+  StreamSubscription<PurchaseResult> purchaseErrorSubscription =
+      FlutterInappPurchase.purchaseError.listen((purchaseError) {
+    print('purchase-error: $purchaseError');
+
+    if (purchaseError.code == "E_USER_CANCELLED") {
       // The user did not purchase the product, so return `false`
       completer.complete(false);
-    } else if (purchasedProduct.status == PurchaseStatus.error) {
+    } else {
       // The user attempted to purchase the product, but something went
       // wrong. Throw an error.
-      completer.completeError(purchasedProduct.error);
-
-      if (Platform.isIOS) {
-        // iOS requires purchases to be completed, even in the event of failure
-        InAppPurchaseConnection.instance.completePurchase(purchasedProduct);
-      }
-    } else if (purchasedProduct.status == PurchaseStatus.purchased) {
-      // The user purchased the product
-      completer.complete(true);
-
-      InAppPurchaseConnection.instance.completePurchase(purchasedProduct);
-    } else {
-      // We got an update, but it didn't include any details about the
-      // product we just purchased.
-      // Keep waiting for an update about the purchase.
+      completer.completeError(purchaseError);
     }
   });
 
+  await FlutterInappPurchase.instance.getProducts([product.id]);
+
+  // We don't await this one, because updates to the purchases status are
+  // reported through the `purchaseUpdated` and `purchaseError` streams above
+  FlutterInappPurchase.instance.requestPurchase(product.id);
+
   bool productHasBeenPurchased = await completer.future;
 
-  subscription.cancel();
+  purchaseUpdatedSubscription.cancel();
+  purchaseErrorSubscription.cancel();
+
+  await FlutterInappPurchase.instance.endConnection;
+
+  if (productHasBeenPurchased) {
+    await purchases.updatePurchasedItems();
+  }
 
   return productHasBeenPurchased;
 }

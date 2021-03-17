@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:inspiral/state/purchases_state.dart';
 import 'package:inspiral/widgets/drawing_tools/helpers/purchase_product.dart';
 
 class PurchaseDialog extends StatefulWidget {
+  /// The current PurchasesState object. This must be manually passed since
+  /// this dialog doesn't share a `context` with the main app.
+  final PurchasesState purchases;
+
   /// The product being purchased
   final Product product;
 
   /// The function to call if the Product is purchased
   final Function onPurchased;
 
-  PurchaseDialog({@required this.product, @required this.onPurchased});
+  PurchaseDialog(
+      {@required this.purchases,
+      @required this.product,
+      @required this.onPurchased});
 
   @override
   _PurchaseDialogState createState() => _PurchaseDialogState();
@@ -71,7 +79,8 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
                               _isWaitingForPurchase = true;
                             });
                             bool productHasBeenPurchased =
-                                await purchaseProduct(widget.product);
+                                await purchaseProduct(
+                                    widget.purchases, widget.product);
                             setState(() {
                               _isWaitingForPurchase = false;
                             });
@@ -151,8 +160,8 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
                           setState(() {
                             _isWaitingForPurchase = true;
                           });
-                          bool productHasBeenPurchased =
-                              await purchaseProduct(Product.everything);
+                          bool productHasBeenPurchased = await purchaseProduct(
+                              widget.purchases, Product.everything);
                           setState(() {
                             _isWaitingForPurchase = false;
                           });

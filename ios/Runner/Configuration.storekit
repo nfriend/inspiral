@@ -11,7 +11,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.ovalgears",
+      "productID" : "io.nathanfriend.inspiral.development.ovalgears",
       "referenceName" : "Oval Gears",
       "type" : "NonConsumable"
     },
@@ -26,7 +26,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.squaregears",
+      "productID" : "io.nathanfriend.inspiral.development.squaregears",
       "referenceName" : "Square Gears",
       "type" : "NonConsumable"
     },
@@ -41,7 +41,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.specialgears",
+      "productID" : "io.nathanfriend.inspiral.development.specialgears",
       "referenceName" : "Special Gears",
       "type" : "NonConsumable"
     },
@@ -56,7 +56,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.airbrushpens",
+      "productID" : "io.nathanfriend.inspiral.development.airbrushpens",
       "referenceName" : "Airbrush Pens",
       "type" : "NonConsumable"
     },
@@ -71,7 +71,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.custompencolors",
+      "productID" : "io.nathanfriend.inspiral.development.custompencolors",
       "referenceName" : "Custom Pen Colors",
       "type" : "NonConsumable"
     },
@@ -86,7 +86,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.custombackgroundcolors",
+      "productID" : "io.nathanfriend.inspiral.development.custombackgroundcolors",
       "referenceName" : "Custom Background Colors",
       "type" : "NonConsumable"
     },
@@ -101,7 +101,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "io.nathanfriend.inspiral.everything",
+      "productID" : "io.nathanfriend.inspiral.development.everything",
       "referenceName" : "Everything",
       "type" : "NonConsumable"
     }
