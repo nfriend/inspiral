@@ -10,6 +10,7 @@ const androidpublisher = google.androidpublisher('v3');
   const auth = new google.auth.GoogleAuth({
     scopes: ['https://www.googleapis.com/auth/androidpublisher'],
     projectId: require(path.resolve(__dirname, 'project.json')),
+    keyFile: path.resolve(__dirname, 'key.json'),
   });
 
   const authClient = await auth.getClient();

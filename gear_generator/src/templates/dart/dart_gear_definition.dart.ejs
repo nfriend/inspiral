@@ -9,7 +9,8 @@ final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
     thumbnailImage: '<%= gearDefinition.thumbnailImage %>',
     size: Size(<%= gearDefinition.size.width %>, <%= gearDefinition.size.height %>),
     toothCount: <%= gearDefinition.toothCount %>,
-    product: <%= gearDefinition.product.dart %>,
+    entitlement: <%= gearDefinition.entitlement.dart %>,
+    package: <%= gearDefinition.package.dart %>,
     points: [
       <%_ for (const point of gearDefinition.points) { _%>
       ContactPoint(

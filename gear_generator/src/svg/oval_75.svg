@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg">
-	<desc xmlns:inspiral="http://nathanfriend.io/inspiral">
-		<product-id>
-			io.nathanfriend.inspiral.development.ovalgears
-		</product-id>
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<entitlement-id>
+			io.nathanfriend.inspiral.ovalgears
+		</entitlement-id>
+    <package-id>
+			io.nathanfriend.inspiral.ovalgears
+		</package-id>
 	</desc>
-	<g>
-		<path d="M 150 50
+  <g>
+    <path d="M 150 50
              A 75 50 0 1 0 0 50
              A 75 50 0 0 0 150 50
              Z" />
-	</g>
+  </g>
 </svg>

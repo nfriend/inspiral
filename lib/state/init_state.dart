@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:inspiral/models/gears/gears.dart';
-import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/stroke_state.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ Future<void> initState(BuildContext context,
   ProgressState.init();
   final settings = SettingsState.init();
   final selectorDrawer = SelectorDrawerState.init();
-  final purchases = PurchasesState.init(initialPurchases: [Product.free]);
+  PurchasesState.init();
   final colors = ColorState.init(
       initialBackgroundColor: initialCanvasColor,
       initialPenColor: TinyColor(Color(0x66FF0000)));
@@ -90,6 +90,7 @@ Future<void> initState(BuildContext context,
   // Run any initialization logic
   rotatingGear.initializePosition();
 
+  await Purchases.setDebugLogsEnabled(settings.debug);
   // TODO: how will this work offline?
-  await purchases.updatePurchasedItems();
+  await Purchases.setup("QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz");
 }

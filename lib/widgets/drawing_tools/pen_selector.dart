@@ -13,12 +13,14 @@ import 'package:tinycolor/tinycolor.dart';
 class _StrokeAndStyle {
   final double width;
   final StrokeStyle style;
-  final Product product;
+  final String entitlement;
+  final String package;
 
   const _StrokeAndStyle(
       {@required this.width,
       @required this.style,
-      this.product = Product.free});
+      this.entitlement = Entitlement.free,
+      this.package});
 }
 
 final List<TinyColor> _penColors = [
@@ -44,15 +46,30 @@ final List<_StrokeAndStyle> _strokeOptions = [
   const _StrokeAndStyle(width: 20.0, style: StrokeStyle.normal),
   const _StrokeAndStyle(width: 30.0, style: StrokeStyle.normal),
   const _StrokeAndStyle(
-      width: 5.0, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+      width: 5.0,
+      style: StrokeStyle.airbrush,
+      package: Package.airbrushpens,
+      entitlement: Entitlement.airbrushpens),
   const _StrokeAndStyle(
-      width: 7.5, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+      width: 7.5,
+      style: StrokeStyle.airbrush,
+      package: Package.airbrushpens,
+      entitlement: Entitlement.airbrushpens),
   const _StrokeAndStyle(
-      width: 12.5, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+      width: 12.5,
+      style: StrokeStyle.airbrush,
+      package: Package.airbrushpens,
+      entitlement: Entitlement.airbrushpens),
   const _StrokeAndStyle(
-      width: 15.0, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+      width: 15.0,
+      style: StrokeStyle.airbrush,
+      package: Package.airbrushpens,
+      entitlement: Entitlement.airbrushpens),
   const _StrokeAndStyle(
-      width: 20.0, style: StrokeStyle.airbrush, product: Product.airbrushPens),
+      width: 20.0,
+      style: StrokeStyle.airbrush,
+      package: Package.airbrushpens,
+      entitlement: Entitlement.airbrushpens),
 ];
 
 class PenSelector extends StatelessWidget {
@@ -78,11 +95,16 @@ class PenSelector extends StatelessWidget {
                   style: options.style,
                   isActive: options.width == strokeWidth &&
                       options.style == strokeStyle,
-                  product: options.product,
-                  onStrokeTap: ifPurchased(context, options.product, () {
-                    stroke.setStroke(
-                        width: options.width, style: options.style);
-                  }))
+                  package: options.package,
+                  entitlement: options.entitlement,
+                  onStrokeTap: ifPurchased(
+                      context: context,
+                      entitlement: options.entitlement,
+                      package: options.package,
+                      callbackIfPurchased: () {
+                        stroke.setStroke(
+                            width: options.width, style: options.style);
+                      }))
           ]),
       SelectionrRowDefinition(
           storageKey: "penColor",

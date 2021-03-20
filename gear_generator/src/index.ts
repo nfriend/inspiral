@@ -13,7 +13,8 @@ import { ImageInfo } from './models/image_info';
 import { renderHtmlToPng } from './render';
 import { writeGearDefinitionAsDartFile } from './util/write_gear_definition_as_dart_file';
 import { writeDartProxyExportFile } from './util/write_dart_proxy_export_file';
-import { allProducts } from './models/product';
+import { allEntitlements } from './models/entitlement';
+import { allPackages } from './models/package';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
@@ -59,8 +60,8 @@ const readFile = util.promisify(fs.readFile);
       meshSpacing,
       gearName,
       camelCasedGearName: camelcase(gearName),
-      allProducts: allProducts,
-      freeProductIdString: allProducts.free.id,
+      allEntitlements,
+      allPackages,
     };
 
     const gearDefinition: GearDefinition = await page.evaluate(

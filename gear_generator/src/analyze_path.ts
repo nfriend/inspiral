@@ -1,7 +1,8 @@
 import { ContactPoint } from './models/contact_point';
 import { GearDefinition } from './models/gear_definition';
 import { AngleGearHole } from './models/gear_hole';
-import { Product } from './models/product';
+import { allEntitlements } from './models/entitlement';
+import { allPackages } from './models/package';
 
 export interface AnalyzePathParams {
   baseScale: number;
@@ -9,8 +10,8 @@ export interface AnalyzePathParams {
   meshSpacing: number;
   gearName: string;
   camelCasedGearName: string;
-  allProducts: { [name: string]: Product };
-  freeProductIdString: string;
+  allEntitlements: typeof allEntitlements;
+  allPackages: typeof allPackages;
 }
 
 /**
@@ -29,26 +30,38 @@ export const analyzePath = ({
   meshSpacing,
   gearName,
   camelCasedGearName,
-  allProducts: allProducts,
-  freeProductIdString,
+  allEntitlements,
+  allPackages,
 }: AnalyzePathParams): GearDefinition => {
   const pi2 = 2 * Math.PI;
 
   const svg = document.querySelector('svg');
   const path = svg.querySelector('path');
 
-  // Find the product ID embeded in the <product-id> element.
-  // If no <product-id> element was provided, the gear is assumed to free.
-  // If an invalid product ID is found, an error is thown.
-  const productIdString = (
-    document.querySelector('svg desc product-id')?.textContent ||
-    freeProductIdString
+  // Find the entitlement ID embeded in the <entitlement-id> element.
+  // If no <entitlement-id> element was provided, the gear is assumed to free.
+  // If an invalid entitlement ID is found, an error is thown.
+  const entitlementId = (
+    document.querySelector('svg desc entitlement-id')?.textContent ||
+    allEntitlements.free.id
   ).trim();
-  const product = Object.values(allProducts).find(
-    (pid) => pid.id === productIdString,
+  const entitlement = Object.values(allEntitlements).find(
+    (p) => p.id === entitlementId,
   );
-  if (!product) {
-    throw new Error(`Unrecognized product id: "${productIdString}"`);
+  if (!entitlement) {
+    throw new Error(`Unrecognized entitlement id: "${entitlementId}"`);
+  }
+
+  // Similar to above, but for the package ID
+  const packageId = (
+    document.querySelector('svg desc package-id')?.textContent ||
+    allPackages.free.id
+  ).trim();
+  const gearPackage = Object.values(allPackages).find(
+    (p) => p.id === packageId,
+  );
+  if (!gearPackage) {
+    throw new Error(`Unrecognized package id: "${packageId}"`);
   }
 
   // The total length of the path
@@ -201,7 +214,8 @@ export const analyzePath = ({
     toothCount,
     points: evaluatedPoints,
     holes,
-    product,
+    entitlement,
+    package: gearPackage,
   };
 
   return gearDefinition;

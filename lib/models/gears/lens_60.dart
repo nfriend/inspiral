@@ -16,7 +16,8 @@ final lens60 = GearDefinition(
     thumbnailImage: 'images/gears/lens_60_thumb.png',
     size: Size(628, 628),
     toothCount: 57,
-    product: Product.specialGears,
+    entitlement: Entitlement.specialgears,
+    package: Package.specialgears,
     points: [
       ContactPoint(
           position: Offset(303.96874773064127, -0.0858987126624377),

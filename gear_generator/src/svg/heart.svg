@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
 	<desc xmlns:inspiral="http://nathanfriend.io/inspiral">
-		<product-id>
-			io.nathanfriend.inspiral.development.specialgears
-		</product-id>
+		<entitlement-id>
+			io.nathanfriend.inspiral.specialgears
+		</entitlement-id>
+		<package-id>
+			io.nathanfriend.inspiral.specialgears
+		</package-id>
 	</desc>
 	<style>
 		text {

@@ -16,7 +16,8 @@ final square40 = GearDefinition(
     thumbnailImage: 'images/gears/square_40_thumb.png',
     size: Size(300, 300),
     toothCount: 40,
-    product: Product.squareGears,
+    entitlement: Entitlement.squaregears,
+    package: Package.squaregears,
     points: [
       ContactPoint(
           position: Offset(137.32740783691406, -0.33629608154296875),

@@ -16,7 +16,8 @@ final squiggle = GearDefinition(
     thumbnailImage: 'images/gears/squiggle_thumb.png',
     size: Size(448, 448),
     toothCount: 51,
-    product: Product.specialGears,
+    entitlement: Entitlement.specialgears,
+    package: Package.specialgears,
     points: [
       ContactPoint(
           position: Offset(211.99403241238386, 9.621600091589398),

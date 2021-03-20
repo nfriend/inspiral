@@ -4,7 +4,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/if_purchased.dart';
 import 'package:inspiral/widgets/color_filters.dart';
-import 'package:inspiral/widgets/drawing_tools/crown_image.dart';
+import 'package:inspiral/widgets/drawing_tools/crown_if_not_entitled.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -18,7 +18,6 @@ class GearSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purchases = Provider.of<PurchasesState>(context);
     final bool isDark =
         context.select<ColorState, bool>((colors) => colors.isDark);
     final TinyColor activeColor =
@@ -26,8 +25,6 @@ class GearSelectorThumbnail extends StatelessWidget {
     final TinyColor uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10.0));
-    final Widget crown =
-        purchases.purchased(gear.product) ? Container() : CrownImage();
 
     Color toothCountTextColor;
     Color toothCountBubbleBackgroundColor;
@@ -57,7 +54,11 @@ class GearSelectorThumbnail extends StatelessWidget {
                   borderRadius: borderRadius,
                   color: isActive ? activeColor.color : Colors.transparent,
                   child: InkWell(
-                      onTap: ifPurchased(context, gear.product, onGearTap),
+                      onTap: ifPurchased(
+                          context: context,
+                          entitlement: gear.entitlement,
+                          package: gear.package,
+                          callbackIfPurchased: onGearTap),
                       borderRadius: borderRadius,
                       child: ColorFiltered(
                           colorFilter: isActive
@@ -80,7 +81,7 @@ class GearSelectorThumbnail extends StatelessWidget {
                     gear.toothCount.toString(),
                     style: toothCountTextStyle,
                   )))),
-      crown
+      CrownIfNotEntitled(entitlement: gear.entitlement)
     ]);
   }
 }

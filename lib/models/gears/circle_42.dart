@@ -16,7 +16,8 @@ final circle42 = GearDefinition(
     thumbnailImage: 'images/gears/circle_42_thumb.png',
     size: Size(384, 384),
     toothCount: 42,
-    product: Product.free,
+    entitlement: Entitlement.free,
+    package: Package.free,
     points: [
       ContactPoint(
           position: Offset(179.99999999999778, -0.0000073111685132682875),

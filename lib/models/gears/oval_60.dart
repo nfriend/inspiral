@@ -16,7 +16,8 @@ final oval60 = GearDefinition(
     thumbnailImage: 'images/gears/oval_60_thumb.png',
     size: Size(528, 528),
     toothCount: 51,
-    product: Product.ovalGears,
+    entitlement: Entitlement.ovalgears,
+    package: Package.ovalgears,
     points: [
       ContactPoint(position: Offset(252, 0), direction: 0),
       ContactPoint(

@@ -1,6 +1,7 @@
 import { ContactPoint } from './contact_point';
 import { AngleGearHole } from './gear_hole';
-import { Product } from './product';
+import { Entitlement } from './entitlement';
+import { Package } from './package';
 
 /**
  * A class that holds all the data necessary to
@@ -35,6 +36,9 @@ export interface GearDefinition {
   /** The holes in the gear */
   holes: AngleGearHole[];
 
-  // The product of this gear.
-  product: Product;
+  // The entitlement of this gear.
+  entitlement: Entitlement;
+
+  // The package that will unlock the gear's entitlement
+  package: Package;
 }

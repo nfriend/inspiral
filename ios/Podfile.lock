@@ -2,8 +2,6 @@ PODS:
   - Flutter (1.0.0)
   - image_gallery_saver (1.5.0):
     - Flutter
-  - in_app_purchase (0.0.1):
-    - Flutter
   - integration_test (0.0.1):
     - Flutter
   - open_file (0.0.1):
@@ -12,26 +10,38 @@ PODS:
     - Flutter
   - "permission_handler (5.1.0+2)":
     - Flutter
+  - Purchases (3.10.6):
+    - PurchasesCoreSwift (= 3.10.6)
+  - purchases_flutter (3.1.0):
+    - Flutter
+    - PurchasesHybridCommon (= 1.6.1)
+  - PurchasesCoreSwift (3.10.6)
+  - PurchasesHybridCommon (1.6.1):
+    - Purchases (= 3.10.6)
   - share (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
-  - in_app_purchase (from `.symlinks/plugins/in_app_purchase/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - open_file (from `.symlinks/plugins/open_file/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - share (from `.symlinks/plugins/share/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Purchases
+    - PurchasesCoreSwift
+    - PurchasesHybridCommon
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
-  in_app_purchase:
-    :path: ".symlinks/plugins/in_app_purchase/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
   open_file:
@@ -40,17 +50,22 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  purchases_flutter:
+    :path: ".symlinks/plugins/purchases_flutter/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
 
 SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
-  in_app_purchase: 3e2155afa9d03d4fa32d9e62d567885080ce97d6
   integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
   open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  Purchases: 520fdb59140fed96932a30d02a3ec04858cb541c
+  purchases_flutter: 05472ba84c83f05a138a3a657f1013f5f7143539
+  PurchasesCoreSwift: 31c2a3d7394432abbe64d46f0933835de0b33033
+  PurchasesHybridCommon: 013c8072b73e752a206779747e88c068fbf999ec
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c

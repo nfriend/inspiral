@@ -16,7 +16,8 @@ final heart = GearDefinition(
     thumbnailImage: 'images/gears/heart_thumb.png',
     size: Size(664, 664),
     toothCount: 75,
-    product: Product.specialGears,
+    entitlement: Entitlement.specialgears,
+    package: Package.specialgears,
     points: [
       ContactPoint(
           position: Offset(320.88840384834464, -124.03994940517872),

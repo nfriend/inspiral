@@ -25,8 +25,11 @@ class GearDefinition {
   /// The list of all holes in this gear
   final List<GearHole> holes;
 
-  /// The product that includes this gear.
-  final Product product;
+  /// The entitlement that includes this gear
+  final String entitlement;
+
+  /// The package that will unlock the gear's entitlement
+  final String package;
 
   GearDefinition(
       {@required this.image,
@@ -35,7 +38,8 @@ class GearDefinition {
       @required this.toothCount,
       @required this.points,
       @required this.holes,
-      @required this.product});
+      @required this.entitlement,
+      @required this.package});
 
   /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {
