@@ -17,9 +17,11 @@ import 'package:tinycolor/tinycolor.dart';
 class DrawingBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([
-      SystemUiOverlay.top,
-    ]);
+    // SystemChrome.setEnabledSystemUIOverlays(
+    //     [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+    ));
 
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
