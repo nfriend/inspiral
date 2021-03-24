@@ -48,8 +48,7 @@ class _InspiralProvidersState extends State<InspiralProviders> {
               ChangeNotifierProvider(create: (context) => FixedGearState())
             ], child: this.widget.child);
           } else {
-            // TODO: Do we need a real loading state here?
-            // If the startup time is slow enough, consider
+            // Note: If the startup time is slow enough, consider
             // showing a splash screen of some kind here.
             return Container(color: initialCanvasColor.color);
           }

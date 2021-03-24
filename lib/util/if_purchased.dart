@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/purchases_state.dart';
-import 'package:inspiral/widgets/drawing_tools/purchase_dialog.dart';
+import 'package:inspiral/widgets/purchases/purchase_dialog.dart';
 import 'package:provider/provider.dart';
 
 /// Returns a function that executes the callback if the provided entitlement is

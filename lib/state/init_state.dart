@@ -91,6 +91,5 @@ Future<void> initState(BuildContext context,
   rotatingGear.initializePosition();
 
   await Purchases.setDebugLogsEnabled(settings.debug);
-  // TODO: how will this work offline?
   await Purchases.setup("QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz");
 }

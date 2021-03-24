@@ -17,15 +17,13 @@ class CrownIfNotEntitled extends StatelessWidget {
     return FutureBuilder(
         future: purchases.isEntitledTo(entitlement),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data ? Container() : crown;
-          } else if (snapshot.hasError) {
-            // TODO: Handle this case
-            return crown;
-          } else {
-            // TODO: Handle this case
-            return crown;
+          if (snapshot.hasData && snapshot.data) {
+            // The `isEntitledTo` check has finished and the user
+            // is entitled to the provided entitlement
+            return Container();
           }
+
+          return crown;
         });
   }
 }

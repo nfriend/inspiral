@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inspiral/models/entitlement.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -27,5 +28,33 @@ class PurchasesState extends ChangeNotifier {
 
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
     return purchaserInfo.entitlements.all[entitlement]?.isActive == true;
+  }
+
+  /// Prompts the user to purchase the provided package using the OS's native
+  /// in-app purchasing functionality.
+  /// Returns a `bool` that indicates whether or not the product was purchased.
+  Future<bool> purchasePackage(Package packageToBuy) async {
+    try {
+      await Purchases.purchasePackage(packageToBuy);
+      return true;
+    } on PlatformException catch (e) {
+      PurchasesErrorCode errorCode = PurchasesErrorHelper.getErrorCode(e);
+      if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+        return false;
+      }
+
+      throw e;
+    }
+  }
+
+  /// Gets the current offering
+  Future<Offering> getCurrentOffering() async {
+    Offerings offerings = await Purchases.getOfferings();
+    if (offerings.current == null ||
+        offerings.current.availablePackages.isEmpty) {
+      throw 'Offering returned no packages';
+    }
+
+    return offerings.current;
   }
 }
