@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:inspiral/state/color_state.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class ColorPickerDialog extends StatefulWidget {
+  /// The title to render at the top of the dialog
   final String title;
 
-  ColorPickerDialog({@required this.title});
+  /// The current ColorState object. Provided here explicitly since the
+  /// dialog doesn't share the same provider context.
+  final ColorState colors;
+
+  ColorPickerDialog({@required this.title, @required this.colors});
 
   @override
   _ColorPickerDialogState createState() => _ColorPickerDialogState();
@@ -14,17 +20,28 @@ class ColorPickerDialog extends StatefulWidget {
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
   Color _selectedColor = Colors.red;
 
-  final ButtonStyle _cancelButtonStyle = ButtonStyle(
-      shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
-      foregroundColor:
-          MaterialStateProperty.resolveWith((states) => Colors.black));
-
   @override
   Widget build(BuildContext context) {
-    Color nameColor =
-        TinyColor(_selectedColor).isDark() && _selectedColor.alpha > 100
-            ? Colors.white
-            : Colors.black;
+    bool darkMode = widget.colors.isDark;
+    bool isSelectedColorOpaqueish = _selectedColor.alpha > 100;
+    bool selectedColorIsDark = TinyColor(_selectedColor).isDark();
+
+    // Ensure the text of the colored button is always legible
+    Color selectButtonTextColor;
+    if (darkMode) {
+      selectButtonTextColor = !selectedColorIsDark && isSelectedColorOpaqueish
+          ? Colors.black
+          : Colors.white;
+    } else {
+      selectButtonTextColor = selectedColorIsDark && isSelectedColorOpaqueish
+          ? Colors.white
+          : Colors.black;
+    }
+
+    final ButtonStyle _cancelButtonStyle = ButtonStyle(
+        shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
+        foregroundColor: MaterialStateProperty.resolveWith(
+            (states) => darkMode ? Colors.white : Colors.black));
 
     final ButtonStyle _selectButtonStyle = ButtonStyle(
         shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
@@ -64,8 +81,9 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 onPressed: () {},
                 child: Text(
                   "SELECT ${ColorTools.nameThatColor(_selectedColor).toUpperCase()}",
-                  style:
-                      TextStyle(fontWeight: FontWeight.w500, color: nameColor),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: selectButtonTextColor),
                 ),
                 style: _selectButtonStyle),
           ),

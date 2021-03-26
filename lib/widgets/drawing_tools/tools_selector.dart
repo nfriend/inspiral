@@ -74,7 +74,7 @@ class ToolsSelector extends StatelessWidget {
                       context: context,
                       builder: (_) {
                         return ColorPickerDialog(
-                            title: "Select new canvas color");
+                            title: "Select new canvas color", colors: colors);
                       });
                 })
           ]),
