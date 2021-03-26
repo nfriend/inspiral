@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/entitlement.dart';
+import 'package:inspiral/models/package.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/action_button.dart';
-import 'package:inspiral/widgets/drawing_tools/color_picker_dialog.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector_thumbnail.dart';
+import 'package:inspiral/widgets/drawing_tools/new_color_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -67,16 +69,10 @@ class ToolsSelector extends StatelessWidget {
                   color: color,
                   isActive: color.color == backgroundColor.color,
                   onColorTap: () => colors.backgroundColor = color),
-            ElevatedButton(
-                child: Text("Open color picker"),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        return ColorPickerDialog(
-                            title: "Select new canvas color", colors: colors);
-                      });
-                })
+            NewColorThumbnail(
+                title: "Select new canvas color",
+                entitlement: Entitlement.custombackgroundcolors,
+                package: Package.custombackgroundcolors)
           ]),
     ]);
   }

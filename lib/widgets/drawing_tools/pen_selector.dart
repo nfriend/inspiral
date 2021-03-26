@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/if_purchased.dart';
-import 'package:inspiral/widgets/drawing_tools/color_picker_dialog.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector_thumbnail.dart';
+import 'package:inspiral/widgets/drawing_tools/new_color_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:inspiral/widgets/drawing_tools/stroke_selector_thumbnail.dart';
 import 'package:inspiral/models/ink_line.dart';
@@ -116,16 +116,10 @@ class PenSelector extends StatelessWidget {
                   color: color,
                   isActive: color.color == penColor.color,
                   onColorTap: () => colors.penColor = color),
-            ElevatedButton(
-                child: Text("Open color picker"),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        return ColorPickerDialog(
-                            title: "Select new pen color", colors: colors);
-                      });
-                })
+            NewColorThumbnail(
+                title: "Select new pen color",
+                entitlement: Entitlement.custompencolors,
+                package: Package.custompencolors)
           ]),
     ]);
   }
