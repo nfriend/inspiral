@@ -43,6 +43,7 @@ dependencies:
   open_file: ^3.0.3
   gradient_widgets: ^0.5.1
   purchases_flutter: ^3.1.0
+  flex_color_picker: ^2.0.0-nullsafety.4
 
 dev_dependencies:
   flutter_test:
