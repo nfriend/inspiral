@@ -122,7 +122,7 @@ class PenSelector extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (_) {
-                        return ColorPickerDialog();
+                        return ColorPickerDialog(title: "Select new pen color");
                       });
                 })
           ]),
