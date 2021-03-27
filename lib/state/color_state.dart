@@ -10,12 +10,16 @@ class ColorState extends ChangeNotifier {
       {@required TinyColor initialBackgroundColor,
       @required TinyColor initialPenColor,
       @required List<TinyColor> initialAvailablePenColors,
-      @required List<TinyColor> initialAvailableCanvasColors}) {
+      @required List<TinyColor> initialAvailableCanvasColors,
+      @required TinyColor lastSelectedCustomPenColor,
+      @required TinyColor lastSelectedCustomCanvasColor}) {
     return _instance = ColorState._internal(
         initialBackgroundColor: initialBackgroundColor,
         initialPenColor: initialPenColor,
         initialAvailablePenColors: initialAvailablePenColors,
-        initialAvailableCanvasColors: initialAvailableCanvasColors);
+        initialAvailableCanvasColors: initialAvailableCanvasColors,
+        lastSelectedCustomPenColor: lastSelectedCustomPenColor,
+        lastSelectedCustomCanvasColor: lastSelectedCustomCanvasColor);
   }
 
   factory ColorState() {
@@ -28,7 +32,9 @@ class ColorState extends ChangeNotifier {
       {@required TinyColor initialBackgroundColor,
       @required TinyColor initialPenColor,
       @required List<TinyColor> initialAvailablePenColors,
-      @required List<TinyColor> initialAvailableCanvasColors}) {
+      @required List<TinyColor> initialAvailableCanvasColors,
+      @required this.lastSelectedCustomPenColor,
+      @required this.lastSelectedCustomCanvasColor}) {
     _backgroundColor = initialBackgroundColor;
     _penColor = initialPenColor;
     _availablePenColors = initialAvailablePenColors;
@@ -61,6 +67,12 @@ class ColorState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// The last custom canvas color selected in the color picker dialog
+  TinyColor lastSelectedCustomCanvasColor;
+
+  /// The last custom pen color selected in the color picker dialog
+  TinyColor lastSelectedCustomPenColor;
+
   List<TinyColor> _availablePenColors;
   UnmodifiableListView<TinyColor> _unmodifiableAvailablePenColors;
   List<TinyColor> get availablePenColors => _unmodifiableAvailablePenColors;
@@ -70,6 +82,7 @@ class ColorState extends ChangeNotifier {
   void addAndSelectPenColor(TinyColor color) {
     _availablePenColors.add(color);
     penColor = color;
+    lastSelectedCustomPenColor = color;
     notifyListeners();
   }
 
@@ -89,6 +102,7 @@ class ColorState extends ChangeNotifier {
   void addAndSelectCanvasColor(TinyColor color) {
     _availableCanvasColors.add(color);
     backgroundColor = color;
+    lastSelectedCustomCanvasColor = color;
     notifyListeners();
   }
 

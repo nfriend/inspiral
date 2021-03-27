@@ -68,7 +68,9 @@ Future<void> initState(BuildContext context,
         TinyColor(Color(0xFF0E1247)),
         TinyColor(Color(0xFF333333)),
         TinyColor(Color(0xFF121212)),
-      ]);
+      ],
+      lastSelectedCustomPenColor: TinyColor(Color(0xB348F1F7)),
+      lastSelectedCustomCanvasColor: TinyColor(Color(0xFF592659)));
   final stroke = StrokeState.init(initialWidth: 5.0);
   final ink = InkState.init();
   final pointers = PointersState.init();

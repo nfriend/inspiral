@@ -104,9 +104,11 @@ class PenSelector extends StatelessWidget {
                   isActive: color.color == penColor.color,
                   onColorTap: () => colors.penColor = color),
             NewColorThumbnail(
-                title: "Select new pen color",
-                entitlement: Entitlement.custombackgroundcolors,
+                title: "New pen color",
+                entitlement: Entitlement.free,
                 package: Package.custompencolors,
+                showOpacity: true,
+                initialColor: colors.lastSelectedCustomPenColor.color,
                 onSelect: (color) {
                   colors.addAndSelectPenColor(TinyColor(color));
                 })

@@ -11,18 +11,35 @@ class ColorPickerDialog extends StatefulWidget {
   /// dialog doesn't share the same provider context.
   final ColorState colors;
 
+  /// Whether or not to show the opacity slider
+  final bool showOpacity;
+
+  /// The color that should be initially selected;
+  final Color initialColor;
+
   /// The function to call when a new color is selected
   final Function(Color color) onSelect;
 
   ColorPickerDialog(
-      {@required this.title, @required this.colors, @required this.onSelect});
+      {@required this.title,
+      @required this.colors,
+      @required this.showOpacity,
+      @required this.initialColor,
+      @required this.onSelect});
 
   @override
   _ColorPickerDialogState createState() => _ColorPickerDialogState();
 }
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
-  Color _selectedColor = Colors.red;
+  Color _selectedColor;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedColor = widget.initialColor;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +82,9 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 textAlign: TextAlign.center,
               )),
           ColorPicker(
+            color: widget.initialColor,
             showRecentColors: false,
-            enableOpacity: true,
+            enableOpacity: widget.showOpacity,
             enableShadesSelection: false,
             borderRadius: 20,
             opacityTrackHeight: 22,
@@ -86,12 +104,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                   widget.onSelect(_selectedColor);
                   Navigator.of(context).pop();
                 },
-                child: Text(
-                  "SELECT ${ColorTools.nameThatColor(_selectedColor).toUpperCase()}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: selectButtonTextColor),
-                ),
+                child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      "SELECT ${ColorTools.nameThatColor(_selectedColor).toUpperCase()}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: selectButtonTextColor),
+                    )),
                 style: _selectButtonStyle),
           ),
           Padding(

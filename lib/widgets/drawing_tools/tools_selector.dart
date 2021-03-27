@@ -59,9 +59,11 @@ class ToolsSelector extends StatelessWidget {
                   isActive: color.color == backgroundColor.color,
                   onColorTap: () => colors.backgroundColor = color),
             NewColorThumbnail(
-                title: "Select new canvas color",
-                entitlement: Entitlement.custombackgroundcolors,
+                title: "New canvas color",
+                entitlement: Entitlement.free,
                 package: Package.custombackgroundcolors,
+                showOpacity: false,
+                initialColor: colors.lastSelectedCustomCanvasColor.color,
                 onSelect: (color) {
                   colors.addAndSelectCanvasColor(TinyColor(color));
                 }),

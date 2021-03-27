@@ -16,6 +16,12 @@ class NewColorThumbnail extends StatelessWidget {
   /// The package that will purchase the entitlement for this color picker
   final String package;
 
+  /// Whether or not to show the opacity slider in the dialog
+  final bool showOpacity;
+
+  /// The color that should be initially selected;
+  final Color initialColor;
+
   /// The function to call when a new color is selected
   final Function(Color color) onSelect;
 
@@ -23,6 +29,8 @@ class NewColorThumbnail extends StatelessWidget {
       {@required this.title,
       @required this.entitlement,
       @required this.package,
+      @required this.showOpacity,
+      @required this.initialColor,
       @required this.onSelect});
 
   @override
@@ -51,6 +59,8 @@ class NewColorThumbnail extends StatelessWidget {
                               builder: (_) => ColorPickerDialog(
                                   title: title,
                                   colors: colors,
+                                  showOpacity: showOpacity,
+                                  initialColor: initialColor,
                                   onSelect: onSelect));
                         }),
                     child: Center(
