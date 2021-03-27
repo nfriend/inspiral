@@ -3,7 +3,7 @@ import 'package:inspiral/models/gears/gears.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:tinycolor/tinycolor.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
@@ -46,7 +46,29 @@ Future<void> initState(BuildContext context,
   PurchasesState.init();
   final colors = ColorState.init(
       initialBackgroundColor: initialCanvasColor,
-      initialPenColor: TinyColor(Color(0x66FF0000)));
+      initialPenColor: TinyColor(Color(0x66FF0000)),
+      initialAvailablePenColors: [
+        TinyColor(Color(0x66FF0000)),
+        TinyColor(Color(0xB3FF9500)),
+        TinyColor(Color(0xB3FFFF00)),
+        TinyColor(Color(0x80009600)),
+        TinyColor(Color(0x660000FF)),
+        TinyColor(Color(0x80960096)),
+        TinyColor(Color(0xCCFFFFFF)),
+        TinyColor(Color(0xCCC8C8C8)),
+        TinyColor(Color(0xCC969696)),
+        TinyColor(Color(0xCC646464)),
+      ],
+      initialAvailableCanvasColors: [
+        TinyColor(Colors.white),
+        TinyColor(Color(0xFFF0F0F0)),
+        TinyColor(Color(0xFFE3E3E3)),
+        TinyColor(Color(0xFFF7EFDA)),
+        TinyColor(Color(0xFF3B2507)),
+        TinyColor(Color(0xFF0E1247)),
+        TinyColor(Color(0xFF333333)),
+        TinyColor(Color(0xFF121212)),
+      ]);
   final stroke = StrokeState.init(initialWidth: 5.0);
   final ink = InkState.init();
   final pointers = PointersState.init();

@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -7,10 +8,14 @@ class ColorState extends ChangeNotifier {
 
   factory ColorState.init(
       {@required TinyColor initialBackgroundColor,
-      @required TinyColor initialPenColor}) {
+      @required TinyColor initialPenColor,
+      @required List<TinyColor> initialAvailablePenColors,
+      @required List<TinyColor> initialAvailableCanvasColors}) {
     return _instance = ColorState._internal(
         initialBackgroundColor: initialBackgroundColor,
-        initialPenColor: initialPenColor);
+        initialPenColor: initialPenColor,
+        initialAvailablePenColors: initialAvailablePenColors,
+        initialAvailableCanvasColors: initialAvailableCanvasColors);
   }
 
   factory ColorState() {
@@ -21,9 +26,16 @@ class ColorState extends ChangeNotifier {
 
   ColorState._internal(
       {@required TinyColor initialBackgroundColor,
-      @required TinyColor initialPenColor}) {
+      @required TinyColor initialPenColor,
+      @required List<TinyColor> initialAvailablePenColors,
+      @required List<TinyColor> initialAvailableCanvasColors}) {
     _backgroundColor = initialBackgroundColor;
     _penColor = initialPenColor;
+    _availablePenColors = initialAvailablePenColors;
+    _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
+    _availableCanvasColors = initialAvailableCanvasColors;
+    _unmodifiableAvailableCanvasColors =
+        UnmodifiableListView(_availableCanvasColors);
 
     _updateDependentColors();
   }
@@ -46,6 +58,43 @@ class ColorState extends ChangeNotifier {
     _penColor = value;
     _updateDependentColors();
     ink.finishLine();
+    notifyListeners();
+  }
+
+  List<TinyColor> _availablePenColors;
+  UnmodifiableListView<TinyColor> _unmodifiableAvailablePenColors;
+  List<TinyColor> get availablePenColors => _unmodifiableAvailablePenColors;
+
+  /// Adds a new color to the end of the list of available
+  /// pen colors and selects it
+  void addAndSelectPenColor(TinyColor color) {
+    _availablePenColors.add(color);
+    penColor = color;
+    notifyListeners();
+  }
+
+  /// Removes an existing colors from the list of available pen colors
+  void removePenColor(TinyColor color) {
+    _availableCanvasColors.removeWhere((c) => c.color == color.color);
+    notifyListeners();
+  }
+
+  List<TinyColor> _availableCanvasColors;
+  UnmodifiableListView<TinyColor> _unmodifiableAvailableCanvasColors;
+  List<TinyColor> get availableCanvasColors =>
+      _unmodifiableAvailableCanvasColors;
+
+  /// Adds a new color to the end of the list of available
+  /// canvas colors and selects it
+  void addAndSelectCanvasColor(TinyColor color) {
+    _availableCanvasColors.add(color);
+    backgroundColor = color;
+    notifyListeners();
+  }
+
+  /// Removes an existing colors from the list of available canvas colors
+  void removeCanvasColor(TinyColor color) {
+    _availableCanvasColors.removeWhere((c) => c.color == color.color);
     notifyListeners();
   }
 

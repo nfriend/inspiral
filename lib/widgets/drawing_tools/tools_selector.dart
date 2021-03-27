@@ -15,19 +15,8 @@ class ToolsSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final TinyColor backgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
-    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+    final ColorState colors = Provider.of<ColorState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
-
-    final List<TinyColor> penColors = [
-      TinyColor(Colors.white),
-      TinyColor(Color(0xFFF0F0F0)),
-      TinyColor(Color(0xFFE3E3E3)),
-      TinyColor(Color(0xFFF7EFDA)),
-      TinyColor(Color(0xFF3B2507)),
-      TinyColor(Color(0xFF0E1247)),
-      TinyColor(Color(0xFF333333)),
-      TinyColor(Color(0xFF121212)),
-    ];
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(storageKey: "tools", label: 'TOOLS', children: [
@@ -64,7 +53,7 @@ class ToolsSelector extends StatelessWidget {
           storageKey: "canvasColor",
           label: 'CANVAS',
           children: [
-            for (TinyColor color in penColors)
+            for (TinyColor color in colors.availableCanvasColors)
               ColorSelectorThumbnail(
                   color: color,
                   isActive: color.color == backgroundColor.color,
@@ -72,7 +61,10 @@ class ToolsSelector extends StatelessWidget {
             NewColorThumbnail(
                 title: "Select new canvas color",
                 entitlement: Entitlement.custombackgroundcolors,
-                package: Package.custombackgroundcolors)
+                package: Package.custombackgroundcolors,
+                onSelect: (color) {
+                  colors.addAndSelectCanvasColor(TinyColor(color));
+                }),
           ]),
     ]);
   }

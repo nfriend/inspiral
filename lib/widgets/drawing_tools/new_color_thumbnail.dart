@@ -16,10 +16,14 @@ class NewColorThumbnail extends StatelessWidget {
   /// The package that will purchase the entitlement for this color picker
   final String package;
 
+  /// The function to call when a new color is selected
+  final Function(Color color) onSelect;
+
   NewColorThumbnail(
       {@required this.title,
       @required this.entitlement,
-      @required this.package});
+      @required this.package,
+      @required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,9 @@ class NewColorThumbnail extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (_) => ColorPickerDialog(
-                                  title: title, colors: colors));
+                                  title: title,
+                                  colors: colors,
+                                  onSelect: onSelect));
                         }),
                     child: Center(
                         child:

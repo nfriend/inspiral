@@ -24,19 +24,6 @@ class _StrokeAndStyle {
       this.package});
 }
 
-final List<TinyColor> _penColors = [
-  TinyColor(Color(0x66FF0000)),
-  TinyColor(Color(0xB3FF9500)),
-  TinyColor(Color(0xB3FFFF00)),
-  TinyColor(Color(0x80009600)),
-  TinyColor(Color(0x660000FF)),
-  TinyColor(Color(0x80960096)),
-  TinyColor(Color(0xCCFFFFFF)),
-  TinyColor(Color(0xCCC8C8C8)),
-  TinyColor(Color(0xCC969696)),
-  TinyColor(Color(0xCC646464)),
-];
-
 final List<_StrokeAndStyle> _strokeOptions = [
   const _StrokeAndStyle(width: 1.0, style: StrokeStyle.normal),
   const _StrokeAndStyle(width: 3.0, style: StrokeStyle.normal),
@@ -78,7 +65,7 @@ class PenSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final TinyColor penColor =
         context.select<ColorState, TinyColor>((colors) => colors.penColor);
-    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+    final ColorState colors = Provider.of<ColorState>(context);
     final StrokeStyle strokeStyle =
         context.select<StrokeState, StrokeStyle>((stroke) => stroke.style);
     final double strokeWidth =
@@ -111,15 +98,18 @@ class PenSelector extends StatelessWidget {
           storageKey: "penColor",
           label: 'COLOR',
           children: [
-            for (TinyColor color in _penColors)
+            for (TinyColor color in colors.availablePenColors)
               ColorSelectorThumbnail(
                   color: color,
                   isActive: color.color == penColor.color,
                   onColorTap: () => colors.penColor = color),
             NewColorThumbnail(
                 title: "Select new pen color",
-                entitlement: Entitlement.custompencolors,
-                package: Package.custompencolors)
+                entitlement: Entitlement.custombackgroundcolors,
+                package: Package.custompencolors,
+                onSelect: (color) {
+                  colors.addAndSelectPenColor(TinyColor(color));
+                })
           ]),
     ]);
   }

@@ -11,7 +11,11 @@ class ColorPickerDialog extends StatefulWidget {
   /// dialog doesn't share the same provider context.
   final ColorState colors;
 
-  ColorPickerDialog({@required this.title, @required this.colors});
+  /// The function to call when a new color is selected
+  final Function(Color color) onSelect;
+
+  ColorPickerDialog(
+      {@required this.title, @required this.colors, @required this.onSelect});
 
   @override
   _ColorPickerDialogState createState() => _ColorPickerDialogState();
@@ -78,7 +82,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.onSelect(_selectedColor);
+                  Navigator.of(context).pop();
+                },
                 child: Text(
                   "SELECT ${ColorTools.nameThatColor(_selectedColor).toUpperCase()}",
                   style: TextStyle(
