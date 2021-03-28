@@ -94,6 +94,7 @@ Future<void> initState(BuildContext context,
     ..colors = colors
     ..stroke = stroke;
   rotatingGear
+    ..canvas = canvas
     ..pointers = pointers
     ..dragLine = dragLine
     ..fixedGear = fixedGear
@@ -104,6 +105,7 @@ Future<void> initState(BuildContext context,
     ..canvas = canvas
     ..rotatingGear = rotatingGear;
   fixedGear
+    ..canvas = canvas
     ..pointers = pointers
     ..rotatingGear = rotatingGear
     ..ink = ink

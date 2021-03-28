@@ -61,19 +61,12 @@ abstract class BaseGearState extends ChangeNotifier {
     if (!isDragging) {
       draggingPointerId = event.device;
 
-      dragOffset = event.localPosition - position;
+      dragOffset = canvas.pixelToCanvasPosition(event.position) - position;
 
       if (settings.closeDrawingToolsDrawerOnDrag) {
         selectorDrawer.closeDrawer();
       }
 
-      notifyListeners();
-    }
-  }
-
-  globalPointerDown(PointerDownEvent event) {
-    if (pointers.count == 2) {
-      draggingPointerId = -1;
       notifyListeners();
     }
   }

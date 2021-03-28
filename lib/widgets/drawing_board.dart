@@ -16,8 +16,6 @@ import 'package:tinycolor/tinycolor.dart';
 class DrawingBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final fixedGear = Provider.of<FixedGearState>(context, listen: false);
-    final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final pointers = Provider.of<PointersState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context, listen: false);
     final TinyColor appBackgroundColor = context
@@ -31,8 +29,6 @@ class DrawingBoard extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onPointerDown: (event) {
           pointers.pointerDown(event);
-          fixedGear.globalPointerDown(event);
-          rotatingGear.globalPointerDown(event);
         },
         onPointerMove: (event) {
           pointers.pointerMove(event);

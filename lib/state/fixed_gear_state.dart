@@ -44,7 +44,8 @@ class FixedGearState extends BaseGearState {
   gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
       final Offset newPosition =
-          (event.localPosition - dragOffset).clamp(dragBounds);
+          (canvas.pixelToCanvasPosition(event.position) - dragOffset)
+              .clamp(dragBounds);
 
       rotatingGear.fixedGearDrag(position - newPosition);
       dragLine.fixedGearDrag(position - newPosition);
