@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:inspiral/state/color_state.dart';
+import 'package:inspiral/util/replace_problematic_color_names.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class ColorPickerDialog extends StatefulWidget {
@@ -69,11 +70,16 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
         backgroundColor:
             MaterialStateProperty.resolveWith((states) => _selectedColor));
 
+    final colorName =
+        replaceProblematicColorNames(ColorTools.nameThatColor(_selectedColor))
+            .toUpperCase();
+
     return Dialog(
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+        child: SingleChildScrollView(
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
           Padding(
               padding: EdgeInsets.only(top: 20.0),
               child: Text(
@@ -107,7 +113,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      "SELECT ${ColorTools.nameThatColor(_selectedColor).toUpperCase()}",
+                      "SELECT $colorName",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: selectButtonTextColor),
@@ -120,6 +126,6 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text("CANCEL"),
                   style: _cancelButtonStyle)),
-        ]));
+        ])));
   }
 }
