@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/state/purchases_state.dart';
 import 'package:inspiral/widgets/purchases/purchase_dialog_error_content.dart';
 import 'package:inspiral/widgets/purchases/purchase_dialog_success_content.dart';
@@ -12,6 +13,9 @@ class PurchaseDialog extends StatefulWidget {
   /// this dialog doesn't share a `context` with the main app.
   final PurchasesState purchases;
 
+  /// The current ColorState object. Same note as above.
+  final ColorState colors;
+
   /// The package being purchased
   final String package;
 
@@ -20,6 +24,7 @@ class PurchaseDialog extends StatefulWidget {
 
   PurchaseDialog(
       {@required this.purchases,
+      @required this.colors,
       @required this.package,
       @required this.onPurchased});
 
@@ -49,7 +54,10 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
     }
 
     return MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: widget.purchases)],
+      providers: [
+        ChangeNotifierProvider.value(value: widget.purchases),
+        ChangeNotifierProvider.value(value: widget.colors)
+      ],
       child: FutureBuilder(
           future: _offeringFuture,
           builder: (BuildContext context, AsyncSnapshot<Offering> snapshot) {

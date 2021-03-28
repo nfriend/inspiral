@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/state/purchases_state.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -40,15 +41,18 @@ class _PurchaseDialogSuccessContentState
       backgroundColor:
           MaterialStateProperty.resolveWith((states) => Colors.green));
 
-  final ButtonStyle _cancelButtonStyle = ButtonStyle(
-      shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
-      foregroundColor:
-          MaterialStateProperty.resolveWith((states) => Colors.black87));
-
   @override
   Widget build(BuildContext context) {
-    PurchasesState purchases =
+    final PurchasesState purchases =
         Provider.of<PurchasesState>(context, listen: false);
+    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+
+    final Color orLineColor = colors.isDark ? Colors.white24 : Colors.black26;
+
+    final ButtonStyle _cancelButtonStyle = ButtonStyle(
+        shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
+        foregroundColor: MaterialStateProperty.resolveWith(
+            (states) => colors.isDark ? Colors.white70 : Colors.black87));
 
     return Dialog(
         child: SingleChildScrollView(
@@ -106,7 +110,7 @@ class _PurchaseDialogSuccessContentState
                                 children: [
                                   Expanded(
                                       child: Container(
-                                          height: 1, color: Colors.black26)),
+                                          height: 1, color: orLineColor)),
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(
                                           5.0, 0.0, 5.0, 2.0),
@@ -117,7 +121,7 @@ class _PurchaseDialogSuccessContentState
                                       )),
                                   Expanded(
                                       child: Container(
-                                          height: 1, color: Colors.black26))
+                                          height: 1, color: orLineColor))
                                 ],
                               )),
                           Text("Unlock", textAlign: TextAlign.center),
@@ -125,7 +129,9 @@ class _PurchaseDialogSuccessContentState
                               padding: EdgeInsets.only(top: 2.0, bottom: 5.0),
                               child: GradientText(
                                 widget.everythingPackage.product.title,
-                                gradient: Gradients.cosmicFusion,
+                                gradient: colors.isDark
+                                    ? Gradients.hotLinear
+                                    : Gradients.cosmicFusion,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,

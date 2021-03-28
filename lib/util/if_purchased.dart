@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/state/purchases_state.dart';
 import 'package:inspiral/widgets/purchases/purchase_dialog.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ Function ifPurchased(
     String package,
     Function callbackIfPurchased}) {
   final purchases = Provider.of<PurchasesState>(context, listen: false);
+  final colors = Provider.of<ColorState>(context, listen: false);
 
   return () async {
     if (!await purchases.isEntitledTo(entitlement)) {
@@ -20,6 +22,7 @@ Function ifPurchased(
           builder: (context) {
             return PurchaseDialog(
                 purchases: purchases,
+                colors: colors,
                 package: package,
                 onPurchased: callbackIfPurchased);
           });
