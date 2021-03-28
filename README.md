@@ -1,12 +1,22 @@
 # Inspiral
 
-Create beautiful spirals with gears.
+Relive your childhood in pixel-perfect bliss.
+[nfriend.gitlab.io/inspiral](https://nfriend.gitlab.io/inspiral/)
 
 <img alt="A screenshot of Inspiral" src="screenshot.png" height="840" />
 
 ## Developing
 
 This app is built using [Flutter](https://flutter.dev/).
+
+### A note about code quality
+
+This is a nights & weekends side project. My guiding principle while building
+this app is: **have fun** :smile:. As a result, there are some rough patches in
+this code base that would require non-fun refactoring work that I simply haven't
+prioritized. This is not representative of my professional work! A much more
+representative example is [my list of open-source contributions to
+GitLab](https://gitlab.com/gitlab-org/gitlab/-/merge_requests?scope=all&utf8=%E2%9C%93&state=merged&author_username=nfriend).
 
 ### Running
 
@@ -30,4 +40,5 @@ more information about this process.
 
 ## Attributions
 
-- Icons made by [Freepik](https://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com)
+- Icons made by [Freepik](https://www.freepik.com) from
+  [www.flaticon.com](https://www.flaticon.com)
