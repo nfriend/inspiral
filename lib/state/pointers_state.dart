@@ -28,7 +28,7 @@ class Positions {
   }
 }
 
-class PointersState extends ChangeNotifier {
+class PointersState extends ChangeNotifier with WidgetsBindingObserver {
   static PointersState _instance;
 
   factory PointersState.init() {
@@ -51,6 +51,22 @@ class PointersState extends ChangeNotifier {
         UnmodifiableMapView(_pointerPreviousPositions);
     _pointerDeltas = {};
     _pointerDeltasView = UnmodifiableMapView(_pointerDeltas);
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  /// When the app is paused and then resumed, reset the state of all our
+  /// pointer tracking, since they are no longer up-to-date
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _activePointerIds.removeWhere((element) => true);
+      _pointerPositions.removeWhere((key, value) => true);
+      _pointerPreviousPositions.removeWhere((key, value) => true);
+      _pointerDeltas.removeWhere((key, value) => true);
+
+      notifyListeners();
+    }
   }
 
   CanvasState canvas;
@@ -230,5 +246,11 @@ class PointersState extends ChangeNotifier {
 
       return transform;
     }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }
