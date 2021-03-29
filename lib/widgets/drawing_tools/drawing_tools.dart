@@ -28,6 +28,8 @@ class DrawingTools extends StatelessWidget {
         (selectorDrawer) => selectorDrawer.isOpen);
     final selectorDrawer =
         Provider.of<SelectorDrawerState>(context, listen: false);
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     double margin = 2.5;
     double iconSize = 18;
@@ -62,20 +64,28 @@ class DrawingTools extends StatelessWidget {
     return Container(
       color: uiBackgroundColor.color,
       child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: margin * 2),
-          child: Row(children: [
-            for (var button in buttons)
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: margin),
-                      child: TextButton.icon(
-                          style: activeTab == button.tab && selectorDrawerIsOpen
-                              ? activeStyle
-                              : null,
-                          onPressed: button.onPressed,
-                          icon: button.icon,
-                          label: Text(button.text))))
-          ])),
+          padding: isLandscape
+              ? EdgeInsets.symmetric(vertical: margin * 2)
+              : EdgeInsets.symmetric(horizontal: margin * 2),
+          child: Flex(
+              direction: isLandscape ? Axis.vertical : Axis.horizontal,
+              verticalDirection: VerticalDirection.up,
+              children: [
+                for (var button in buttons)
+                  Expanded(
+                      child: RotatedBox(
+                          quarterTurns: isLandscape ? 3 : 0,
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: margin),
+                              child: TextButton.icon(
+                                  style: activeTab == button.tab &&
+                                          selectorDrawerIsOpen
+                                      ? activeStyle
+                                      : null,
+                                  onPressed: button.onPressed,
+                                  icon: button.icon,
+                                  label: Text(button.text)))))
+              ])),
     );
   }
 }

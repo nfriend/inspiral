@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 class AnimatedToolbarContainer extends StatelessWidget {
   final Widget child;
   final double translateY;
+  final double translateX;
 
-  AnimatedToolbarContainer({@required this.child, @required this.translateY});
+  AnimatedToolbarContainer(
+      {@required this.child, this.translateY = 0.0, this.translateX = 0.0});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class AnimatedToolbarContainer extends StatelessWidget {
 
     Matrix4 transform = Matrix4.identity();
     if (rotatingGearIsDragging || fixedGearIsDragging || canvasIsTransforming) {
-      transform.translate(0.0, translateY);
+      transform.translate(translateX, translateY);
     }
 
     return AnimatedContainer(

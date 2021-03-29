@@ -22,6 +22,8 @@ class MenuBar extends StatelessWidget {
     final colors = context.watch<ColorState>();
     final bool rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     double margin = 2.5;
     double iconSize = 26;
@@ -52,21 +54,28 @@ class MenuBar extends StatelessWidget {
     return Container(
         color: colors.uiBackgroundColor.color,
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: margin * 2),
-            child: Row(children: [
-              for (var button in buttons)
-                Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: margin),
-                        child: Material(
-                            type: MaterialType.transparency,
-                            child: IconButton(
-                              color: colors.uiTextColor.color,
-                              onPressed: button.onPressed,
-                              icon: button.icon,
-                              iconSize: iconSize,
-                              tooltip: button.tooltipMessage,
-                            ))))
-            ])));
+            padding: isLandscape
+                ? EdgeInsets.symmetric(vertical: margin * 2)
+                : EdgeInsets.symmetric(horizontal: margin * 2),
+            child: Flex(
+                direction: isLandscape ? Axis.vertical : Axis.horizontal,
+                verticalDirection: VerticalDirection.up,
+                children: [
+                  for (var button in buttons)
+                    Expanded(
+                        child: Padding(
+                            padding: isLandscape
+                                ? EdgeInsets.symmetric(vertical: margin)
+                                : EdgeInsets.symmetric(horizontal: margin),
+                            child: Material(
+                                type: MaterialType.transparency,
+                                child: IconButton(
+                                  color: colors.uiTextColor.color,
+                                  onPressed: button.onPressed,
+                                  icon: button.icon,
+                                  iconSize: iconSize,
+                                  tooltip: button.tooltipMessage,
+                                ))))
+                ])));
   }
 }

@@ -22,8 +22,9 @@ class DrawingBoard extends StatelessWidget {
         .select<ColorState, TinyColor>((colors) => colors.appBackgroundColor);
     final bool debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
-
     final double safePaddingTop = MediaQuery.of(context).padding.top;
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     final Widget scaffoldBody = Listener(
         behavior: HitTestBehavior.translucent,
@@ -52,19 +53,30 @@ class DrawingBoard extends StatelessWidget {
                 color: appBackgroundColor.color, child: CanvasContainer()),
           ),
           Positioned(
-              left: 0,
-              right: 0,
-              top: safePaddingTop,
+              left: 0.0,
+              right: isLandscape ? null : 0.0,
+              top: isLandscape ? 0.0 : safePaddingTop,
+              bottom: isLandscape ? 0.0 : null,
               child: AnimatedToolbarContainer(
-                  translateY: -42.0 - safePaddingTop, child: MenuBar())),
-          Positioned(left: 0, right: 0, bottom: 0, child: SelectorDrawer())
+                  translateY: isLandscape ? 0.0 : -42.0 - safePaddingTop,
+                  translateX: isLandscape ? -42.0 : 0.0,
+                  child: MenuBar())),
+          Positioned(
+              left: isLandscape ? null : 0.0,
+              right: 0.0,
+              top: isLandscape ? safePaddingTop : null,
+              bottom: 0.0,
+              child: AnimatedToolbarContainer(
+                  translateY: isLandscape ? 0.0 : 42.0,
+                  translateX: isLandscape ? 42.0 : 0.0,
+                  child: DrawingTools())),
+          Positioned(
+              left: 0.0, right: 0.0, bottom: 0.0, child: SelectorDrawer())
         ]));
 
     return DynamicTheme(
         child: ModalProgress(
             child: Scaffold(
-                body: debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
-                bottomNavigationBar: AnimatedToolbarContainer(
-                    translateY: 42.0, child: DrawingTools()))));
+                body: debug ? StatsFl(child: scaffoldBody) : scaffoldBody)));
   }
 }
