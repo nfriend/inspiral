@@ -69,3 +69,10 @@ final GlobalKey<ScaffoldMessengerState> scaffoldGlobalKey =
 /// Thumbnail images are square, so only one dimension is needed.
 /// This constant should equal its counterpart in `constants.ts`.
 final double thumbnailSize = 65.0;
+
+/// The height of the top and bottom menu bars
+final double menuBarHeight = 48.0;
+
+/// The height of the selector drawer (the container for the gear, pen, and tool
+/// options), in logical pixels.
+final double selectorDrawerHeight = 168.0;

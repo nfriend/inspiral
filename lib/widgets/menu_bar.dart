@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/helpers/save_share_image.dart';
 import 'package:inspiral/widgets/helpers/toggle_gear_visibility.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,8 @@ class MenuBar extends StatelessWidget {
 
     return Container(
         color: colors.uiBackgroundColor.color,
+        height: isLandscape ? null : menuBarHeight,
+        width: isLandscape ? menuBarHeight : null,
         child: Padding(
             padding: isLandscape
                 ? EdgeInsets.symmetric(vertical: margin * 2)

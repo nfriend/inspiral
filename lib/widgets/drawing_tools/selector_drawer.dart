@@ -43,9 +43,11 @@ class _SelectorDrawerState extends State<SelectorDrawer>
     final bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    Matrix4 transform = Matrix4.identity();
+    Matrix4 transform = Matrix4.identity()
+      ..translate(isLandscape ? -menuBarHeight : 0.0,
+          isLandscape ? 0.0 : -menuBarHeight);
     double opacity = 1.0;
-    double height = 200;
+    double height = menuBarHeight + selectorDrawerHeight;
 
     if (!selectorDrawer.isOpen ||
         rotatingGearIsDragging ||
@@ -91,7 +93,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
                     quarterTurns: isLandscape ? 3 : 0,
                     child: Container(
                         color: uiBackgroundColor.color,
-                        height: 168,
+                        height: selectorDrawerHeight,
                         child: GestureDetector(
                             onPanUpdate: (details) {
                               if (details.delta.dy > 0) {

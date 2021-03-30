@@ -26,6 +26,9 @@ class DrawingBoard extends StatelessWidget {
     final bool isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
+    // Translate the menu bars _almost_ off the screen
+    final double translationAmount = menuBarHeight - 6.0;
+
     final Widget scaffoldBody = Listener(
         behavior: HitTestBehavior.translucent,
         onPointerDown: (event) {
@@ -58,24 +61,25 @@ class DrawingBoard extends StatelessWidget {
               top: isLandscape ? 0.0 : safePaddingTop,
               bottom: isLandscape ? 0.0 : null,
               child: AnimatedToolbarContainer(
-                  translateY: isLandscape ? 0.0 : -42.0 - safePaddingTop,
-                  translateX: isLandscape ? -42.0 : 0.0,
+                  translateY:
+                      isLandscape ? 0.0 : -translationAmount - safePaddingTop,
+                  translateX: isLandscape ? -translationAmount : 0.0,
                   child: MenuBar())),
+          Positioned(
+              left: isLandscape ? null : 0.0,
+              right: 0.0,
+              top: isLandscape ? 0.0 : null,
+              bottom: 0.0,
+              child: SelectorDrawer()),
           Positioned(
               left: isLandscape ? null : 0.0,
               right: 0.0,
               top: isLandscape ? safePaddingTop : null,
               bottom: 0.0,
               child: AnimatedToolbarContainer(
-                  translateY: isLandscape ? 0.0 : 42.0,
-                  translateX: isLandscape ? 42.0 : 0.0,
+                  translateY: isLandscape ? 0.0 : translationAmount,
+                  translateX: isLandscape ? translationAmount : 0.0,
                   child: DrawingTools())),
-          Positioned(
-              left: isLandscape ? null : 0.0,
-              right: 0.0,
-              top: isLandscape ? 0.0 : null,
-              bottom: 0.0,
-              child: SelectorDrawer())
         ]));
 
     return DynamicTheme(

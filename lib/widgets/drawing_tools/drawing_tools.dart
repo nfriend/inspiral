@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -63,6 +64,8 @@ class DrawingTools extends StatelessWidget {
 
     return Container(
       color: uiBackgroundColor.color,
+      height: isLandscape ? null : menuBarHeight,
+      width: isLandscape ? menuBarHeight : null,
       child: Padding(
           padding: isLandscape
               ? EdgeInsets.symmetric(vertical: margin * 2)
