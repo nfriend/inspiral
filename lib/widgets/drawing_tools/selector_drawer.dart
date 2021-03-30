@@ -40,6 +40,8 @@ class _SelectorDrawerState extends State<SelectorDrawer>
         .select<FixedGearState, bool>((fixedGear) => fixedGear.isDragging);
     final bool canvasIsTransforming =
         context.select<CanvasState, bool>((canvas) => canvas.isTransforming);
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     Matrix4 transform = Matrix4.identity();
     double opacity = 1.0;
@@ -49,7 +51,8 @@ class _SelectorDrawerState extends State<SelectorDrawer>
         rotatingGearIsDragging ||
         fixedGearIsDragging ||
         canvasIsTransforming) {
-      transform.translate(0.0, height);
+      transform.translate(
+          isLandscape ? height : 0.0, isLandscape ? 0.0 : height);
       opacity = 0.0;
     }
 
@@ -84,22 +87,24 @@ class _SelectorDrawerState extends State<SelectorDrawer>
                 duration: uiAnimationDuration,
                 curve: Curves.easeOut,
                 opacity: opacity,
-                child: Container(
-                    color: uiBackgroundColor.color,
-                    height: 168,
-                    child: GestureDetector(
-                        onPanUpdate: (details) {
-                          if (details.delta.dy > 0) {
-                            selectorDrawer.closeDrawer();
-                          }
-                        },
-                        child: TabBarView(
-                            controller: _tabController,
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [
-                              ToolsSelector(),
-                              PenSelector(),
-                              GearSelector(),
-                            ]))))));
+                child: RotatedBox(
+                    quarterTurns: isLandscape ? 3 : 0,
+                    child: Container(
+                        color: uiBackgroundColor.color,
+                        height: 168,
+                        child: GestureDetector(
+                            onPanUpdate: (details) {
+                              if (details.delta.dy > 0) {
+                                selectorDrawer.closeDrawer();
+                              }
+                            },
+                            child: TabBarView(
+                                controller: _tabController,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: [
+                                  ToolsSelector(),
+                                  PenSelector(),
+                                  GearSelector(),
+                                ])))))));
   }
 }

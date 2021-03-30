@@ -71,7 +71,11 @@ class DrawingBoard extends StatelessWidget {
                   translateX: isLandscape ? 42.0 : 0.0,
                   child: DrawingTools())),
           Positioned(
-              left: 0.0, right: 0.0, bottom: 0.0, child: SelectorDrawer())
+              left: isLandscape ? null : 0.0,
+              right: 0.0,
+              top: isLandscape ? 0.0 : null,
+              bottom: 0.0,
+              child: SelectorDrawer())
         ]));
 
     return DynamicTheme(

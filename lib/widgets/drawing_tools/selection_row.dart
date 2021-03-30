@@ -24,6 +24,8 @@ class SelectionRows extends StatelessWidget {
   Widget build(BuildContext context) {
     final TinyColor uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final double padding = 2.5;
 
     TextStyle textStyle =
@@ -40,23 +42,37 @@ class SelectionRows extends StatelessWidget {
                     child: Row(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(right: padding / 2),
-                              child: Center(
-                                  child: RotatedBox(
-                                      quarterTurns: 3,
-                                      child:
-                                          Text(def.label, style: textStyle)))),
-                          Expanded(
-                              child: ListView.builder(
-                                  key: PageStorageKey(def.storageKey),
-                                  scrollDirection: Axis.horizontal,
-                                  itemExtent: thumbnailSize + 10.0,
-                                  itemCount: def.children.length,
-                                  itemBuilder: (context, index) =>
-                                      def.children[index]))
-                        ])))
+                        children: _reverseIfLandscape(
+                            isLandscape: isLandscape,
+                            list: [
+                              Padding(
+                                  padding: EdgeInsets.only(right: padding / 2),
+                                  child: Center(
+                                      child: RotatedBox(
+                                          quarterTurns: isLandscape ? 1 : 3,
+                                          child: Text(def.label,
+                                              style: textStyle)))),
+                              Expanded(
+                                  child: ListView.builder(
+                                      key: PageStorageKey(def.storageKey),
+                                      scrollDirection: Axis.horizontal,
+                                      reverse: isLandscape,
+                                      itemExtent: thumbnailSize + 10.0,
+                                      itemCount: def.children.length,
+                                      itemBuilder: (context, index) {
+                                        Widget child = def.children[index];
+
+                                        return isLandscape
+                                            ? RotatedBox(
+                                                quarterTurns: 1, child: child)
+                                            : child;
+                                      }))
+                            ]))))
         ]));
+  }
+
+  /// Returns a reversed version of the list if `isLandscape` is `true`
+  List<T> _reverseIfLandscape<T>({bool isLandscape, List<T> list}) {
+    return isLandscape ? list.reversed.toList() : list;
   }
 }
