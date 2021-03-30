@@ -60,7 +60,7 @@ class ToolsSelector extends StatelessWidget {
                   onColorTap: () => colors.backgroundColor = color),
             NewColorThumbnail(
                 title: "New canvas color",
-                entitlement: Entitlement.custombackgroundcolors,
+                entitlement: Entitlement.free,
                 package: Package.custombackgroundcolors,
                 showOpacity: false,
                 initialColor: colors.lastSelectedCustomCanvasColor.color,

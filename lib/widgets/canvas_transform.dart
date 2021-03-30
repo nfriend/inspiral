@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
@@ -39,6 +40,8 @@ class _CanvasTransformState extends State<CanvasTransform>
         context.select<CanvasState, Matrix4>((canvas) => canvas.transform);
     final bool areGearsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
+    final bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     bool zoomToRotatingGear = isSelectingHole && areGearsVisible;
 
@@ -56,11 +59,25 @@ class _CanvasTransformState extends State<CanvasTransform>
     }
 
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
-    final double screenWidth = MediaQuery.of(context).size.width;
+    double availableWidth = MediaQuery.of(context).size.width;
+    double availableHeight = MediaQuery.of(context).size.height;
     final Size gearSize = rotatingGear.definition.size;
 
-    // Scale the gear so that it exactly fits in the current width of the screen
-    final double newScale = screenWidth / gearSize.width;
+    // The amount of space, in logical pixels, that has already been claimed
+    // by the UI (vertically, if in portrait mode, or horizontally,
+    // if in landscape mode)
+    final double unavailablePixels = menuBarHeight * 2.0 + selectorDrawerHeight;
+
+    // Subtract the unavailable pixels from the relevant dimension
+    if (isLandscape) {
+      availableWidth -= unavailablePixels;
+    } else {
+      availableHeight -= unavailablePixels;
+    }
+
+    // Scale the gear so that it exactly fits in the available screen space
+    final double newScale =
+        min(availableWidth / gearSize.width, availableHeight / gearSize.height);
 
     Matrix4 gearViewTransform = Matrix4.identity();
 
@@ -68,10 +85,17 @@ class _CanvasTransformState extends State<CanvasTransform>
     // (to center the gear horizontally) and position the gear 50 logical
     // pixels from the top. This renders the gear slightly below
     // the menu bar.
-    Vector3 centerTranslation = Offset((MediaQuery.of(context).size / 2).width,
-            gearSize.height / 2 * newScale + 50)
-        .toVector3();
-    gearViewTransform.translate(centerTranslation);
+    Offset centerTranslation;
+    final double menuBarBuffer = menuBarHeight + 2.0;
+    if (isLandscape) {
+      centerTranslation =
+          Offset(menuBarBuffer + (availableWidth / 2), availableHeight / 2);
+    } else {
+      centerTranslation =
+          Offset(availableWidth / 2, menuBarBuffer + (availableHeight / 2));
+    }
+
+    gearViewTransform.translate(centerTranslation.toVector3());
 
     // Keep the same rotation as the current canvas
     double canvasRotation = canvasTransform.decompose2D().rotation;
