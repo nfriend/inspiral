@@ -13,8 +13,8 @@ import 'package:inspiral/util/custom_icons.dart';
 class ToolsSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final TinyColor backgroundColor = context
-        .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
+    final PurchasesState purchases =
+        Provider.of<PurchasesState>(context, listen: false);
     final ColorState colors = Provider.of<ColorState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
 
@@ -54,10 +54,25 @@ class ToolsSelector extends StatelessWidget {
           label: 'CANVAS',
           children: [
             for (TinyColor color in colors.availableCanvasColors)
-              ColorSelectorThumbnail(
-                  color: color,
-                  isActive: color.color == backgroundColor.color,
-                  onColorTap: () => colors.backgroundColor = color),
+              FutureBuilder(
+                  future: purchases
+                      .isEntitledTo(Entitlement.custombackgroundcolors),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    bool showDeleteButton = snapshot.hasData &&
+                        snapshot.data &&
+                        colors.showCanvasColorDeleteButtons;
+
+                    return ColorSelectorThumbnail(
+                        color: color,
+                        isActive: color.color == colors.backgroundColor.color,
+                        onColorTap: () => colors.backgroundColor = color,
+                        onColorLongPress: () =>
+                            colors.showCanvasColorDeleteButtons =
+                                !colors.showCanvasColorDeleteButtons,
+                        onColorDelete: () => colors.removeCanvasColor(color),
+                        showDeleteButton: showDeleteButton);
+                  }),
             NewColorThumbnail(
                 title: "New canvas color",
                 entitlement: Entitlement.custombackgroundcolors,

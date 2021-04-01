@@ -54,6 +54,7 @@ class ColorState extends ChangeNotifier {
   set backgroundColor(TinyColor value) {
     _backgroundColor = value;
     _updateDependentColors();
+    showCanvasColorDeleteButtons = false;
     notifyListeners();
   }
 
@@ -64,6 +65,23 @@ class ColorState extends ChangeNotifier {
     _penColor = value;
     _updateDependentColors();
     ink.finishLine();
+    showPenColorDeleteButtons = false;
+    notifyListeners();
+  }
+
+  /// Whether or not to show the delete button on the pen colors
+  bool get showPenColorDeleteButtons => _showPenColorDeleteButtons;
+  bool _showPenColorDeleteButtons = false;
+  set showPenColorDeleteButtons(bool value) {
+    _showPenColorDeleteButtons = value;
+    notifyListeners();
+  }
+
+  /// Whether or not to show the delete button on the canvas colors
+  bool get showCanvasColorDeleteButtons => _showCanvasColorDeleteButtons;
+  bool _showCanvasColorDeleteButtons = false;
+  set showCanvasColorDeleteButtons(bool value) {
+    _showCanvasColorDeleteButtons = value;
     notifyListeners();
   }
 
@@ -88,7 +106,7 @@ class ColorState extends ChangeNotifier {
 
   /// Removes an existing colors from the list of available pen colors
   void removePenColor(TinyColor color) {
-    _availableCanvasColors.removeWhere((c) => c.color == color.color);
+    _availablePenColors.remove(color);
     notifyListeners();
   }
 
@@ -108,7 +126,7 @@ class ColorState extends ChangeNotifier {
 
   /// Removes an existing colors from the list of available canvas colors
   void removeCanvasColor(TinyColor color) {
-    _availableCanvasColors.removeWhere((c) => c.color == color.color);
+    _availableCanvasColors.remove(color);
     notifyListeners();
   }
 

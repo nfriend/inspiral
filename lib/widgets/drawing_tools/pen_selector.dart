@@ -63,9 +63,9 @@ final List<_StrokeAndStyle> _strokeOptions = [
 class PenSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final TinyColor penColor =
-        context.select<ColorState, TinyColor>((colors) => colors.penColor);
     final ColorState colors = Provider.of<ColorState>(context);
+    final PurchasesState purchases =
+        Provider.of<PurchasesState>(context, listen: false);
     final StrokeStyle strokeStyle =
         context.select<StrokeState, StrokeStyle>((stroke) => stroke.style);
     final double strokeWidth =
@@ -99,10 +99,24 @@ class PenSelector extends StatelessWidget {
           label: 'COLOR',
           children: [
             for (TinyColor color in colors.availablePenColors)
-              ColorSelectorThumbnail(
-                  color: color,
-                  isActive: color.color == penColor.color,
-                  onColorTap: () => colors.penColor = color),
+              FutureBuilder(
+                  future: purchases.isEntitledTo(Entitlement.custompencolors),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    bool showDeleteButton = snapshot.hasData &&
+                        snapshot.data &&
+                        colors.showPenColorDeleteButtons;
+
+                    return ColorSelectorThumbnail(
+                        color: color,
+                        isActive: color.color == colors.penColor.color,
+                        onColorTap: () => colors.penColor = color,
+                        onColorLongPress: () =>
+                            colors.showPenColorDeleteButtons =
+                                !colors.showPenColorDeleteButtons,
+                        onColorDelete: () => colors.removePenColor(color),
+                        showDeleteButton: showDeleteButton);
+                  }),
             NewColorThumbnail(
                 title: "New pen color",
                 entitlement: Entitlement.custompencolors,

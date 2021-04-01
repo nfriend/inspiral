@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/state/canvas_state.dart';
+import 'package:inspiral/state/state.dart';
 
 enum DrawerTab { tools, pen, gears }
 
@@ -19,6 +19,7 @@ class SelectorDrawerState extends ChangeNotifier {
   SelectorDrawerState._internal();
 
   CanvasState canvas;
+  ColorState colors;
 
   /// Whether or not the selector drawer is open
   bool get isOpen => _isOpen;
@@ -54,6 +55,7 @@ class SelectorDrawerState extends ChangeNotifier {
     }
 
     _updateIsSelectingHole();
+    _hideColorDeleteButtons();
   }
 
   /// Syncs this state's active tab with the TabController's active tab.
@@ -63,6 +65,7 @@ class SelectorDrawerState extends ChangeNotifier {
   void syncActiveTab({@required DrawerTab newActiveTab}) {
     _activeTab = newActiveTab;
     _updateIsSelectingHole();
+    _hideColorDeleteButtons();
 
     notifyListeners();
   }
@@ -73,6 +76,14 @@ class SelectorDrawerState extends ChangeNotifier {
   /// TODO: It feels like there should be a more declarative way to do this.
   void _updateIsSelectingHole() {
     canvas.isSelectingHole = isOpen && activeTab == DrawerTab.pen;
+  }
+
+  /// Hides the pen and canvas color delete buttons (if they are shown)
+  ///
+  /// Same comment as above about a more declarative way to do this.
+  void _hideColorDeleteButtons() {
+    colors.showPenColorDeleteButtons = false;
+    colors.showCanvasColorDeleteButtons = false;
   }
 
   /// The currently active drawer tab
