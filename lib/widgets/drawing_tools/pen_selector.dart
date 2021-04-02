@@ -76,24 +76,27 @@ class PenSelector extends StatelessWidget {
       SelectionrRowDefinition(
           storageKey: "penStyle",
           label: 'STYLE',
-          children: [
-            for (_StrokeAndStyle options in _strokeOptions)
-              StrokeSelectorThumbnail(
-                  width: options.width,
-                  style: options.style,
-                  isActive: options.width == strokeWidth &&
-                      options.style == strokeStyle,
-                  package: options.package,
-                  entitlement: options.entitlement,
-                  onStrokeTap: ifPurchased(
-                      context: context,
-                      entitlement: options.entitlement,
-                      package: options.package,
-                      callbackIfPurchased: () {
-                        stroke.setStroke(
-                            width: options.width, style: options.style);
-                      }))
-          ]),
+          children: _strokeOptions.map((_StrokeAndStyle options) {
+            final Function setStrokeIfPurchased = ifPurchased(
+                context: context,
+                entitlement: options.entitlement,
+                package: options.package,
+                callbackIfPurchased: () {
+                  stroke.setStroke(width: options.width, style: options.style);
+                });
+
+            return StrokeSelectorThumbnail(
+                width: options.width,
+                style: options.style,
+                isActive: options.width == strokeWidth &&
+                    options.style == strokeStyle,
+                package: options.package,
+                entitlement: options.entitlement,
+                onStrokeTap: () {
+                  colors.showPenColorDeleteButtons = false;
+                  setStrokeIfPurchased();
+                });
+          }).toList()),
       SelectionrRowDefinition(
           storageKey: "penColor",
           label: 'COLOR',
@@ -110,7 +113,10 @@ class PenSelector extends StatelessWidget {
                     return ColorSelectorThumbnail(
                         color: color,
                         isActive: color.color == colors.penColor.color,
-                        onColorTap: () => colors.penColor = color,
+                        onColorTap: () {
+                          colors.showPenColorDeleteButtons = false;
+                          colors.penColor = color;
+                        },
                         onColorLongPress: () =>
                             colors.showPenColorDeleteButtons =
                                 !colors.showPenColorDeleteButtons,
@@ -123,6 +129,7 @@ class PenSelector extends StatelessWidget {
                 package: Package.custompencolors,
                 showOpacity: true,
                 initialColor: colors.lastSelectedCustomPenColor.color,
+                onPress: () => colors.showPenColorDeleteButtons = false,
                 onSelect: (color) {
                   colors.addAndSelectPenColor(TinyColor(color));
                 })

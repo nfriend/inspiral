@@ -22,6 +22,9 @@ class NewColorThumbnail extends StatelessWidget {
   /// The color that should be initially selected;
   final Color initialColor;
 
+  /// The function to call immediately when the button is pressed
+  final Function onPress;
+
   /// The function to call when a new color is selected
   final Function(Color color) onSelect;
 
@@ -31,12 +34,32 @@ class NewColorThumbnail extends StatelessWidget {
       @required this.package,
       @required this.showOpacity,
       @required this.initialColor,
-      @required this.onSelect});
+      @required this.onSelect,
+      this.onPress});
 
   @override
   Widget build(BuildContext context) {
     final ColorState colors = Provider.of<ColorState>(context, listen: false);
     final BorderRadius borderRadius = BorderRadius.all(Radius.circular(5.0));
+
+    final Function showDialogIfPurchased = ifPurchased(
+        context: context,
+        entitlement: entitlement,
+        package: package,
+        callbackIfPurchased: () {
+          if (onPress != null) {
+            onPress();
+          }
+
+          showDialog(
+              context: context,
+              builder: (_) => ColorPickerDialog(
+                  title: title,
+                  colors: colors,
+                  showOpacity: showOpacity,
+                  initialColor: initialColor,
+                  onSelect: onSelect));
+        });
 
     return Stack(children: [
       Padding(
@@ -49,20 +72,10 @@ class NewColorThumbnail extends StatelessWidget {
                   borderRadius: borderRadius,
                   child: InkWell(
                     borderRadius: borderRadius,
-                    onTap: ifPurchased(
-                        context: context,
-                        entitlement: entitlement,
-                        package: package,
-                        callbackIfPurchased: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ColorPickerDialog(
-                                  title: title,
-                                  colors: colors,
-                                  showOpacity: showOpacity,
-                                  initialColor: initialColor,
-                                  onSelect: onSelect));
-                        }),
+                    onTap: () {
+                      onPress?.call();
+                      showDialogIfPurchased();
+                    },
                     child: Center(
                         child:
                             Icon(Icons.add, size: 40.0, color: Colors.white)),

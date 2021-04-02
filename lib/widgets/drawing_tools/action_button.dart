@@ -15,6 +15,7 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorState colors = Provider.of<ColorState>(context, listen: false);
     final TinyColor buttonColor =
         context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
     final TinyColor uiTextColor =
@@ -27,7 +28,10 @@ class ActionButton extends StatelessWidget {
             borderRadius: borderRadius,
             color: buttonColor.color,
             child: InkWell(
-                onTap: onButtonTap,
+                onTap: () {
+                  colors.showCanvasColorDeleteButtons = false;
+                  onButtonTap();
+                },
                 borderRadius: borderRadius,
                 child: Tooltip(
                     message: tooltipMessage,

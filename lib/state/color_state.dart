@@ -54,7 +54,6 @@ class ColorState extends ChangeNotifier {
   set backgroundColor(TinyColor value) {
     _backgroundColor = value;
     _updateDependentColors();
-    showCanvasColorDeleteButtons = false;
     notifyListeners();
   }
 
@@ -65,7 +64,6 @@ class ColorState extends ChangeNotifier {
     _penColor = value;
     _updateDependentColors();
     ink.finishLine();
-    showPenColorDeleteButtons = false;
     notifyListeners();
   }
 

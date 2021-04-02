@@ -66,7 +66,10 @@ class ToolsSelector extends StatelessWidget {
                     return ColorSelectorThumbnail(
                         color: color,
                         isActive: color.color == colors.backgroundColor.color,
-                        onColorTap: () => colors.backgroundColor = color,
+                        onColorTap: () {
+                          colors.showCanvasColorDeleteButtons = false;
+                          colors.backgroundColor = color;
+                        },
                         onColorLongPress: () =>
                             colors.showCanvasColorDeleteButtons =
                                 !colors.showCanvasColorDeleteButtons,
@@ -79,6 +82,7 @@ class ToolsSelector extends StatelessWidget {
                 package: Package.custombackgroundcolors,
                 showOpacity: false,
                 initialColor: colors.lastSelectedCustomCanvasColor.color,
+                onPress: () => colors.showCanvasColorDeleteButtons = false,
                 onSelect: (color) {
                   colors.addAndSelectCanvasColor(TinyColor(color));
                 }),
