@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inspiral/models/entitlement.dart';
+import 'package:inspiral/state/settings_state.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -19,9 +20,16 @@ class PurchasesState extends ChangeNotifier {
 
   PurchasesState._internal();
 
+  SettingsState settings;
+
   /// Returns a boolean indicating whether or not
   /// the provided `entitlement` is owned by the user
   Future<bool> isEntitledTo(String entitlement) async {
+    // Unlock all purchases in debug mode
+    if (settings.debug) {
+      return true;
+    }
+
     if (entitlement == Entitlement.free) {
       return true;
     }

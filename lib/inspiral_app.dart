@@ -6,6 +6,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/widgets/inspiral_providers.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/widgets/drawing_board.dart';
+import 'package:inspiral/widgets/android_back_button_handler.dart';
 
 class InspiralApp extends StatelessWidget {
   @override
@@ -36,8 +37,8 @@ class InspiralApp extends StatelessWidget {
       scaffoldMessengerKey: scaffoldGlobalKey,
       title: 'Inspiral',
       routes: {
-        InspiralRoutes.canvas: (context) =>
-            InspiralProviders(child: DrawingBoard())
+        InspiralRoutes.canvas: (context) => InspiralProviders(
+            child: AndroidBackButtonHandler(child: DrawingBoard()))
       },
     );
   }

@@ -69,44 +69,32 @@ class _SelectorDrawerState extends State<SelectorDrawer>
       }
     });
 
-    return WillPopScope(
-        onWillPop: () async {
-          // When Android's back button is pressed, and the drawer is open,
-          // close the drawer and prevent the default behavior.
-          if (selectorDrawer.isOpen) {
-            selectorDrawer.closeDrawer();
-            return false;
-          }
-
-          // Otherwise, allow the native behavior to continue.
-          return true;
-        },
-        child: AnimatedContainer(
+    return AnimatedContainer(
+        duration: uiAnimationDuration,
+        curve: Curves.easeOut,
+        transform: transform,
+        child: AnimatedOpacity(
             duration: uiAnimationDuration,
             curve: Curves.easeOut,
-            transform: transform,
-            child: AnimatedOpacity(
-                duration: uiAnimationDuration,
-                curve: Curves.easeOut,
-                opacity: opacity,
-                child: RotatedBox(
-                    quarterTurns: isLandscape ? 3 : 0,
-                    child: Container(
-                        color: uiBackgroundColor.color,
-                        height: selectorDrawerHeight,
-                        child: GestureDetector(
-                            onPanUpdate: (details) {
-                              if (details.delta.dy > 0) {
-                                selectorDrawer.closeDrawer();
-                              }
-                            },
-                            child: TabBarView(
-                                controller: _tabController,
-                                physics: NeverScrollableScrollPhysics(),
-                                children: [
-                                  ToolsSelector(),
-                                  PenSelector(),
-                                  GearSelector(),
-                                ])))))));
+            opacity: opacity,
+            child: RotatedBox(
+                quarterTurns: isLandscape ? 3 : 0,
+                child: Container(
+                    color: uiBackgroundColor.color,
+                    height: selectorDrawerHeight,
+                    child: GestureDetector(
+                        onPanUpdate: (details) {
+                          if (details.delta.dy > 0) {
+                            selectorDrawer.closeDrawer();
+                          }
+                        },
+                        child: TabBarView(
+                            controller: _tabController,
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                              ToolsSelector(),
+                              PenSelector(),
+                              GearSelector(),
+                            ]))))));
   }
 }
