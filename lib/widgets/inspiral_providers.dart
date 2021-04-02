@@ -19,11 +19,9 @@ class _InspiralProvidersState extends State<InspiralProviders> {
 
   @override
   Widget build(BuildContext context) {
-    TinyColor initialCanvasColor = TinyColor(Colors.white);
-
     // Initialize all the singletons that will be provided below
     if (_stateFuture == null) {
-      _stateFuture = initState(context, initialCanvasColor: initialCanvasColor);
+      _stateFuture = initState(context);
     }
 
     return FutureBuilder(
@@ -50,7 +48,7 @@ class _InspiralProvidersState extends State<InspiralProviders> {
           } else {
             // Note: If the startup time is slow enough, consider
             // showing a splash screen of some kind here.
-            return Container(color: initialCanvasColor.color);
+            return Container(color: Colors.white);
           }
         });
   }

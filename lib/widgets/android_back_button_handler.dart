@@ -36,7 +36,9 @@ class AndroidBackButtonHandler extends StatelessWidget {
     // Same as above, but for the canvas color delete buttons
     bool isEntitledToDeleteCanvasColors =
         await purchases.isEntitledTo(Entitlement.custombackgroundcolors);
-    if (isEntitledToDeleteCanvasColors && colors.showCanvasColorDeleteButtons) {
+    if (isEntitledToDeleteCanvasColors &&
+        colors.showCanvasColorDeleteButtons &&
+        colors.availableCanvasColors.length > 1) {
       colors.showCanvasColorDeleteButtons = false;
       return false;
     }

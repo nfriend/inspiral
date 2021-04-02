@@ -11,8 +11,7 @@ import 'package:inspiral/extensions/extensions.dart';
 
 /// Initializes all state singletons. This method must be called early in the
 /// application lifecycle, and it must only be called once.
-Future<void> initState(BuildContext context,
-    {@required TinyColor initialCanvasColor}) async {
+Future<void> initState(BuildContext context) async {
   // Compute an initial canvas translation that will place the
   // center point of the canvas directly in the center of the screen
   // By default, the canvas's top-left corner is lined up with
@@ -44,31 +43,36 @@ Future<void> initState(BuildContext context,
   final settings = SettingsState.init();
   final selectorDrawer = SelectorDrawerState.init();
   final purchases = PurchasesState.init();
+
+  List<TinyColor> initialAvailablePenColors = [
+    TinyColor(Color(0x66FF0000)),
+    TinyColor(Color(0xB3FF9500)),
+    TinyColor(Color(0xB3FFFF00)),
+    TinyColor(Color(0x80009600)),
+    TinyColor(Color(0x660000FF)),
+    TinyColor(Color(0x80960096)),
+    TinyColor(Color(0xCCFFFFFF)),
+    TinyColor(Color(0xCCC8C8C8)),
+    TinyColor(Color(0xCC969696)),
+    TinyColor(Color(0xCC646464)),
+  ];
+
+  List<TinyColor> initialAvailableCanvasColors = [
+    TinyColor(Colors.white),
+    TinyColor(Color(0xFFF0F0F0)),
+    TinyColor(Color(0xFFE3E3E3)),
+    TinyColor(Color(0xFFF7EFDA)),
+    TinyColor(Color(0xFF3B2507)),
+    TinyColor(Color(0xFF0E1247)),
+    TinyColor(Color(0xFF333333)),
+    TinyColor(Color(0xFF121212)),
+  ];
+
   final colors = ColorState.init(
-      initialBackgroundColor: initialCanvasColor,
-      initialPenColor: TinyColor(Color(0x66FF0000)),
-      initialAvailablePenColors: [
-        TinyColor(Color(0x66FF0000)),
-        TinyColor(Color(0xB3FF9500)),
-        TinyColor(Color(0xB3FFFF00)),
-        TinyColor(Color(0x80009600)),
-        TinyColor(Color(0x660000FF)),
-        TinyColor(Color(0x80960096)),
-        TinyColor(Color(0xCCFFFFFF)),
-        TinyColor(Color(0xCCC8C8C8)),
-        TinyColor(Color(0xCC969696)),
-        TinyColor(Color(0xCC646464)),
-      ],
-      initialAvailableCanvasColors: [
-        TinyColor(Colors.white),
-        TinyColor(Color(0xFFF0F0F0)),
-        TinyColor(Color(0xFFE3E3E3)),
-        TinyColor(Color(0xFFF7EFDA)),
-        TinyColor(Color(0xFF3B2507)),
-        TinyColor(Color(0xFF0E1247)),
-        TinyColor(Color(0xFF333333)),
-        TinyColor(Color(0xFF121212)),
-      ],
+      initialBackgroundColor: initialAvailableCanvasColors.first,
+      initialPenColor: initialAvailablePenColors.first,
+      initialAvailablePenColors: initialAvailablePenColors,
+      initialAvailableCanvasColors: initialAvailableCanvasColors,
       lastSelectedCustomPenColor: TinyColor(Color(0xB348F1F7)),
       lastSelectedCustomCanvasColor: TinyColor(Color(0xFF592659)));
   final stroke = StrokeState.init(initialWidth: 5.0);

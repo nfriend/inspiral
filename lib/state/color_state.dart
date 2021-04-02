@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -104,7 +105,19 @@ class ColorState extends ChangeNotifier {
 
   /// Removes an existing colors from the list of available pen colors
   void removePenColor(TinyColor color) {
-    _availablePenColors.remove(color);
+    int colorIndex = _availablePenColors.indexOf(color);
+    bool colorWasRemoved = _availablePenColors.remove(color);
+
+    if (penColor == color && colorWasRemoved) {
+      if (_availablePenColors.length > 0) {
+        // If there are still colors left, select the next closest color
+        int newColorIndex = min(colorIndex, _availablePenColors.length - 1);
+        penColor = _availablePenColors[newColorIndex];
+      } else {
+        penColor = TinyColor(Colors.transparent);
+      }
+    }
+
     notifyListeners();
   }
 
@@ -124,7 +137,20 @@ class ColorState extends ChangeNotifier {
 
   /// Removes an existing colors from the list of available canvas colors
   void removeCanvasColor(TinyColor color) {
-    _availableCanvasColors.remove(color);
+    int colorIndex = _availableCanvasColors.indexOf(color);
+    bool colorWasRemoved = _availableCanvasColors.remove(color);
+
+    if (backgroundColor == color && colorWasRemoved) {
+      if (_availableCanvasColors.length > 0) {
+        int newColorIndex = min(colorIndex, _availableCanvasColors.length - 1);
+        backgroundColor = _availableCanvasColors[newColorIndex];
+      } else {
+        // We _should_ never hit this code path - the UI should prevent
+        // the final color from being deleted.
+        backgroundColor = TinyColor(Colors.white);
+      }
+    }
+
     notifyListeners();
   }
 

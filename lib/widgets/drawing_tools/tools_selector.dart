@@ -61,7 +61,8 @@ class ToolsSelector extends StatelessWidget {
                       (BuildContext context, AsyncSnapshot<bool> snapshot) {
                     bool showDeleteButton = snapshot.hasData &&
                         snapshot.data &&
-                        colors.showCanvasColorDeleteButtons;
+                        colors.showCanvasColorDeleteButtons &&
+                        colors.availableCanvasColors.length > 1;
 
                     return ColorSelectorThumbnail(
                         color: color,
