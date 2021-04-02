@@ -4,6 +4,7 @@ import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/if_purchased.dart';
 import 'package:inspiral/widgets/drawing_tools/color_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/new_color_thumbnail.dart';
+import 'package:inspiral/widgets/drawing_tools/no_color_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:inspiral/widgets/drawing_tools/stroke_selector_thumbnail.dart';
 import 'package:inspiral/models/ink_line.dart';
@@ -101,6 +102,12 @@ class PenSelector extends StatelessWidget {
           storageKey: "penColor",
           label: 'COLOR',
           children: [
+            NoColorThumbnail(
+                isActive: colors.penColor.color == Colors.transparent,
+                onColorTap: () {
+                  colors.showPenColorDeleteButtons = false;
+                  colors.penColor = TinyColor(Colors.transparent);
+                }),
             for (TinyColor color in colors.availablePenColors)
               FutureBuilder(
                   future: purchases.isEntitledTo(Entitlement.custompencolors),
