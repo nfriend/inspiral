@@ -28,7 +28,7 @@ class Positions {
   }
 }
 
-class PointersState extends ChangeNotifier with WidgetsBindingObserver {
+class PointersState extends BaseState with WidgetsBindingObserver {
   static PointersState _instance;
 
   factory PointersState.init() {
@@ -41,7 +41,7 @@ class PointersState extends ChangeNotifier with WidgetsBindingObserver {
     return _instance;
   }
 
-  PointersState._internal() {
+  PointersState._internal() : super() {
     _activePointerIds = LinkedHashSet<int>();
     _activePointerIdsView = UnmodifiableSetView(_activePointerIds);
     _pointerPositions = {};

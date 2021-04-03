@@ -68,11 +68,14 @@ final GlobalKey<ScaffoldMessengerState> scaffoldGlobalKey =
 /// The size of thumbnail gear images (in logical pixels).
 /// Thumbnail images are square, so only one dimension is needed.
 /// This constant should equal its counterpart in `constants.ts`.
-final double thumbnailSize = 65.0;
+const double thumbnailSize = 65.0;
 
 /// The height of the top and bottom menu bars
-final double menuBarHeight = 48.0;
+const double menuBarHeight = 48.0;
 
 /// The height of the selector drawer (the container for the gear, pen, and tool
 /// options), in logical pixels.
-final double selectorDrawerHeight = 168.0;
+const double selectorDrawerHeight = 168.0;
+
+/// The name of the local SQLite database to use for persisting app state
+const String localDatabaseName = 'inspiral.db';

@@ -3,7 +3,7 @@ import 'package:inspiral/state/state.dart';
 
 enum DrawerTab { tools, pen, gears }
 
-class SelectorDrawerState extends ChangeNotifier {
+class SelectorDrawerState extends BaseState {
   static SelectorDrawerState _instance;
 
   factory SelectorDrawerState.init() {
@@ -16,7 +16,7 @@ class SelectorDrawerState extends ChangeNotifier {
     return _instance;
   }
 
-  SelectorDrawerState._internal();
+  SelectorDrawerState._internal() : super();
 
   CanvasState canvas;
   ColorState colors;

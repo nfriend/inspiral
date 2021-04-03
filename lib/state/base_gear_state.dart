@@ -3,7 +3,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 
-abstract class BaseGearState extends ChangeNotifier {
+abstract class BaseGearState extends BaseState {
   Offset _position = canvasCenter;
   Offset get position => _position;
   set position(Offset value) {

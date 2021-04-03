@@ -5,7 +5,7 @@ import 'package:inspiral/state/state.dart';
 
 final double pi2 = 2 * pi;
 
-class DragLineState extends ChangeNotifier {
+class DragLineState extends BaseState {
   static DragLineState _instance;
 
   factory DragLineState.init(
@@ -21,7 +21,8 @@ class DragLineState extends ChangeNotifier {
   }
 
   DragLineState._internal(
-      {@required Offset initialPosition, @required double initialAngle}) {
+      {@required Offset initialPosition, @required double initialAngle})
+      : super() {
     _pivotPositionInCanvasCoordinates = initialPosition;
     _angle = initialAngle;
   }

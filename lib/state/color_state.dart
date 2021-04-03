@@ -2,22 +2,21 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/get_database.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
-class ColorState extends ChangeNotifier {
+class ColorState extends BaseState {
   static ColorState _instance;
 
   factory ColorState.init(
       {@required TinyColor initialBackgroundColor,
-      @required TinyColor initialPenColor,
-      @required List<TinyColor> initialAvailablePenColors,
       @required List<TinyColor> initialAvailableCanvasColors,
       @required TinyColor lastSelectedCustomPenColor,
       @required TinyColor lastSelectedCustomCanvasColor}) {
     return _instance = ColorState._internal(
         initialBackgroundColor: initialBackgroundColor,
-        initialPenColor: initialPenColor,
-        initialAvailablePenColors: initialAvailablePenColors,
         initialAvailableCanvasColors: initialAvailableCanvasColors,
         lastSelectedCustomPenColor: lastSelectedCustomPenColor,
         lastSelectedCustomCanvasColor: lastSelectedCustomCanvasColor);
@@ -31,14 +30,13 @@ class ColorState extends ChangeNotifier {
 
   ColorState._internal(
       {@required TinyColor initialBackgroundColor,
-      @required TinyColor initialPenColor,
-      @required List<TinyColor> initialAvailablePenColors,
       @required List<TinyColor> initialAvailableCanvasColors,
       @required this.lastSelectedCustomPenColor,
-      @required this.lastSelectedCustomCanvasColor}) {
+      @required this.lastSelectedCustomCanvasColor})
+      : super() {
     _backgroundColor = initialBackgroundColor;
-    _penColor = initialPenColor;
-    _availablePenColors = initialAvailablePenColors;
+    _penColor = TinyColor(Colors.transparent);
+    _availablePenColors = [];
     _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
     _availableCanvasColors = initialAvailableCanvasColors;
     _unmodifiableAvailableCanvasColors =
@@ -246,5 +244,51 @@ class ColorState extends ChangeNotifier {
 
     _canvasShadowColor =
         isDark ? backgroundColor.lighten(20) : backgroundColor.darken(20);
+  }
+
+  static const String _tableName = 'penColors';
+  static const String _valueColumn = 'value';
+  static const String _isActiveColumn = 'isActive';
+
+  @override
+  Future<void> persist() async {
+    Database db = await getDatabase();
+
+    await db.delete(_tableName);
+
+    for (TinyColor color in availablePenColors) {
+      bool isActive = penColor == color;
+      await db.insert(_tableName, {
+        _valueColumn: color.toHexString(),
+        _isActiveColumn: isActive.toInt()
+      });
+    }
+  }
+
+  @override
+  Future<void> rehydrate() async {
+    Database db = await getDatabase();
+
+    final List<Map<String, dynamic>> rows = await db.query(_tableName);
+
+    // Remove all the current items from the list
+    _availablePenColors.removeWhere((_) => true);
+
+    // Set the pen color to transparent. This is the fallback in case
+    // none of the colors below are marked as "active".
+    penColor = TinyColor(Colors.transparent);
+
+    for (Map<String, dynamic> attrs in rows) {
+      TinyColor newColor = TinyColor(
+          Color(int.parse(attrs[_valueColumn].toString(), radix: 16)));
+
+      _availablePenColors.add(newColor);
+
+      if (attrs[_isActiveColumn] == 1) {
+        penColor = newColor;
+      }
+    }
+
+    notifyListeners();
   }
 }

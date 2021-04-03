@@ -3,7 +3,7 @@ import 'package:inspiral/constants.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/state/state.dart';
 
-class CanvasState extends ChangeNotifier {
+class CanvasState extends BaseState {
   static CanvasState _instance;
 
   factory CanvasState.init({@required Matrix4 initialTransform}) {
@@ -17,7 +17,7 @@ class CanvasState extends ChangeNotifier {
     return _instance;
   }
 
-  CanvasState._internal({@required Matrix4 initialTransform}) {
+  CanvasState._internal({@required Matrix4 initialTransform}) : super() {
     _transform = initialTransform;
   }
 

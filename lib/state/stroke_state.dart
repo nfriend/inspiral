@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/models/ink_line.dart';
 
-class StrokeState extends ChangeNotifier {
+class StrokeState extends BaseState {
   static StrokeState _instance;
 
   factory StrokeState.init(
@@ -19,7 +19,8 @@ class StrokeState extends ChangeNotifier {
   }
 
   StrokeState._internal(
-      {@required double initialWidth, @required StrokeStyle initialStyle}) {
+      {@required double initialWidth, @required StrokeStyle initialStyle})
+      : super() {
     _width = initialWidth;
     _style = initialStyle;
   }

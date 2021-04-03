@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:inspiral/models/gears/gears.dart';
 import 'package:inspiral/state/stroke_state.dart';
+import 'package:inspiral/util/delete_database.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
@@ -39,23 +40,10 @@ Future<void> initState(BuildContext context) async {
   double initialAngle = pi / 2;
 
   // Initialize all the state singletons
-  ProgressState.init();
+  final progress = ProgressState.init();
   final settings = SettingsState.init();
   final selectorDrawer = SelectorDrawerState.init();
   final purchases = PurchasesState.init();
-
-  List<TinyColor> initialAvailablePenColors = [
-    TinyColor(Color(0x66FF0000)),
-    TinyColor(Color(0xB3FF9500)),
-    TinyColor(Color(0xB3FFFF00)),
-    TinyColor(Color(0x80009600)),
-    TinyColor(Color(0x660000FF)),
-    TinyColor(Color(0x80960096)),
-    TinyColor(Color(0xCCFFFFFF)),
-    TinyColor(Color(0xCCC8C8C8)),
-    TinyColor(Color(0xCC969696)),
-    TinyColor(Color(0xCC646464)),
-  ];
 
   List<TinyColor> initialAvailableCanvasColors = [
     TinyColor(Colors.white),
@@ -70,8 +58,6 @@ Future<void> initState(BuildContext context) async {
 
   final colors = ColorState.init(
       initialBackgroundColor: initialAvailableCanvasColors.first,
-      initialPenColor: initialAvailablePenColors.first,
-      initialAvailablePenColors: initialAvailablePenColors,
       initialAvailableCanvasColors: initialAvailableCanvasColors,
       lastSelectedCustomPenColor: TinyColor(Color(0xB348F1F7)),
       lastSelectedCustomCanvasColor: TinyColor(Color(0xFF592659)));
@@ -120,8 +106,26 @@ Future<void> initState(BuildContext context) async {
     ..settings = settings
     ..selectorDrawer = selectorDrawer;
 
+  List<BaseState> allStateObjects = [
+    progress,
+    settings,
+    selectorDrawer,
+    purchases,
+    colors,
+    stroke,
+    ink,
+    pointers,
+    canvas,
+    rotatingGear,
+    fixedGear,
+    dragLine
+  ];
+
   // Run any initialization logic
   rotatingGear.initializePosition();
+  for (BaseState state in allStateObjects) {
+    await state.rehydrate();
+  }
 
   await Purchases.setDebugLogsEnabled(settings.debug);
   await Purchases.setup("QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz");

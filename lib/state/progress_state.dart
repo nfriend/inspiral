@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:inspiral/state/state.dart';
 
-class ProgressState extends ChangeNotifier {
+class ProgressState extends BaseState {
   static ProgressState _instance;
 
   factory ProgressState.init() {
@@ -13,7 +13,7 @@ class ProgressState extends ChangeNotifier {
     return _instance;
   }
 
-  ProgressState._internal();
+  ProgressState._internal() : super();
 
   /// Whether or not something is loading
   bool get isLoading => _isLoading;

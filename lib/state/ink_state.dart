@@ -6,7 +6,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 
-class InkState extends ChangeNotifier {
+class InkState extends BaseState {
   static InkState _instance;
 
   factory InkState.init() {
@@ -19,7 +19,7 @@ class InkState extends ChangeNotifier {
     return _instance;
   }
 
-  InkState._internal();
+  InkState._internal() : super();
 
   ColorState colors;
   StrokeState stroke;

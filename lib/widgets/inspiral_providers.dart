@@ -3,7 +3,6 @@ import 'package:inspiral/state/init_state.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 class InspiralProviders extends StatefulWidget {
   final Widget child;

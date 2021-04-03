@@ -32,7 +32,7 @@ class FixedGearState extends BaseGearState {
   FixedGearState._internal({
     @required Offset initialPosition,
     @required GearDefinition initialDefinition,
-  }) {
+  }) : super() {
     definition = initialDefinition;
     position = initialPosition;
   }

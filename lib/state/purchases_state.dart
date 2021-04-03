@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inspiral/models/entitlement.dart';
-import 'package:inspiral/state/settings_state.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-class PurchasesState extends ChangeNotifier {
+class PurchasesState extends BaseState {
   static PurchasesState _instance;
 
   factory PurchasesState.init() {
@@ -18,7 +17,7 @@ class PurchasesState extends ChangeNotifier {
     return _instance;
   }
 
-  PurchasesState._internal();
+  PurchasesState._internal() : super();
 
   SettingsState settings;
 

@@ -55,7 +55,8 @@ class RotatingGearState extends BaseGearState {
   RotatingGearState._internal(
       {@required double initialAngle,
       @required GearDefinition initialDefinition,
-      @required GearHole initialActiveHole}) {
+      @required GearHole initialActiveHole})
+      : super() {
     definition = initialDefinition;
     _lastAngle = initialAngle;
     activeHole = initialActiveHole;

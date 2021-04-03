@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:inspiral/state/state.dart';
 
-class SettingsState extends ChangeNotifier {
+class SettingsState extends BaseState {
   static SettingsState _instance;
 
   factory SettingsState.init() {
@@ -14,7 +14,7 @@ class SettingsState extends ChangeNotifier {
     return _instance;
   }
 
-  SettingsState._internal();
+  SettingsState._internal() : super();
 
   /// Whether or not to show various debugging aids
   bool get debug => _debug;
