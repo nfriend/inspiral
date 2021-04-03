@@ -45,20 +45,7 @@ Future<void> initState(BuildContext context) async {
   final selectorDrawer = SelectorDrawerState.init();
   final purchases = PurchasesState.init();
 
-  List<TinyColor> initialAvailableCanvasColors = [
-    TinyColor(Colors.white),
-    TinyColor(Color(0xFFF0F0F0)),
-    TinyColor(Color(0xFFE3E3E3)),
-    TinyColor(Color(0xFFF7EFDA)),
-    TinyColor(Color(0xFF3B2507)),
-    TinyColor(Color(0xFF0E1247)),
-    TinyColor(Color(0xFF333333)),
-    TinyColor(Color(0xFF121212)),
-  ];
-
   final colors = ColorState.init(
-      initialBackgroundColor: initialAvailableCanvasColors.first,
-      initialAvailableCanvasColors: initialAvailableCanvasColors,
       lastSelectedCustomPenColor: TinyColor(Color(0xB348F1F7)),
       lastSelectedCustomCanvasColor: TinyColor(Color(0xFF592659)));
   final stroke = StrokeState.init(initialWidth: 5.0);
