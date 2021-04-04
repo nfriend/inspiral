@@ -1,13 +1,9 @@
 import 'dart:collection';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:inspiral/state/persistors/color_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/database/get_database.dart';
-import 'package:inspiral/database/schema.dart';
-import 'package:inspiral/util/color_from_hex_string.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
-import 'package:inspiral/extensions/extensions.dart';
 
 class ColorState extends BaseState {
   static ColorState _instance;
@@ -219,87 +215,22 @@ class ColorState extends BaseState {
 
   @override
   Future<void> persist() async {
-    Database db = await getDatabase();
-
-    Iterable<int> colorIdsToDelete = (await db.query(Schema.colors.toString(),
-            columns: [Schema.colors.id],
-            where:
-                "${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}'"))
-        .map((row) => row[Schema.colors.id]);
-
-    int activePenColorId, activeCanvasColorId;
-
-    for (TinyColor color in availablePenColors) {
-      int colorId = await db.insert(Schema.colors.toString(), {
-        Schema.colors.value: color.toHexString(),
-        Schema.colors.type: ColorsTableType.pen
-      });
-
-      if (penColor == color) {
-        activePenColorId = colorId;
-      }
-    }
-
-    for (TinyColor color in availableCanvasColors) {
-      int colorId = await db.insert(Schema.colors.toString(), {
-        Schema.colors.value: color.toHexString(),
-        Schema.colors.type: ColorsTableType.canvas
-      });
-
-      if (backgroundColor == color) {
-        activeCanvasColorId = colorId;
-      }
-    }
-
-    await db.update(Schema.state.toString(), {
-      Schema.state.selectedPenColor: activePenColorId,
-      Schema.state.selectedCanvasColor: activeCanvasColorId
-    });
-
-    await db.delete(Schema.colors.toString(),
-        where: "${Schema.colors.id} IN (${colorIdsToDelete.join(', ')})");
+    await ColorStatePersistor.persist(this);
   }
 
   @override
   Future<void> rehydrate() async {
-    _availablePenColors = [];
+    print("rehydratin!");
+    ColorStateRehydrationResult result =
+        await ColorStatePersistor.rehydrate(this);
+
+    _availablePenColors = result.availablePenColors;
     _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
-    _availableCanvasColors = [];
+    _availableCanvasColors = result.availableCanvasColors;
     _unmodifiableAvailableCanvasColors =
         UnmodifiableListView(_availableCanvasColors);
-
-    Database db = await getDatabase();
-
-    final List<Map<String, dynamic>> rows =
-        await db.query(Schema.colors.toString());
-
-    for (Map<String, dynamic> attrs in rows) {
-      TinyColor newColor = tinyColorFromHexString(attrs[Schema.colors.value]);
-
-      if (attrs[Schema.colors.type] == ColorsTableType.pen) {
-        _availablePenColors.add(newColor);
-      } else if (attrs[Schema.colors.type] == ColorsTableType.canvas) {
-        _availableCanvasColors.add(newColor);
-      }
-    }
-
-    Map<String, dynamic> state = (await db.rawQuery('''
-      SELECT
-        c1.${Schema.colors.value} AS ${Schema.state.selectedPenColor},
-        c2.${Schema.colors.value} AS ${Schema.state.selectedCanvasColor}
-      FROM
-        ${Schema.state} s
-      JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.selectedPenColor}
-      JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
-    ''')).first;
-
-    _penColor = _availablePenColors.firstWhere(
-        (color) => color.toHexString() == state[Schema.state.selectedPenColor],
-        orElse: () => TinyColor(Colors.transparent));
-    _backgroundColor = _availableCanvasColors.firstWhere(
-        (color) =>
-            color.toHexString() == state[Schema.state.selectedCanvasColor],
-        orElse: () => TinyColor(Colors.white));
+    _penColor = result.penColor;
+    _backgroundColor = result.canvasColor;
 
     _updateDependentColors();
   }
