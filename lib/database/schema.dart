@@ -27,6 +27,15 @@ class ColorsTable extends Table {
 class ColorsTableType {
   static String pen = 'pen';
   static String canvas = 'canvas';
+  static String lastSelectedPen = 'lastSelectedPen';
+  static String lastSelectedCanvas = 'lastSelectedCanvas';
+
+  static Iterable<String> all = [
+    ColorsTableType.pen,
+    ColorsTableType.canvas,
+    ColorsTableType.lastSelectedPen,
+    ColorsTableType.lastSelectedCanvas
+  ];
 }
 
 class StateTable extends Table {
@@ -34,4 +43,6 @@ class StateTable extends Table {
 
   final String selectedPenColor = 'selectedPenColor';
   final String selectedCanvasColor = 'selectedCanvasColor';
+  final String lastSelectedPenColor = 'lastSelectedPenColor';
+  final String lastSelectedCanvasColor = 'lastSelectedCanvasColor';
 }

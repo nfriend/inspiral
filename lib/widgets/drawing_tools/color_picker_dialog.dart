@@ -18,6 +18,11 @@ class ColorPickerDialog extends StatefulWidget {
   /// The color that should be initially selected;
   final Color initialColor;
 
+  /// The function to call when the color wheel inside the dialog is moved.
+  /// Note: This is different than `onSelect`, which is called when the user
+  /// actually _confirms_ the new color.
+  final Function(Color color) onColorMove;
+
   /// The function to call when a new color is selected
   final Function(Color color) onSelect;
 
@@ -26,6 +31,7 @@ class ColorPickerDialog extends StatefulWidget {
       @required this.colors,
       @required this.showOpacity,
       @required this.initialColor,
+      @required this.onColorMove,
       @required this.onSelect});
 
   @override
@@ -101,6 +107,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             },
             onColorChanged: (Color newColor) => setState(() {
               _selectedColor = newColor;
+              widget.onColorMove(newColor);
             }),
           ),
           Padding(

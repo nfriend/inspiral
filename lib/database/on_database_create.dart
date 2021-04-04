@@ -14,7 +14,12 @@ void _createTableColorsV1(Batch batch) {
     CREATE TABLE ${Schema.colors}(
       ${Schema.colors.id} INTEGER PRIMARY KEY AUTOINCREMENT,
       ${Schema.colors.value} TEXT CHECK(LENGTH(value) = 8) NOT NULL,
-      ${Schema.colors.type} TEXT CHECK(type IN ('${ColorsTableType.pen}', '${ColorsTableType.canvas}')) NOT NULL
+      ${Schema.colors.type} TEXT CHECK(type IN (
+        '${ColorsTableType.pen}',
+        '${ColorsTableType.canvas}',
+        '${ColorsTableType.lastSelectedPen}',
+        '${ColorsTableType.lastSelectedCanvas}'
+      )) NOT NULL
     )
   ''');
 
@@ -31,6 +36,7 @@ void _createTableColorsV1(Batch batch) {
       (8, 'CCC8C8C8', '${ColorsTableType.pen}'),
       (9, 'CC969696', '${ColorsTableType.pen}'),
       (10, 'CC646464', '${ColorsTableType.pen}'),
+
       (12, 'FFFFFFFF', '${ColorsTableType.canvas}'),
       (13, 'FFF0F0F0', '${ColorsTableType.canvas}'),
       (14, 'FFE3E3E3', '${ColorsTableType.canvas}'),
@@ -38,7 +44,11 @@ void _createTableColorsV1(Batch batch) {
       (16, 'FF3B2507', '${ColorsTableType.canvas}'),
       (17, 'FF0E1247', '${ColorsTableType.canvas}'),
       (18, 'FF333333', '${ColorsTableType.canvas}'),
-      (19, 'FF121212', '${ColorsTableType.canvas}');
+      (19, 'FF121212', '${ColorsTableType.canvas}'),
+
+      (20, 'B348F1F7', '${ColorsTableType.lastSelectedPen}'),
+
+      (21, 'FF592659', '${ColorsTableType.lastSelectedCanvas}');
   ''');
 }
 
@@ -47,12 +57,19 @@ void _createTableStateV1(Batch batch) {
   batch.execute('''
     CREATE TABLE ${Schema.state}(
       ${Schema.state.selectedPenColor} INTEGER NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
-      ${Schema.state.selectedCanvasColor} INTEGER NULL REFERENCES ${Schema.colors}(${Schema.colors.id})
+      ${Schema.state.selectedCanvasColor} INTEGER NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
+      ${Schema.state.lastSelectedPenColor} INTEGER NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
+      ${Schema.state.lastSelectedCanvasColor} INTEGER NULL REFERENCES ${Schema.colors}(${Schema.colors.id})
     )
   ''');
   batch.execute('''
-    INSERT INTO ${Schema.state} (${Schema.state.selectedPenColor}, ${Schema.state.selectedCanvasColor})
+    INSERT INTO ${Schema.state} (
+      ${Schema.state.selectedPenColor},
+      ${Schema.state.selectedCanvasColor},
+      ${Schema.state.lastSelectedPenColor},
+      ${Schema.state.lastSelectedCanvasColor}
+    )
     VALUES
-      (1, 12)
+      (1, 12, 20, 21)
   ''');
 }

@@ -45,9 +45,8 @@ Future<void> initState(BuildContext context) async {
   final selectorDrawer = SelectorDrawerState.init();
   final purchases = PurchasesState.init();
 
-  final colors = ColorState.init(
-      lastSelectedCustomPenColor: TinyColor(Color(0xB348F1F7)),
-      lastSelectedCustomCanvasColor: TinyColor(Color(0xFF592659)));
+  final colors = ColorState.init();
+  final colorPicker = ColorPickerState.init();
   final stroke = StrokeState.init(initialWidth: 5.0);
   final ink = InkState.init();
   final pointers = PointersState.init();
@@ -105,7 +104,8 @@ Future<void> initState(BuildContext context) async {
     canvas,
     rotatingGear,
     fixedGear,
-    dragLine
+    dragLine,
+    colorPicker
   ];
 
   // Run any initialization logic

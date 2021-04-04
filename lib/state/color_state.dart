@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
+import 'package:inspiral/util/color_from_hex_string.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -11,12 +12,8 @@ import 'package:inspiral/extensions/extensions.dart';
 class ColorState extends BaseState {
   static ColorState _instance;
 
-  factory ColorState.init(
-      {@required TinyColor lastSelectedCustomPenColor,
-      @required TinyColor lastSelectedCustomCanvasColor}) {
-    return _instance = ColorState._internal(
-        lastSelectedCustomPenColor: lastSelectedCustomPenColor,
-        lastSelectedCustomCanvasColor: lastSelectedCustomCanvasColor);
+  factory ColorState.init() {
+    return _instance = ColorState._internal();
   }
 
   factory ColorState() {
@@ -25,20 +22,7 @@ class ColorState extends BaseState {
     return _instance;
   }
 
-  ColorState._internal(
-      {@required this.lastSelectedCustomPenColor,
-      @required this.lastSelectedCustomCanvasColor})
-      : super() {
-    _backgroundColor = TinyColor(Colors.white);
-    _penColor = TinyColor(Colors.transparent);
-    _availablePenColors = [];
-    _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
-    _availableCanvasColors = [];
-    _unmodifiableAvailableCanvasColors =
-        UnmodifiableListView(_availableCanvasColors);
-
-    _updateDependentColors();
-  }
+  ColorState._internal() : super();
 
   InkState ink;
 
@@ -77,12 +61,6 @@ class ColorState extends BaseState {
     notifyListeners();
   }
 
-  /// The last custom canvas color selected in the color picker dialog
-  TinyColor lastSelectedCustomCanvasColor;
-
-  /// The last custom pen color selected in the color picker dialog
-  TinyColor lastSelectedCustomPenColor;
-
   List<TinyColor> _availablePenColors;
   UnmodifiableListView<TinyColor> _unmodifiableAvailablePenColors;
   List<TinyColor> get availablePenColors => _unmodifiableAvailablePenColors;
@@ -92,7 +70,6 @@ class ColorState extends BaseState {
   void addAndSelectPenColor(TinyColor color) {
     _availablePenColors.add(color);
     penColor = color;
-    lastSelectedCustomPenColor = color;
     notifyListeners();
   }
 
@@ -124,7 +101,6 @@ class ColorState extends BaseState {
   void addAndSelectCanvasColor(TinyColor color) {
     _availableCanvasColors.add(color);
     backgroundColor = color;
-    lastSelectedCustomCanvasColor = color;
     notifyListeners();
   }
 
@@ -245,7 +221,11 @@ class ColorState extends BaseState {
   Future<void> persist() async {
     Database db = await getDatabase();
 
-    await db.delete(Schema.colors.toString());
+    Iterable<int> colorIdsToDelete = (await db.query(Schema.colors.toString(),
+            columns: [Schema.colors.id],
+            where:
+                "${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}'"))
+        .map((row) => row[Schema.colors.id]);
 
     int activePenColorId, activeCanvasColorId;
 
@@ -271,25 +251,30 @@ class ColorState extends BaseState {
       }
     }
 
-    await db.insert(Schema.state.toString(), {
+    await db.update(Schema.state.toString(), {
       Schema.state.selectedPenColor: activePenColorId,
       Schema.state.selectedCanvasColor: activeCanvasColorId
     });
+
+    await db.delete(Schema.colors.toString(),
+        where: "${Schema.colors.id} IN (${colorIdsToDelete.join(', ')})");
   }
 
   @override
   Future<void> rehydrate() async {
-    Database db = await getDatabase();
+    _availablePenColors = [];
+    _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
+    _availableCanvasColors = [];
+    _unmodifiableAvailableCanvasColors =
+        UnmodifiableListView(_availableCanvasColors);
 
-    // Remove all the current items from the list
-    _availablePenColors.removeWhere((_) => true);
+    Database db = await getDatabase();
 
     final List<Map<String, dynamic>> rows =
         await db.query(Schema.colors.toString());
 
     for (Map<String, dynamic> attrs in rows) {
-      TinyColor newColor =
-          TinyColor(Color(int.parse(attrs[Schema.colors.value], radix: 16)));
+      TinyColor newColor = tinyColorFromHexString(attrs[Schema.colors.value]);
 
       if (attrs[Schema.colors.type] == ColorsTableType.pen) {
         _availablePenColors.add(newColor);
@@ -308,16 +293,14 @@ class ColorState extends BaseState {
       JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
     ''')).first;
 
-    penColor = _availablePenColors.firstWhere(
+    _penColor = _availablePenColors.firstWhere(
         (color) => color.toHexString() == state[Schema.state.selectedPenColor],
         orElse: () => TinyColor(Colors.transparent));
-    backgroundColor = _availableCanvasColors.firstWhere(
+    _backgroundColor = _availableCanvasColors.firstWhere(
         (color) =>
             color.toHexString() == state[Schema.state.selectedCanvasColor],
         orElse: () => TinyColor(Colors.white));
 
     _updateDependentColors();
-
-    notifyListeners();
   }
 }

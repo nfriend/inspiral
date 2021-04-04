@@ -25,6 +25,11 @@ class NewColorThumbnail extends StatelessWidget {
   /// The function to call immediately when the button is pressed
   final Function onPress;
 
+  /// The function to call when the color wheel inside the dialog is moved.
+  /// Note: This is different than `onSelect`, which is called when the user
+  /// actually _confirms_ the new color.
+  final Function(Color color) onColorMove;
+
   /// The function to call when a new color is selected
   final Function(Color color) onSelect;
 
@@ -35,6 +40,7 @@ class NewColorThumbnail extends StatelessWidget {
       @required this.showOpacity,
       @required this.initialColor,
       @required this.onSelect,
+      @required this.onColorMove,
       this.onPress});
 
   @override
@@ -58,6 +64,7 @@ class NewColorThumbnail extends StatelessWidget {
                   colors: colors,
                   showOpacity: showOpacity,
                   initialColor: initialColor,
+                  onColorMove: onColorMove,
                   onSelect: onSelect));
         });
 

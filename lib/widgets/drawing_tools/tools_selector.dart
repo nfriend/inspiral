@@ -16,6 +16,7 @@ class ToolsSelector extends StatelessWidget {
     final PurchasesState purchases =
         Provider.of<PurchasesState>(context, listen: false);
     final ColorState colors = Provider.of<ColorState>(context);
+    final ColorPickerState colorPicker = Provider.of<ColorPickerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
@@ -82,8 +83,11 @@ class ToolsSelector extends StatelessWidget {
                 entitlement: Entitlement.custombackgroundcolors,
                 package: Package.custombackgroundcolors,
                 showOpacity: false,
-                initialColor: colors.lastSelectedCustomCanvasColor.color,
+                initialColor: colorPicker.lastSelectedCustomCanvasColor.color,
                 onPress: () => colors.showCanvasColorDeleteButtons = false,
+                onColorMove: (Color color) {
+                  colorPicker.lastSelectedCustomCanvasColor = TinyColor(color);
+                },
                 onSelect: (color) {
                   colors.addAndSelectCanvasColor(TinyColor(color));
                 }),

@@ -65,6 +65,7 @@ class PenSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorState colors = Provider.of<ColorState>(context);
+    final ColorPickerState colorPicker = Provider.of<ColorPickerState>(context);
     final PurchasesState purchases =
         Provider.of<PurchasesState>(context, listen: false);
     final StrokeStyle strokeStyle =
@@ -135,9 +136,12 @@ class PenSelector extends StatelessWidget {
                 entitlement: Entitlement.custompencolors,
                 package: Package.custompencolors,
                 showOpacity: true,
-                initialColor: colors.lastSelectedCustomPenColor.color,
+                initialColor: colorPicker.lastSelectedCustomPenColor.color,
                 onPress: () => colors.showPenColorDeleteButtons = false,
-                onSelect: (color) {
+                onColorMove: (Color color) {
+                  colorPicker.lastSelectedCustomPenColor = TinyColor(color);
+                },
+                onSelect: (Color color) {
                   colors.addAndSelectPenColor(TinyColor(color));
                 })
           ]),

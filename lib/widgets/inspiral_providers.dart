@@ -42,7 +42,8 @@ class _InspiralProvidersState extends State<InspiralProviders> {
               ChangeNotifierProvider(create: (context) => CanvasState()),
               ChangeNotifierProvider(create: (context) => RotatingGearState()),
               ChangeNotifierProvider(create: (context) => DragLineState()),
-              ChangeNotifierProvider(create: (context) => FixedGearState())
+              ChangeNotifierProvider(create: (context) => FixedGearState()),
+              ChangeNotifierProvider(create: (context) => ColorPickerState())
             ], child: this.widget.child);
           } else {
             // Note: If the startup time is slow enough, consider
