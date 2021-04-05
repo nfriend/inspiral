@@ -7,6 +7,7 @@ import 'package:inspiral/widgets/dynamic_theme.dart';
 import 'package:inspiral/widgets/menu_bar.dart';
 import 'package:inspiral/widgets/modal_progress.dart';
 import 'package:inspiral/widgets/drawing_tools/selector_drawer.dart';
+import 'package:inspiral/widgets/settings_drawer/settings_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
@@ -85,6 +86,10 @@ class DrawingBoard extends StatelessWidget {
     return DynamicTheme(
         child: ModalProgress(
             child: Scaffold(
-                body: debug ? StatsFl(child: scaffoldBody) : scaffoldBody)));
+                body: debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
+                endDrawer: SettingsDrawer(),
+
+                // Effectively disables the "swipe-to-open" drawer behavior
+                drawerEdgeDragWidth: 0.0)));
   }
 }

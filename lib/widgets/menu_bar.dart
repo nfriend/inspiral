@@ -49,7 +49,9 @@ class MenuBar extends StatelessWidget {
       _ManuBarButtonParams(
           icon: Icon(Icons.undo), onPressed: () {}, tooltipMessage: 'Undo'),
       _ManuBarButtonParams(
-          icon: Icon(Icons.menu), onPressed: () {}, tooltipMessage: 'Show menu')
+          icon: Icon(Icons.menu),
+          onPressed: () => Scaffold.of(context).openEndDrawer(),
+          tooltipMessage: 'Show menu')
     ];
 
     return Container(

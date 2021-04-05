@@ -34,7 +34,7 @@ class InspiralApp extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     return MaterialApp(
-      scaffoldMessengerKey: scaffoldGlobalKey,
+      scaffoldMessengerKey: scaffoldMessengerGlobalKey,
       title: 'Inspiral',
       routes: {
         InspiralRoutes.canvas: (context) => InspiralProviders(

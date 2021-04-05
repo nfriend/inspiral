@@ -62,7 +62,7 @@ final GlobalKey canvasWithBackgroundGlobalKey =
 
 /// The key used to fetch the instance of the ScaffoldMessenger
 /// Used for showing snack bars.
-final GlobalKey<ScaffoldMessengerState> scaffoldGlobalKey =
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerGlobalKey =
     GlobalKey(debugLabel: 'ScaffoldMessenger');
 
 /// The size of thumbnail gear images (in logical pixels).

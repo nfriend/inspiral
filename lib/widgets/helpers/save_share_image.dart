@@ -17,7 +17,7 @@ import 'package:open_file/open_file.dart';
 
 /// Shows a SnackBar message
 void _showSnackBarMessage(String message) {
-  scaffoldGlobalKey.currentState.showSnackBar(
+  scaffoldMessengerGlobalKey.currentState.showSnackBar(
       SnackBar(content: Text(message), behavior: SnackBarBehavior.fixed));
 }
 
