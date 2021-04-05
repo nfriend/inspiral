@@ -28,7 +28,7 @@ class Positions {
   }
 }
 
-class PointersState extends BaseState with WidgetsBindingObserver {
+class PointersState extends BaseState {
   static PointersState _instance;
 
   factory PointersState.init() {
@@ -58,7 +58,7 @@ class PointersState extends BaseState with WidgetsBindingObserver {
   /// When the app is paused and then resumed, reset the state of all our
   /// pointer tracking, since they are no longer up-to-date
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       _activePointerIds.removeWhere((element) => true);
       _pointerPositions.removeWhere((key, value) => true);

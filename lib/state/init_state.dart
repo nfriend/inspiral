@@ -3,7 +3,6 @@ import 'package:inspiral/models/gears/gears.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:inspiral/util/delete_database.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:tinycolor/tinycolor.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';

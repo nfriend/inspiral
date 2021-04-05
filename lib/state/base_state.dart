@@ -13,13 +13,13 @@ class BaseState extends ChangeNotifier with WidgetsBindingObserver {
 
   /// When the app is paused, save the state of the object
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if ([
       AppLifecycleState.paused,
       AppLifecycleState.inactive,
       AppLifecycleState.detached
     ].contains(state)) {
-      persist();
+      await persist();
     }
   }
 }

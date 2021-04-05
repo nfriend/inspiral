@@ -220,7 +220,6 @@ class ColorState extends BaseState {
 
   @override
   Future<void> rehydrate() async {
-    print("rehydratin!");
     ColorStateRehydrationResult result =
         await ColorStatePersistor.rehydrate(this);
 

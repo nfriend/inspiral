@@ -22,6 +22,7 @@ class ColorsTable extends Table {
   final String id = 'id';
   final String value = 'value';
   final String type = 'type';
+  final String order = 'order';
 }
 
 class ColorsTableType {

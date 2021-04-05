@@ -22,20 +22,27 @@ class ColorStateRehydrationResult {
 
 class ColorStatePersistor {
   static Future<void> persist(ColorState colors) async {
+    print("checkpoint 1");
     Database db = await getDatabase();
+    print("checkpoint 2");
 
     Iterable<int> colorIdsToDelete = (await db.query(Schema.colors.toString(),
             columns: [Schema.colors.id],
             where:
                 "${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}'"))
         .map((row) => row[Schema.colors.id]);
+    print("colorIdsToDelete: ${colorIdsToDelete.join(', ')}");
+    print("checkpoint 3");
 
     int activePenColorId, activeCanvasColorId;
 
-    for (TinyColor color in colors.availablePenColors) {
+    for (int i = 0; i < colors.availablePenColors.length; i++) {
+      TinyColor color = colors.availablePenColors[i];
+
       int colorId = await db.insert(Schema.colors.toString(), {
         Schema.colors.value: color.toHexString(),
-        Schema.colors.type: ColorsTableType.pen
+        Schema.colors.type: ColorsTableType.pen,
+        Schema.colors.order: i
       });
 
       if (colors.penColor == color) {
@@ -43,10 +50,15 @@ class ColorStatePersistor {
       }
     }
 
-    for (TinyColor color in colors.availableCanvasColors) {
+    print("checkpoint 4");
+
+    for (int i = 0; i < colors.availableCanvasColors.length; i++) {
+      TinyColor color = colors.availableCanvasColors[i];
+
       int colorId = await db.insert(Schema.colors.toString(), {
         Schema.colors.value: color.toHexString(),
-        Schema.colors.type: ColorsTableType.canvas
+        Schema.colors.type: ColorsTableType.canvas,
+        Schema.colors.order: i
       });
 
       if (colors.backgroundColor == color) {
@@ -54,13 +66,26 @@ class ColorStatePersistor {
       }
     }
 
+    print("checkpoint 5");
+
     await db.update(Schema.state.toString(), {
       Schema.state.selectedPenColor: activePenColorId,
       Schema.state.selectedCanvasColor: activeCanvasColorId
     });
 
-    await db.delete(Schema.colors.toString(),
+    print("checkpoint 6");
+
+    int numRowsDeleted = await db.delete(Schema.colors.toString(),
         where: "${Schema.colors.id} IN (${colorIdsToDelete.join(', ')})");
+
+    print("numRowsDeleted: ${numRowsDeleted}");
+
+    print("checkpoint 7");
+
+    // TEMP
+    var allPenColors = await db.query(Schema.colors.toString(),
+        where: '${Schema.colors.type} = "${ColorsTableType.pen}"');
+    print("pen color count: ${allPenColors.length}");
   }
 
   static Future<ColorStateRehydrationResult> rehydrate(
@@ -70,8 +95,8 @@ class ColorStatePersistor {
 
     Database db = await getDatabase();
 
-    final List<Map<String, dynamic>> rows =
-        await db.query(Schema.colors.toString());
+    final List<Map<String, dynamic>> rows = await db
+        .query(Schema.colors.toString(), orderBy: '"${Schema.colors.order}"');
 
     for (Map<String, dynamic> attrs in rows) {
       TinyColor newColor = tinyColorFromHexString(attrs[Schema.colors.value]);

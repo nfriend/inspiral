@@ -19,36 +19,42 @@ void _createTableColorsV1(Batch batch) {
         '${ColorsTableType.canvas}',
         '${ColorsTableType.lastSelectedPen}',
         '${ColorsTableType.lastSelectedCanvas}'
-      )) NOT NULL
+      )) NOT NULL,
+      "${Schema.colors.order}" INTEGER NOT NULL DEFAULT 1
     )
   ''');
 
   batch.execute('''
-    INSERT INTO ${Schema.colors} (${Schema.colors.id}, ${Schema.colors.value}, ${Schema.colors.type})
+    INSERT INTO ${Schema.colors} (
+      ${Schema.colors.id},
+      ${Schema.colors.value},
+      ${Schema.colors.type},
+      "${Schema.colors.order}"
+    )
     VALUES
-      (1, '66FF0000', '${ColorsTableType.pen}'),
-      (2, 'B3FF9500', '${ColorsTableType.pen}'),
-      (3, 'B3FFFF00', '${ColorsTableType.pen}'),
-      (4, '80009600', '${ColorsTableType.pen}'),
-      (5, '660000FF', '${ColorsTableType.pen}'),
-      (6, '80960096', '${ColorsTableType.pen}'),
-      (7, 'CCFFFFFF', '${ColorsTableType.pen}'),
-      (8, 'CCC8C8C8', '${ColorsTableType.pen}'),
-      (9, 'CC969696', '${ColorsTableType.pen}'),
-      (10, 'CC646464', '${ColorsTableType.pen}'),
+      (1, '66FF0000', '${ColorsTableType.pen}', 1),
+      (2, 'B3FF9500', '${ColorsTableType.pen}', 2),
+      (3, 'B3FFFF00', '${ColorsTableType.pen}', 3),
+      (4, '80009600', '${ColorsTableType.pen}', 4),
+      (5, '660000FF', '${ColorsTableType.pen}', 5),
+      (6, '80960096', '${ColorsTableType.pen}', 6),
+      (7, 'CCFFFFFF', '${ColorsTableType.pen}', 7),
+      (8, 'CCC8C8C8', '${ColorsTableType.pen}', 8),
+      (9, 'CC969696', '${ColorsTableType.pen}', 9),
+      (10, 'CC646464', '${ColorsTableType.pen}', 10),
 
-      (12, 'FFFFFFFF', '${ColorsTableType.canvas}'),
-      (13, 'FFF0F0F0', '${ColorsTableType.canvas}'),
-      (14, 'FFE3E3E3', '${ColorsTableType.canvas}'),
-      (15, 'FFF7EFDA', '${ColorsTableType.canvas}'),
-      (16, 'FF3B2507', '${ColorsTableType.canvas}'),
-      (17, 'FF0E1247', '${ColorsTableType.canvas}'),
-      (18, 'FF333333', '${ColorsTableType.canvas}'),
-      (19, 'FF121212', '${ColorsTableType.canvas}'),
+      (11, 'FFFFFFFF', '${ColorsTableType.canvas}', 1),
+      (12, 'FFF0F0F0', '${ColorsTableType.canvas}', 2),
+      (13, 'FFE3E3E3', '${ColorsTableType.canvas}', 3),
+      (14, 'FFF7EFDA', '${ColorsTableType.canvas}', 4),
+      (15, 'FF3B2507', '${ColorsTableType.canvas}', 5),
+      (16, 'FF0E1247', '${ColorsTableType.canvas}', 6),
+      (17, 'FF333333', '${ColorsTableType.canvas}', 7),
+      (18, 'FF121212', '${ColorsTableType.canvas}', 8),
 
-      (20, 'B348F1F7', '${ColorsTableType.lastSelectedPen}'),
+      (19, 'B348F1F7', '${ColorsTableType.lastSelectedPen}', 1),
 
-      (21, 'FF592659', '${ColorsTableType.lastSelectedCanvas}');
+      (20, 'FF592659', '${ColorsTableType.lastSelectedCanvas}', 1);
   ''');
 }
 
@@ -70,6 +76,6 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.lastSelectedCanvasColor}
     )
     VALUES
-      (1, 12, 20, 21)
+      (1, 11, 19, 20)
   ''');
 }
