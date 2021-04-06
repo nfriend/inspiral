@@ -13,8 +13,8 @@ void _createTableColorsV1(Batch batch) {
   batch.execute('''
     CREATE TABLE ${Schema.colors}(
       ${Schema.colors.id} TEXT NOT NULL PRIMARY KEY,
-      ${Schema.colors.value} TEXT CHECK(LENGTH(value) = 8) NOT NULL,
-      ${Schema.colors.type} TEXT CHECK(type IN (
+      ${Schema.colors.value} TEXT CHECK(LENGTH(${Schema.colors.value}) = 8) NOT NULL,
+      ${Schema.colors.type} TEXT CHECK(${Schema.colors.type} IN (
         '${ColorsTableType.pen}',
         '${ColorsTableType.canvas}',
         '${ColorsTableType.lastSelectedPen}',
@@ -67,7 +67,9 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.selectedPenColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
       ${Schema.state.selectedCanvasColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
       ${Schema.state.lastSelectedPenColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
-      ${Schema.state.lastSelectedCanvasColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id})
+      ${Schema.state.lastSelectedCanvasColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
+      ${Schema.state.includeBackgroundWhenSaving} INTEGER CHECK(${Schema.state.includeBackgroundWhenSaving} IN (0, 1)) NOT NULL,
+      ${Schema.state.closeDrawingToolsDrawerOnDrag} INTEGER CHECK(${Schema.state.closeDrawingToolsDrawerOnDrag} IN (0, 1)) NOT NULL
     )
   ''');
   batch.execute('''
@@ -75,14 +77,19 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.selectedPenColor},
       ${Schema.state.selectedCanvasColor},
       ${Schema.state.lastSelectedPenColor},
-      ${Schema.state.lastSelectedCanvasColor}
+      ${Schema.state.lastSelectedCanvasColor},
+      ${Schema.state.includeBackgroundWhenSaving},
+      ${Schema.state.closeDrawingToolsDrawerOnDrag}
+
     )
     VALUES
       (
         'ab91b67b-e1f0-4d45-9d99-d67383e23bea',
         'e243e24c-17be-40fa-8505-091a0f2e2a03',
         '97a24b56-edc6-4613-beeb-f9a139f7f669',
-        'c0ed2d30-86cf-46a1-b7cf-271fd56b1756'
+        'c0ed2d30-86cf-46a1-b7cf-271fd56b1756',
+        1,
+        0
       )
   ''');
 }

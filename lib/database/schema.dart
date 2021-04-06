@@ -46,4 +46,6 @@ class StateTable extends Table {
   final String selectedCanvasColor = 'selectedCanvasColor';
   final String lastSelectedPenColor = 'lastSelectedPenColor';
   final String lastSelectedCanvasColor = 'lastSelectedCanvasColor';
+  final String includeBackgroundWhenSaving = 'includeBackgroundWhenSaving';
+  final String closeDrawingToolsDrawerOnDrag = 'closeDrawingToolsDrawerOnDrag';
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/state/persistors/settings_state_persistor.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class SettingsState extends ChangeNotifier with Persistable {
   static SettingsState _instance;
@@ -39,5 +41,19 @@ class SettingsState extends ChangeNotifier with Persistable {
   set closeDrawingToolsDrawerOnDrag(bool value) {
     _closeDrawingToolsDrawerOnDrag = value;
     notifyListeners();
+  }
+
+  @override
+  void persist(Batch batch) async {
+    await SettingsStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db) async {
+    SettingsStateRehydrationResult result =
+        await SettingsStatePersistor.rehydrate(db, this);
+
+    includeBackgroundWhenSaving = result.includeBackgroundWhenSaving;
+    closeDrawingToolsDrawerOnDrag = result.closeDrawingToolsDrawerOnDrag;
   }
 }

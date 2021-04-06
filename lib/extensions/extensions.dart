@@ -7,3 +7,4 @@ export 'package:inspiral/extensions/quaternion_extensions.dart';
 export 'package:inspiral/extensions/color_extensions.dart';
 export 'package:inspiral/extensions/tiny_color_extensions.dart';
 export 'package:inspiral/extensions/bool_extensions.dart';
+export 'package:inspiral/extensions/int_extensions.dart';
