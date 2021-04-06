@@ -12,6 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
 
 final oval72 = GearDefinition(
+    id: 'oval72',
     image: 'images/gears/oval_72.png',
     thumbnailImage: 'images/gears/oval_72_thumb.png',
     size: Size(624, 624),

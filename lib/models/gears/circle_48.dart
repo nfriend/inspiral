@@ -12,6 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
 
 final circle48 = GearDefinition(
+    id: 'circle48',
     image: 'images/gears/circle_48.png',
     thumbnailImage: 'images/gears/circle_48_thumb.png',
     size: Size(432, 432),

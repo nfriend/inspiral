@@ -12,6 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
 
 final lens60 = GearDefinition(
+    id: 'lens60',
     image: 'images/gears/lens_60.png',
     thumbnailImage: 'images/gears/lens_60_thumb.png',
     size: Size(628, 628),

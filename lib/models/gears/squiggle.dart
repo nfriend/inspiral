@@ -12,6 +12,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
 
 final squiggle = GearDefinition(
+    id: 'squiggle',
     image: 'images/gears/squiggle.png',
     thumbnailImage: 'images/gears/squiggle_thumb.png',
     size: Size(448, 448),

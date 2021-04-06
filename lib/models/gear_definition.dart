@@ -2,11 +2,13 @@ import 'dart:math';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
-import 'package:quiver/core.dart';
 import 'package:tuple/tuple.dart';
 
 @immutable
 class GearDefinition {
+  /// An ID that uniquely identifies this gear definition
+  final String id;
+
   /// The asset path to the gear's image
   final String image;
 
@@ -32,7 +34,8 @@ class GearDefinition {
   final String package;
 
   GearDefinition(
-      {@required this.image,
+      {@required this.id,
+      @required this.image,
       @required this.thumbnailImage,
       @required this.size,
       @required this.toothCount,
@@ -103,14 +106,8 @@ class GearDefinition {
   }
 
   @override
-  int get hashCode => hash4(image.hashCode, size.hashCode,
-      angleToTooth.hashCode, toothToContactPoint.hashCode);
+  int get hashCode => id.hashCode;
 
   @override
-  bool operator ==(Object other) =>
-      other is GearDefinition &&
-      other.image == image &&
-      other.size == size &&
-      other.angleToTooth == angleToTooth &&
-      other.toothToContactPoint == toothToContactPoint;
+  bool operator ==(Object other) => other is GearDefinition && other.id == id;
 }
