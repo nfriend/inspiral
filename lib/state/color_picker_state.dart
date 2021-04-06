@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:inspiral/state/persistors/color_picker_state_persistor.dart';
-import 'package:inspiral/state/state.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class ColorPickerState extends BaseState {
+class ColorPickerState extends ChangeNotifier with Persistable {
   static ColorPickerState _instance;
 
   factory ColorPickerState.init() {
@@ -34,14 +36,14 @@ class ColorPickerState extends BaseState {
   }
 
   @override
-  Future<void> persist() async {
-    await ColorPickerStatePersistor.persist(this);
+  void persist(Batch batch) async {
+    ColorPickerStatePersistor.persist(batch, this);
   }
 
   @override
-  Future<void> rehydrate() async {
+  Future<void> rehydrate(Database db) async {
     ColorPickerStateRehydrationResult result =
-        await ColorPickerStatePersistor.rehydrate(this);
+        await ColorPickerStatePersistor.rehydrate(db, this);
 
     _lastSelectedCustomPenColor = result.lastSelectedPenColor;
     _lastSelectedCustomCanvasColor = result.lastSelectedCanvasColor;

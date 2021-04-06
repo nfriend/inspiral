@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:inspiral/state/state.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 
-class SettingsState extends BaseState {
+class SettingsState extends ChangeNotifier with Persistable {
   static SettingsState _instance;
 
   factory SettingsState.init() {

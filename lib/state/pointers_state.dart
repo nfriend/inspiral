@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/util/get_center_of_mass.dart' as util;
@@ -28,7 +29,8 @@ class Positions {
   }
 }
 
-class PointersState extends BaseState with WidgetsBindingObserver {
+class PointersState extends ChangeNotifier
+    with Persistable, WidgetsBindingObserver {
   static PointersState _instance;
 
   factory PointersState.init() {

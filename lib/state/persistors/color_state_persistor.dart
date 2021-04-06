@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/util/color_from_hex_string.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:uuid/uuid.dart';
 
 class ColorStateRehydrationResult {
   final List<TinyColor> availablePenColors;
@@ -21,57 +21,66 @@ class ColorStateRehydrationResult {
 }
 
 class ColorStatePersistor {
-  static Future<void> persist(ColorState colors) async {
-    Database db = await getDatabase();
+  static Future<void> persist(Batch batch, ColorState colors) async {
+    Uuid uuid = Uuid();
 
-    Iterable<int> colorIdsToDelete = (await db.query(Schema.colors.toString(),
-            columns: [Schema.colors.id],
-            where:
-                "${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}'"))
-        .map((row) => row[Schema.colors.id]);
+    // Remove references to avoid foreign key constraint errors below
+    batch.update(Schema.state.toString(), {
+      Schema.state.selectedPenColor: null,
+      Schema.state.selectedCanvasColor: null
+    });
 
-    int activePenColorId, activeCanvasColorId;
+    batch.delete(Schema.colors.toString(),
+        where:
+            "${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}'");
 
-    for (TinyColor color in colors.availablePenColors) {
-      int colorId = await db.insert(Schema.colors.toString(), {
+    String activePenColorId, activeCanvasColorId;
+
+    for (int i = 0; i < colors.availablePenColors.length; i++) {
+      TinyColor color = colors.availablePenColors[i];
+
+      String rowId = uuid.v4();
+      batch.insert(Schema.colors.toString(), {
+        Schema.colors.id: rowId,
         Schema.colors.value: color.toHexString(),
-        Schema.colors.type: ColorsTableType.pen
+        Schema.colors.type: ColorsTableType.pen,
+        Schema.colors.order: i
       });
 
       if (colors.penColor == color) {
-        activePenColorId = colorId;
+        activePenColorId = rowId;
       }
     }
 
-    for (TinyColor color in colors.availableCanvasColors) {
-      int colorId = await db.insert(Schema.colors.toString(), {
+    for (int i = 0; i < colors.availableCanvasColors.length; i++) {
+      TinyColor color = colors.availableCanvasColors[i];
+
+      String rowId = uuid.v4();
+      batch.insert(Schema.colors.toString(), {
+        Schema.colors.id: rowId,
         Schema.colors.value: color.toHexString(),
-        Schema.colors.type: ColorsTableType.canvas
+        Schema.colors.type: ColorsTableType.canvas,
+        Schema.colors.order: i
       });
 
       if (colors.backgroundColor == color) {
-        activeCanvasColorId = colorId;
+        activeCanvasColorId = rowId;
       }
     }
 
-    await db.update(Schema.state.toString(), {
+    batch.update(Schema.state.toString(), {
       Schema.state.selectedPenColor: activePenColorId,
       Schema.state.selectedCanvasColor: activeCanvasColorId
     });
-
-    await db.delete(Schema.colors.toString(),
-        where: "${Schema.colors.id} IN (${colorIdsToDelete.join(', ')})");
   }
 
   static Future<ColorStateRehydrationResult> rehydrate(
-      ColorState colors) async {
+      Database db, ColorState colors) async {
     List<TinyColor> availablePenColors = [];
     List<TinyColor> availableCanvasColors = [];
 
-    Database db = await getDatabase();
-
-    final List<Map<String, dynamic>> rows =
-        await db.query(Schema.colors.toString());
+    final List<Map<String, dynamic>> rows = await db
+        .query(Schema.colors.toString(), orderBy: '"${Schema.colors.order}"');
 
     for (Map<String, dynamic> attrs in rows) {
       TinyColor newColor = tinyColorFromHexString(attrs[Schema.colors.value]);
@@ -89,8 +98,8 @@ class ColorStatePersistor {
         c2.${Schema.colors.value} AS ${Schema.state.selectedCanvasColor}
       FROM
         ${Schema.state} s
-      JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.selectedPenColor}
-      JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
+      LEFT JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.selectedPenColor}
+      LEFT JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
     ''')).first;
 
     TinyColor penColor = availablePenColors.firstWhere(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/models/ink_line.dart';
 
-class StrokeState extends BaseState {
+class StrokeState extends ChangeNotifier with Persistable {
   static StrokeState _instance;
 
   factory StrokeState.init(

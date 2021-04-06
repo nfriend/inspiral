@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 
-final double pi2 = 2 * pi;
+final double _pi2 = 2 * pi;
 
-class DragLineState extends BaseState {
+class DragLineState extends ChangeNotifier with Persistable {
   static DragLineState _instance;
 
   factory DragLineState.init(
@@ -88,9 +89,9 @@ class DragLineState extends BaseState {
 
     // This is how many times we've fully rotated (in the positive direction)
     // around the fixed gear. Can be positive or negative.
-    int rotationCount = (angle / pi2).floor();
+    int rotationCount = (angle / _pi2).floor();
 
-    double newAngle = translatedNewAngle + rotationCount * pi2;
+    double newAngle = translatedNewAngle + rotationCount * _pi2;
 
     // Detect when we wrap around from 0 to 2*pi or vice versa,
     // and update the angle accordingly
@@ -98,11 +99,11 @@ class DragLineState extends BaseState {
       if (translatedNewAngle > translatedAngle) {
         // We crossed over the X axis in the negative direction
         // (e.g. from 0.1 to 6.1)
-        newAngle -= pi2;
+        newAngle -= _pi2;
       } else {
         // We crossed over the X axis in the positive direction
         // (e.g. from 6.1 to 0.1)
-        newAngle += pi2;
+        newAngle += _pi2;
       }
     }
 
@@ -119,6 +120,6 @@ class DragLineState extends BaseState {
 
   /// Translates an angle (in radians) into the range [0, 2pi)
   double _translateToRange(double angle) {
-    return angle % pi2;
+    return angle % _pi2;
   }
 }

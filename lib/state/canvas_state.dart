@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/state/state.dart';
 
-class CanvasState extends BaseState {
+class CanvasState extends ChangeNotifier with Persistable {
   static CanvasState _instance;
 
   factory CanvasState.init({@required Matrix4 initialTransform}) {

@@ -4,9 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 
-class InkState extends BaseState {
+class InkState extends ChangeNotifier with Persistable {
   static InkState _instance;
 
   factory InkState.init() {

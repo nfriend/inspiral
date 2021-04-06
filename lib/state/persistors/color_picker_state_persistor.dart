@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/color_from_hex_string.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:uuid/uuid.dart';
 
 class ColorPickerStateRehydrationResult {
   final TinyColor lastSelectedPenColor;
@@ -17,47 +17,50 @@ class ColorPickerStateRehydrationResult {
 }
 
 class ColorPickerStatePersistor {
-  static Future<void> persist(ColorPickerState colorPicker) async {
-    Database db = await getDatabase();
+  static Future<void> persist(Batch batch, ColorPickerState colorPicker) async {
+    Uuid uuid = Uuid();
 
-    Iterable<int> colorIdsToDelete = (await db.query(Schema.colors.toString(),
-            columns: [Schema.colors.id],
-            where:
-                "${Schema.colors.type} = '${ColorsTableType.lastSelectedPen}' OR ${Schema.colors.type} = '${ColorsTableType.lastSelectedCanvas}'"))
-        .map((row) => row[Schema.colors.id]);
+    // Remove references to avoid foreign key constraint errors below
+    batch.update(Schema.state.toString(), {
+      Schema.state.lastSelectedPenColor: null,
+      Schema.state.lastSelectedCanvasColor: null
+    });
 
-    int lastPenColorId = await db.insert(Schema.colors.toString(), {
+    batch.delete(Schema.colors.toString(),
+        where:
+            "${Schema.colors.type} = '${ColorsTableType.lastSelectedPen}' OR ${Schema.colors.type} = '${ColorsTableType.lastSelectedCanvas}'");
+
+    String lastPenColorId = uuid.v4();
+    batch.insert(Schema.colors.toString(), {
+      Schema.colors.id: lastPenColorId,
       Schema.colors.value: colorPicker.lastSelectedCustomPenColor.toHexString(),
       Schema.colors.type: ColorsTableType.lastSelectedPen
     });
 
-    int lastCanvasColorId = await db.insert(Schema.colors.toString(), {
+    String lastCanvasColorId = uuid.v4();
+    batch.insert(Schema.colors.toString(), {
+      Schema.colors.id: lastCanvasColorId,
       Schema.colors.value:
           colorPicker.lastSelectedCustomCanvasColor.toHexString(),
       Schema.colors.type: ColorsTableType.lastSelectedCanvas
     });
 
-    await db.update(Schema.state.toString(), {
+    batch.update(Schema.state.toString(), {
       Schema.state.lastSelectedPenColor: lastPenColorId,
       Schema.state.lastSelectedCanvasColor: lastCanvasColorId,
     });
-
-    await db.delete(Schema.colors.toString(),
-        where: "${Schema.colors.id} IN (${colorIdsToDelete.join(', ')})");
   }
 
   static Future<ColorPickerStateRehydrationResult> rehydrate(
-      ColorPickerState colorPicker) async {
-    Database db = await getDatabase();
-
+      Database db, ColorPickerState colorPicker) async {
     Map<String, dynamic> state = (await db.rawQuery('''
       SELECT
         c1.${Schema.colors.value} AS ${Schema.state.lastSelectedPenColor},
         c2.${Schema.colors.value} AS ${Schema.state.lastSelectedCanvasColor}
       FROM
         ${Schema.state} s
-      JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.lastSelectedPenColor}
-      JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.lastSelectedCanvasColor}
+      LEFT JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.lastSelectedPenColor}
+      LEFT JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.lastSelectedCanvasColor}
     ''')).first;
 
     return ColorPickerStateRehydrationResult(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/state/init_state.dart';
+import 'package:inspiral/database/get_database.dart';
+import 'package:inspiral/state/initialize_all_state_singletons.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class InspiralProviders extends StatefulWidget {
   final Widget child;
@@ -13,19 +16,28 @@ class InspiralProviders extends StatefulWidget {
   _InspiralProvidersState createState() => _InspiralProvidersState();
 }
 
-class _InspiralProvidersState extends State<InspiralProviders> {
-  Future<void> _stateFuture;
+class _InspiralProvidersState extends State<InspiralProviders>
+    with WidgetsBindingObserver {
+  Future<Iterable<Persistable>> _stateFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   Widget build(BuildContext context) {
     // Initialize all the singletons that will be provided below
     if (_stateFuture == null) {
-      _stateFuture = initState(context);
+      _stateFuture = initializeAllStateSingletons(context);
     }
 
     return FutureBuilder(
         future: _stateFuture,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<Iterable<Persistable>> snapshot) {
           if (snapshot.hasError) {
             throw ("Something went wrong while initializing state! ${snapshot.error}");
           } else if (snapshot.connectionState == ConnectionState.done) {
@@ -51,5 +63,35 @@ class _InspiralProvidersState extends State<InspiralProviders> {
             return Container(color: Colors.white);
           }
         });
+  }
+
+  /// When the app is paused, save the state of the object
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if ([
+      AppLifecycleState.paused,
+      AppLifecycleState.inactive,
+      AppLifecycleState.detached
+    ].contains(state)) {
+      Iterable<Persistable> allStateObjects = await _stateFuture;
+
+      Database db = await getDatabase();
+
+      await db.transaction((txn) async {
+        Batch batch = txn.batch();
+
+        allStateObjects.forEach((state) => state.persist(batch));
+
+        await batch.commit();
+      });
+
+      await db.close();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }

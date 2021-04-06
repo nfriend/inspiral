@@ -1,18 +1,20 @@
 import 'dart:math';
+import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/models/gears/gears.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
-import 'package:inspiral/util/delete_database.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:tinycolor/tinycolor.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
-/// Initializes all state singletons. This method must be called early in the
-/// application lifecycle, and it must only be called once.
-Future<void> initState(BuildContext context) async {
+/// This method must be called early in the application lifecycle,
+/// and it must only be called once.
+Future<Iterable<Persistable>> initializeAllStateSingletons(
+    BuildContext context) async {
   // Compute an initial canvas translation that will place the
   // center point of the canvas directly in the center of the screen
   // By default, the canvas's top-left corner is lined up with
@@ -92,7 +94,7 @@ Future<void> initState(BuildContext context) async {
     ..settings = settings
     ..selectorDrawer = selectorDrawer;
 
-  List<BaseState> allStateObjects = [
+  Iterable<Persistable> allStateObjects = [
     progress,
     settings,
     selectorDrawer,
@@ -110,10 +112,14 @@ Future<void> initState(BuildContext context) async {
 
   // Run any initialization logic
   rotatingGear.initializePosition();
-  for (BaseState state in allStateObjects) {
-    await state.rehydrate();
+  for (Persistable state in allStateObjects) {
+    Database db = await getDatabase();
+    await state.rehydrate(db);
+    db.close();
   }
 
   await Purchases.setDebugLogsEnabled(settings.debug);
   await Purchases.setup("QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz");
+
+  return allStateObjects;
 }

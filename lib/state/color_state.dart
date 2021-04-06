@@ -2,10 +2,12 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/persistors/color_state_persistor.dart';
+import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class ColorState extends BaseState {
+class ColorState extends ChangeNotifier with Persistable {
   static ColorState _instance;
 
   factory ColorState.init() {
@@ -214,15 +216,14 @@ class ColorState extends BaseState {
   }
 
   @override
-  Future<void> persist() async {
-    await ColorStatePersistor.persist(this);
+  void persist(Batch batch) async {
+    await ColorStatePersistor.persist(batch, this);
   }
 
   @override
-  Future<void> rehydrate() async {
-    print("rehydratin!");
+  Future<void> rehydrate(Database db) async {
     ColorStateRehydrationResult result =
-        await ColorStatePersistor.rehydrate(this);
+        await ColorStatePersistor.rehydrate(db, this);
 
     _availablePenColors = result.availablePenColors;
     _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
