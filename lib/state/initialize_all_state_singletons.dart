@@ -112,11 +112,9 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
 
   // Run any initialization logic
   rotatingGear.initializePosition();
-  for (Persistable state in allStateObjects) {
-    Database db = await getDatabase();
-    await state.rehydrate(db);
-    db.close();
-  }
+  Database db = await getDatabase();
+  await Future.wait(allStateObjects.map((state) => state.rehydrate(db)));
+  db.close();
 
   await Purchases.setDebugLogsEnabled(settings.debug);
   await Purchases.setup("QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz");

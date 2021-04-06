@@ -24,6 +24,8 @@ void _createTableColorsV1(Batch batch) {
     )
   ''');
 
+  // These colors should be kept in sync with the colors in the `reset` method
+  // of `lib/state/color_state.dart`
   batch.execute('''
     INSERT INTO ${Schema.colors} (
       ${Schema.colors.id},

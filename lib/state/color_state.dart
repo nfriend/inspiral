@@ -215,6 +215,41 @@ class ColorState extends ChangeNotifier with Persistable {
         isDark ? backgroundColor.lighten(20) : backgroundColor.darken(20);
   }
 
+  // Resets all available colors and selections to their factory defaults.
+  // These colors should be kept in-sync with the colors specified in
+  // `lib/database/on_database_create.dart`
+  void reset() {
+    _availablePenColors.removeWhere((c) => true);
+    _availableCanvasColors.removeWhere((c) => true);
+
+    _availablePenColors.addAll([
+      TinyColor(Color(0x66FF0000)),
+      TinyColor(Color(0xB3FF9500)),
+      TinyColor(Color(0xB3FFFF00)),
+      TinyColor(Color(0x80009600)),
+      TinyColor(Color(0x660000FF)),
+      TinyColor(Color(0x80960096)),
+      TinyColor(Color(0xCCFFFFFF)),
+      TinyColor(Color(0xCCC8C8C8)),
+      TinyColor(Color(0xCC969696)),
+      TinyColor(Color(0xCC646464)),
+    ]);
+
+    _availableCanvasColors.addAll([
+      TinyColor(Color(0xFFFFFFFF)),
+      TinyColor(Color(0xFFF0F0F0)),
+      TinyColor(Color(0xFFE3E3E3)),
+      TinyColor(Color(0xFFF7EFDA)),
+      TinyColor(Color(0xFF3B2507)),
+      TinyColor(Color(0xFF0E1247)),
+      TinyColor(Color(0xFF333333)),
+      TinyColor(Color(0xFF121212)),
+    ]);
+
+    penColor = _availablePenColors.first;
+    backgroundColor = _availableCanvasColors.first;
+  }
+
   @override
   void persist(Batch batch) async {
     await ColorStatePersistor.persist(batch, this);
