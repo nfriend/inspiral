@@ -50,7 +50,10 @@ class MenuBar extends StatelessWidget {
           icon: Icon(Icons.undo), onPressed: () {}, tooltipMessage: 'Undo'),
       _ManuBarButtonParams(
           icon: Icon(Icons.menu),
-          onPressed: () => Scaffold.of(context).openEndDrawer(),
+          onPressed: () {
+            ScaffoldState scaffold = Scaffold.of(context);
+            isLandscape ? scaffold.openDrawer() : scaffold.openEndDrawer();
+          },
           tooltipMessage: 'Show menu')
     ];
 

@@ -87,6 +87,7 @@ class DrawingBoard extends StatelessWidget {
         child: ModalProgress(
             child: Scaffold(
                 body: debug ? StatsFl(child: scaffoldBody) : scaffoldBody,
+                drawer: SettingsDrawer(),
                 endDrawer: SettingsDrawer(),
 
                 // Effectively disables the "swipe-to-open" drawer behavior

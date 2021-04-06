@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/util/reverse_if.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -42,37 +43,30 @@ class SelectionRows extends StatelessWidget {
                     child: Row(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: _reverseIfLandscape(
-                            isLandscape: isLandscape,
-                            list: [
-                              Padding(
-                                  padding: EdgeInsets.only(right: padding / 2),
-                                  child: Center(
-                                      child: RotatedBox(
-                                          quarterTurns: isLandscape ? 1 : 3,
-                                          child: Text(def.label,
-                                              style: textStyle)))),
-                              Expanded(
-                                  child: ListView.builder(
-                                      key: PageStorageKey(def.storageKey),
-                                      scrollDirection: Axis.horizontal,
-                                      reverse: isLandscape,
-                                      itemExtent: thumbnailSize + 10.0,
-                                      itemCount: def.children.length,
-                                      itemBuilder: (context, index) {
-                                        Widget child = def.children[index];
+                        children: reverseIf(condition: isLandscape, list: [
+                          Padding(
+                              padding: EdgeInsets.only(right: padding / 2),
+                              child: Center(
+                                  child: RotatedBox(
+                                      quarterTurns: isLandscape ? 1 : 3,
+                                      child:
+                                          Text(def.label, style: textStyle)))),
+                          Expanded(
+                              child: ListView.builder(
+                                  key: PageStorageKey(def.storageKey),
+                                  scrollDirection: Axis.horizontal,
+                                  reverse: isLandscape,
+                                  itemExtent: thumbnailSize + 10.0,
+                                  itemCount: def.children.length,
+                                  itemBuilder: (context, index) {
+                                    Widget child = def.children[index];
 
-                                        return isLandscape
-                                            ? RotatedBox(
-                                                quarterTurns: 1, child: child)
-                                            : child;
-                                      }))
-                            ]))))
+                                    return isLandscape
+                                        ? RotatedBox(
+                                            quarterTurns: 1, child: child)
+                                        : child;
+                                  }))
+                        ]))))
         ]));
-  }
-
-  /// Returns a reversed version of the list if `isLandscape` is `true`
-  List<T> _reverseIfLandscape<T>({bool isLandscape, List<T> list}) {
-    return isLandscape ? list.reversed.toList() : list;
   }
 }
