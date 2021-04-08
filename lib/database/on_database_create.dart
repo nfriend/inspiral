@@ -1,5 +1,5 @@
-import 'package:inspiral/database/schema.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:inspiral/database/schema.dart';
 
 Future<void> onDatabaseCreate(Database db, int version) async {
   Batch batch = db.batch();
@@ -69,7 +69,11 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.lastSelectedPenColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
       ${Schema.state.lastSelectedCanvasColor} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
       ${Schema.state.includeBackgroundWhenSaving} INTEGER CHECK(${Schema.state.includeBackgroundWhenSaving} IN (0, 1)) NOT NULL,
-      ${Schema.state.closeDrawingToolsDrawerOnDrag} INTEGER CHECK(${Schema.state.closeDrawingToolsDrawerOnDrag} IN (0, 1)) NOT NULL
+      ${Schema.state.closeDrawingToolsDrawerOnDrag} INTEGER CHECK(${Schema.state.closeDrawingToolsDrawerOnDrag} IN (0, 1)) NOT NULL,
+      ${Schema.state.rotatingGearAngle} REAL NOT NULL,
+      ${Schema.state.rotatingGearDefinitionId} TEXT NOT NULL,
+      ${Schema.state.rotatingGearActiveHoleName} TEXT NOT NULL,
+      ${Schema.state.gearsAreVisible} INTEGER CHECK(${Schema.state.gearsAreVisible} IN (0, 1)) NOT NULL
     )
   ''');
   batch.execute('''
@@ -79,7 +83,11 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.lastSelectedPenColor},
       ${Schema.state.lastSelectedCanvasColor},
       ${Schema.state.includeBackgroundWhenSaving},
-      ${Schema.state.closeDrawingToolsDrawerOnDrag}
+      ${Schema.state.closeDrawingToolsDrawerOnDrag},
+      ${Schema.state.rotatingGearAngle},
+      ${Schema.state.rotatingGearDefinitionId},
+      ${Schema.state.rotatingGearActiveHoleName},
+      ${Schema.state.gearsAreVisible}
 
     )
     VALUES
@@ -89,7 +97,11 @@ void _createTableStateV1(Batch batch) {
         '97a24b56-edc6-4613-beeb-f9a139f7f669',
         'c0ed2d30-86cf-46a1-b7cf-271fd56b1756',
         1,
-        0
+        0,
+        1.57079632679,
+        'circle24',
+        '16',
+        1
       )
   ''');
 }

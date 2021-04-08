@@ -53,10 +53,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final ink = InkState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
-  final rotatingGear = RotatingGearState.init(
-      initialAngle: initialAngle,
-      initialDefinition: circle24,
-      initialActiveHole: circle24.holes.last);
+  final rotatingGear = RotatingGearState.init();
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);
   final fixedGear = FixedGearState.init(
@@ -110,8 +107,6 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     colorPicker
   ];
 
-  // Run any initialization logic
-  rotatingGear.initializePosition();
   Database db = await getDatabase();
   await Future.wait(allStateObjects.map((state) => state.rehydrate(db)));
   db.close();

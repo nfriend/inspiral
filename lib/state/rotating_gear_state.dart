@@ -2,10 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/persistors/rotating_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/util/calculate_rotation_count.dart';
 import 'package:inspiral/util/select_closest_hole.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 /// A utility class to hold the results of a rotation calculation
 @immutable
@@ -36,14 +38,8 @@ class RotationResult {
 class RotatingGearState extends BaseGearState {
   static RotatingGearState _instance;
 
-  factory RotatingGearState.init(
-      {@required double initialAngle,
-      @required GearDefinition initialDefinition,
-      @required GearHole initialActiveHole}) {
-    return _instance = RotatingGearState._internal(
-        initialAngle: initialAngle,
-        initialDefinition: initialDefinition,
-        initialActiveHole: initialActiveHole);
+  factory RotatingGearState.init() {
+    return _instance = RotatingGearState._internal();
   }
 
   factory RotatingGearState() {
@@ -52,15 +48,7 @@ class RotatingGearState extends BaseGearState {
     return _instance;
   }
 
-  RotatingGearState._internal(
-      {@required double initialAngle,
-      @required GearDefinition initialDefinition,
-      @required GearHole initialActiveHole})
-      : super() {
-    definition = initialDefinition;
-    _lastAngle = initialAngle;
-    activeHole = initialActiveHole;
-  }
+  RotatingGearState._internal() : super();
 
   /// Initializes the position of the gear
   void initializePosition() {
@@ -69,6 +57,10 @@ class RotatingGearState extends BaseGearState {
   }
 
   double _lastAngle;
+
+  // Only exposed publicly for use in the persistor
+  double get lastAngle => _lastAngle;
+
   int toothOffset = 0;
 
   FixedGearState fixedGear;
@@ -287,5 +279,23 @@ class RotatingGearState extends BaseGearState {
 
     ink.addPoints(pointsToAdd);
     _lastAngle = angle;
+  }
+
+  @override
+  void persist(Batch batch) async {
+    await RotatingGearStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db) async {
+    RotatingGearStateRehydrationResult result =
+        await RotatingGearStatePersistor.rehydrate(db, this);
+
+    _lastAngle = result.angle;
+    definition = result.definition;
+    isVisible = result.isVisible;
+    activeHole = result.activeHole;
+
+    initializePosition();
   }
 }
