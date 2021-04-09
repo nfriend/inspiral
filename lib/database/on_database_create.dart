@@ -76,7 +76,23 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.gearsAreVisible} INTEGER CHECK(${Schema.state.gearsAreVisible} IN (0, 1)) NOT NULL,
       ${Schema.state.fixedGearPositionX} REAL NULL,
       ${Schema.state.fixedGearPositionY} REAL NULL,
-      ${Schema.state.fixedGearDefinitionId} TEXT NOT NULL
+      ${Schema.state.fixedGearDefinitionId} TEXT NOT NULL,
+      ${Schema.state.canvasTransform_0} REAL NULL,
+      ${Schema.state.canvasTransform_1} REAL NULL,
+      ${Schema.state.canvasTransform_2} REAL NULL,
+      ${Schema.state.canvasTransform_3} REAL NULL,
+      ${Schema.state.canvasTransform_4} REAL NULL,
+      ${Schema.state.canvasTransform_5} REAL NULL,
+      ${Schema.state.canvasTransform_6} REAL NULL,
+      ${Schema.state.canvasTransform_7} REAL NULL,
+      ${Schema.state.canvasTransform_8} REAL NULL,
+      ${Schema.state.canvasTransform_9} REAL NULL,
+      ${Schema.state.canvasTransform_10} REAL NULL,
+      ${Schema.state.canvasTransform_11} REAL NULL,
+      ${Schema.state.canvasTransform_12} REAL NULL,
+      ${Schema.state.canvasTransform_13} REAL NULL,
+      ${Schema.state.canvasTransform_14} REAL NULL,
+      ${Schema.state.canvasTransform_15} REAL NULL
     )
   ''');
   batch.execute('''

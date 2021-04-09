@@ -55,4 +55,20 @@ class StateTable extends Table {
   final String fixedGearPositionX = 'fixedGearPositionX';
   final String fixedGearPositionY = 'fixedGearPositionY';
   final String fixedGearDefinitionId = 'fixedGearDefinitionId';
+  final String canvasTransform_0 = 'canvasTransform_0';
+  final String canvasTransform_1 = 'canvasTransform_1';
+  final String canvasTransform_2 = 'canvasTransform_2';
+  final String canvasTransform_3 = 'canvasTransform_3';
+  final String canvasTransform_4 = 'canvasTransform_4';
+  final String canvasTransform_5 = 'canvasTransform_5';
+  final String canvasTransform_6 = 'canvasTransform_6';
+  final String canvasTransform_7 = 'canvasTransform_7';
+  final String canvasTransform_8 = 'canvasTransform_8';
+  final String canvasTransform_9 = 'canvasTransform_9';
+  final String canvasTransform_10 = 'canvasTransform_10';
+  final String canvasTransform_11 = 'canvasTransform_11';
+  final String canvasTransform_12 = 'canvasTransform_12';
+  final String canvasTransform_13 = 'canvasTransform_13';
+  final String canvasTransform_14 = 'canvasTransform_14';
+  final String canvasTransform_15 = 'canvasTransform_15';
 }

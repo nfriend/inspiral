@@ -4,39 +4,14 @@ import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/extensions/extensions.dart';
 
 /// This method must be called early in the application lifecycle,
 /// and it must only be called once.
 Future<Iterable<Persistable>> initializeAllStateSingletons(
     BuildContext context) async {
-  // Compute an initial canvas translation that will place the
-  // center point of the canvas directly in the center of the screen
-  // By default, the canvas's top-left corner is lined up with
-  // the screen's top-left corner
-  final Matrix4 initialCanvasTransform = Matrix4.identity();
-
-  // Scale the canvas to the correct zoom level
-  final initialZoom = 0.5;
-  initialCanvasTransform.scale(initialZoom, initialZoom, 0);
-
-  // Move the center of the canvas to the
-  // top-left of the screen. Multiplied by 2, because the
-  // canvas itself is offset by `canvasCenter` from its parent.
-  Vector3 originTranslation = -(canvasCenter.toVector3() * 2);
-  initialCanvasTransform.translate(originTranslation);
-
-  // Then, move the canvas back by half the screen dimensions
-  // so that the centor of the canvas is located
-  // in the center of the screen
-  Vector3 centerTranslation =
-      (MediaQuery.of(context).size / 2).toVector3() * (1 / initialZoom);
-  initialCanvasTransform.translate(centerTranslation);
-
   // The initial angle of the rotating gear, relative to the fixed gear
   double initialAngle = pi / 2;
 
@@ -51,7 +26,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final stroke = StrokeState.init(initialWidth: 5.0);
   final ink = InkState.init();
   final pointers = PointersState.init();
-  final canvas = CanvasState.init(initialTransform: initialCanvasTransform);
+  final canvas = CanvasState.init();
   final rotatingGear = RotatingGearState.init();
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);

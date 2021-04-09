@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/state/persistors/canvas_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/state/state.dart';
 
 class CanvasState extends ChangeNotifier with Persistable {
   static CanvasState _instance;
 
-  factory CanvasState.init({@required Matrix4 initialTransform}) {
-    return _instance =
-        CanvasState._internal(initialTransform: initialTransform);
+  factory CanvasState.init() {
+    return _instance = CanvasState._internal();
   }
 
   factory CanvasState() {
@@ -18,9 +19,7 @@ class CanvasState extends ChangeNotifier with Persistable {
     return _instance;
   }
 
-  CanvasState._internal({@required Matrix4 initialTransform}) : super() {
-    _transform = initialTransform;
-  }
+  CanvasState._internal() : super();
 
   PointersState pointers;
 
@@ -96,5 +95,18 @@ class CanvasState extends ChangeNotifier with Persistable {
     if (pointers.count == 0) {
       isTransforming = false;
     }
+  }
+
+  @override
+  void persist(Batch batch) {
+    CanvasStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db, BuildContext context) async {
+    CanvasStateRehydrationResult result =
+        await CanvasStatePersistor.rehydrate(db, context, this);
+
+    _transform = result.transform;
   }
 }
