@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/persistors/settings_state_persistor.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -44,12 +45,12 @@ class SettingsState extends ChangeNotifier with Persistable {
   }
 
   @override
-  void persist(Batch batch) async {
-    await SettingsStatePersistor.persist(batch, this);
+  void persist(Batch batch) {
+    SettingsStatePersistor.persist(batch, this);
   }
 
   @override
-  Future<void> rehydrate(Database db) async {
+  Future<void> rehydrate(Database db, BuildContext context) async {
     SettingsStateRehydrationResult result =
         await SettingsStatePersistor.rehydrate(db, this);
 

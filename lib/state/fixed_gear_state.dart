@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/persistors/fixed_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 // An arbitrary number that allows even the biggest gear
 // combination to always be draggable.
@@ -16,11 +18,8 @@ final Rect dragBounds = Rect.fromLTRB(
 class FixedGearState extends BaseGearState {
   static FixedGearState _instance;
 
-  factory FixedGearState.init(
-      {@required Offset initialPosition,
-      @required GearDefinition initialDefinition}) {
-    return _instance = FixedGearState._internal(
-        initialPosition: initialPosition, initialDefinition: initialDefinition);
+  factory FixedGearState.init() {
+    return _instance = FixedGearState._internal();
   }
 
   factory FixedGearState() {
@@ -29,13 +28,7 @@ class FixedGearState extends BaseGearState {
     return _instance;
   }
 
-  FixedGearState._internal({
-    @required Offset initialPosition,
-    @required GearDefinition initialDefinition,
-  }) : super() {
-    definition = initialDefinition;
-    position = initialPosition;
-  }
+  FixedGearState._internal() : super();
 
   RotatingGearState rotatingGear;
   DragLineState dragLine;
@@ -58,5 +51,20 @@ class FixedGearState extends BaseGearState {
     this.definition = newGear;
     this.rotatingGear.initializePosition();
     ink.finishLine();
+  }
+
+  @override
+  void persist(Batch batch) {
+    FixedGearStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db, BuildContext context) async {
+    FixedGearStateRehydrationResult result =
+        await FixedGearStatePersistor.rehydrate(db, this);
+
+    definition = result.definition;
+    isVisible = result.isVisible;
+    position = result.position;
   }
 }

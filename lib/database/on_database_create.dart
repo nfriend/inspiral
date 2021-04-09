@@ -73,7 +73,10 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.rotatingGearAngle} REAL NOT NULL,
       ${Schema.state.rotatingGearDefinitionId} TEXT NOT NULL,
       ${Schema.state.rotatingGearActiveHoleName} TEXT NOT NULL,
-      ${Schema.state.gearsAreVisible} INTEGER CHECK(${Schema.state.gearsAreVisible} IN (0, 1)) NOT NULL
+      ${Schema.state.gearsAreVisible} INTEGER CHECK(${Schema.state.gearsAreVisible} IN (0, 1)) NOT NULL,
+      ${Schema.state.fixedGearPositionX} REAL NULL,
+      ${Schema.state.fixedGearPositionY} REAL NULL,
+      ${Schema.state.fixedGearDefinitionId} TEXT NOT NULL
     )
   ''');
   batch.execute('''
@@ -87,8 +90,10 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.rotatingGearAngle},
       ${Schema.state.rotatingGearDefinitionId},
       ${Schema.state.rotatingGearActiveHoleName},
-      ${Schema.state.gearsAreVisible}
-
+      ${Schema.state.gearsAreVisible},
+      ${Schema.state.fixedGearPositionX},
+      ${Schema.state.fixedGearPositionY},
+      ${Schema.state.fixedGearDefinitionId}
     )
     VALUES
       (
@@ -101,7 +106,10 @@ void _createTableStateV1(Batch batch) {
         1.57079632679,
         'circle24',
         '16',
-        1
+        1,
+        null,
+        null,
+        'oval30'
       )
   ''');
 }

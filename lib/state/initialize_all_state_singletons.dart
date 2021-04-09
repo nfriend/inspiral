@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:inspiral/database/get_database.dart';
-import 'package:inspiral/models/gears/gears.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -56,8 +55,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final rotatingGear = RotatingGearState.init();
   final dragLine = DragLineState.init(
       initialPosition: canvasCenter, initialAngle: initialAngle);
-  final fixedGear = FixedGearState.init(
-      initialPosition: canvasCenter, initialDefinition: oval30);
+  final fixedGear = FixedGearState.init();
 
   // Link up dependencies between the singletons
   pointers.canvas = canvas;
@@ -91,6 +89,9 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     ..settings = settings
     ..selectorDrawer = selectorDrawer;
 
+  // Order matters. The order in which these state object are specified
+  // here is the order in which they will be hydrated (which matters
+  // for some state objects).
   Iterable<Persistable> allStateObjects = [
     progress,
     settings,
@@ -101,14 +102,16 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     ink,
     pointers,
     canvas,
-    rotatingGear,
     fixedGear,
+    rotatingGear,
     dragLine,
     colorPicker
   ];
 
   Database db = await getDatabase();
-  await Future.wait(allStateObjects.map((state) => state.rehydrate(db)));
+  for (Persistable stateObject in allStateObjects) {
+    await stateObject.rehydrate(db, context);
+  }
   db.close();
 
   await Purchases.setDebugLogsEnabled(settings.debug);

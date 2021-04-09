@@ -14,7 +14,7 @@ class SettingsStateRehydrationResult {
 }
 
 class SettingsStatePersistor {
-  static Future<void> persist(Batch batch, SettingsState settings) async {
+  static void persist(Batch batch, SettingsState settings) {
     batch.update(Schema.state.toString(), {
       Schema.state.includeBackgroundWhenSaving:
           settings.includeBackgroundWhenSaving.toInt(),

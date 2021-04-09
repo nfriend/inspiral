@@ -287,7 +287,7 @@ class RotatingGearState extends BaseGearState {
   }
 
   @override
-  Future<void> rehydrate(Database db) async {
+  Future<void> rehydrate(Database db, BuildContext context) async {
     RotatingGearStateRehydrationResult result =
         await RotatingGearStatePersistor.rehydrate(db, this);
 

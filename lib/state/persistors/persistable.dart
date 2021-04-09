@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 abstract class Persistable {
@@ -5,5 +6,5 @@ abstract class Persistable {
   void persist(Batch batch) {}
 
   /// Rehydrates this object from the database
-  Future<void> rehydrate(Database database) async {}
+  Future<void> rehydrate(Database database, BuildContext context) async {}
 }

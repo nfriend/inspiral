@@ -36,12 +36,12 @@ class ColorPickerState extends ChangeNotifier with Persistable {
   }
 
   @override
-  void persist(Batch batch) async {
+  void persist(Batch batch) {
     ColorPickerStatePersistor.persist(batch, this);
   }
 
   @override
-  Future<void> rehydrate(Database db) async {
+  Future<void> rehydrate(Database db, BuildContext context) async {
     ColorPickerStateRehydrationResult result =
         await ColorPickerStatePersistor.rehydrate(db, this);
 

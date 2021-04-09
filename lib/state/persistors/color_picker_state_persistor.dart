@@ -17,7 +17,7 @@ class ColorPickerStateRehydrationResult {
 }
 
 class ColorPickerStatePersistor {
-  static Future<void> persist(Batch batch, ColorPickerState colorPicker) async {
+  static void persist(Batch batch, ColorPickerState colorPicker) {
     Uuid uuid = Uuid();
 
     // Remove references to avoid foreign key constraint errors below

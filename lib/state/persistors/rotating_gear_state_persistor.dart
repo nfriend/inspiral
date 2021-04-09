@@ -26,8 +26,7 @@ class RotatingGearStateRehydrationResult
 }
 
 class RotatingGearStatePersistor {
-  static Future<void> persist(
-      Batch batch, RotatingGearState rotatingGear) async {
+  static void persist(Batch batch, RotatingGearState rotatingGear) {
     batch.update(Schema.state.toString(), {
       Schema.state.rotatingGearAngle: rotatingGear.lastAngle,
       Schema.state.rotatingGearDefinitionId: rotatingGear.definition.id,
