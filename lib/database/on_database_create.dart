@@ -92,7 +92,9 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.canvasTransform_12} REAL NULL,
       ${Schema.state.canvasTransform_13} REAL NULL,
       ${Schema.state.canvasTransform_14} REAL NULL,
-      ${Schema.state.canvasTransform_15} REAL NULL
+      ${Schema.state.canvasTransform_15} REAL NULL,
+      ${Schema.state.strokeWidth} REAL NOT NULL,
+      ${Schema.state.strokeStyle} TEXT CHECK(${Schema.state.strokeStyle} IN ('normal', 'airbrush')) NOT NULL
     )
   ''');
   batch.execute('''
@@ -109,7 +111,9 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.gearsAreVisible},
       ${Schema.state.fixedGearPositionX},
       ${Schema.state.fixedGearPositionY},
-      ${Schema.state.fixedGearDefinitionId}
+      ${Schema.state.fixedGearDefinitionId},
+      ${Schema.state.strokeWidth},
+      ${Schema.state.strokeStyle}
     )
     VALUES
       (
@@ -125,7 +129,9 @@ void _createTableStateV1(Batch batch) {
         1,
         null,
         null,
-        'oval30'
+        'oval30',
+        5.0,
+        'normal'
       )
   ''');
 }

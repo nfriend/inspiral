@@ -23,7 +23,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
 
   final colors = ColorState.init();
   final colorPicker = ColorPickerState.init();
-  final stroke = StrokeState.init(initialWidth: 5.0);
+  final stroke = StrokeState.init();
   final ink = InkState.init();
   final pointers = PointersState.init();
   final canvas = CanvasState.init();

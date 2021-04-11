@@ -71,4 +71,6 @@ class StateTable extends Table {
   final String canvasTransform_13 = 'canvasTransform_13';
   final String canvasTransform_14 = 'canvasTransform_14';
   final String canvasTransform_15 = 'canvasTransform_15';
+  final String strokeWidth = 'strokeWidth';
+  final String strokeStyle = 'strokeStyle';
 }

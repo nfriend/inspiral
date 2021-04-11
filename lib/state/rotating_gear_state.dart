@@ -282,8 +282,8 @@ class RotatingGearState extends BaseGearState {
   }
 
   @override
-  void persist(Batch batch) async {
-    await RotatingGearStatePersistor.persist(batch, this);
+  void persist(Batch batch) {
+    RotatingGearStatePersistor.persist(batch, this);
   }
 
   @override

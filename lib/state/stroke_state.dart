@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/state/persistors/stroke_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/models/ink_line.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class StrokeState extends ChangeNotifier with Persistable {
   static StrokeState _instance;
 
-  factory StrokeState.init(
-      {@required double initialWidth,
-      StrokeStyle initialStyle = StrokeStyle.normal}) {
-    return _instance = StrokeState._internal(
-        initialWidth: initialWidth, initialStyle: initialStyle);
+  factory StrokeState.init() {
+    return _instance = StrokeState._internal();
   }
 
   factory StrokeState() {
@@ -19,12 +18,7 @@ class StrokeState extends ChangeNotifier with Persistable {
     return _instance;
   }
 
-  StrokeState._internal(
-      {@required double initialWidth, @required StrokeStyle initialStyle})
-      : super() {
-    _width = initialWidth;
-    _style = initialStyle;
-  }
+  StrokeState._internal() : super();
 
   InkState ink;
 
@@ -42,5 +36,18 @@ class StrokeState extends ChangeNotifier with Persistable {
     _style = style;
     ink.finishLine();
     notifyListeners();
+  }
+
+  @override
+  void persist(Batch batch) {
+    StrokeStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db, BuildContext context) async {
+    StrokeStateRehydrationResult result =
+        await StrokeStatePersistor.rehydrate(db, this);
+
+    setStroke(style: result.style, width: result.width);
   }
 }
