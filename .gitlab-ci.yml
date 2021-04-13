@@ -9,8 +9,6 @@ default:
     untracked: true
     key: ${CI_COMMIT_REF_SLUG}
     paths:
-      - packages/
-      - web/packages/
       - .pub_cache/
 
 stages:
