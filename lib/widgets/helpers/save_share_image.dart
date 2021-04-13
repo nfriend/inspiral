@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
@@ -26,7 +25,7 @@ Future<void> shareImage(BuildContext context) async {
   var progress = Provider.of<ProgressState>(context, listen: false);
   progress.showModalProgress(message: 'Sharing...');
 
-  String filePath = await _saveToTempFile(context);
+  var filePath = await _saveToTempFile(context);
   await Share.shareFiles([filePath]);
 
   progress.hideModalPropress();
@@ -42,10 +41,10 @@ Future<void> saveImage(BuildContext context) async {
   var progress = Provider.of<ProgressState>(context, listen: false);
   progress.showModalProgress(message: 'Saving to the gallery...');
 
-  String filePath = await _saveToTempFile(context);
+  var filePath = await _saveToTempFile(context);
   await ImageGallerySaver.saveFile(filePath);
 
-  OpenFile.open(filePath, type: "image/png", uti: "public.png");
+  await OpenFile.open(filePath, type: 'image/png', uti: 'public.png');
 
   progress.hideModalPropress();
 }
@@ -55,18 +54,18 @@ Future<void> saveImage(BuildContext context) async {
 Future<String> _saveToTempFile(BuildContext context) async {
   var settings = Provider.of<SettingsState>(context, listen: false);
 
-  GlobalKey canvasKey = settings.includeBackgroundWhenSaving
+  var canvasKey = settings.includeBackgroundWhenSaving
       ? canvasWithBackgroundGlobalKey
       : canvasWithoutBackgroundGlobalKey;
 
-  RenderRepaintBoundary canvasBoundary =
-      canvasKey.currentContext.findRenderObject();
-  Image screenshot = await canvasBoundary.toImage();
-  ByteData byteData = await screenshot.toByteData(format: ImageByteFormat.png);
-  Uint8List pngBytes = byteData.buffer.asUint8List();
+  var canvasBoundary =
+      canvasKey.currentContext.findRenderObject() as RenderRepaintBoundary;
+  var screenshot = await canvasBoundary.toImage();
+  var byteData = await screenshot.toByteData(format: ImageByteFormat.png);
+  var pngBytes = byteData.buffer.asUint8List();
 
-  Directory directory = (await getTemporaryDirectory());
-  String filePath = p.join(directory.path, '${Uuid().v4()}.png');
+  var directory = (await getTemporaryDirectory());
+  var filePath = p.join(directory.path, '${Uuid().v4()}.png');
 
   await File(filePath).writeAsBytes(pngBytes, flush: true);
   screenshot.dispose();

@@ -11,13 +11,13 @@ abstract class BaseInkPainter extends CustomPainter {
 
   BaseInkPainter(
       {@required List<InkLine> lines, Offset position, Image inkImage})
-      : this._lines = lines,
-        this._position = position,
-        this._inkImage = inkImage;
+      : _lines = lines,
+        _position = position,
+        _inkImage = inkImage;
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (InkLine line in _lines) {
+    for (var line in _lines) {
       final paint = Paint()
         ..color = line.color
         ..strokeWidth = line.strokeWidth
@@ -29,7 +29,7 @@ abstract class BaseInkPainter extends CustomPainter {
       }
 
       if (_inkImage != null) {
-        Matrix4 m = Matrix4.identity();
+        var m = Matrix4.identity();
         paint.shader =
             ImageShader(_inkImage, TileMode.mirror, TileMode.mirror, m.storage);
       }
@@ -42,7 +42,7 @@ abstract class BaseInkPainter extends CustomPainter {
         translatedPaths = translatedPaths.map((p) => p.translate(-_position));
       }
 
-      for (Path path in translatedPaths) {
+      for (var path in translatedPaths) {
         canvas.drawPath(path, paint);
       }
     }

@@ -30,24 +30,23 @@ class _SelectorDrawerState extends State<SelectorDrawer>
 
   @override
   Widget build(BuildContext context) {
-    final SelectorDrawerState selectorDrawer =
-        Provider.of<SelectorDrawerState>(context);
-    final TinyColor uiBackgroundColor = context
+    final selectorDrawer = Provider.of<SelectorDrawerState>(context);
+    final uiBackgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.uiBackgroundColor);
-    final bool rotatingGearIsDragging = context.select<RotatingGearState, bool>(
+    final rotatingGearIsDragging = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isDragging);
-    final bool fixedGearIsDragging = context
+    final fixedGearIsDragging = context
         .select<FixedGearState, bool>((fixedGear) => fixedGear.isDragging);
-    final bool canvasIsTransforming =
+    final canvasIsTransforming =
         context.select<CanvasState, bool>((canvas) => canvas.isTransforming);
-    final bool isLandscape =
+    final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    Matrix4 transform = Matrix4.identity()
+    var transform = Matrix4.identity()
       ..translate(isLandscape ? -menuBarHeight : 0.0,
           isLandscape ? 0.0 : -menuBarHeight);
-    double opacity = 1.0;
-    double height = menuBarHeight + selectorDrawerHeight;
+    var opacity = 1.0;
+    var height = menuBarHeight + selectorDrawerHeight;
 
     if (!selectorDrawer.isOpen ||
         rotatingGearIsDragging ||

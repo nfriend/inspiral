@@ -16,7 +16,7 @@ class FixedGear extends StatelessWidget {
     final pointers = Provider.of<PointersState>(context, listen: false);
     final colors = context.watch<ColorState>();
 
-    final ColorFilter colorFilter =
+    final colorFilter =
         colors.isDark ? fixedGearInvertedColorFilter : fixedGearColorFilter;
 
     return Transform.translate(

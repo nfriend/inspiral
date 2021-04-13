@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
@@ -15,7 +14,7 @@ class CanvasStateRehydrationResult {
 
 class CanvasStatePersistor {
   static void persist(Batch batch, CanvasState canvas) {
-    Float64List elements = canvas.transform.storage;
+    var elements = canvas.transform.storage;
 
     batch.update(Schema.state.toString(), {
       Schema.state.canvasTransform_0: elements[0],
@@ -42,23 +41,23 @@ class CanvasStatePersistor {
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
 
-    List<double> elements = [
-      state[Schema.state.canvasTransform_0],
-      state[Schema.state.canvasTransform_1],
-      state[Schema.state.canvasTransform_2],
-      state[Schema.state.canvasTransform_3],
-      state[Schema.state.canvasTransform_4],
-      state[Schema.state.canvasTransform_5],
-      state[Schema.state.canvasTransform_6],
-      state[Schema.state.canvasTransform_7],
-      state[Schema.state.canvasTransform_8],
-      state[Schema.state.canvasTransform_9],
-      state[Schema.state.canvasTransform_10],
-      state[Schema.state.canvasTransform_11],
-      state[Schema.state.canvasTransform_12],
-      state[Schema.state.canvasTransform_13],
-      state[Schema.state.canvasTransform_14],
-      state[Schema.state.canvasTransform_15],
+    var elements = <double>[
+      state[Schema.state.canvasTransform_0] as double,
+      state[Schema.state.canvasTransform_1] as double,
+      state[Schema.state.canvasTransform_2] as double,
+      state[Schema.state.canvasTransform_3] as double,
+      state[Schema.state.canvasTransform_4] as double,
+      state[Schema.state.canvasTransform_5] as double,
+      state[Schema.state.canvasTransform_6] as double,
+      state[Schema.state.canvasTransform_7] as double,
+      state[Schema.state.canvasTransform_8] as double,
+      state[Schema.state.canvasTransform_9] as double,
+      state[Schema.state.canvasTransform_10] as double,
+      state[Schema.state.canvasTransform_11] as double,
+      state[Schema.state.canvasTransform_12] as double,
+      state[Schema.state.canvasTransform_13] as double,
+      state[Schema.state.canvasTransform_14] as double,
+      state[Schema.state.canvasTransform_15] as double,
     ];
 
     Matrix4 transform;
@@ -83,13 +82,13 @@ class CanvasStatePersistor {
       // Move the center of the canvas to the
       // top-left of the screen. Multiplied by 2, because the
       // canvas itself is offset by `canvasCenter` from its parent.
-      Vector3 originTranslation = -(canvasCenter.toVector3() * 2);
+      var originTranslation = -(canvasCenter.toVector3() * 2);
       transform.translate(originTranslation);
 
       // Then, move the canvas back by half the screen dimensions
       // so that the centor of the canvas is located
       // in the center of the screen
-      Vector3 centerTranslation =
+      var centerTranslation =
           (MediaQuery.of(context).size / 2).toVector3() * (1 / initialZoom);
       transform.translate(centerTranslation);
     } else {

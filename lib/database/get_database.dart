@@ -6,9 +6,9 @@ import 'package:sqflite/sqlite_api.dart';
 
 /// Returns a `Database` instance that is ready to read/write local data
 Future<Database> getDatabase() async {
-  String databasePath = join(await getDatabasesPath(), localDatabaseName);
+  var databasePath = join(await getDatabasesPath(), localDatabaseName);
 
-  Database database = await openDatabase(databasePath, version: 1,
+  var database = await openDatabase(databasePath, version: 1,
       onConfigure: (Database db) async {
     await db.execute('PRAGMA foreign_keys = ON;');
   }, onCreate: onDatabaseCreate, onDowngrade: onDatabaseDowngradeDelete);

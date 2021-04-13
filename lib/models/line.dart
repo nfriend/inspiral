@@ -31,6 +31,6 @@ class Line {
 
   @override
   String toString() {
-    return "Line($point1, $point2)";
+    return 'Line($point1, $point2)';
   }
 }

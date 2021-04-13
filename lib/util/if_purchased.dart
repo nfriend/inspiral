@@ -7,17 +7,17 @@ import 'package:provider/provider.dart';
 /// Returns a function that executes the callback if the provided entitlement is
 /// owned. If the entitlement is not purchased, the purchase dialog is shown
 /// for the provide package and the callback is not executed.
-Function ifPurchased(
+Future<void> Function() ifPurchased(
     {BuildContext context,
     String entitlement,
     String package,
-    Function callbackIfPurchased}) {
+    void Function() callbackIfPurchased}) {
   final purchases = Provider.of<PurchasesState>(context, listen: false);
   final colors = Provider.of<ColorState>(context, listen: false);
 
   return () async {
     if (!await purchases.isEntitledTo(entitlement)) {
-      showDialog(
+      await showDialog(
           context: context,
           builder: (context) {
             return PurchaseDialog(

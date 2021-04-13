@@ -15,23 +15,21 @@ class RotatingGear extends StatelessWidget {
       return Container();
     }
 
-    final DragLineState dragLine =
-        Provider.of<DragLineState>(context, listen: false);
-    final PointersState pointers =
-        Provider.of<PointersState>(context, listen: false);
-    final TinyColor penColor =
+    final dragLine = Provider.of<DragLineState>(context, listen: false);
+    final pointers = Provider.of<PointersState>(context, listen: false);
+    final penColor =
         context.select<ColorState, TinyColor>((colors) => colors.penColor);
-    final TinyColor backgroundColor = context
+    final backgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
 
-    final ColorFilter colorFilter =
+    final colorFilter =
         backgroundColor.isDark() ? invertColorFilter : noFilterColorFilter;
 
-    final Offset gearCenter = gear.definition.size.toOffset() / 2;
+    final gearCenter = gear.definition.size.toOffset() / 2;
 
     // Compute the location of the ink dot (the pen). Multiplying by 1.5
     // due to the margin of the `Container` dot.
-    final Offset penPosition =
+    final penPosition =
         gear.relativePenPosition + gearCenter - (inkDotSize.toOffset() * 1.5);
 
     return Transform.translate(

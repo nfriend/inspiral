@@ -5,20 +5,18 @@ import 'package:tinycolor/tinycolor.dart';
 
 class NoColorThumbnail extends StatelessWidget {
   final bool isActive;
-  final Function onColorTap;
+  final void Function() onColorTap;
 
   NoColorThumbnail({@required this.isActive, @required this.onColorTap});
 
   @override
   Widget build(BuildContext context) {
-    final TinyColor activeColor =
+    final activeColor =
         context.select<ColorState, TinyColor>((colors) => colors.activeColor);
-    final TinyColor buttonColor =
+    final buttonColor =
         context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
-    final BorderRadius outerBorderRadius =
-        BorderRadius.all(Radius.circular(10.0));
-    final BorderRadius innerBorderRadius =
-        BorderRadius.all(Radius.circular(5.0));
+    final outerBorderRadius = BorderRadius.all(Radius.circular(10.0));
+    final innerBorderRadius = BorderRadius.all(Radius.circular(5.0));
 
     return Container(
         decoration: BoxDecoration(

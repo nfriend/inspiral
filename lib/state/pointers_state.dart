@@ -44,7 +44,9 @@ class PointersState extends ChangeNotifier
   }
 
   PointersState._internal() : super() {
+    // ignore: prefer_collection_literals
     _activePointerIds = LinkedHashSet<int>();
+
     _activePointerIdsView = UnmodifiableSetView(_activePointerIds);
     _pointerPositions = {};
     _pointerPositionsView = UnmodifiableMapView(_pointerPositions);
@@ -112,11 +114,10 @@ class PointersState extends ChangeNotifier
   /// This should be one of the first methods called as a result of a pointer
   /// event, because it updates pointer IDs used by other state object
   /// to determine whether or not to react to pointer events.
-  pointerDown(PointerDownEvent event) {
-    bool pointerIsNew = _activePointerIds.add(event.pointer);
+  void pointerDown(PointerDownEvent event) {
+    var pointerIsNew = _activePointerIds.add(event.pointer);
     if (pointerIsNew) {
-      Offset canvasPointerPosition =
-          canvas.pixelToCanvasPosition(event.position);
+      var canvasPointerPosition = canvas.pixelToCanvasPosition(event.position);
       _pointerPositions[event.pointer] =
           Positions(canvas: canvasPointerPosition, global: event.position);
       _pointerDeltas[event.pointer] = Positions.zero();
@@ -128,8 +129,8 @@ class PointersState extends ChangeNotifier
 
   /// Notifies this state object about a pointer up event. See comment about
   /// `pointerDown` for additional info.
-  pointerUp(PointerUpEvent event) {
-    bool pointerWasInSet = _activePointerIds.remove(event.pointer);
+  void pointerUp(PointerUpEvent event) {
+    var pointerWasInSet = _activePointerIds.remove(event.pointer);
     if (pointerWasInSet) {
       _pointerPositions.remove(event.pointer);
       _pointerDeltas.remove(event.pointer);
@@ -140,10 +141,10 @@ class PointersState extends ChangeNotifier
 
   /// Notifies this state object about a pointer move event. See comment about
   /// `pointerDown` for additional info.
-  pointerMove(PointerMoveEvent event) {
+  void pointerMove(PointerMoveEvent event) {
     if (_pointerPreviousPositions[event.pointer].global != event.position) {
-      Positions originalLocation = _pointerPositions[event.pointer];
-      Positions newLocation = Positions(
+      var originalLocation = _pointerPositions[event.pointer];
+      var newLocation = Positions(
           canvas: canvas.pixelToCanvasPosition(event.position),
           global: event.position);
 
@@ -158,7 +159,7 @@ class PointersState extends ChangeNotifier
 
   /// Returns the center of mass for all currently active pointers
   Positions getCenterOfMass() {
-    return new Positions(
+    return Positions(
         global:
             util.getCenterOfMass(_pointerPositions.values.map((e) => e.global)),
         canvas: util
@@ -168,7 +169,7 @@ class PointersState extends ChangeNotifier
   /// Returns the center of mass for the previous position of all
   /// currently active pointers
   Positions getPreviousCenterOfMass() {
-    return new Positions(
+    return Positions(
         global: util.getCenterOfMass(
             _pointerPreviousPositions.values.map((e) => e.global)),
         canvas: util.getCenterOfMass(
@@ -187,7 +188,7 @@ class PointersState extends ChangeNotifier
   /// to the current positions
   double _getRotation(
       {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
-    double totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
+    var totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
       return sum +
           Line(previousCenterOfMass,
                   _pointerPreviousPositions[pointerId].global)
@@ -202,7 +203,7 @@ class PointersState extends ChangeNotifier
   /// to the current positions
   double _getScale(
       {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
-    double totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
+    var totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
       return sum +
           Line(centerOfMass, _pointerPositions[pointerId].global).length() /
               Line(previousCenterOfMass,
@@ -220,8 +221,8 @@ class PointersState extends ChangeNotifier
       return Matrix4.identity()
         ..translate(_pointerDeltas[_activePointerIds.first].global.toVector3());
     } else {
-      Offset previousCoM = getPreviousCenterOfMass().global;
-      Offset currentCoM = getCenterOfMass().global;
+      var previousCoM = getPreviousCenterOfMass().global;
+      var currentCoM = getCenterOfMass().global;
 
       final pivotVector = previousCoM.toVector3();
 
@@ -231,7 +232,7 @@ class PointersState extends ChangeNotifier
       transform.translate(pivotVector);
 
       // Scale
-      double scale = _getScale(
+      var scale = _getScale(
           centerOfMass: currentCoM, previousCenterOfMass: previousCoM);
       transform.scale(scale, scale, 0);
 

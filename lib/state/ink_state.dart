@@ -29,7 +29,7 @@ class InkState extends ChangeNotifier with Persistable {
 
   List<InkLine> _lines = [];
   bool _isBaking = false;
-  Map<Offset, Image> _tileImages = {};
+  final Map<Offset, Image> _tileImages = {};
   Offset _lastPoint;
 
   /// The total number of points included in the the drawing.
@@ -95,8 +95,7 @@ class InkState extends ChangeNotifier with Persistable {
     // Operate on a shallow clone of the points, because the baking process
     // is asynchronous, and more points may be added to `_points` while
     // this method is running
-    List<InkLine> linesToBake =
-        _lines.map((line) => InkLine.from(line)).toList();
+    var linesToBake = _lines.map((line) => InkLine.from(line)).toList();
 
     // Indicate to the current line that it should "split" the current path
     // right now and mark the location of the split, so that we can remove
@@ -106,10 +105,10 @@ class InkState extends ChangeNotifier with Persistable {
     // Determine which tiles need to update
     var tilesToUpdate = _getTilesToUpdate(linesToBake);
 
-    Size renderedSize = tileSize;
-    Map<Offset, Image> updatedTileImages = {};
-    List<Future> allUpdates = [];
-    for (Offset tilePosition in tilesToUpdate) {
+    var renderedSize = tileSize;
+    var updatedTileImages = <Offset, Image>{};
+    var allUpdates = <Future>[];
+    for (var tilePosition in tilesToUpdate) {
       var recorder = PictureRecorder();
       var canvas = Canvas(recorder);
       DryInkTilePainter(
@@ -118,7 +117,7 @@ class InkState extends ChangeNotifier with Persistable {
               lines: linesToBake)
           .paint(canvas, renderedSize);
 
-      Picture picture = recorder.endRecording();
+      var picture = recorder.endRecording();
       allUpdates.add(picture
           .toImage(renderedSize.width.ceil(), renderedSize.height.ceil())
           .then((Image newImage) {
@@ -151,17 +150,17 @@ class InkState extends ChangeNotifier with Persistable {
   Set<Offset> _getTilesToUpdate(List<InkLine> linesToBake) {
     var tilesToUpdate = HashSet<Offset>();
 
-    for (InkLine line in linesToBake) {
-      for (List<Offset> lineSegment in line.points) {
-        for (Offset point in lineSegment) {
-          double surroundingPointDistance =
+    for (var line in linesToBake) {
+      for (var lineSegment in line.points) {
+        for (var point in lineSegment) {
+          var surroundingPointDistance =
               max(maxStrokeWidth, maxLineSegmentLength);
 
           // Expand the search radius slightly. Otherwise a line with a very
           // wide stroke might brush a corner or edge of another tile, but
           // because the point itself isn't in the tile, the tile wouldn't
           // be considered as needing updating.
-          List<Offset> surroundingPoints = [
+          var surroundingPoints = <Offset>[
             point + Offset(-surroundingPointDistance, 0),
             point + Offset(surroundingPointDistance, 0),
             point + Offset(0, -surroundingPointDistance),
@@ -170,8 +169,8 @@ class InkState extends ChangeNotifier with Persistable {
 
           // Find the correct tile for each point
           // (Each tile is keyed by the position of its top-left corner)
-          for (Offset nearbyPoint in surroundingPoints) {
-            Offset containingTile = Offset(
+          for (var nearbyPoint in surroundingPoints) {
+            var containingTile = Offset(
                 (nearbyPoint.dx / tileSize.width).floor() * tileSize.width,
                 (nearbyPoint.dy / tileSize.height).floor() * tileSize.height);
             tilesToUpdate.add(containingTile);
@@ -190,8 +189,7 @@ class InkState extends ChangeNotifier with Persistable {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    InkStateRehydrationResult result =
-        await InkStatePersistor.rehydrate(db, this);
+    var result = await InkStatePersistor.rehydrate(db, this);
 
     _lines = result.lines;
   }

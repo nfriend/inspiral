@@ -4,15 +4,15 @@ import 'package:vector_math/vector_math_64.dart';
 
 extension OffsetExtensions on Offset {
   Vector3 toVector3() {
-    return Vector3(this.dx, this.dy, 0);
+    return Vector3(dx, dy, 0);
   }
 
   // Returns a new Offset, rotated by `angle` around the provided point
   Offset rotated(double angle, Offset point) {
-    double s = sin(angle);
-    double c = cos(angle);
+    var s = sin(angle);
+    var c = cos(angle);
 
-    Offset rotatedPosition = this;
+    var rotatedPosition = this;
 
     // Translate point to origin
     rotatedPosition -= point;
@@ -30,8 +30,8 @@ extension OffsetExtensions on Offset {
   /// Returns a new Offset, clamped within the provided bounds
   Offset clamp(Rect bounds) {
     return Offset(
-      this.dx.clamp(bounds.left, bounds.right),
-      this.dy.clamp(bounds.top, bounds.bottom),
+      dx.clamp(bounds.left, bounds.right).toDouble(),
+      dy.clamp(bounds.top, bounds.bottom).toDouble(),
     );
   }
 }

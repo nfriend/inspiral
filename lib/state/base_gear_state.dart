@@ -58,7 +58,7 @@ abstract class BaseGearState extends ChangeNotifier with Persistable {
   /// Whether or not the gear is currently being dragged
   bool get isDragging => draggingPointerId > -1 && pointers.count == 1;
 
-  gearPointerDown(PointerDownEvent event) {
+  void gearPointerDown(PointerDownEvent event) {
     if (!isDragging) {
       draggingPointerId = event.device;
 
@@ -72,7 +72,7 @@ abstract class BaseGearState extends ChangeNotifier with Persistable {
     }
   }
 
-  gearPointerUp(PointerUpEvent event) {
+  void gearPointerUp(PointerUpEvent event) {
     if (event.device == draggingPointerId) {
       draggingPointerId = -1;
       notifyListeners();

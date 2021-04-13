@@ -31,17 +31,16 @@ class Matrix4TransformDecomposition {
   Matrix4TransformDecomposition interpolateTo(
       Matrix4TransformDecomposition to, double t) {
     return Matrix4TransformDecomposition(
-        translation: this.translation * (1.0 - t) + to.translation * t,
-        scale: this.scale * (1.0 - t) + to.scale * t,
-        quaternion: this.quaternion.slerp(to.quaternion, t));
+        translation: translation * (1.0 - t) + to.translation * t,
+        scale: scale * (1.0 - t) + to.scale * t,
+        quaternion: quaternion.slerp(to.quaternion, t));
   }
 }
 
 extension Matrix4Extensions on Matrix4 {
   /// Interpolates this `Matrix4` to the provided `Matrix4`.
   Matrix4 interpolateTo(Matrix4 to, double t) {
-    Matrix4TransformDecomposition deltas =
-        this.decompose2D().interpolateTo(to.decompose2D(), t);
+    var deltas = decompose2D().interpolateTo(to.decompose2D(), t);
 
     return Matrix4.compose(deltas.translation.toVector3(), deltas.quaternion,
         Vector3(deltas.scale, deltas.scale, 1.0));
@@ -49,9 +48,9 @@ extension Matrix4Extensions on Matrix4 {
 
   /// Breaks down this `Matrix4` into its individual tranform components.
   Matrix4TransformDecomposition decompose2D() {
-    Vector3 decomposedTranslation = Vector3.zero();
-    Vector3 decomposedScale = Vector3.zero();
-    Quaternion decomposedRotation = Quaternion.identity();
+    var decomposedTranslation = Vector3.zero();
+    var decomposedScale = Vector3.zero();
+    var decomposedRotation = Quaternion.identity();
     PointerEvent.removePerspectiveTransform(this)
         .decompose(decomposedTranslation, decomposedRotation, decomposedScale);
 

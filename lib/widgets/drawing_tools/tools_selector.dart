@@ -13,45 +13,44 @@ import 'package:inspiral/util/custom_icons.dart';
 class ToolsSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PurchasesState purchases =
-        Provider.of<PurchasesState>(context, listen: false);
-    final ColorState colors = Provider.of<ColorState>(context);
-    final ColorPickerState colorPicker = Provider.of<ColorPickerState>(context);
+    final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final colors = Provider.of<ColorState>(context);
+    final colorPicker = Provider.of<ColorPickerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
-      SelectionrRowDefinition(storageKey: "tools", label: 'TOOLS', children: [
+      SelectionrRowDefinition(storageKey: 'tools', label: 'TOOLS', children: [
         ActionButton(
           icon: InspiralCustomIcons.forward_1,
-          tooltipMessage: "Rotate in place clockwise by one tooth",
+          tooltipMessage: 'Rotate in place clockwise by one tooth',
           onButtonTap: () {
             rotatingGear.rotateInPlace(teethToRotate: -1);
           },
         ),
         ActionButton(
           icon: InspiralCustomIcons.backwards_1,
-          tooltipMessage: "Rotate in place counterclockwise by one tooth",
+          tooltipMessage: 'Rotate in place counterclockwise by one tooth',
           onButtonTap: () {
             rotatingGear.rotateInPlace(teethToRotate: 1);
           },
         ),
         ActionButton(
           icon: Icons.refresh,
-          tooltipMessage: "Draw one rotation",
+          tooltipMessage: 'Draw one rotation',
           onButtonTap: () {
             rotatingGear.drawOneRotation();
           },
         ),
         ActionButton(
           icon: InspiralCustomIcons.rotate_complete,
-          tooltipMessage: "Draw complete pattern",
+          tooltipMessage: 'Draw complete pattern',
           onButtonTap: () {
             rotatingGear.drawCompletePattern();
           },
         ),
       ]),
       SelectionrRowDefinition(
-          storageKey: "canvasColor",
+          storageKey: 'canvasColor',
           label: 'CANVAS',
           children: [
             for (TinyColor color in colors.availableCanvasColors)
@@ -60,7 +59,7 @@ class ToolsSelector extends StatelessWidget {
                       .isEntitledTo(Entitlement.custombackgroundcolors),
                   builder:
                       (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                    bool showDeleteButton = snapshot.hasData &&
+                    var showDeleteButton = snapshot.hasData &&
                         snapshot.data &&
                         colors.showCanvasColorDeleteButtons &&
                         colors.availableCanvasColors.length > 1;
@@ -79,7 +78,7 @@ class ToolsSelector extends StatelessWidget {
                         showDeleteButton: showDeleteButton);
                   }),
             NewColorThumbnail(
-                title: "New canvas color",
+                title: 'New canvas color',
                 entitlement: Entitlement.custombackgroundcolors,
                 package: Package.custombackgroundcolors,
                 showOpacity: false,

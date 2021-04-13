@@ -45,8 +45,7 @@ class StrokeState extends ChangeNotifier with Persistable {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    StrokeStateRehydrationResult result =
-        await StrokeStatePersistor.rehydrate(db, this);
+    var result = await StrokeStatePersistor.rehydrate(db, this);
 
     setStroke(style: result.style, width: result.width);
   }

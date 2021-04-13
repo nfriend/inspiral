@@ -6,9 +6,9 @@ import 'package:tinycolor/tinycolor.dart';
 class ColorSelectorThumbnail extends StatelessWidget {
   final TinyColor color;
   final bool isActive;
-  final Function onColorTap;
-  final Function onColorDelete;
-  final Function onColorLongPress;
+  final void Function() onColorTap;
+  final void Function() onColorDelete;
+  final void Function() onColorLongPress;
   final bool showDeleteButton;
 
   ColorSelectorThumbnail(
@@ -21,15 +21,12 @@ class ColorSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark =
-        context.select<ColorState, bool>((colors) => colors.isDark);
-    final TinyColor activeColor =
+    final isDark = context.select<ColorState, bool>((colors) => colors.isDark);
+    final activeColor =
         context.select<ColorState, TinyColor>((colors) => colors.activeColor);
-    final BorderRadius outerBorderRadius =
-        BorderRadius.all(Radius.circular(10.0));
-    final BorderRadius innerBorderRadius =
-        BorderRadius.all(Radius.circular(5.0));
-    final double deleteButtonSize = 30.0;
+    final outerBorderRadius = BorderRadius.all(Radius.circular(10.0));
+    final innerBorderRadius = BorderRadius.all(Radius.circular(5.0));
+    final deleteButtonSize = 30.0;
 
     return GestureDetector(
         onLongPress: onColorLongPress,
@@ -59,7 +56,7 @@ class ColorSelectorThumbnail extends StatelessWidget {
                   child: Container(
                       width: deleteButtonSize,
                       height: deleteButtonSize,
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           color: isDark ? Color(0xFF333333) : Color(0xFFEEEEEE),
                           shape: BoxShape.circle,
                           border: Border.all(

@@ -11,20 +11,19 @@ import 'package:tinycolor/tinycolor.dart';
 class GearSelectorThumbnail extends StatelessWidget {
   final GearDefinition gear;
   final bool isActive;
-  final Function onGearTap;
+  final void Function() onGearTap;
 
   GearSelectorThumbnail(
       {@required this.gear, @required this.isActive, @required this.onGearTap});
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark =
-        context.select<ColorState, bool>((colors) => colors.isDark);
-    final TinyColor activeColor =
+    final isDark = context.select<ColorState, bool>((colors) => colors.isDark);
+    final activeColor =
         context.select<ColorState, TinyColor>((colors) => colors.activeColor);
-    final TinyColor uiTextColor =
+    final uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
-    final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10.0));
+    final borderRadius = BorderRadius.all(Radius.circular(10.0));
 
     Color toothCountTextColor;
     Color toothCountBubbleBackgroundColor;
@@ -43,7 +42,7 @@ class GearSelectorThumbnail extends StatelessWidget {
           isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
     }
 
-    TextStyle toothCountTextStyle =
+    var toothCountTextStyle =
         TextStyle(fontWeight: FontWeight.bold, color: toothCountTextColor);
 
     return Stack(children: [

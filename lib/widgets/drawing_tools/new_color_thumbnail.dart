@@ -45,10 +45,10 @@ class NewColorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorState colors = Provider.of<ColorState>(context, listen: false);
-    final BorderRadius borderRadius = BorderRadius.all(Radius.circular(5.0));
+    final colors = Provider.of<ColorState>(context, listen: false);
+    final borderRadius = BorderRadius.all(Radius.circular(5.0));
 
-    final Function showDialogIfPurchased = ifPurchased(
+    final showDialogIfPurchased = ifPurchased(
         context: context,
         entitlement: entitlement,
         package: package,

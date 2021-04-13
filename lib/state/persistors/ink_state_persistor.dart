@@ -15,7 +15,7 @@ class InkStateRehydrationResult {
 
 class InkStatePersistor {
   static void persist(Batch batch, InkState ink) {
-    Uuid uuid = Uuid();
+    var uuid = Uuid();
 
     batch.delete(Schema.points.toString());
     batch.delete(Schema.lineSegments.toString());
@@ -23,10 +23,10 @@ class InkStatePersistor {
     batch.delete(Schema.colors.toString(),
         where: "${Schema.colors.type} = '${ColorsTableType.ink}'");
 
-    for (int i = 0; i < ink.lines.length; i++) {
-      InkLine line = ink.lines[i];
-      String inkLineId = uuid.v4();
-      String colorId = uuid.v4();
+    for (var i = 0; i < ink.lines.length; i++) {
+      var line = ink.lines[i];
+      var inkLineId = uuid.v4();
+      var colorId = uuid.v4();
 
       batch.insert(Schema.colors.toString(), {
         Schema.colors.id: colorId,
@@ -44,9 +44,9 @@ class InkStatePersistor {
         Schema.inkLines.order: i
       });
 
-      for (int j = 0; j < line.points.length; j++) {
-        List<Offset> segment = line.points[j];
-        String segmentId = uuid.v4();
+      for (var j = 0; j < line.points.length; j++) {
+        var segment = line.points[j];
+        var segmentId = uuid.v4();
 
         batch.insert(Schema.lineSegments.toString(), {
           Schema.lineSegments.id: segmentId,
@@ -54,9 +54,9 @@ class InkStatePersistor {
           Schema.lineSegments.order: j
         });
 
-        for (int k = 0; k < segment.length; k++) {
-          Offset point = segment[k];
-          String pointId = uuid.v4();
+        for (var k = 0; k < segment.length; k++) {
+          var point = segment[k];
+          var pointId = uuid.v4();
 
           batch.insert(Schema.points.toString(), {
             Schema.points.id: pointId,
@@ -91,10 +91,10 @@ class InkStatePersistor {
     List<Map<String, dynamic>> points = await db.query(Schema.points.toString(),
         orderBy: '"${Schema.points.order}" ASC');
 
-    List<InkLine> lines = inkLines.map((inkLine) {
-      InkLine newInkLine = new InkLine(
-          color: colorFromHexString(inkLine[Schema.inkLines.colorId]),
-          strokeWidth: inkLine[Schema.inkLines.strokeWidth],
+    var lines = inkLines.map((inkLine) {
+      var newInkLine = InkLine(
+          color: colorFromHexString(inkLine[Schema.inkLines.colorId] as String),
+          strokeWidth: inkLine[Schema.inkLines.strokeWidth] as double,
           strokeStyle:
               inkLine[Schema.inkLines.strokeStyle] == StrokeStyleType.normal
                   ? StrokeStyle.normal
@@ -105,12 +105,12 @@ class InkStatePersistor {
               segment[Schema.lineSegments.inkLineId] ==
               inkLine[Schema.inkLines.id])
           .forEach((segment) {
-        List<Offset> pointsToAdd = points
+        var pointsToAdd = points
             .where((point) =>
                 point[Schema.points.lineSegmentId] ==
                 segment[Schema.lineSegments.id])
-            .map((point) =>
-                Offset(point[Schema.points.x], point[Schema.points.y]))
+            .map((point) => Offset(point[Schema.points.x] as double,
+                point[Schema.points.y] as double))
             .toList();
 
         newInkLine.addPoints(pointsToAdd);

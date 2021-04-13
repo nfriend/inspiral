@@ -24,7 +24,7 @@ class ContactPoint {
   /// Based on https://stackoverflow.com/a/2259502/1063392
   ContactPoint rotated(double angle, Offset point) {
     // Add the rotation to the new direction
-    double rotatedDirection = (direction + angle + (2 * pi)) % (2 * pi);
+    var rotatedDirection = (direction + angle + (2 * pi)) % (2 * pi);
 
     return ContactPoint(
         position: point.rotated(angle, point), direction: rotatedDirection);
@@ -32,7 +32,7 @@ class ContactPoint {
 
   @override
   String toString() {
-    return "ContactPoint(position: $position, direction: $direction)";
+    return 'ContactPoint(position: $position, direction: $direction)';
   }
 
   @override
@@ -47,15 +47,15 @@ class ContactPoint {
   /// Computes the weighted averaged of a number of ContactPoints
   static ContactPoint weightedAverage(
       List<Tuple2<ContactPoint, double>> weightedPoints) {
-    Offset averagedPosition = Offset.zero;
-    double totalWeight = 0;
+    var averagedPosition = Offset.zero;
+    var totalWeight = 0.0;
 
     // To compute the average direction, we treat each direction
     // as a vector with length `weight`, sum them all up, and
     // return the angle of the result.
     // See https://stackoverflow.com/a/491769/1063392.
-    double totalDirectionX = 0;
-    double totalDirectionY = 0;
+    var totalDirectionX = 0.0;
+    var totalDirectionY = 0.0;
 
     for (final point in weightedPoints) {
       averagedPosition += point.item1.position * point.item2;
@@ -65,7 +65,7 @@ class ContactPoint {
     }
 
     averagedPosition /= totalWeight;
-    double averagedDirection = atan2(totalDirectionY, totalDirectionX);
+    var averagedDirection = atan2(totalDirectionY, totalDirectionX);
 
     return ContactPoint(
         position: averagedPosition, direction: averagedDirection);

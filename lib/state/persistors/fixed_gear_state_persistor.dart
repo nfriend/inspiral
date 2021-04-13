@@ -20,7 +20,7 @@ class FixedGearStateRehydrationResult extends BaseGearStateRehydrationResult {
 
   @override
   String toString() {
-    return "FixedGearStateRehydrationResult(position: $position, definition: $definition, isVisible: $isVisible)";
+    return 'FixedGearStateRehydrationResult(position: $position, definition: $definition, isVisible: $isVisible)';
   }
 }
 
@@ -41,16 +41,16 @@ class FixedGearStatePersistor {
 
     // Defaulting to oval30 just in case we didn't find a match in `allGears`.
     // This _should_ never happen.
-    GearDefinition definition =
+    var definition =
         allGears[state[Schema.state.fixedGearDefinitionId]] ?? oval30;
 
     // If these are null, it means we don't have a previously-saved gear
     // position. (For example, when opening the app for the very first time.)
     // In this case, use `canvasCenter` instead.
-    double positionX =
-        state[Schema.state.fixedGearPositionX] ?? canvasCenter.dx;
-    double positionY =
-        state[Schema.state.fixedGearPositionY] ?? canvasCenter.dy;
+    var positionX =
+        state[Schema.state.fixedGearPositionX] as double ?? canvasCenter.dx;
+    var positionY =
+        state[Schema.state.fixedGearPositionY] as double ?? canvasCenter.dy;
 
     return FixedGearStateRehydrationResult(
         position: Offset(positionX, positionY),

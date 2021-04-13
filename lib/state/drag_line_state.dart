@@ -63,17 +63,17 @@ class DragLineState extends ChangeNotifier with Persistable {
   /// the drag begins.
   double _angleDragOffset = 0;
 
-  gearPointerDown(PointerDownEvent event) {
-    double pointerAngle = _getPointerAngle(event);
+  void gearPointerDown(PointerDownEvent event) {
+    var pointerAngle = _getPointerAngle(event);
     _angleDragOffset = pointerAngle - _translateToRange(angle);
     _updatePointerPositionAndAngle(event);
   }
 
-  gearPointerMove(PointerMoveEvent event) {
+  void gearPointerMove(PointerMoveEvent event) {
     _updatePointerPositionAndAngle(event);
   }
 
-  fixedGearDrag(Offset rotatingGearDelta) {
+  void fixedGearDrag(Offset rotatingGearDelta) {
     pivotPosition -= rotatingGearDelta;
   }
 
@@ -81,17 +81,17 @@ class DragLineState extends ChangeNotifier with Persistable {
     pointerPosition = canvas.pixelToCanvasPosition(event.position);
 
     // The current angle, translated in the range [0, 2*pi)
-    double translatedAngle = _translateToRange(angle);
+    var translatedAngle = _translateToRange(angle);
 
     // The new angle, translated into the same range
-    double translatedNewAngle =
+    var translatedNewAngle =
         _translateToRange(_getPointerAngle(event) - _angleDragOffset);
 
     // This is how many times we've fully rotated (in the positive direction)
     // around the fixed gear. Can be positive or negative.
-    int rotationCount = (angle / _pi2).floor();
+    var rotationCount = (angle / _pi2).floor();
 
-    double newAngle = translatedNewAngle + rotationCount * _pi2;
+    var newAngle = translatedNewAngle + rotationCount * _pi2;
 
     // Detect when we wrap around from 0 to 2*pi or vice versa,
     // and update the angle accordingly
@@ -112,7 +112,7 @@ class DragLineState extends ChangeNotifier with Persistable {
 
   /// Gets the angle between the pointer and the pivot position
   double _getPointerAngle(PointerEvent event) {
-    Offset eventPosition = canvas.pixelToCanvasPosition(event.position);
+    var eventPosition = canvas.pixelToCanvasPosition(event.position);
     final lineAngle = Line(pivotPosition, eventPosition).angle();
 
     return -_translateToRange(lineAngle);

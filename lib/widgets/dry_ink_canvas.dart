@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
@@ -10,14 +9,14 @@ class DryInkCanvas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ink = Provider.of<InkState>(context);
-    final bool debug =
+    final debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
-    final TinyColor backgroundColor = context
+    final backgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
 
-    List<Positioned> tiles = ink.tileImages.entries.map((entry) {
-      Offset position = entry.key;
-      Image tileImage = entry.value;
+    var tiles = ink.tileImages.entries.map((entry) {
+      var position = entry.key;
+      var tileImage = entry.value;
 
       return Positioned(
           left: position.dx,

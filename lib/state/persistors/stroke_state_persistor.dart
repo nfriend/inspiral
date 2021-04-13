@@ -13,7 +13,7 @@ class StrokeStateRehydrationResult {
 
 class StrokeStatePersistor {
   static void persist(Batch batch, StrokeState stroke) {
-    String style = stroke.style == StrokeStyle.normal
+    var style = stroke.style == StrokeStyle.normal
         ? StrokeStyleType.normal
         : StrokeStyleType.airbrush;
 
@@ -28,13 +28,13 @@ class StrokeStatePersistor {
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
 
-    StrokeStyle style = StrokeStyle.normal;
+    var style = StrokeStyle.normal;
 
     if (state[Schema.state.strokeStyle] == StrokeStyleType.airbrush) {
       style = StrokeStyle.airbrush;
     }
 
     return StrokeStateRehydrationResult(
-        width: state[Schema.state.strokeWidth], style: style);
+        width: state[Schema.state.strokeWidth] as double, style: style);
   }
 }

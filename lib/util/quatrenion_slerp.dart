@@ -18,9 +18,9 @@ Quaternion slerp(Quaternion qa, Quaternion qb, double t) {
   if (t == 0.0) return qa;
   if (t == 1.0) return qb;
 
-  final double x = qa.x, y = qa.y, z = qa.z, w = qa.w;
+  final x = qa.x, y = qa.y, z = qa.z, w = qa.w;
 
-  double cosHalfTheta = w * qb.w + x * qb.x + y * qb.y + z * qb.z;
+  var cosHalfTheta = w * qb.w + x * qb.x + y * qb.y + z * qb.z;
 
   if (cosHalfTheta < 0.0) {
     qa.setValues(-qb.x, -qb.y, -qb.z, -qb.w);
@@ -31,10 +31,10 @@ Quaternion slerp(Quaternion qa, Quaternion qb, double t) {
     qa = qb.clone();
   }
 
-  final double sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
+  final sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
 
   if (sqrSinHalfTheta <= _epsilon) {
-    final double s = 1 - t;
+    final s = 1 - t;
     qa.setValues(
         s * x + t * qa.x, s * y + t * qa.y, s * z + t * qa.z, s * w + t * qa.w);
     qa.normalize();
@@ -42,10 +42,10 @@ Quaternion slerp(Quaternion qa, Quaternion qb, double t) {
     return qa;
   }
 
-  final double sinHalfTheta = sqrt(sqrSinHalfTheta);
-  final double halfTheta = atan2(sinHalfTheta, cosHalfTheta);
-  final double ratioA = sin((1 - t) * halfTheta) / sinHalfTheta;
-  final double ratioB = sin(t * halfTheta) / sinHalfTheta;
+  final sinHalfTheta = sqrt(sqrSinHalfTheta);
+  final halfTheta = atan2(sinHalfTheta, cosHalfTheta);
+  final ratioA = sin((1 - t) * halfTheta) / sinHalfTheta;
+  final ratioB = sin(t * halfTheta) / sinHalfTheta;
 
   qa.setValues(x * ratioA + qa.x * ratioB, y * ratioA + qa.y * ratioB,
       z * ratioA + qa.z * ratioB, w * ratioA + qa.w * ratioB);

@@ -8,7 +8,7 @@ import 'package:inspiral/state/state.dart';
 @immutable
 class _ManuBarButtonParams {
   final Icon icon;
-  final Function onPressed;
+  final void Function() onPressed;
   final String tooltipMessage;
 
   _ManuBarButtonParams(
@@ -21,19 +21,19 @@ class MenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
-    final bool rotatingGearIsVisible = context.select<RotatingGearState, bool>(
+    final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
-    final bool isLandscape =
+    final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    double margin = 2.5;
-    double iconSize = 26;
+    var margin = 2.5;
+    var iconSize = 26.0;
 
-    final Icon visibilityIcon = rotatingGearIsVisible
+    final visibilityIcon = rotatingGearIsVisible
         ? Icon(Icons.visibility)
         : Icon(Icons.visibility_off);
 
-    List<_ManuBarButtonParams> buttons = [
+    var buttons = <_ManuBarButtonParams>[
       _ManuBarButtonParams(
           icon: Icon(Icons.save),
           onPressed: () => saveImage(context),
@@ -51,7 +51,7 @@ class MenuBar extends StatelessWidget {
       _ManuBarButtonParams(
           icon: Icon(Icons.menu),
           onPressed: () {
-            ScaffoldState scaffold = Scaffold.of(context);
+            var scaffold = Scaffold.of(context);
             isLandscape ? scaffold.openDrawer() : scaffold.openEndDrawer();
           },
           tooltipMessage: 'Show menu')

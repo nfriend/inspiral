@@ -9,26 +9,25 @@ import 'package:tinycolor/tinycolor.dart';
 class HoleSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bool isSelectingHole =
+    final isSelectingHole =
         context.select<CanvasState, bool>((canvas) => canvas.isSelectingHole);
-    final GearHole activeHole = context.select<RotatingGearState, GearHole>(
+    final activeHole = context.select<RotatingGearState, GearHole>(
         (rotatingGear) => rotatingGear.activeHole);
-    final bool areGearsVisible = context.select<RotatingGearState, bool>(
+    final areGearsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
 
     if (!isSelectingHole || !areGearsVisible) {
       return Container();
     }
 
-    final RotatingGearState gear = Provider.of<RotatingGearState>(context);
-    final bool isDark =
-        context.select<ColorState, bool>((colors) => colors.isDark);
-    final TinyColor penColor =
+    final gear = Provider.of<RotatingGearState>(context);
+    final isDark = context.select<ColorState, bool>((colors) => colors.isDark);
+    final penColor =
         context.select<ColorState, TinyColor>((colors) => colors.penColor);
-    final TinyColor inactivePenColor = isDark
+    final inactivePenColor = isDark
         ? penColor.desaturate(50).darken()
         : penColor.desaturate(50).lighten();
-    final Offset gearCenter = gear.definition.size.toOffset() / 2;
+    final gearCenter = gear.definition.size.toOffset() / 2;
     final dotSize = inkDotSize * 2;
 
     return Stack(children: [

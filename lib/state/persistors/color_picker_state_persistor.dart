@@ -18,7 +18,7 @@ class ColorPickerStateRehydrationResult {
 
 class ColorPickerStatePersistor {
   static void persist(Batch batch, ColorPickerState colorPicker) {
-    Uuid uuid = Uuid();
+    var uuid = Uuid();
 
     // Remove references to avoid foreign key constraint errors below
     batch.update(Schema.state.toString(), {
@@ -30,14 +30,14 @@ class ColorPickerStatePersistor {
         where:
             "${Schema.colors.type} = '${ColorsTableType.lastSelectedPen}' OR ${Schema.colors.type} = '${ColorsTableType.lastSelectedCanvas}'");
 
-    String lastPenColorId = uuid.v4();
+    var lastPenColorId = uuid.v4();
     batch.insert(Schema.colors.toString(), {
       Schema.colors.id: lastPenColorId,
       Schema.colors.value: colorPicker.lastSelectedCustomPenColor.toHexString(),
       Schema.colors.type: ColorsTableType.lastSelectedPen
     });
 
-    String lastCanvasColorId = uuid.v4();
+    var lastCanvasColorId = uuid.v4();
     batch.insert(Schema.colors.toString(), {
       Schema.colors.id: lastCanvasColorId,
       Schema.colors.value:
@@ -64,9 +64,9 @@ class ColorPickerStatePersistor {
     ''')).first;
 
     return ColorPickerStateRehydrationResult(
-        lastSelectedPenColor:
-            tinyColorFromHexString(state[Schema.state.lastSelectedPenColor]),
+        lastSelectedPenColor: tinyColorFromHexString(
+            state[Schema.state.lastSelectedPenColor] as String),
         lastSelectedCanvasColor: tinyColorFromHexString(
-            state[Schema.state.lastSelectedCanvasColor]));
+            state[Schema.state.lastSelectedCanvasColor] as String));
   }
 }

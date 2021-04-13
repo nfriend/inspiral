@@ -5,7 +5,6 @@ import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 class InspiralProviders extends StatefulWidget {
   final Widget child;
@@ -30,16 +29,14 @@ class _InspiralProvidersState extends State<InspiralProviders>
   @override
   Widget build(BuildContext context) {
     // Initialize all the singletons that will be provided below
-    if (_stateFuture == null) {
-      _stateFuture = initializeAllStateSingletons(context);
-    }
+    _stateFuture ??= initializeAllStateSingletons(context);
 
     return FutureBuilder(
         future: _stateFuture,
         builder: (BuildContext context,
             AsyncSnapshot<Iterable<Persistable>> snapshot) {
           if (snapshot.hasError) {
-            throw ("Something went wrong while initializing state! ${snapshot.error}");
+            throw ('Something went wrong while initializing state! ${snapshot.error}');
           } else if (snapshot.connectionState == ConnectionState.done) {
             return MultiProvider(providers: [
               ChangeNotifierProvider(create: (context) => SettingsState()),
@@ -56,7 +53,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
               ChangeNotifierProvider(create: (context) => DragLineState()),
               ChangeNotifierProvider(create: (context) => FixedGearState()),
               ChangeNotifierProvider(create: (context) => ColorPickerState())
-            ], child: this.widget.child);
+            ], child: widget.child);
           } else {
             // Note: If the startup time is slow enough, consider
             // showing a splash screen of some kind here.
@@ -73,12 +70,12 @@ class _InspiralProvidersState extends State<InspiralProviders>
       AppLifecycleState.inactive,
       AppLifecycleState.detached
     ].contains(state)) {
-      Iterable<Persistable> allStateObjects = await _stateFuture;
+      var allStateObjects = await _stateFuture;
 
-      Database db = await getDatabase();
+      var db = await getDatabase();
 
       await db.transaction((txn) async {
-        Batch batch = txn.batch();
+        var batch = txn.batch();
 
         allStateObjects.forEach((state) => state.persist(batch));
 

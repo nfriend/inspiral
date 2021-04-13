@@ -52,7 +52,7 @@ class RotatingGearState extends BaseGearState {
 
   /// Initializes the position of the gear
   void initializePosition() {
-    RotationResult result = _getRotationForAngle(_lastAngle);
+    var result = _getRotationForAngle(_lastAngle);
     _updateGearState(result);
   }
 
@@ -79,31 +79,31 @@ class RotatingGearState extends BaseGearState {
   /// The position of the pen, relative to the center of the rotating gear
   Offset get relativePenPosition => _activeHole.relativeOffset;
 
-  fixedGearDrag(Offset rotatingGearDelta) {
+  void fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
     ink.finishLine();
   }
 
   @override
-  gearPointerDown(PointerDownEvent event) {
+  void gearPointerDown(PointerDownEvent event) {
     super.gearPointerDown(event);
 
     if (event.device == draggingPointerId && isDragging) {
-      RotationResult result = _getRotationForAngle(dragLine.angle);
+      var result = _getRotationForAngle(dragLine.angle);
       ink.addPoints([result.penPosition]);
     }
   }
 
-  gearPointerMove(PointerMoveEvent event) {
+  void gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
-      RotationResult result = _getRotationForAngle(dragLine.angle);
+      var result = _getRotationForAngle(dragLine.angle);
       _updateGearState(result);
       _drawPoints(result, dragLine.angle);
     }
   }
 
   @override
-  gearPointerUp(PointerUpEvent event) {
+  void gearPointerUp(PointerUpEvent event) {
     if (event.device == draggingPointerId && isDragging) {
       ink.finishLine();
     }
@@ -115,7 +115,7 @@ class RotatingGearState extends BaseGearState {
 
   /// Swaps the current rotating gear for a new one
   void selectNewGear(GearDefinition newGear) {
-    this.definition = newGear;
+    definition = newGear;
 
     activeHole = selectClosetHole(
         currentHole: activeHole, availableHoles: definition.holes);
@@ -127,7 +127,7 @@ class RotatingGearState extends BaseGearState {
   /// Rotates the rotating gear in place (without drawing)
   /// by the provided number of teeth in the positive direction
   void rotateInPlace({int teethToRotate}) {
-    this.toothOffset += teethToRotate;
+    toothOffset += teethToRotate;
     initializePosition();
     ink.finishLine();
   }
@@ -145,13 +145,12 @@ class RotatingGearState extends BaseGearState {
 
     _isDrawingRotation = true;
 
-    double rotationAmount = 2 * pi * -1;
-    int intervalsToDraw = 10;
-    double intervalAmount = rotationAmount / intervalsToDraw;
-    for (int i = 0; i <= intervalsToDraw; i++) {
-      double amountToAdd = intervalAmount * i;
-      RotationResult result =
-          _getRotationForAngle(dragLine.angle + amountToAdd);
+    var rotationAmount = 2 * pi * -1;
+    var intervalsToDraw = 10;
+    var intervalAmount = rotationAmount / intervalsToDraw;
+    for (var i = 0; i <= intervalsToDraw; i++) {
+      var amountToAdd = intervalAmount * i;
+      var result = _getRotationForAngle(dragLine.angle + amountToAdd);
       _updateGearState(result);
       _drawPoints(result, dragLine.angle + amountToAdd);
 
@@ -174,11 +173,11 @@ class RotatingGearState extends BaseGearState {
 
     _isDrawingCompletePattern = true;
 
-    int rotationsToComplete = calculateRotationCount(
+    var rotationsToComplete = calculateRotationCount(
         fixedGearTeeth: fixedGear.definition.toothCount,
         rotatingGearTeeth: definition.toothCount);
 
-    for (int i = 0; i < rotationsToComplete; i++) {
+    for (var i = 0; i < rotationsToComplete; i++) {
       await drawOneRotation();
     }
 
@@ -196,30 +195,30 @@ class RotatingGearState extends BaseGearState {
 
   /// Calculates the effect of a rotation to the provided angle
   RotationResult _getRotationForAngle(double angle) {
-    double fixedGearTooth = fixedGear.definition.angleToTooth(angle);
+    var fixedGearTooth = fixedGear.definition.angleToTooth(angle);
 
-    ContactPoint fixedGearContactPoint = fixedGear.definition
+    var fixedGearContactPoint = fixedGear.definition
         .toothToContactPoint(fixedGearTooth)
         .translated(fixedGear.position);
 
-    ContactPoint rotatingGearRelativeContactPoint = definition
+    var rotatingGearRelativeContactPoint = definition
         .toothToContactPoint(fixedGearTooth + toothOffset, isRotating: true);
 
-    double rotatingGearRotation = rotatingGearRelativeContactPoint.direction -
+    var rotatingGearRotation = rotatingGearRelativeContactPoint.direction -
         fixedGearContactPoint.direction +
         pi;
 
-    Offset rotatingGearPosition = (fixedGearContactPoint.position +
+    var rotatingGearPosition = (fixedGearContactPoint.position +
             rotatingGearRelativeContactPoint.position)
         .rotated(rotatingGearRotation - pi, fixedGearContactPoint.position);
 
-    double penAngle = rotatingGearRotation - activeHole.angle;
-    Offset penPosition = Offset(cos(penAngle), sin(penAngle)) *
+    var penAngle = rotatingGearRotation - activeHole.angle;
+    var penPosition = Offset(cos(penAngle), sin(penAngle)) *
             activeHole.distance *
             scaleFactor +
         rotatingGearPosition;
 
-    ContactPoint rotatingGearContactPoint = rotatingGearRelativeContactPoint
+    var rotatingGearContactPoint = rotatingGearRelativeContactPoint
         .translated(rotatingGearPosition)
         .rotated(-rotatingGearRotation, fixedGearContactPoint.position);
 
@@ -246,7 +245,7 @@ class RotatingGearState extends BaseGearState {
       return;
     }
 
-    double segmentLength = Line(result.penPosition, ink.lastPoint).length();
+    var segmentLength = Line(result.penPosition, ink.lastPoint).length();
 
     // If the point is too close to the last drawn point, don't draw a new one
     if (segmentLength < minLineSegmentLength) {
@@ -263,17 +262,16 @@ class RotatingGearState extends BaseGearState {
     // Otherwise, the point is too far away from the last point.
     // Calculate some intermediate points to avoid choppy lines.
 
-    List<Offset> pointsToAdd = [];
+    var pointsToAdd = <Offset>[];
 
     // Approximate the amount of intermediate angles we need to calculate.
     // This isn't mathematically precise - it assumes a 1:1 correlation
     // between angle size and segment size (which is not true), but it's
     // close enough for this purpose.
-    int segmentsToDraw = (segmentLength / maxLineSegmentLength).ceil();
-    double angleDelta = (angle - _lastAngle) / segmentsToDraw;
-    for (int i = 1; i <= segmentsToDraw; i++) {
-      RotationResult incrementalResult =
-          _getRotationForAngle(_lastAngle + angleDelta * i);
+    var segmentsToDraw = (segmentLength / maxLineSegmentLength).ceil();
+    var angleDelta = (angle - _lastAngle) / segmentsToDraw;
+    for (var i = 1; i <= segmentsToDraw; i++) {
+      var incrementalResult = _getRotationForAngle(_lastAngle + angleDelta * i);
       pointsToAdd.add(incrementalResult.penPosition);
     }
 
@@ -288,8 +286,7 @@ class RotatingGearState extends BaseGearState {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    RotatingGearStateRehydrationResult result =
-        await RotatingGearStatePersistor.rehydrate(db, this);
+    var result = await RotatingGearStatePersistor.rehydrate(db, this);
 
     _lastAngle = result.angle;
     definition = result.definition;

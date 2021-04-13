@@ -73,13 +73,13 @@ class ColorState extends ChangeNotifier with Persistable {
 
   /// Removes an existing colors from the list of available pen colors
   void removePenColor(TinyColor color) {
-    int colorIndex = _availablePenColors.indexOf(color);
-    bool colorWasRemoved = _availablePenColors.remove(color);
+    var colorIndex = _availablePenColors.indexOf(color);
+    var colorWasRemoved = _availablePenColors.remove(color);
 
     if (penColor == color && colorWasRemoved) {
-      if (_availablePenColors.length > 0) {
+      if (_availablePenColors.isNotEmpty) {
         // If there are still colors left, select the next closest color
-        int newColorIndex = min(colorIndex, _availablePenColors.length - 1);
+        var newColorIndex = min(colorIndex, _availablePenColors.length - 1);
         penColor = _availablePenColors[newColorIndex];
       } else {
         penColor = TinyColor(Colors.transparent);
@@ -104,12 +104,12 @@ class ColorState extends ChangeNotifier with Persistable {
 
   /// Removes an existing colors from the list of available canvas colors
   void removeCanvasColor(TinyColor color) {
-    int colorIndex = _availableCanvasColors.indexOf(color);
-    bool colorWasRemoved = _availableCanvasColors.remove(color);
+    var colorIndex = _availableCanvasColors.indexOf(color);
+    var colorWasRemoved = _availableCanvasColors.remove(color);
 
     if (backgroundColor == color && colorWasRemoved) {
-      if (_availableCanvasColors.length > 0) {
-        int newColorIndex = min(colorIndex, _availableCanvasColors.length - 1);
+      if (_availableCanvasColors.isNotEmpty) {
+        var newColorIndex = min(colorIndex, _availableCanvasColors.length - 1);
         backgroundColor = _availableCanvasColors[newColorIndex];
       } else {
         // We _should_ never hit this code path - the UI should prevent
@@ -173,12 +173,12 @@ class ColorState extends ChangeNotifier with Persistable {
 
   /// Updates all dependt colors based on the background and pen colors
   void _updateDependentColors() {
-    HslColor penHsl = penColor.toHsl();
-    double penHue = penHsl.h;
-    double penSaturation = penHsl.s;
+    var penHsl = penColor.toHsl();
+    var penHue = penHsl.h;
+    var penSaturation = penHsl.s;
 
     // Reduce the bottom range of the luminance to avoid complete black
-    double luminance = penHsl.l * .9 + 0.1;
+    var luminance = penHsl.l * .9 + 0.1;
 
     _uiBackgroundColor =
         isDark ? TinyColor(Color(0xCC555555)) : TinyColor(Color(0xCCCCCCCC));
@@ -257,8 +257,7 @@ class ColorState extends ChangeNotifier with Persistable {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    ColorStateRehydrationResult result =
-        await ColorStatePersistor.rehydrate(db, this);
+    var result = await ColorStatePersistor.rehydrate(db, this);
 
     _availablePenColors = result.availablePenColors;
     _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);

@@ -3,7 +3,6 @@ import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
@@ -13,7 +12,7 @@ import 'package:inspiral/state/state.dart';
 Future<Iterable<Persistable>> initializeAllStateSingletons(
     BuildContext context) async {
   // The initial angle of the rotating gear, relative to the fixed gear
-  double initialAngle = pi / 2;
+  var initialAngle = pi / 2;
 
   // Initialize all the state singletons
   final progress = ProgressState.init();
@@ -83,14 +82,14 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     colorPicker
   ];
 
-  Database db = await getDatabase();
-  for (Persistable stateObject in allStateObjects) {
+  var db = await getDatabase();
+  for (var stateObject in allStateObjects) {
     await stateObject.rehydrate(db, context);
   }
-  db.close();
+  await db.close();
 
   await Purchases.setDebugLogsEnabled(settings.debug);
-  await Purchases.setup("QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz");
+  await Purchases.setup('QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz');
 
   return allStateObjects;
 }

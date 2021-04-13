@@ -21,7 +21,7 @@ class RotatingGearStateRehydrationResult
 
   @override
   String toString() {
-    return "RotatingGearStateRehydrationResult(angle: $angle, definition: $definition, isVisible: $isVisible, activeHole: $activeHole)";
+    return 'RotatingGearStateRehydrationResult(angle: $angle, definition: $definition, isVisible: $isVisible, activeHole: $activeHole)';
   }
 }
 
@@ -42,11 +42,11 @@ class RotatingGearStatePersistor {
 
     // Defaulting to circle24 just in case we didn't find a match in `allGears`.
     // This _should_ never happen.
-    GearDefinition definition =
+    var definition =
         allGears[state[Schema.state.rotatingGearDefinitionId]] ?? circle24;
 
     return RotatingGearStateRehydrationResult(
-        angle: state[Schema.state.rotatingGearAngle],
+        angle: state[Schema.state.rotatingGearAngle] as double,
         definition: definition,
         isVisible: (state[Schema.state.gearsAreVisible] as int).toBool(),
         activeHole: definition.holes.firstWhere(

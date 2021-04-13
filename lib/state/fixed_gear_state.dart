@@ -34,9 +34,9 @@ class FixedGearState extends BaseGearState {
   DragLineState dragLine;
   InkState ink;
 
-  gearPointerMove(PointerMoveEvent event) {
+  void gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
-      final Offset newPosition =
+      final newPosition =
           (canvas.pixelToCanvasPosition(event.position) - dragOffset)
               .clamp(dragBounds);
 
@@ -48,8 +48,8 @@ class FixedGearState extends BaseGearState {
 
   /// Swaps the current fixed gear for a new one
   void selectNewGear(GearDefinition newGear) {
-    this.definition = newGear;
-    this.rotatingGear.initializePosition();
+    definition = newGear;
+    rotatingGear.initializePosition();
     ink.finishLine();
   }
 
@@ -60,8 +60,7 @@ class FixedGearState extends BaseGearState {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    FixedGearStateRehydrationResult result =
-        await FixedGearStatePersistor.rehydrate(db, this);
+    var result = await FixedGearStatePersistor.rehydrate(db, this);
 
     definition = result.definition;
     isVisible = result.isVisible;

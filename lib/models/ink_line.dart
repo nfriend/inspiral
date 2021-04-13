@@ -76,7 +76,7 @@ class InkLine {
 
   /// Add points to this line's list of points and its path
   void addPoints(List<Offset> pointsToAdd) {
-    for (Offset point in pointsToAdd) {
+    for (var point in pointsToAdd) {
       // If we haven't yet start a line segment, start one now.
       // Side note: because of this, it's always safe to call `.last` below.
       if (_points.isEmpty) {
@@ -89,17 +89,17 @@ class InkLine {
       // (moving from positive to negative, or vice versa), we begin a new path.
       // Idea from: https://stackoverflow.com/a/47141411/1063392
       if (_points.last.length > 1) {
-        Offset penultimatePoint = _points.last[_points.last.length - 2];
-        Offset lastPoint = _points.last[_points.last.length - 1];
+        var penultimatePoint = _points.last[_points.last.length - 2];
+        var lastPoint = _points.last[_points.last.length - 1];
 
         // The last two points were trending negative, but the new point
         // takes us in a positive direction
-        bool isTransitioningFromNegativeToPositiveHorizontalMotion =
+        var isTransitioningFromNegativeToPositiveHorizontalMotion =
             penultimatePoint.dx - lastPoint.dx >= 0 &&
                 lastPoint.dx - point.dx < 0;
 
         // The reverse of the above
-        bool isTransitioningFromPositiveToNegativeHorizontalMotion =
+        var isTransitioningFromPositiveToNegativeHorizontalMotion =
             penultimatePoint.dx - lastPoint.dx <= 0 &&
                 lastPoint.dx - point.dx > 0;
 
@@ -110,10 +110,10 @@ class InkLine {
         }
       }
 
-      List<Offset> previousPointList =
-          _points.length > 1 ? _points[_points.length - 2] : [];
-      List<Offset> currentPointList = _points.last;
-      Path currentPath = _paths.last;
+      var previousPointList =
+          _points.length > 1 ? _points[_points.length - 2] : <Offset>[];
+      var currentPointList = _points.last;
+      var currentPath = _paths.last;
 
       if (currentPointList.isEmpty) {
         // We haven't added any points to the current line segment
@@ -130,7 +130,7 @@ class InkLine {
           // to perfectly align with the previous line. But this is such
           // a small issue, it doesn't seem worth the extra complexity.
 
-          Offset lastPointOfPreviousLine = previousPointList.last;
+          var lastPointOfPreviousLine = previousPointList.last;
 
           currentPointList.add(lastPointOfPreviousLine);
           currentPath.moveTo(
@@ -180,12 +180,14 @@ class InkLine {
     _pointCount = _points.fold(0, (sum, points) => sum + points.length);
   }
 
+  @override
   bool operator ==(Object other) =>
       other is InkLine &&
       other.color == color &&
       other.strokeWidth == strokeWidth &&
       listEquals(other.paths, paths);
 
+  @override
   int get hashCode =>
       hash3(color.hashCode, strokeWidth.hashCode, paths.hashCode);
 }

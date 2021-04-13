@@ -12,7 +12,7 @@ class StrokeSelectorThumbnail extends StatelessWidget {
   final bool isActive;
   final String package;
   final String entitlement;
-  final Function onStrokeTap;
+  final void Function() onStrokeTap;
 
   StrokeSelectorThumbnail(
       {@required this.width,
@@ -24,28 +24,27 @@ class StrokeSelectorThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TinyColor themeButtonColor =
+    final themeButtonColor =
         context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
-    final TinyColor uiTextColor =
+    final uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
-    final TinyColor activeColor =
+    final activeColor =
         context.select<ColorState, TinyColor>((colors) => colors.activeColor);
-    final bool isDark =
-        context.select<ColorState, bool>((colors) => colors.isDark);
-    final BorderRadius borderRadius = BorderRadius.all(Radius.circular(5.0));
+    final isDark = context.select<ColorState, bool>((colors) => colors.isDark);
+    final borderRadius = BorderRadius.all(Radius.circular(5.0));
 
-    Color buttonColor = isActive ? activeColor.color : themeButtonColor.color;
+    var buttonColor = isActive ? activeColor.color : themeButtonColor.color;
 
     Widget line;
     if (style == StrokeStyle.normal) {
-      Color lineColor = uiTextColor.color;
+      var lineColor = uiTextColor.color;
       if (isActive) {
         lineColor = isDark ? Colors.black : Colors.white;
       }
 
       line = Container(width: width, color: lineColor);
     } else {
-      Color airbrushColor = Colors.black87;
+      var airbrushColor = Colors.black87;
       if ((isDark && !isActive) || (!isDark && isActive)) {
         airbrushColor = Colors.white70;
       }

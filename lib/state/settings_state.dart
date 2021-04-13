@@ -51,8 +51,7 @@ class SettingsState extends ChangeNotifier with Persistable {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    SettingsStateRehydrationResult result =
-        await SettingsStatePersistor.rehydrate(db, this);
+    var result = await SettingsStatePersistor.rehydrate(db, this);
 
     includeBackgroundWhenSaving = result.includeBackgroundWhenSaving;
     closeDrawingToolsDrawerOnDrag = result.closeDrawingToolsDrawerOnDrag;

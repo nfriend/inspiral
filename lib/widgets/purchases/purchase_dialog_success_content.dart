@@ -43,13 +43,12 @@ class _PurchaseDialogSuccessContentState
 
   @override
   Widget build(BuildContext context) {
-    final PurchasesState purchases =
-        Provider.of<PurchasesState>(context, listen: false);
-    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+    final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final colors = Provider.of<ColorState>(context, listen: false);
 
-    final Color orLineColor = colors.isDark ? Colors.white24 : Colors.black26;
+    final orLineColor = colors.isDark ? Colors.white24 : Colors.black26;
 
-    final ButtonStyle _cancelButtonStyle = ButtonStyle(
+    final _cancelButtonStyle = ButtonStyle(
         shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
         foregroundColor: MaterialStateProperty.resolveWith(
             (states) => colors.isDark ? Colors.white70 : Colors.black87));
@@ -65,7 +64,7 @@ class _PurchaseDialogSuccessContentState
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text("Unlock", textAlign: TextAlign.center),
+                          Text('Unlock', textAlign: TextAlign.center),
                           Padding(
                               padding: EdgeInsets.only(top: 2.0, bottom: 5.0),
                               child: Text(widget.requestedPackage.product.title,
@@ -78,7 +77,7 @@ class _PurchaseDialogSuccessContentState
                               child: RichText(
                                   textAlign: TextAlign.center,
                                   text: TextSpan(
-                                      text: "for ",
+                                      text: 'for ',
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
                                         TextSpan(
@@ -86,7 +85,7 @@ class _PurchaseDialogSuccessContentState
                                                 .product.priceString,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold)),
-                                        TextSpan(text: "?")
+                                        TextSpan(text: '?')
                                       ]))),
                           ElevatedButton(
                               style: _buttonStyle,
@@ -103,7 +102,7 @@ class _PurchaseDialogSuccessContentState
                                 });
                               },
                               child: Text(
-                                  "Unlock ${widget.requestedPackage.product.title}")),
+                                  'Unlock ${widget.requestedPackage.product.title}')),
                           Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Row(
@@ -115,7 +114,7 @@ class _PurchaseDialogSuccessContentState
                                       padding: EdgeInsets.fromLTRB(
                                           5.0, 0.0, 5.0, 2.0),
                                       child: Text(
-                                        "or",
+                                        'or',
                                         style: TextStyle(
                                             fontStyle: FontStyle.italic),
                                       )),
@@ -124,7 +123,7 @@ class _PurchaseDialogSuccessContentState
                                           height: 1, color: orLineColor))
                                 ],
                               )),
-                          Text("Unlock", textAlign: TextAlign.center),
+                          Text('Unlock', textAlign: TextAlign.center),
                           Padding(
                               padding: EdgeInsets.only(top: 2.0, bottom: 5.0),
                               child: GradientText(
@@ -140,7 +139,7 @@ class _PurchaseDialogSuccessContentState
                           RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                  text: "for ",
+                                  text: 'for ',
                                   style: DefaultTextStyle.of(context).style,
                                   children: <TextSpan>[
                                     TextSpan(
@@ -148,7 +147,7 @@ class _PurchaseDialogSuccessContentState
                                             .priceString,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
-                                    TextSpan(text: "?")
+                                    TextSpan(text: '?')
                                   ])),
                           Padding(
                               padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -168,10 +167,6 @@ class _PurchaseDialogSuccessContentState
                                 ],
                               ))),
                           GradientButton(
-                            child: Text(
-                              "Unlock ${widget.everythingPackage.product.title}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
                             increaseWidthBy: double.infinity,
                             callback: () async {
                               setState(() {
@@ -189,6 +184,10 @@ class _PurchaseDialogSuccessContentState
                             elevation: 10.0,
                             shadowColor:
                                 Gradients.jShine.colors.last.withOpacity(0.25),
+                            child: Text(
+                              'Unlock ${widget.everythingPackage.product.title}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Padding(
                               padding: EdgeInsets.only(top: 10.0),
@@ -198,7 +197,7 @@ class _PurchaseDialogSuccessContentState
                                     Navigator.of(context).pop();
                                   },
                                   child: Text(
-                                    "Cancel",
+                                    'Cancel',
                                   )))
                         ],
                       )),

@@ -42,8 +42,7 @@ class ColorPickerState extends ChangeNotifier with Persistable {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    ColorPickerStateRehydrationResult result =
-        await ColorPickerStatePersistor.rehydrate(db, this);
+    var result = await ColorPickerStatePersistor.rehydrate(db, this);
 
     _lastSelectedCustomPenColor = result.lastSelectedPenColor;
     _lastSelectedCustomCanvasColor = result.lastSelectedCanvasColor;

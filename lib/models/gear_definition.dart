@@ -64,14 +64,14 @@ class GearDefinition {
 
     // This represents the "unrounded" index that we should
     // select from the array.
-    double contactPointIndexUnrounded = points.length * (tooth / toothCount);
+    var contactPointIndexUnrounded = points.length * (tooth / toothCount);
 
     // Find the two closest ContactPoints
     // Note: These two indices will usually be different (offset by 1),
     // _except_ if `contactPointIndexUnrounded` exactly equals an integer.
-    int contactPointLowerIndex =
+    var contactPointLowerIndex =
         contactPointIndexUnrounded.floor() % points.length;
-    int contactPointUpperIndex =
+    var contactPointUpperIndex =
         contactPointIndexUnrounded.ceil() % points.length;
 
     // Rotating gears "spin" in the opposite direction as fixed gears,
@@ -83,16 +83,16 @@ class GearDefinition {
 
     // Perform a weighted average of the two ContactPoints
     // to get our final ContactPoint
-    ContactPoint lowerPoint = points[contactPointLowerIndex];
-    ContactPoint upperPoint = points[contactPointUpperIndex];
+    var lowerPoint = points[contactPointLowerIndex];
+    var upperPoint = points[contactPointUpperIndex];
 
     // Find the weight that should be applied to each point.
     // For example, if `contactPointIndexUnrounded` is 12.25,
     // we want ContactPoint[12] to be heavier weighted (.75, to be exact),
     // than ContactPoint[13] (.25).
-    double lowerWeight =
+    var lowerWeight =
         contactPointIndexUnrounded.ceil() - contactPointIndexUnrounded;
-    double upperWeight = 1 - lowerWeight;
+    var upperWeight = 1 - lowerWeight;
 
     return ContactPoint.weightedAverage([
       Tuple2<ContactPoint, double>(lowerPoint, lowerWeight),

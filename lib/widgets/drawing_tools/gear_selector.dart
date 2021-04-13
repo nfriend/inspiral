@@ -10,22 +10,20 @@ import 'package:inspiral/models/gears/gears.dart';
 class GearSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final GearDefinition rotatingGearDefinition =
+    final rotatingGearDefinition =
         context.select<RotatingGearState, GearDefinition>(
             (rotatingGear) => rotatingGear.definition);
-    final RotatingGearState rotatingGear =
-        Provider.of<RotatingGearState>(context, listen: false);
-    final GearDefinition fixedGearDefinition =
-        context.select<FixedGearState, GearDefinition>(
-            (fixedGear) => fixedGear.definition);
+    final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
+    final fixedGearDefinition = context.select<FixedGearState, GearDefinition>(
+        (fixedGear) => fixedGear.definition);
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
 
-    final Iterable<GearDefinition> onlyGearsWithHoles =
-        allGears.values.where((gear) => gear.holes.length > 0);
+    final onlyGearsWithHoles =
+        allGears.values.where((gear) => gear.holes.isNotEmpty);
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(
-          storageKey: "fixedGears",
+          storageKey: 'fixedGears',
           label: 'FIXED',
           children: [
             for (var gear in allGears.values)
@@ -35,7 +33,7 @@ class GearSelector extends StatelessWidget {
                   onGearTap: () => fixedGear.selectNewGear(gear))
           ]),
       SelectionrRowDefinition(
-          storageKey: "rotatingGears",
+          storageKey: 'rotatingGears',
           label: 'ROTATING',
           children: [
             for (var gear in onlyGearsWithHoles)

@@ -22,7 +22,7 @@ class ColorStateRehydrationResult {
 
 class ColorStatePersistor {
   static void persist(Batch batch, ColorState colors) {
-    Uuid uuid = Uuid();
+    var uuid = Uuid();
 
     // Remove references to avoid foreign key constraint errors below
     batch.update(Schema.state.toString(), {
@@ -36,10 +36,10 @@ class ColorStatePersistor {
 
     String activePenColorId, activeCanvasColorId;
 
-    for (int i = 0; i < colors.availablePenColors.length; i++) {
-      TinyColor color = colors.availablePenColors[i];
+    for (var i = 0; i < colors.availablePenColors.length; i++) {
+      var color = colors.availablePenColors[i];
 
-      String rowId = uuid.v4();
+      var rowId = uuid.v4();
       batch.insert(Schema.colors.toString(), {
         Schema.colors.id: rowId,
         Schema.colors.value: color.toHexString(),
@@ -52,10 +52,10 @@ class ColorStatePersistor {
       }
     }
 
-    for (int i = 0; i < colors.availableCanvasColors.length; i++) {
-      TinyColor color = colors.availableCanvasColors[i];
+    for (var i = 0; i < colors.availableCanvasColors.length; i++) {
+      var color = colors.availableCanvasColors[i];
 
-      String rowId = uuid.v4();
+      var rowId = uuid.v4();
       batch.insert(Schema.colors.toString(), {
         Schema.colors.id: rowId,
         Schema.colors.value: color.toHexString(),
@@ -76,14 +76,15 @@ class ColorStatePersistor {
 
   static Future<ColorStateRehydrationResult> rehydrate(
       Database db, ColorState colors) async {
-    List<TinyColor> availablePenColors = [];
-    List<TinyColor> availableCanvasColors = [];
+    var availablePenColors = <TinyColor>[];
+    var availableCanvasColors = <TinyColor>[];
 
     final List<Map<String, dynamic>> rows = await db
         .query(Schema.colors.toString(), orderBy: '"${Schema.colors.order}"');
 
-    for (Map<String, dynamic> attrs in rows) {
-      TinyColor newColor = tinyColorFromHexString(attrs[Schema.colors.value]);
+    for (var attrs in rows) {
+      var newColor =
+          tinyColorFromHexString(attrs[Schema.colors.value] as String);
 
       if (attrs[Schema.colors.type] == ColorsTableType.pen) {
         availablePenColors.add(newColor);
@@ -102,10 +103,10 @@ class ColorStatePersistor {
       LEFT JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
     ''')).first;
 
-    TinyColor penColor = availablePenColors.firstWhere(
+    var penColor = availablePenColors.firstWhere(
         (color) => color.toHexString() == state[Schema.state.selectedPenColor],
         orElse: () => TinyColor(Colors.transparent));
-    TinyColor canvasColor = availableCanvasColors.firstWhere(
+    var canvasColor = availableCanvasColors.firstWhere(
         (color) =>
             color.toHexString() == state[Schema.state.selectedCanvasColor],
         orElse: () => TinyColor(Colors.white));

@@ -11,8 +11,8 @@ class ModalProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProgressState progress = Provider.of<ProgressState>(context);
-    final TinyColor primaryColor =
+    final progress = Provider.of<ProgressState>(context);
+    final primaryColor =
         context.select<ColorState, TinyColor>((colors) => colors.primaryColor);
 
     if (!progress.isLoading) {
@@ -22,7 +22,7 @@ class ModalProgress extends StatelessWidget {
     Animation<Color> indicatorColor =
         AlwaysStoppedAnimation<Color>(primaryColor.color);
 
-    List<Widget> columnChildren = [];
+    var columnChildren = <Widget>[];
 
     if (!isBlank(progress.loadingMessage)) {
       columnChildren.add(Padding(

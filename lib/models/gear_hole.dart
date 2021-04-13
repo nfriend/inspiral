@@ -21,11 +21,13 @@ class GearHole {
     return Offset(cos(angle), -sin(angle)) * distance * scaleFactor;
   }
 
+  @override
   bool operator ==(Object other) =>
       other is GearHole &&
       other.name == name &&
       other.angle == angle &&
       other.distance == distance;
 
+  @override
   int get hashCode => hash3(name.hashCode, angle.hashCode, distance.hashCode);
 }

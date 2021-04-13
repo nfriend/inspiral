@@ -13,11 +13,11 @@ class DynamicTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
 
-    TextTheme textTheme = colors.uiBackgroundColor.isDark()
+    var textTheme = colors.uiBackgroundColor.isDark()
         ? Typography.whiteHelsinki
         : Typography.blackHelsinki;
 
-    ButtonStyle buttonStyle = ButtonStyle(
+    var buttonStyle = ButtonStyle(
         shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
         backgroundColor: MaterialStateProperty.resolveWith(
             (states) => colors.buttonColor.color),
@@ -26,8 +26,7 @@ class DynamicTheme extends StatelessWidget {
         overlayColor: MaterialStateProperty.resolveWith(
             (states) => colors.splashColor.color));
 
-    TextButtonThemeData textButtonTheme =
-        TextButtonThemeData(style: buttonStyle);
+    var textButtonTheme = TextButtonThemeData(style: buttonStyle);
 
     return Theme(
         data: ThemeData(

@@ -61,7 +61,7 @@ class CanvasState extends ChangeNotifier with Persistable {
   /// @param pixelPosition The pixel coordinates to translate into canvas
   /// coordinates
   Offset pixelToCanvasPosition(Offset pixelPosition) {
-    Matrix4 unprojection =
+    var unprojection =
         Matrix4.tryInvert(PointerEvent.removePerspectiveTransform(transform));
 
     if (unprojection == null) {
@@ -86,7 +86,7 @@ class CanvasState extends ChangeNotifier with Persistable {
   /// empty canvas is moved.
   void appBackgroundOrCanvasMove(PointerMoveEvent event) {
     if (pointers.count > 0) {
-      transform = pointers.getTransform() * transform;
+      transform = pointers.getTransform() * transform as Matrix4;
     }
   }
 
@@ -104,8 +104,7 @@ class CanvasState extends ChangeNotifier with Persistable {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    CanvasStateRehydrationResult result =
-        await CanvasStatePersistor.rehydrate(db, context, this);
+    var result = await CanvasStatePersistor.rehydrate(db, context, this);
 
     _transform = result.transform;
   }

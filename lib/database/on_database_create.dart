@@ -2,7 +2,7 @@ import 'package:sqflite/sqlite_api.dart';
 import 'package:inspiral/database/schema.dart';
 
 Future<void> onDatabaseCreate(Database db, int version) async {
-  Batch batch = db.batch();
+  var batch = db.batch();
   _createTableColorsV1(batch);
   _createTableStateV1(batch);
   _createTableInkLinesV1(batch);

@@ -8,7 +8,7 @@ import 'package:tinycolor/tinycolor.dart';
 class _DrawingToolsButton {
   final Icon icon;
   final String text;
-  final Function onPressed;
+  final void Function() onPressed;
   final DrawerTab tab;
 
   _DrawingToolsButton({this.icon, this.text, this.onPressed, this.tab});
@@ -17,25 +17,25 @@ class _DrawingToolsButton {
 class DrawingTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final TinyColor activeColor =
+    final activeColor =
         context.select<ColorState, TinyColor>((colors) => colors.activeColor);
-    final TinyColor activeTextColor = context
+    final activeTextColor = context
         .select<ColorState, TinyColor>((colors) => colors.activeTextColor);
-    final TinyColor uiBackgroundColor = context
+    final uiBackgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.uiBackgroundColor);
-    final DrawerTab activeTab = context.select<SelectorDrawerState, DrawerTab>(
+    final activeTab = context.select<SelectorDrawerState, DrawerTab>(
         (selectorDrawer) => selectorDrawer.activeTab);
-    final bool selectorDrawerIsOpen = context.select<SelectorDrawerState, bool>(
+    final selectorDrawerIsOpen = context.select<SelectorDrawerState, bool>(
         (selectorDrawer) => selectorDrawer.isOpen);
     final selectorDrawer =
         Provider.of<SelectorDrawerState>(context, listen: false);
-    final bool isLandscape =
+    final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    double margin = 2.5;
-    double iconSize = 18;
+    var margin = 2.5;
+    var iconSize = 18.0;
 
-    List<_DrawingToolsButton> buttons = [
+    var buttons = <_DrawingToolsButton>[
       _DrawingToolsButton(
           icon: Icon(Icons.build, size: iconSize),
           text: 'TOOLS',
@@ -56,7 +56,7 @@ class DrawingTools extends StatelessWidget {
               tabToSelect: DrawerTab.gears)),
     ];
 
-    ButtonStyle activeStyle = ButtonStyle(
+    var activeStyle = ButtonStyle(
         backgroundColor:
             MaterialStateProperty.resolveWith((states) => activeColor.color),
         foregroundColor: MaterialStateProperty.resolveWith(

@@ -19,14 +19,13 @@ class AndroidBackButtonHandler extends StatelessWidget {
   /// to specify multiple WillPopScopes.
   /// See https://github.com/flutter/flutter/issues/47088.
   Future<bool> _onWillPop(BuildContext context) async {
-    final PurchasesState purchases =
-        Provider.of<PurchasesState>(context, listen: false);
-    final SelectorDrawerState selectorDrawer =
+    final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final selectorDrawer =
         Provider.of<SelectorDrawerState>(context, listen: false);
-    final ColorState colors = Provider.of<ColorState>(context, listen: false);
+    final colors = Provider.of<ColorState>(context, listen: false);
 
     // If the pen color delete buttons are shown, hide the delete buttons
-    bool isEntitledToDeletePenColors =
+    var isEntitledToDeletePenColors =
         await purchases.isEntitledTo(Entitlement.custompencolors);
     if (isEntitledToDeletePenColors && colors.showPenColorDeleteButtons) {
       colors.showPenColorDeleteButtons = false;
@@ -34,7 +33,7 @@ class AndroidBackButtonHandler extends StatelessWidget {
     }
 
     // Same as above, but for the canvas color delete buttons
-    bool isEntitledToDeleteCanvasColors =
+    var isEntitledToDeleteCanvasColors =
         await purchases.isEntitledTo(Entitlement.custombackgroundcolors);
     if (isEntitledToDeleteCanvasColors &&
         colors.showCanvasColorDeleteButtons &&

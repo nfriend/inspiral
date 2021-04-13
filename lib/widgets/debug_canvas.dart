@@ -125,12 +125,11 @@ class _DebugCanvasPainter extends CustomPainter {
       ..strokeWidth = 1 * scaleFactor
       ..strokeCap = StrokeCap.round;
 
-    final Offset endPostion = contactPoint.position;
+    final endPostion = contactPoint.position;
 
     // Draw the main stem of the arrow
-    double angle = contactPoint.direction;
-    Offset startPosition =
-        endPostion - Offset(cos(angle) * 50, -sin(angle) * 50);
+    var angle = contactPoint.direction;
+    var startPosition = endPostion - Offset(cos(angle) * 50, -sin(angle) * 50);
     canvas.drawLine(startPosition, endPostion, linePaint);
 
     // Draw the arrow head
@@ -200,7 +199,7 @@ class DebugCanvas extends StatelessWidget {
     final params = _DebugCanvasPainterParams()
       ..fixedGearPosition = fixedGear.position
       ..rotatingGearPosition = rotatingGear.position
-      ..logMessage = "# of points: ${ink.currentPointCount}";
+      ..logMessage = '# of points: ${ink.currentPointCount}';
 
     if (rotatingGear.isDragging) {
       params

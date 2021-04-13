@@ -50,9 +50,9 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    bool darkMode = widget.colors.isDark;
-    bool isSelectedColorOpaqueish = _selectedColor.alpha > 100;
-    bool selectedColorIsDark = TinyColor(_selectedColor).isDark();
+    var darkMode = widget.colors.isDark;
+    var isSelectedColorOpaqueish = _selectedColor.alpha > 100;
+    var selectedColorIsDark = TinyColor(_selectedColor).isDark();
 
     // Ensure the text of the colored button is always legible
     Color selectButtonTextColor;
@@ -66,12 +66,12 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
           : Colors.black;
     }
 
-    final ButtonStyle _cancelButtonStyle = ButtonStyle(
+    final _cancelButtonStyle = ButtonStyle(
         shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
         foregroundColor: MaterialStateProperty.resolveWith(
             (states) => darkMode ? Colors.white : Colors.black));
 
-    final ButtonStyle _selectButtonStyle = ButtonStyle(
+    final _selectButtonStyle = ButtonStyle(
         shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
         backgroundColor:
             MaterialStateProperty.resolveWith((states) => _selectedColor));
@@ -111,28 +111,29 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             }),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: OutlinedButton(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: OutlinedButton(
                 onPressed: () {
                   widget.onSelect(_selectedColor);
                   Navigator.of(context).pop();
                 },
+                style: _selectButtonStyle,
                 child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      "SELECT $colorName",
+                      'SELECT $colorName',
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: selectButtonTextColor),
                     )),
-                style: _selectButtonStyle),
-          ),
+              )),
           Padding(
               padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
               child: OutlinedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text("CANCEL"),
-                  style: _cancelButtonStyle)),
+                onPressed: () => Navigator.of(context).pop(),
+                style: _cancelButtonStyle,
+                child: Text('CANCEL'),
+              )),
         ])));
   }
 }

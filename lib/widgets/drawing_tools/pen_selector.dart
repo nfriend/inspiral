@@ -64,22 +64,21 @@ final List<_StrokeAndStyle> _strokeOptions = [
 class PenSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ColorState colors = Provider.of<ColorState>(context);
-    final ColorPickerState colorPicker = Provider.of<ColorPickerState>(context);
-    final PurchasesState purchases =
-        Provider.of<PurchasesState>(context, listen: false);
-    final StrokeStyle strokeStyle =
+    final colors = Provider.of<ColorState>(context);
+    final colorPicker = Provider.of<ColorPickerState>(context);
+    final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final strokeStyle =
         context.select<StrokeState, StrokeStyle>((stroke) => stroke.style);
-    final double strokeWidth =
+    final strokeWidth =
         context.select<StrokeState, double>((stroke) => stroke.width);
-    final StrokeState stroke = Provider.of<StrokeState>(context, listen: false);
+    final stroke = Provider.of<StrokeState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(
-          storageKey: "penStyle",
+          storageKey: 'penStyle',
           label: 'STYLE',
           children: _strokeOptions.map((_StrokeAndStyle options) {
-            final Function setStrokeIfPurchased = ifPurchased(
+            final setStrokeIfPurchased = ifPurchased(
                 context: context,
                 entitlement: options.entitlement,
                 package: options.package,
@@ -100,7 +99,7 @@ class PenSelector extends StatelessWidget {
                 });
           }).toList()),
       SelectionrRowDefinition(
-          storageKey: "penColor",
+          storageKey: 'penColor',
           label: 'COLOR',
           children: [
             NoColorThumbnail(
@@ -114,7 +113,7 @@ class PenSelector extends StatelessWidget {
                   future: purchases.isEntitledTo(Entitlement.custompencolors),
                   builder:
                       (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                    bool showDeleteButton = snapshot.hasData &&
+                    var showDeleteButton = snapshot.hasData &&
                         snapshot.data &&
                         colors.showPenColorDeleteButtons;
 
@@ -132,7 +131,7 @@ class PenSelector extends StatelessWidget {
                         showDeleteButton: showDeleteButton);
                   }),
             NewColorThumbnail(
-                title: "New pen color",
+                title: 'New pen color',
                 entitlement: Entitlement.custompencolors,
                 package: Package.custompencolors,
                 showOpacity: true,

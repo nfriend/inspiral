@@ -14,10 +14,10 @@ import 'package:tinycolor/tinycolor.dart';
 class CanvasContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final CanvasState canvas = Provider.of<CanvasState>(context, listen: false);
-    final bool debug =
+    final canvas = Provider.of<CanvasState>(context, listen: false);
+    final debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
-    final TinyColor canvasShadowColor = context
+    final canvasShadowColor = context
         .select<ColorState, TinyColor>((colors) => colors.canvasShadowColor);
     final pointers = Provider.of<PointersState>(context, listen: false);
 

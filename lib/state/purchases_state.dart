@@ -35,7 +35,7 @@ class PurchasesState extends ChangeNotifier with Persistable {
       return true;
     }
 
-    PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
+    var purchaserInfo = await Purchases.getPurchaserInfo();
     return purchaserInfo.entitlements.all[entitlement]?.isActive == true;
   }
 
@@ -47,18 +47,18 @@ class PurchasesState extends ChangeNotifier with Persistable {
       await Purchases.purchasePackage(packageToBuy);
       return true;
     } on PlatformException catch (e) {
-      PurchasesErrorCode errorCode = PurchasesErrorHelper.getErrorCode(e);
+      var errorCode = PurchasesErrorHelper.getErrorCode(e);
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
         return false;
       }
 
-      throw e;
+      rethrow;
     }
   }
 
   /// Gets the current offering
   Future<Offering> getCurrentOffering() async {
-    Offerings offerings = await Purchases.getOfferings();
+    var offerings = await Purchases.getOfferings();
     if (offerings.current == null ||
         offerings.current.availablePackages.isEmpty) {
       throw 'Offering returned no packages';

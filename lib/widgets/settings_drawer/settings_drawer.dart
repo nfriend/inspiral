@@ -20,8 +20,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     // custom canvas colors. If they do, show the "Reset colors"
     // option (it doesn't make sense to show this if they can't
     // modify the list of colors).
-    PurchasesState purchases =
-        Provider.of<PurchasesState>(context, listen: false);
+    var purchases = Provider.of<PurchasesState>(context, listen: false);
     _entitlementCheckFuture = Future.wait([
       purchases.isEntitledTo(Entitlement.custompencolors),
       purchases.isEntitledTo(Entitlement.custombackgroundcolors)
@@ -32,17 +31,17 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    ColorState colors = Provider.of<ColorState>(context, listen: false);
-    SettingsState settings = Provider.of<SettingsState>(context);
+    var colors = Provider.of<ColorState>(context, listen: false);
+    var settings = Provider.of<SettingsState>(context);
 
-    List<Widget> regularSettingsItems = [
+    var regularSettingsItems = <Widget>[
       ToggleListItem(
-          text: "Include background color when saving or sharing",
+          text: 'Include background color when saving or sharing',
           value: settings.includeBackgroundWhenSaving,
           onChanged: (bool newValue) =>
               settings.includeBackgroundWhenSaving = newValue),
       ToggleListItem(
-          text: "Close tools drawer when drawing",
+          text: 'Close tools drawer when drawing',
           value: settings.closeDrawingToolsDrawerOnDrag,
           onChanged: (bool newValue) =>
               settings.closeDrawingToolsDrawerOnDrag = newValue),
@@ -51,7 +50,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.hasData && snapshot.data) {
               return ListTile(
-                  title: Text("Reset pen and canvas colors"),
+                  title: Text('Reset pen and canvas colors'),
                   onTap: () {
                     colors.reset();
                     Navigator.of(context).pop();
@@ -62,12 +61,12 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           })
     ];
 
-    List<Widget> debugSettingsItems = [];
+    var debugSettingsItems = <Widget>[];
     if (settings.debug) {
       debugSettingsItems = [
         Divider(),
         ListTile(
-          title: Text("Delete DB file"),
+          title: Text('Delete DB file'),
           onTap: () async {
             await deleteDatabase();
             Navigator.of(context).pop();
@@ -92,7 +91,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         children: [
                           Expanded(
                               child: Text(
-                            "Settings",
+                            'Settings',
                             style: TextStyle(fontSize: 20.0),
                           )),
                           IconButton(

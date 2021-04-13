@@ -6,7 +6,7 @@ import 'package:inspiral/widgets/purchases/purchase_dialog_error_content.dart';
 import 'package:inspiral/widgets/purchases/purchase_dialog_success_content.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:inspiral/models/package.dart' as InspiralPackage;
+import 'package:inspiral/models/package.dart' as inspiral_package;
 
 class PurchaseDialog extends StatefulWidget {
   /// The current PurchasesState object. This must be manually passed since
@@ -62,17 +62,16 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
           future: _offeringFuture,
           builder: (BuildContext context, AsyncSnapshot<Offering> snapshot) {
             if (snapshot.hasData) {
-              final Offering offering = snapshot.data;
+              final offering = snapshot.data;
 
-              Iterable<Package> allIndividuallyPurchasablePackages =
+              var allIndividuallyPurchasablePackages =
                   offering.availablePackages.where((p) =>
-                      p.identifier != InspiralPackage.Package.everything);
+                      p.identifier != inspiral_package.Package.everything);
 
-              Package everythingPackage =
-                  offering.getPackage(InspiralPackage.Package.everything);
+              var everythingPackage =
+                  offering.getPackage(inspiral_package.Package.everything);
 
-              Package requestedPackage =
-                  offering.getPackage(this.widget.package);
+              var requestedPackage = offering.getPackage(widget.package);
 
               return PurchaseDialogSuccessContent(
                 requestedPackage: requestedPackage,
@@ -96,12 +95,12 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
   /// Handles both the individual product button and the "everything" button
   Future<void> _purchaseButtonPressed(
       PurchasesState purchases, Package packageToBuy) async {
-    bool productHasBeenPurchased = false;
+    var productHasBeenPurchased = false;
     try {
       productHasBeenPurchased = await purchases.purchasePackage(packageToBuy);
     } catch (error) {
       setState(() {
-        this._showErrorMessage = true;
+        _showErrorMessage = true;
       });
     }
 

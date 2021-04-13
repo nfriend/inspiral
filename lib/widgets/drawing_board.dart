@@ -19,16 +19,16 @@ class DrawingBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pointers = Provider.of<PointersState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context, listen: false);
-    final TinyColor appBackgroundColor = context
+    final appBackgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.appBackgroundColor);
-    final bool debug =
+    final debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
-    final double safePaddingTop = MediaQuery.of(context).padding.top;
-    final bool isLandscape =
+    final safePaddingTop = MediaQuery.of(context).padding.top;
+    final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
     // Translate the menu bars _almost_ off the screen
-    final double translationAmount = menuBarHeight - 6.0;
+    final translationAmount = menuBarHeight - 6.0;
 
     final Widget scaffoldBody = Listener(
         behavior: HitTestBehavior.translucent,

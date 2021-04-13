@@ -15,12 +15,12 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorState colors = Provider.of<ColorState>(context, listen: false);
-    final TinyColor buttonColor =
+    final colors = Provider.of<ColorState>(context, listen: false);
+    final buttonColor =
         context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
-    final TinyColor uiTextColor =
+    final uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
-    final BorderRadius borderRadius = BorderRadius.all(Radius.circular(5.0));
+    final borderRadius = BorderRadius.all(Radius.circular(5.0));
 
     return Padding(
         padding: EdgeInsets.all(10),

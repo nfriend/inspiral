@@ -4,8 +4,7 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 
 /// Deletes the local database file
 Future<void> deleteDatabase() async {
-  String databasePath =
-      join(await sqflite.getDatabasesPath(), localDatabaseName);
+  var databasePath = join(await sqflite.getDatabasesPath(), localDatabaseName);
 
   await sqflite.deleteDatabase(databasePath);
 }

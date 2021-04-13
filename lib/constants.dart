@@ -22,8 +22,8 @@ const int tileColumnCount = 10;
 const int tileRowCount = 10;
 
 /// The size of each tile
-final Size tileSize = new Size(
-    canvasSize.width / tileColumnCount, canvasSize.height / tileRowCount);
+final Size tileSize =
+    Size(canvasSize.width / tileColumnCount, canvasSize.height / tileRowCount);
 
 /// The size of the debug dots
 final Size debugDotSize = Size(4, 4) * scaleFactor;

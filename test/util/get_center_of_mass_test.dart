@@ -5,7 +5,7 @@ void main() {
   group('get_center_of_mass', () {
     test('returns the correct weighted average of all provided ContactPoints',
         () {
-      List<Offset> points = [
+      var points = <Offset>[
         Offset(1, 2),
         Offset(3, 4),
         Offset(5, 6),
@@ -13,7 +13,7 @@ void main() {
         Offset(9, 10),
       ];
 
-      Offset expected = Offset(5, 6);
+      var expected = Offset(5, 6);
 
       expect(getCenterOfMass(points), expected);
     });

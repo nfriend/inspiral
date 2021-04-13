@@ -9,12 +9,12 @@ void main() {
     group('weightedAverage', () {
       test('returns the correct weighted average of all provided ContactPoints',
           () {
-        ContactPoint point1 =
+        var point1 =
             ContactPoint(position: Offset(3, 6), direction: pi / 2);
-        ContactPoint point2 =
+        var point2 =
             ContactPoint(position: Offset(9, 18), direction: pi);
 
-        ContactPoint expected =
+        var expected =
             ContactPoint(position: Offset(7, 14), direction: atan2(1, -2));
 
         expect(
@@ -28,17 +28,17 @@ void main() {
       test(
           'returns the correct direction when the two directions are offset by 2*pi',
           () {
-        ContactPoint point1 = ContactPoint(position: Offset.zero, direction: 1);
-        ContactPoint point2 =
+        var point1 = ContactPoint(position: Offset.zero, direction: 1);
+        var point2 =
             ContactPoint(position: Offset.zero, direction: 2 * pi - 1);
 
-        ContactPoint actual = ContactPoint.weightedAverage([
+        var actual = ContactPoint.weightedAverage([
           Tuple2<ContactPoint, double>(point1, 1),
           Tuple2<ContactPoint, double>(point2, 1)
         ]);
 
-        double epsilon = 0.000001;
-        bool isInRange =
+        var epsilon = 0.000001;
+        var isInRange =
             actual.direction > -epsilon && actual.direction < epsilon;
         expect(isInRange, true);
       });

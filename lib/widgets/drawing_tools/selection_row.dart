@@ -23,13 +23,13 @@ class SelectionRows extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TinyColor uiTextColor =
+    final uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
-    final bool isLandscape =
+    final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    final double padding = 2.5;
+    final padding = 2.5;
 
-    TextStyle textStyle =
+    var textStyle =
         TextStyle(color: uiTextColor.color, fontWeight: FontWeight.bold);
 
     return Padding(
@@ -59,7 +59,7 @@ class SelectionRows extends StatelessWidget {
                                   itemExtent: thumbnailSize + 10.0,
                                   itemCount: def.children.length,
                                   itemBuilder: (context, index) {
-                                    Widget child = def.children[index];
+                                    var child = def.children[index];
 
                                     return isLandscape
                                         ? RotatedBox(
