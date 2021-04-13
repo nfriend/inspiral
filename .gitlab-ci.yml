@@ -1,10 +1,40 @@
-image: node:latest
+default:
+  image: cirrusci/flutter:stable
+  before_script:
+    - export PUB_CACHE=$PWD/.pub_cache/
+    - flutter pub version
+    - flutter pub get
+    - flutter pub upgrade
+  cache:
+    untracked: true
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - packages/
+      - web/packages/
+      - .pub_cache/
 
 stages:
+  - verify
   - deploy
 
+test:
+  stage: verify
+  script:
+    - flutter test
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+lint:
+  stage: verify
+  script:
+    - dart analyze
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
 pages:
+  image: node:latest
   stage: deploy
+  before_script: []
   script:
     - cd landing-page
     - yarn install --frozen-lockfile
