@@ -5,7 +5,7 @@ Future<void> onDatabaseCreate(Database db, int version) async {
   Batch batch = db.batch();
   _createTableColorsV1(batch);
   _createTableStateV1(batch);
-  await batch.commit(continueOnError: false);
+  await batch.commit(continueOnError: false, noResult: true);
 }
 
 void _createTableColorsV1(Batch batch) {

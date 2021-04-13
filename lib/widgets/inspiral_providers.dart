@@ -82,7 +82,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
 
         allStateObjects.forEach((state) => state.persist(batch));
 
-        await batch.commit();
+        await batch.commit(noResult: true);
       });
 
       await db.close();
