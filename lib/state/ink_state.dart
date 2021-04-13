@@ -4,8 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class InkState extends ChangeNotifier with Persistable {
   static InkState _instance;
@@ -179,5 +181,18 @@ class InkState extends ChangeNotifier with Persistable {
     }
 
     return tilesToUpdate;
+  }
+
+  @override
+  void persist(Batch batch) {
+    InkStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db, BuildContext context) async {
+    InkStateRehydrationResult result =
+        await InkStatePersistor.rehydrate(db, this);
+
+    _lines = result.lines;
   }
 }

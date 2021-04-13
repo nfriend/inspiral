@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 class Schema {
   static const ColorsTable colors = ColorsTable();
   static const StateTable state = StateTable();
+  static const InkLinesTable inkLines = InkLinesTable();
+  static const LineSegmentsTable lineSegments = LineSegmentsTable();
+  static const PointsTable points = PointsTable();
 }
 
 class Table {
@@ -30,12 +33,14 @@ class ColorsTableType {
   static String canvas = 'canvas';
   static String lastSelectedPen = 'lastSelectedPen';
   static String lastSelectedCanvas = 'lastSelectedCanvas';
+  static String ink = 'ink';
 
   static Iterable<String> all = [
     ColorsTableType.pen,
     ColorsTableType.canvas,
     ColorsTableType.lastSelectedPen,
-    ColorsTableType.lastSelectedCanvas
+    ColorsTableType.lastSelectedCanvas,
+    ColorsTableType.ink
   ];
 }
 
@@ -73,4 +78,32 @@ class StateTable extends Table {
   final String canvasTransform_15 = 'canvasTransform_15';
   final String strokeWidth = 'strokeWidth';
   final String strokeStyle = 'strokeStyle';
+}
+
+class InkLinesTable extends Table {
+  const InkLinesTable() : super(name: 'inkLines');
+
+  final String id = 'id';
+  final String strokeWidth = 'strokeWidth';
+  final String strokeStyle = 'strokeStyle';
+  final String colorId = 'colorId';
+  final String order = 'order';
+}
+
+class LineSegmentsTable extends Table {
+  const LineSegmentsTable() : super(name: 'lineSegments');
+
+  final String id = 'id';
+  final String inkLineId = 'inkLineId';
+  final String order = 'order';
+}
+
+class PointsTable extends Table {
+  const PointsTable() : super(name: 'points');
+
+  final String id = 'id';
+  final String lineSegmentId = 'lineSegmentId';
+  final String x = 'x';
+  final String y = 'y';
+  final String order = 'order';
 }

@@ -5,6 +5,9 @@ Future<void> onDatabaseCreate(Database db, int version) async {
   Batch batch = db.batch();
   _createTableColorsV1(batch);
   _createTableStateV1(batch);
+  _createTableInkLinesV1(batch);
+  _createTableLineSegmentsV1(batch);
+  _createTablePointsV1(batch);
   await batch.commit(continueOnError: false, noResult: true);
 }
 
@@ -14,12 +17,9 @@ void _createTableColorsV1(Batch batch) {
     CREATE TABLE ${Schema.colors}(
       ${Schema.colors.id} TEXT NOT NULL PRIMARY KEY,
       ${Schema.colors.value} TEXT CHECK(LENGTH(${Schema.colors.value}) = 8) NOT NULL,
-      ${Schema.colors.type} TEXT CHECK(${Schema.colors.type} IN (
-        '${ColorsTableType.pen}',
-        '${ColorsTableType.canvas}',
-        '${ColorsTableType.lastSelectedPen}',
-        '${ColorsTableType.lastSelectedCanvas}'
-      )) NOT NULL,
+      ${Schema.colors.type} TEXT
+        CHECK(${Schema.colors.type} IN (${ColorsTableType.all.map((t) => "'$t'").join(', ')}))
+        NOT NULL,
       "${Schema.colors.order}" INTEGER NOT NULL DEFAULT 1
     )
   ''');
@@ -133,5 +133,42 @@ void _createTableStateV1(Batch batch) {
         5.0,
         'normal'
       )
+  ''');
+}
+
+void _createTableInkLinesV1(Batch batch) {
+  batch.execute('DROP TABLE IF EXISTS ${Schema.inkLines}');
+  batch.execute('''
+    CREATE TABLE ${Schema.inkLines}(
+      ${Schema.inkLines.id} TEXT NOT NULL PRIMARY KEY,
+      ${Schema.inkLines.strokeWidth} REAL NOT NULL,
+      ${Schema.inkLines.strokeStyle} TEXT CHECK(${Schema.inkLines.strokeStyle} IN ('normal', 'airbrush')) NOT NULL,
+      ${Schema.inkLines.colorId} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
+      "${Schema.inkLines.order}" INTEGER NOT NULL
+    )
+  ''');
+}
+
+void _createTableLineSegmentsV1(Batch batch) {
+  batch.execute('DROP TABLE IF EXISTS ${Schema.lineSegments}');
+  batch.execute('''
+    CREATE TABLE ${Schema.lineSegments}(
+      ${Schema.lineSegments.id} TEXT NOT NULL PRIMARY KEY,
+      ${Schema.lineSegments.inkLineId} TEXT NULL REFERENCES ${Schema.inkLines}(${Schema.inkLines.id}),
+      "${Schema.inkLines.order}" INTEGER NOT NULL
+    )
+  ''');
+}
+
+void _createTablePointsV1(Batch batch) {
+  batch.execute('DROP TABLE IF EXISTS ${Schema.points}');
+  batch.execute('''
+    CREATE TABLE ${Schema.points}(
+      ${Schema.points.id} TEXT NOT NULL PRIMARY KEY,
+      ${Schema.points.lineSegmentId} TEXT NULL REFERENCES ${Schema.lineSegments}(${Schema.lineSegments.id}),
+      ${Schema.points.x} REAL NOT NULL,
+      ${Schema.points.y} REAL NOT NULL,
+      "${Schema.inkLines.order}" INTEGER NOT NULL
+    )
   ''');
 }
