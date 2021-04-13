@@ -15,14 +15,14 @@ PODS:
     - Flutter
   - "permission_handler (5.1.0+2)":
     - Flutter
-  - Purchases (3.10.6):
-    - PurchasesCoreSwift (= 3.10.6)
-  - purchases_flutter (3.1.0):
+  - Purchases (3.10.7):
+    - PurchasesCoreSwift (= 3.10.7)
+  - purchases_flutter (3.2.1):
     - Flutter
-    - PurchasesHybridCommon (= 1.6.1)
-  - PurchasesCoreSwift (3.10.6)
-  - PurchasesHybridCommon (1.6.1):
-    - Purchases (= 3.10.6)
+    - PurchasesHybridCommon (= 1.6.2)
+  - PurchasesCoreSwift (3.10.7)
+  - PurchasesHybridCommon (1.6.2):
+    - Purchases (= 3.10.7)
   - Sentry (6.1.4):
     - Sentry/Core (= 6.1.4)
   - Sentry/Core (6.1.4)
@@ -89,10 +89,10 @@ SPEC CHECKSUMS:
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
-  Purchases: 520fdb59140fed96932a30d02a3ec04858cb541c
-  purchases_flutter: 05472ba84c83f05a138a3a657f1013f5f7143539
-  PurchasesCoreSwift: 31c2a3d7394432abbe64d46f0933835de0b33033
-  PurchasesHybridCommon: 013c8072b73e752a206779747e88c068fbf999ec
+  Purchases: b8b8fb6e856ac8166e217f6e014df894d821dda1
+  purchases_flutter: 0130970b895c903e4e0aad793dd3a4c1b70bb434
+  PurchasesCoreSwift: 8ae0f08e020f0bc97c1befa4e38a0dbc8e9732e0
+  PurchasesHybridCommon: 5f5c1c245b12fc5e8760af7d11cb10f888109a9b
   Sentry: 9d055e2de30a77685e86b219acf02e59b82091fc
   sentry_flutter: 8b2b2e1c0101ef562106b5d272d3c0c741512c01
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410

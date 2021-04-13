@@ -29,19 +29,19 @@ dependencies:
   cupertino_icons: ^1.0.1
 
   statsfl: ^1.1.0+3
-  provider: ^4.3.2+3
+  provider: ^5.0.0
   vector_math: ^2.0.8
-  tuple: ^1.0.3
+  tuple: ^2.0.0
   tinycolor: ^1.0.3
-  quiver: ^2.1.5
-  path_provider: ^1.6.27
+  quiver: ^3.0.1
+  path_provider: ^2.0.1
   uuid: ^2.2.2
   image_gallery_saver: "^1.6.8"
   path: ^1.7.0
-  permission_handler: ^5.1.0+2
-  share: ">=0.6.5+4 <2.0.0"
+  permission_handler: ^6.1.1
+  share: ^2.0.1
   open_file: ^3.0.3
-  gradient_widgets: ^0.5.1
+  gradient_widgets: ^0.6.0
   purchases_flutter: ^3.1.0
   flex_color_picker: ^2.0.0-nullsafety.4
   sqflite: ^2.0.0+3
@@ -53,7 +53,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   xml: ^4.5.1
-  ansicolor: ^1.1.1
+  ansicolor: ^2.0.1
   test: ^1.15.7
   flutter_launcher_icons: ^0.8.1
   pedantic: ^1.11.0
