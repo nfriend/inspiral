@@ -13,7 +13,9 @@ class StrokeStateRehydrationResult {
 
 class StrokeStatePersistor {
   static void persist(Batch batch, StrokeState stroke) {
-    String style = stroke.style == StrokeStyle.normal ? 'normal' : 'airbrush';
+    String style = stroke.style == StrokeStyle.normal
+        ? StrokeStyleType.normal
+        : StrokeStyleType.airbrush;
 
     batch.update(Schema.state.toString(), {
       Schema.state.strokeWidth: stroke.width,
@@ -28,7 +30,7 @@ class StrokeStatePersistor {
 
     StrokeStyle style = StrokeStyle.normal;
 
-    if (state[Schema.state.strokeStyle] == 'airbrush') {
+    if (state[Schema.state.strokeStyle] == StrokeStyleType.airbrush) {
       style = StrokeStyle.airbrush;
     }
 

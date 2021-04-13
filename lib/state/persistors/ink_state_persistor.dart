@@ -37,8 +37,9 @@ class InkStatePersistor {
       batch.insert(Schema.inkLines.toString(), {
         Schema.inkLines.id: inkLineId,
         Schema.inkLines.strokeWidth: ink.stroke.width,
-        Schema.inkLines.strokeStyle:
-            ink.stroke.style == StrokeStyle.normal ? 'normal' : 'airbrush',
+        Schema.inkLines.strokeStyle: ink.stroke.style == StrokeStyle.normal
+            ? StrokeStyleType.normal
+            : StrokeStyleType.airbrush,
         Schema.inkLines.colorId: colorId,
         Schema.inkLines.order: i
       });
@@ -94,9 +95,10 @@ class InkStatePersistor {
       InkLine newInkLine = new InkLine(
           color: colorFromHexString(inkLine[Schema.inkLines.colorId]),
           strokeWidth: inkLine[Schema.inkLines.strokeWidth],
-          strokeStyle: inkLine[Schema.inkLines.strokeStyle] == 'normal'
-              ? StrokeStyle.normal
-              : StrokeStyle.airbrush);
+          strokeStyle:
+              inkLine[Schema.inkLines.strokeStyle] == StrokeStyleType.normal
+                  ? StrokeStyle.normal
+                  : StrokeStyle.airbrush);
 
       segments
           .where((segment) =>

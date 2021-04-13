@@ -44,6 +44,16 @@ class ColorsTableType {
   ];
 }
 
+class StrokeStyleType {
+  static String normal = 'normal';
+  static String airbrush = 'airbrush';
+
+  static Iterable<String> all = [
+    StrokeStyleType.normal,
+    StrokeStyleType.airbrush,
+  ];
+}
+
 class StateTable extends Table {
   const StateTable() : super(name: 'state');
 

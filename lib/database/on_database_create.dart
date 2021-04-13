@@ -94,7 +94,9 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.canvasTransform_14} REAL NULL,
       ${Schema.state.canvasTransform_15} REAL NULL,
       ${Schema.state.strokeWidth} REAL NOT NULL,
-      ${Schema.state.strokeStyle} TEXT CHECK(${Schema.state.strokeStyle} IN ('normal', 'airbrush')) NOT NULL
+      ${Schema.state.strokeStyle} TEXT
+        CHECK(${Schema.state.strokeStyle} IN (${StrokeStyleType.all.map((t) => "'$t'").join(', ')}))
+        NOT NULL
     )
   ''');
   batch.execute('''
@@ -131,7 +133,7 @@ void _createTableStateV1(Batch batch) {
         null,
         'oval30',
         5.0,
-        'normal'
+        '${StrokeStyleType.normal}'
       )
   ''');
 }
@@ -142,7 +144,9 @@ void _createTableInkLinesV1(Batch batch) {
     CREATE TABLE ${Schema.inkLines}(
       ${Schema.inkLines.id} TEXT NOT NULL PRIMARY KEY,
       ${Schema.inkLines.strokeWidth} REAL NOT NULL,
-      ${Schema.inkLines.strokeStyle} TEXT CHECK(${Schema.inkLines.strokeStyle} IN ('normal', 'airbrush')) NOT NULL,
+      ${Schema.inkLines.strokeStyle} TEXT
+        CHECK(${Schema.inkLines.strokeStyle} IN (${StrokeStyleType.all.map((t) => "'$t'").join(', ')}))
+        NOT NULL,
       ${Schema.inkLines.colorId} TEXT NULL REFERENCES ${Schema.colors}(${Schema.colors.id}),
       "${Schema.inkLines.order}" INTEGER NOT NULL
     )
