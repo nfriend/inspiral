@@ -1,5 +1,7 @@
 # Inspiral
 
+<a href="https://gitlab.com/nfriend/inspiral/pipelines/latest" target="_blank"><img src="https://gitlab.com/nfriend/inspiral/badges/main/pipeline.svg" alt="GitLab pipeline status"></a>
+
 Relive your childhood in pixel-perfect bliss.
 [nfriend.gitlab.io/inspiral](https://nfriend.gitlab.io/inspiral/)
 
