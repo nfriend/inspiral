@@ -1,17 +1,11 @@
-import 'dart:collection';
-import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
-import 'package:flutter/services.dart';
-import 'package:inspiral/constants.dart';
-import 'package:inspiral/database/get_database.dart';
-import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/helpers/bake_image.dart';
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:uuid/uuid.dart';
 
 class InkState extends ChangeNotifier with Persistable {
   static InkState _instance;
@@ -31,7 +25,6 @@ class InkState extends ChangeNotifier with Persistable {
   ColorState colors;
   StrokeState stroke;
 
-  final Uuid _uuid = Uuid();
   List<InkLine> _lines = [];
   bool _isBaking = false;
   final Map<Offset, Image> _tileImages = {};
@@ -98,121 +91,14 @@ class InkState extends ChangeNotifier with Persistable {
 
     _isBaking = true;
 
-    // Operate on a shallow clone of the points, because the baking process
-    // is asynchronous, and more points may be added to `_points` while
-    // this method is running
-    var linesToBake = _lines.map((line) => InkLine.from(line)).toList();
-
-    // Indicate to the current line that it should "split" the current path
-    // right now and mark the location of the split, so that we can remove
-    // all points prior to this split after the points have been baked.
-    _lines.last.markAndSplitCurrentPath();
-
-    // Determine which tiles need to update
-    var tilesToUpdate = _getTilesToUpdate(linesToBake);
-
-    var renderedSize = tileSize;
-    var updatedTileImages = <Offset, Image>{};
-    var allUpdates = <Future>[];
-
-    var batch = (await getDatabase()).batch();
-
-    for (var tilePosition in tilesToUpdate) {
-      var recorder = PictureRecorder();
-      var canvas = Canvas(recorder);
-      DryInkTilePainter(
-              position: tilePosition,
-              tileImage: tileImages[tilePosition],
-              lines: linesToBake)
-          .paint(canvas, renderedSize);
-
-      var picture = recorder.endRecording();
-      allUpdates.add(picture
-          .toImage(renderedSize.width.ceil(), renderedSize.height.ceil())
-          .then((Image newImage) {
-        updatedTileImages[tilePosition] = newImage;
-
-        return newImage.toByteData(format: ImageByteFormat.png);
-      }).then((ByteData byteData) {
-        var bytes = byteData.buffer.asUint8List();
-
-        if (_tilePositionToDatabaseId.containsKey(tilePosition)) {
-          batch.update(
-              Schema.tileData.toString(), {Schema.tileData.bytes: bytes},
-              where:
-                  '${Schema.tileData.id} == "${_tilePositionToDatabaseId[tilePosition]}"');
-        } else {
-          var id = _uuid.v4();
-
-          batch.insert(Schema.tileData.toString(), {
-            Schema.tileData.id: id,
-            Schema.tileData.x: tilePosition.dx,
-            Schema.tileData.y: tilePosition.dy,
-            Schema.tileData.bytes: bytes
-          });
-
-          _tilePositionToDatabaseId[tilePosition] = id;
-        }
-      }));
-    }
-
-    await Future.wait(allUpdates);
-
-    await batch.commit(noResult: true);
-
-    // Update all the tile images with the new ones generated above
-    for (var entry in updatedTileImages.entries) {
-      tileImages[entry.key]?.dispose();
-      tileImages[entry.key] = entry.value;
-    }
-
-    // Remove all the completed lines (all lines except the last)
-    if (linesToBake.length > 1) {
-      _lines.removeRange(0, linesToBake.length - 1);
-    }
-
-    // Remove all the baked points from the current line
-    _lines.first.removePointsUpToMarkedSplit();
+    await bakeImage(
+        lines: lines,
+        tileImages: _tileImages,
+        tilePositionToDatabaseId: _tilePositionToDatabaseId);
 
     _isBaking = false;
+
     notifyListeners();
-  }
-
-  /// Determines which tiles need to update by matching each point up
-  /// with the appropriate tile
-  Set<Offset> _getTilesToUpdate(List<InkLine> linesToBake) {
-    var tilesToUpdate = HashSet<Offset>();
-
-    for (var line in linesToBake) {
-      for (var lineSegment in line.points) {
-        for (var point in lineSegment) {
-          var surroundingPointDistance =
-              max(maxStrokeWidth, maxLineSegmentLength);
-
-          // Expand the search radius slightly. Otherwise a line with a very
-          // wide stroke might brush a corner or edge of another tile, but
-          // because the point itself isn't in the tile, the tile wouldn't
-          // be considered as needing updating.
-          var surroundingPoints = <Offset>[
-            point + Offset(-surroundingPointDistance, 0),
-            point + Offset(surroundingPointDistance, 0),
-            point + Offset(0, -surroundingPointDistance),
-            point + Offset(0, surroundingPointDistance)
-          ];
-
-          // Find the correct tile for each point
-          // (Each tile is keyed by the position of its top-left corner)
-          for (var nearbyPoint in surroundingPoints) {
-            var containingTile = Offset(
-                (nearbyPoint.dx / tileSize.width).floor() * tileSize.width,
-                (nearbyPoint.dy / tileSize.height).floor() * tileSize.height);
-            tilesToUpdate.add(containingTile);
-          }
-        }
-      }
-    }
-
-    return tilesToUpdate;
   }
 
   @override
