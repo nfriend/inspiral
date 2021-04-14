@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
+import 'package:inspiral/database/get_database.dart';
+import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/helpers/bake_image.dart';
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 
@@ -25,7 +28,7 @@ class InkState extends ChangeNotifier with Persistable {
   ColorState colors;
   StrokeState stroke;
 
-  List<InkLine> _lines = [];
+  final List<InkLine> _lines = [];
   bool _isBaking = false;
   final Map<Offset, Image> _tileImages = {};
   final Map<Offset, String> _tilePositionToDatabaseId = {};
@@ -101,6 +104,23 @@ class InkState extends ChangeNotifier with Persistable {
     notifyListeners();
   }
 
+  /// Erases the canvas, including both baked and unbaked lines.
+  Future<void> eraseCanvas() async {
+    _tileImages.removeAll();
+    _lines.removeAll();
+
+    notifyListeners();
+
+    // Erase all the old data from the database.
+    // Unlike most state, which is saved/fetched when the app is paused/resumed,
+    // baked tiles are saved after each call to `bakeImage`. Because of this,
+    // we clear the database now, because it's possible `bakeImage` won't
+    // be called again before the app is closed.
+    var batch = (await getDatabase()).batch();
+    batch.delete(Schema.tileData.toString());
+    await batch.commit(noResult: true);
+  }
+
   @override
   void persist(Batch batch) {
     InkStatePersistor.persist(batch, this);
@@ -111,8 +131,10 @@ class InkState extends ChangeNotifier with Persistable {
     var result = await InkStatePersistor.rehydrate(db, this);
 
     _tileImages
-      ..removeWhere((key, value) => true)
+      ..removeAll()
       ..addAll(result.tileImages);
-    _lines = result.lines;
+    _lines
+      ..removeAll()
+      ..addAll(result.lines);
   }
 }

@@ -33,6 +33,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   @override
   Widget build(BuildContext context) {
     var colors = Provider.of<ColorState>(context, listen: false);
+    var ink = Provider.of<InkState>(context, listen: false);
     var settings = Provider.of<SettingsState>(context);
 
     var regularSettingsItems = <Widget>[
@@ -43,7 +44,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                 context: context,
                 message: 'Are you sure you want to erase your masterpiece?',
                 confirmButtonText: 'Erase',
-                onConfirm: () {});
+                onConfirm: () {
+                  Navigator.of(context).pop();
+                  ink.eraseCanvas();
+                });
           }),
       ToggleListItem(
           text: 'Include background color when saving or sharing',
@@ -62,8 +66,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               return ListTile(
                   title: Text('Reset pen and canvas colors'),
                   onTap: () {
-                    colors.reset();
-                    Navigator.of(context).pop();
+                    showConfirmationDialog(
+                        context: context,
+                        message:
+                            'Are you sure you want to reset your canvas and pen colors back to their defaults?',
+                        confirmButtonText: 'Reset',
+                        onConfirm: () {
+                          Navigator.of(context).pop();
+                          colors.reset();
+                        });
                   });
             } else {
               return Container();
