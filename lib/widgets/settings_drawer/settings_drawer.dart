@@ -3,6 +3,7 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/entitlement.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/delete_database.dart';
+import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var settings = Provider.of<SettingsState>(context);
 
     var regularSettingsItems = <Widget>[
+      ListTile(
+          title: Text('Erase canvas'),
+          onTap: () {
+            showConfirmationDialog(
+                context: context,
+                message: 'Are you sure you want to erase your masterpiece?',
+                confirmButtonText: 'Erase',
+                onConfirm: () {});
+          }),
       ToggleListItem(
           text: 'Include background color when saving or sharing',
           value: settings.includeBackgroundWhenSaving,
