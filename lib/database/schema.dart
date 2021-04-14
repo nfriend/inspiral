@@ -8,6 +8,7 @@ class Schema {
   static const InkLinesTable inkLines = InkLinesTable();
   static const LineSegmentsTable lineSegments = LineSegmentsTable();
   static const PointsTable points = PointsTable();
+  static const TileDataTable tileData = TileDataTable();
 }
 
 class Table {
@@ -116,4 +117,13 @@ class PointsTable extends Table {
   final String x = 'x';
   final String y = 'y';
   final String order = 'order';
+}
+
+class TileDataTable extends Table {
+  const TileDataTable() : super(name: 'tileData');
+
+  final String id = 'id';
+  final String x = 'x';
+  final String y = 'y';
+  final String bytes = 'bytes';
 }

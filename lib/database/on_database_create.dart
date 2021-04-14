@@ -8,6 +8,7 @@ Future<void> onDatabaseCreate(Database db, int version) async {
   _createTableInkLinesV1(batch);
   _createTableLineSegmentsV1(batch);
   _createTablePointsV1(batch);
+  _createTableTileDataV1(batch);
   await batch.commit(continueOnError: false, noResult: true);
 }
 
@@ -173,6 +174,18 @@ void _createTablePointsV1(Batch batch) {
       ${Schema.points.x} REAL NOT NULL,
       ${Schema.points.y} REAL NOT NULL,
       "${Schema.inkLines.order}" INTEGER NOT NULL
+    )
+  ''');
+}
+
+void _createTableTileDataV1(Batch batch) {
+  batch.execute('DROP TABLE IF EXISTS ${Schema.tileData}');
+  batch.execute('''
+    CREATE TABLE ${Schema.tileData}(
+      ${Schema.tileData.id} TEXT NOT NULL PRIMARY KEY,
+      ${Schema.tileData.x} REAL NOT NULL,
+      ${Schema.tileData.y} REAL NOT NULL,
+      ${Schema.tileData.bytes} BLOB NOT NULL
     )
   ''');
 }

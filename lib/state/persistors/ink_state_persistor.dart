@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/ink_line.dart';
 import 'package:inspiral/state/ink_state.dart';
@@ -9,8 +11,9 @@ import 'package:inspiral/extensions/extensions.dart';
 
 class InkStateRehydrationResult {
   final List<InkLine> lines;
+  final Map<Offset, Image> tileImages;
 
-  InkStateRehydrationResult({@required this.lines});
+  InkStateRehydrationResult({@required this.lines, @required this.tileImages});
 }
 
 class InkStatePersistor {
@@ -120,6 +123,15 @@ class InkStatePersistor {
       return newInkLine;
     }).toList();
 
-    return InkStateRehydrationResult(lines: lines);
+    var allTileData = await db.query(Schema.tileData.toString());
+    var tileImages = <Offset, Image>{};
+    for (var tileData in allTileData) {
+      var tilePosition = Offset(tileData[Schema.tileData.x] as double,
+          tileData[Schema.tileData.y] as double);
+      tileImages[tilePosition] = await decodeImageFromList(
+          tileData[Schema.tileData.bytes] as Uint8List);
+    }
+
+    return InkStateRehydrationResult(lines: lines, tileImages: tileImages);
   }
 }

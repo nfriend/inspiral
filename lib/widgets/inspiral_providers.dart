@@ -81,8 +81,6 @@ class _InspiralProvidersState extends State<InspiralProviders>
 
         await batch.commit(noResult: true);
       });
-
-      await db.close();
     }
   }
 

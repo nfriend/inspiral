@@ -2,12 +2,16 @@ import 'dart:collection';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
+import 'package:flutter/services.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/database/get_database.dart';
+import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:uuid/uuid.dart';
 
 class InkState extends ChangeNotifier with Persistable {
   static InkState _instance;
@@ -27,9 +31,11 @@ class InkState extends ChangeNotifier with Persistable {
   ColorState colors;
   StrokeState stroke;
 
+  final Uuid _uuid = Uuid();
   List<InkLine> _lines = [];
   bool _isBaking = false;
   final Map<Offset, Image> _tileImages = {};
+  final Map<Offset, String> _tilePositionToDatabaseId = {};
   Offset _lastPoint;
 
   /// The total number of points included in the the drawing.
@@ -108,6 +114,9 @@ class InkState extends ChangeNotifier with Persistable {
     var renderedSize = tileSize;
     var updatedTileImages = <Offset, Image>{};
     var allUpdates = <Future>[];
+
+    var batch = (await getDatabase()).batch();
+
     for (var tilePosition in tilesToUpdate) {
       var recorder = PictureRecorder();
       var canvas = Canvas(recorder);
@@ -122,10 +131,34 @@ class InkState extends ChangeNotifier with Persistable {
           .toImage(renderedSize.width.ceil(), renderedSize.height.ceil())
           .then((Image newImage) {
         updatedTileImages[tilePosition] = newImage;
+
+        return newImage.toByteData(format: ImageByteFormat.png);
+      }).then((ByteData byteData) {
+        var bytes = byteData.buffer.asUint8List();
+
+        if (_tilePositionToDatabaseId.containsKey(tilePosition)) {
+          batch.update(
+              Schema.tileData.toString(), {Schema.tileData.bytes: bytes},
+              where:
+                  '${Schema.tileData.id} == "${_tilePositionToDatabaseId[tilePosition]}"');
+        } else {
+          var id = _uuid.v4();
+
+          batch.insert(Schema.tileData.toString(), {
+            Schema.tileData.id: id,
+            Schema.tileData.x: tilePosition.dx,
+            Schema.tileData.y: tilePosition.dy,
+            Schema.tileData.bytes: bytes
+          });
+
+          _tilePositionToDatabaseId[tilePosition] = id;
+        }
       }));
     }
 
     await Future.wait(allUpdates);
+
+    await batch.commit(noResult: true);
 
     // Update all the tile images with the new ones generated above
     for (var entry in updatedTileImages.entries) {
@@ -191,6 +224,9 @@ class InkState extends ChangeNotifier with Persistable {
   Future<void> rehydrate(Database db, BuildContext context) async {
     var result = await InkStatePersistor.rehydrate(db, this);
 
+    _tileImages
+      ..removeWhere((key, value) => true)
+      ..addAll(result.tileImages);
     _lines = result.lines;
   }
 }

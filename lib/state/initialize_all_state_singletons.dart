@@ -86,7 +86,6 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   for (var stateObject in allStateObjects) {
     await stateObject.rehydrate(db, context);
   }
-  await db.close();
 
   await Purchases.setDebugLogsEnabled(settings.debug);
   await Purchases.setup('QKEkbCDUrOGPRFLYtdbOQUCRNxEXbCgz');
