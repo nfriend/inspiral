@@ -1,18 +1,18 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
+import 'package:inspiral/state/persistors/drag_line_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 final double _pi2 = 2 * pi;
 
 class DragLineState extends ChangeNotifier with Persistable {
   static DragLineState _instance;
 
-  factory DragLineState.init(
-      {@required Offset initialPosition, @required double initialAngle}) {
-    return _instance = DragLineState._internal(
-        initialPosition: initialPosition, initialAngle: initialAngle);
+  factory DragLineState.init() {
+    return _instance = DragLineState._internal();
   }
 
   factory DragLineState() {
@@ -21,15 +21,9 @@ class DragLineState extends ChangeNotifier with Persistable {
     return _instance;
   }
 
-  DragLineState._internal(
-      {@required Offset initialPosition, @required double initialAngle})
-      : super() {
-    _pivotPositionInCanvasCoordinates = initialPosition;
-    _angle = initialAngle;
-  }
+  DragLineState._internal() : super();
 
   CanvasState canvas;
-
   RotatingGearState rotatingGear;
 
   Offset _pointerPosition = Offset.zero;
@@ -121,5 +115,18 @@ class DragLineState extends ChangeNotifier with Persistable {
   /// Translates an angle (in radians) into the range [0, 2pi)
   double _translateToRange(double angle) {
     return angle % _pi2;
+  }
+
+  @override
+  void persist(Batch batch) {
+    DragLineStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db, BuildContext context) async {
+    var result = await DragLineStatePersistor.rehydrate(db, this);
+
+    _pivotPositionInCanvasCoordinates = result.pivotPosition;
+    _angle = result.angle;
   }
 }

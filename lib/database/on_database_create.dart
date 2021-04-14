@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:inspiral/database/schema.dart';
 
@@ -97,7 +98,10 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.strokeWidth} REAL NOT NULL,
       ${Schema.state.strokeStyle} TEXT
         CHECK(${Schema.state.strokeStyle} IN (${StrokeStyleType.all.map((t) => "'$t'").join(', ')}))
-        NOT NULL
+        NOT NULL,
+      ${Schema.state.dragLinePositionX} REAL NULL,
+      ${Schema.state.dragLinePositionY} REAL NULL,
+      ${Schema.state.dragLineAngle} REAL NOT NULL
     )
   ''');
   batch.execute('''
@@ -116,7 +120,8 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.fixedGearPositionY},
       ${Schema.state.fixedGearDefinitionId},
       ${Schema.state.strokeWidth},
-      ${Schema.state.strokeStyle}
+      ${Schema.state.strokeStyle},
+      ${Schema.state.dragLineAngle}
     )
     VALUES
       (
@@ -126,7 +131,7 @@ void _createTableStateV1(Batch batch) {
         'c0ed2d30-86cf-46a1-b7cf-271fd56b1756',
         1,
         0,
-        1.57079632679,
+        ${pi / 2},
         'circle24',
         '16',
         1,
@@ -134,7 +139,8 @@ void _createTableStateV1(Batch batch) {
         null,
         'oval30',
         5.0,
-        '${StrokeStyleType.normal}'
+        '${StrokeStyleType.normal}',
+        ${pi / 2}
       )
   ''');
 }

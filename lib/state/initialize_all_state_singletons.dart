@@ -1,19 +1,14 @@
-import 'dart:math';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
 
 /// This method must be called early in the application lifecycle,
 /// and it must only be called once.
 Future<Iterable<Persistable>> initializeAllStateSingletons(
     BuildContext context) async {
-  // The initial angle of the rotating gear, relative to the fixed gear
-  var initialAngle = pi / 2;
-
   // Initialize all the state singletons
   final progress = ProgressState.init();
   final settings = SettingsState.init();
@@ -27,8 +22,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final pointers = PointersState.init();
   final canvas = CanvasState.init();
   final rotatingGear = RotatingGearState.init();
-  final dragLine = DragLineState.init(
-      initialPosition: canvasCenter, initialAngle: initialAngle);
+  final dragLine = DragLineState.init();
   final fixedGear = FixedGearState.init();
 
   // Link up dependencies between the singletons

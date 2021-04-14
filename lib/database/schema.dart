@@ -89,6 +89,9 @@ class StateTable extends Table {
   final String canvasTransform_15 = 'canvasTransform_15';
   final String strokeWidth = 'strokeWidth';
   final String strokeStyle = 'strokeStyle';
+  final String dragLinePositionX = 'dragLinePositionX';
+  final String dragLinePositionY = 'dragLinePositionY';
+  final String dragLineAngle = 'dragLineAngle';
 }
 
 class InkLinesTable extends Table {
