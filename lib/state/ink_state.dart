@@ -124,18 +124,11 @@ class InkState extends ChangeNotifier with Persistable {
   /// Erases the canvas, including both baked and unbaked lines.
   Future<void> eraseCanvas() async {
     _tileImages.removeAll();
+    _tilePositionToDatabaseId.removeAll();
     _lines.removeAll();
+    _lastSnapshotVersion = 0;
 
     notifyListeners();
-
-    // Erase all the old data from the database.
-    // Unlike most state, which is saved/fetched when the app is paused/resumed,
-    // baked tiles are saved after each call to `bakeImage`. Because of this,
-    // we clear the database now, because it's possible `bakeImage` won't
-    // be called again before the app is closed.
-    var batch = (await getDatabase()).batch();
-    batch.delete(Schema.tileData.toString());
-    await batch.commit(noResult: true);
   }
 
   Future<void> undo() async {

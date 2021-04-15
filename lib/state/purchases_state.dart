@@ -26,6 +26,9 @@ class PurchasesState extends ChangeNotifier with Persistable {
   /// Returns a boolean indicating whether or not
   /// the provided `entitlement` is owned by the user
   Future<bool> isEntitledTo(String entitlement) async {
+    // TODO: TEMP!
+    return true;
+
     // Unlock all purchases in debug mode
     if (settings.debug) {
       return true;
