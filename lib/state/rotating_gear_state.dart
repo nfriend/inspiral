@@ -146,8 +146,7 @@ class RotatingGearState extends BaseGearState {
     _isDrawingRotation = true;
 
     var rotationAmount = 2 * pi * -1;
-    var intervalsToDraw =
-        ((definition.toothCount + fixedGear.definition.toothCount) / 5).round();
+    var intervalsToDraw = (fixedGear.definition.toothCount / 2.5).round();
     var intervalAmount = rotationAmount / intervalsToDraw;
     for (var i = 0; i <= intervalsToDraw; i++) {
       var amountToAdd = intervalAmount * i;
