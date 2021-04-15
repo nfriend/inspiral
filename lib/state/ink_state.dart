@@ -55,8 +55,13 @@ class InkState extends ChangeNotifier with Persistable {
   int get lastSnapshotVersion => _lastSnapshotVersion;
   int _lastSnapshotVersion;
 
-  /// Whether or not there is content that can be undone
-  bool get undoAvailable => (lastSnapshotVersion > 0 || currentPointCount > 0);
+  /// Whether or not there is content that can be undone, and
+  /// if it's okay to call undo right now (i.e., there are no
+  /// pending operations that would prevent an undo).
+  bool get undoAvailable =>
+      !_isBaking &&
+      !_isUndoing &&
+      (lastSnapshotVersion > 0 || currentPointCount > 0);
 
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
@@ -96,7 +101,7 @@ class InkState extends ChangeNotifier with Persistable {
   }
 
   Future<void> _bakeImage() async {
-    if (_isBaking || currentPointCount == 0) {
+    if (_isBaking || _isUndoing || currentPointCount == 0) {
       return;
     }
 
@@ -131,7 +136,7 @@ class InkState extends ChangeNotifier with Persistable {
   }
 
   Future<void> undo() async {
-    if (_isUndoing) {
+    if (_isUndoing || _isBaking) {
       return;
     }
 
