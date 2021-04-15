@@ -10,6 +10,7 @@ Future<void> onDatabaseCreate(Database db, int version) async {
   _createTableLineSegmentsV1(batch);
   _createTablePointsV1(batch);
   _createTableTileDataV1(batch);
+  _createTableTileSnapshotsV1(batch);
   await batch.commit(continueOnError: false, noResult: true);
 }
 
@@ -101,7 +102,8 @@ void _createTableStateV1(Batch batch) {
         NOT NULL,
       ${Schema.state.dragLinePositionX} REAL NULL,
       ${Schema.state.dragLinePositionY} REAL NULL,
-      ${Schema.state.dragLineAngle} REAL NOT NULL
+      ${Schema.state.dragLineAngle} REAL NOT NULL,
+      ${Schema.state.lastTileSnapshotVersion} INTEGER NOT NULL
     )
   ''');
   batch.execute('''
@@ -121,7 +123,8 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.fixedGearDefinitionId},
       ${Schema.state.strokeWidth},
       ${Schema.state.strokeStyle},
-      ${Schema.state.dragLineAngle}
+      ${Schema.state.dragLineAngle},
+      ${Schema.state.lastTileSnapshotVersion}
     )
     VALUES
       (
@@ -140,7 +143,8 @@ void _createTableStateV1(Batch batch) {
         'oval30',
         5.0,
         '${StrokeStyleType.normal}',
-        ${pi / 2}
+        ${pi / 2},
+        0
       )
   ''');
 }
@@ -192,6 +196,17 @@ void _createTableTileDataV1(Batch batch) {
       ${Schema.tileData.x} REAL NOT NULL,
       ${Schema.tileData.y} REAL NOT NULL,
       ${Schema.tileData.bytes} BLOB NOT NULL
+    )
+  ''');
+}
+
+void _createTableTileSnapshotsV1(Batch batch) {
+  batch.execute('DROP TABLE IF EXISTS ${Schema.tileSnapshots}');
+  batch.execute('''
+    CREATE TABLE ${Schema.tileSnapshots}(
+      ${Schema.tileSnapshots.id} TEXT NOT NULL PRIMARY KEY,
+      ${Schema.tileSnapshots.tileDataId} TEXT NOT NULL REFERENCES ${Schema.tileData}(${Schema.tileData.id}),
+      ${Schema.tileSnapshots.version} INTEGER NOT NULL
     )
   ''');
 }

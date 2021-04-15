@@ -10,17 +10,22 @@ class _ManuBarButtonParams {
   final Icon icon;
   final void Function() onPressed;
   final String tooltipMessage;
+  final bool disabled;
 
   _ManuBarButtonParams(
       {@required this.icon,
       @required this.onPressed,
-      @required this.tooltipMessage});
+      @required this.tooltipMessage,
+      this.disabled = false});
 }
 
 class MenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
+    final ink = Provider.of<InkState>(context, listen: false);
+    final lastSnapshotVersion =
+        context.select<InkState, int>((ink) => ink.lastSnapshotVersion);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
     final isLandscape =
@@ -47,7 +52,12 @@ class MenuBar extends StatelessWidget {
           onPressed: () => toggleGearVisiblity(context),
           tooltipMessage: 'Toggle gear visibility'),
       _ManuBarButtonParams(
-          icon: Icon(Icons.undo), onPressed: () {}, tooltipMessage: 'Undo'),
+          icon: Icon(Icons.undo),
+          disabled: lastSnapshotVersion == 0,
+          onPressed: () async {
+            await ink.undo();
+          },
+          tooltipMessage: 'Undo'),
       _ManuBarButtonParams(
           icon: Icon(Icons.menu),
           onPressed: () {
@@ -79,7 +89,8 @@ class MenuBar extends StatelessWidget {
                                 type: MaterialType.transparency,
                                 child: IconButton(
                                   color: colors.uiTextColor.color,
-                                  onPressed: button.onPressed,
+                                  onPressed:
+                                      button.disabled ? null : button.onPressed,
                                   icon: button.icon,
                                   iconSize: iconSize,
                                   tooltip: button.tooltipMessage,

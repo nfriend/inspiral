@@ -1,8 +1,8 @@
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/ink_line.dart';
+import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
 import 'package:inspiral/state/ink_state.dart';
 import 'package:inspiral/util/color_from_hex_string.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -12,8 +12,19 @@ import 'package:inspiral/extensions/extensions.dart';
 class InkStateRehydrationResult {
   final List<InkLine> lines;
   final Map<Offset, Image> tileImages;
+  final Map<Offset, String> tilePositionToDatabaseId;
+  final int lastSnapshotVersion;
 
-  InkStateRehydrationResult({@required this.lines, @required this.tileImages});
+  InkStateRehydrationResult(
+      {@required this.lines,
+      @required this.tileImages,
+      @required this.tilePositionToDatabaseId,
+      @required this.lastSnapshotVersion});
+
+  @override
+  String toString() {
+    return 'InkStateRehydrationResult(# of lines: ${lines.length}, # of tileImages: ${tileImages.entries.length}, # of tilePositionToDatabaseId: ${tilePositionToDatabaseId.entries.length}, lastSnapshotVersion: $lastSnapshotVersion})';
+  }
 }
 
 class InkStatePersistor {
@@ -25,6 +36,9 @@ class InkStatePersistor {
     batch.delete(Schema.inkLines.toString());
     batch.delete(Schema.colors.toString(),
         where: "${Schema.colors.type} = '${ColorsTableType.ink}'");
+
+    batch.update(Schema.state.toString(),
+        {Schema.state.lastTileSnapshotVersion: ink.lastSnapshotVersion});
 
     for (var i = 0; i < ink.lines.length; i++) {
       var line = ink.lines[i];
@@ -123,15 +137,18 @@ class InkStatePersistor {
       return newInkLine;
     }).toList();
 
-    var allTileData = await db.query(Schema.tileData.toString());
-    var tileImages = <Offset, Image>{};
-    for (var tileData in allTileData) {
-      var tilePosition = Offset(tileData[Schema.tileData.x] as double,
-          tileData[Schema.tileData.y] as double);
-      tileImages[tilePosition] = await decodeImageFromList(
-          tileData[Schema.tileData.bytes] as Uint8List);
-    }
+    Map<String, dynamic> state =
+        (await db.query(Schema.state.toString())).first;
 
-    return InkStateRehydrationResult(lines: lines, tileImages: tileImages);
+    var lastSnapshotVersion =
+        state[Schema.state.lastTileSnapshotVersion] as int;
+
+    var tileVersionResult = await getTilesForVersion(lastSnapshotVersion);
+
+    return InkStateRehydrationResult(
+        lines: lines,
+        tileImages: tileVersionResult.tileImages,
+        tilePositionToDatabaseId: tileVersionResult.tilePositionToDatabaseId,
+        lastSnapshotVersion: lastSnapshotVersion);
   }
 }

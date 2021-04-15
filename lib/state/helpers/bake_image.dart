@@ -18,7 +18,8 @@ final Uuid _uuid = Uuid();
 Future<void> bakeImage(
     {@required List<InkLine> lines,
     @required Map<Offset, Image> tileImages,
-    @required Map<Offset, String> tilePositionToDatabaseId}) async {
+    @required Map<Offset, String> tilePositionToDatabaseId,
+    @required int snapshotVersion}) async {
   // Operate on a shallow clone of the points, because the baking process
   // is asynchronous, and more points may be added to `_points` while
   // this method is running
@@ -37,6 +38,20 @@ Future<void> bakeImage(
   var allUpdates = <Future>[];
 
   var batch = (await getDatabase()).batch();
+
+  // Delete all snapshot records that are no longer in the history stack
+  batch.delete(Schema.tileSnapshots.toString(),
+      where: '${Schema.tileSnapshots.version} >= $snapshotVersion');
+
+  // Delete all rows not referenced by a snapshot
+  batch.rawDelete('''
+    DELETE FROM ${Schema.tileData}
+    WHERE ${Schema.tileData.id} NOT IN (
+      SELECT ${Schema.tileSnapshots.tileDataId}
+      FROM ${Schema.tileSnapshots}
+      WHERE ${Schema.tileSnapshots.tileDataId} IS NOT NULL
+    )
+  ''');
 
   for (var tilePosition in tilesToUpdate) {
     var recorder = PictureRecorder();
@@ -58,6 +73,14 @@ Future<void> bakeImage(
   }
 
   await Future.wait(allUpdates);
+
+  for (var tilePositionAndId in tilePositionToDatabaseId.entries) {
+    batch.insert(Schema.tileSnapshots.toString(), {
+      Schema.tileSnapshots.id: _uuid.v4(),
+      Schema.tileSnapshots.tileDataId: tilePositionAndId.value,
+      Schema.tileSnapshots.version: snapshotVersion
+    });
+  }
 
   await batch.commit(noResult: true);
 
@@ -95,21 +118,14 @@ Future<void> _processPicture(
 
   var byteData = await newImage.toByteData(format: ImageByteFormat.png);
   var bytes = byteData.buffer.asUint8List();
+  var id = _uuid.v4();
 
-  if (tilePositionToDatabaseId.containsKey(tilePosition)) {
-    batch.update(Schema.tileData.toString(), {Schema.tileData.bytes: bytes},
-        where:
-            '${Schema.tileData.id} == "${tilePositionToDatabaseId[tilePosition]}"');
-  } else {
-    var id = _uuid.v4();
+  batch.insert(Schema.tileData.toString(), {
+    Schema.tileData.id: id,
+    Schema.tileData.x: tilePosition.dx,
+    Schema.tileData.y: tilePosition.dy,
+    Schema.tileData.bytes: bytes
+  });
 
-    batch.insert(Schema.tileData.toString(), {
-      Schema.tileData.id: id,
-      Schema.tileData.x: tilePosition.dx,
-      Schema.tileData.y: tilePosition.dy,
-      Schema.tileData.bytes: bytes
-    });
-
-    tilePositionToDatabaseId[tilePosition] = id;
-  }
+  tilePositionToDatabaseId[tilePosition] = id;
 }

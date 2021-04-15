@@ -4,6 +4,7 @@ import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/helpers/bake_image.dart';
+import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -50,6 +51,15 @@ class InkState extends ChangeNotifier with Persistable {
   /// if there is no current line
   Offset get lastPoint => _lastPoint;
 
+  /// The most recent snapshot version number. Used to keep track of the
+  /// undo/redo stack.
+  int get lastSnapshotVersion => _lastSnapshotVersion;
+  int _lastSnapshotVersion;
+  set lastSnapshotVersion(int value) {
+    _lastSnapshotVersion = value;
+    notifyListeners();
+  }
+
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
   void addPoints(List<Offset> points) {
@@ -88,7 +98,7 @@ class InkState extends ChangeNotifier with Persistable {
   }
 
   Future<void> _bakeImage() async {
-    if (_isBaking) {
+    if (_isBaking || currentPointCount == 0) {
       return;
     }
 
@@ -97,7 +107,11 @@ class InkState extends ChangeNotifier with Persistable {
     await bakeImage(
         lines: lines,
         tileImages: _tileImages,
-        tilePositionToDatabaseId: _tilePositionToDatabaseId);
+        tilePositionToDatabaseId: _tilePositionToDatabaseId,
+        snapshotVersion: lastSnapshotVersion + 1);
+
+    // Wait to actually increment this variable until `bakeImage` is done
+    lastSnapshotVersion++;
 
     _isBaking = false;
 
@@ -121,6 +135,23 @@ class InkState extends ChangeNotifier with Persistable {
     await batch.commit(noResult: true);
   }
 
+  Future<void> undo() async {
+    var tileVersionResult = await getTilesForVersion(lastSnapshotVersion - 1);
+
+    _tileImages
+      ..removeAll()
+      ..addAll(tileVersionResult.tileImages);
+    _lines.removeAll();
+    _tilePositionToDatabaseId
+      ..removeAll()
+      ..addAll(tileVersionResult.tilePositionToDatabaseId);
+
+    // Wait to actually decrement this variable until `undo` is done
+    lastSnapshotVersion--;
+
+    notifyListeners();
+  }
+
   @override
   void persist(Batch batch) {
     InkStatePersistor.persist(batch, this);
@@ -129,12 +160,15 @@ class InkState extends ChangeNotifier with Persistable {
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
     var result = await InkStatePersistor.rehydrate(db, this);
-
     _tileImages
       ..removeAll()
       ..addAll(result.tileImages);
     _lines
       ..removeAll()
       ..addAll(result.lines);
+    _tilePositionToDatabaseId
+      ..removeAll()
+      ..addAll(result.tilePositionToDatabaseId);
+    lastSnapshotVersion = result.lastSnapshotVersion;
   }
 }
