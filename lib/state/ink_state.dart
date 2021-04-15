@@ -55,10 +55,9 @@ class InkState extends ChangeNotifier with Persistable {
   /// undo/redo stack.
   int get lastSnapshotVersion => _lastSnapshotVersion;
   int _lastSnapshotVersion;
-  set lastSnapshotVersion(int value) {
-    _lastSnapshotVersion = value;
-    notifyListeners();
-  }
+
+  /// Whether or not there is content that can be undone
+  bool get undoAvailable => lastSnapshotVersion > 0 || currentPointCount > 0;
 
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
@@ -110,8 +109,12 @@ class InkState extends ChangeNotifier with Persistable {
         tilePositionToDatabaseId: _tilePositionToDatabaseId,
         snapshotVersion: lastSnapshotVersion + 1);
 
-    // Wait to actually increment this variable until `bakeImage` is done
-    lastSnapshotVersion++;
+    // Wait to actually increment this variable until `bakeImage` is done.
+    // This _usually_ doesn't matter, but there's potential the app could be
+    // closed while `bakeImage` is running. This would trigger the state
+    // object to be persisted, opening up the possibility that the version
+    // will be recorded without the `bakeImage` ever finishing.
+    _lastSnapshotVersion++;
 
     _isBaking = false;
 
@@ -136,6 +139,15 @@ class InkState extends ChangeNotifier with Persistable {
   }
 
   Future<void> undo() async {
+    // If there are any "unbaked" points, erase these first.
+    // Once there are no unbaked points left, then we can
+    // move on to updating the actual tiles below.
+    if (currentPointCount > 0) {
+      _lines.removeAll();
+      notifyListeners();
+      return;
+    }
+
     var tileVersionResult = await getTilesForVersion(lastSnapshotVersion - 1);
 
     _tileImages
@@ -146,8 +158,9 @@ class InkState extends ChangeNotifier with Persistable {
       ..removeAll()
       ..addAll(tileVersionResult.tilePositionToDatabaseId);
 
-    // Wait to actually decrement this variable until `undo` is done
-    lastSnapshotVersion--;
+    // Wait to actually decrement this variable until `undo` is done.
+    // See similar comment above for explanation.
+    _lastSnapshotVersion--;
 
     notifyListeners();
   }
@@ -169,6 +182,6 @@ class InkState extends ChangeNotifier with Persistable {
     _tilePositionToDatabaseId
       ..removeAll()
       ..addAll(result.tilePositionToDatabaseId);
-    lastSnapshotVersion = result.lastSnapshotVersion;
+    _lastSnapshotVersion = result.lastSnapshotVersion;
   }
 }

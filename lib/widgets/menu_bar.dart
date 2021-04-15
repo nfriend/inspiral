@@ -24,8 +24,8 @@ class MenuBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
     final ink = Provider.of<InkState>(context, listen: false);
-    final lastSnapshotVersion =
-        context.select<InkState, int>((ink) => ink.lastSnapshotVersion);
+    final undoAvailable =
+        context.select<InkState, bool>((ink) => ink.undoAvailable);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
     final isLandscape =
@@ -53,7 +53,7 @@ class MenuBar extends StatelessWidget {
           tooltipMessage: 'Toggle gear visibility'),
       _ManuBarButtonParams(
           icon: Icon(Icons.undo),
-          disabled: lastSnapshotVersion == 0,
+          disabled: !undoAvailable,
           onPressed: () async {
             await ink.undo();
           },
