@@ -9,7 +9,7 @@ PODS:
     - Flutter
   - open_file (0.0.1):
     - Flutter
-  - package_info (0.0.1):
+  - package_info_plus (0.4.5):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
@@ -23,12 +23,12 @@ PODS:
   - PurchasesCoreSwift (3.10.7)
   - PurchasesHybridCommon (1.6.2):
     - Purchases (= 3.10.7)
-  - Sentry (6.1.4):
-    - Sentry/Core (= 6.1.4)
-  - Sentry/Core (6.1.4)
+  - Sentry (6.2.1):
+    - Sentry/Core (= 6.2.1)
+  - Sentry/Core (6.2.1)
   - sentry_flutter (0.0.1):
     - Flutter
-    - Sentry (~> 6.1.4)
+    - Sentry (~> 6.2.1)
   - share (0.0.1):
     - Flutter
   - sqflite (0.0.2):
@@ -40,7 +40,7 @@ DEPENDENCIES:
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - open_file (from `.symlinks/plugins/open_file/ios`)
-  - package_info (from `.symlinks/plugins/package_info/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
@@ -65,8 +65,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   open_file:
     :path: ".symlinks/plugins/open_file/ios"
-  package_info:
-    :path: ".symlinks/plugins/package_info/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
@@ -86,18 +86,18 @@ SPEC CHECKSUMS:
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
   open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
-  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   Purchases: b8b8fb6e856ac8166e217f6e014df894d821dda1
   purchases_flutter: 0130970b895c903e4e0aad793dd3a4c1b70bb434
   PurchasesCoreSwift: 8ae0f08e020f0bc97c1befa4e38a0dbc8e9732e0
   PurchasesHybridCommon: 5f5c1c245b12fc5e8760af7d11cb10f888109a9b
-  Sentry: 9d055e2de30a77685e86b219acf02e59b82091fc
-  sentry_flutter: 8b2b2e1c0101ef562106b5d272d3c0c741512c01
+  Sentry: 9b922b396b0e0bca8516a10e36b0ea3ebea5faf7
+  sentry_flutter: 5b3c6d717db5b7482504a313c831b318297d4d37
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
