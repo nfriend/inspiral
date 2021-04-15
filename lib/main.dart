@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/inspiral_app.dart';
+import 'package:inspiral/widgets/restart_widget.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
@@ -21,6 +22,6 @@ Future<void> main() async {
         options.environment = 'debug';
       }
     },
-    appRunner: () => runApp(InspiralApp()),
+    appRunner: () => runApp(RestartWidget(child: InspiralApp())),
   );
 }

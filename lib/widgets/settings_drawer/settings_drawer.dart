@@ -4,6 +4,7 @@ import 'package:inspiral/models/entitlement.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/delete_database.dart';
 import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
+import 'package:inspiral/widgets/restart_widget.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
 
@@ -91,6 +92,13 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           onTap: () async {
             await deleteDatabase();
             Navigator.of(context).pop();
+          },
+        ),
+        ListTile(
+          title: Text('Reset app and restart'),
+          onTap: () async {
+            Navigator.of(context).pop();
+            await RestartWidget.restartApp(context, resetDb: true);
           },
         )
       ];
