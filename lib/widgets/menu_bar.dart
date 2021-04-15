@@ -19,7 +19,14 @@ class _ManuBarButtonParams {
       this.disabled = false});
 }
 
-class MenuBar extends StatelessWidget {
+class MenuBar extends StatefulWidget {
+  @override
+  _MenuBarState createState() => _MenuBarState();
+}
+
+class _MenuBarState extends State<MenuBar> {
+  bool isUndoProcessing = false;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
@@ -52,10 +59,26 @@ class MenuBar extends StatelessWidget {
           onPressed: () => toggleGearVisiblity(context),
           tooltipMessage: 'Toggle gear visibility'),
       _ManuBarButtonParams(
-          icon: Icon(Icons.undo),
-          disabled: !undoAvailable,
+          icon: isUndoProcessing
+              ? Icon(Icons.hourglass_bottom)
+              : Icon(Icons.undo),
+          disabled: !undoAvailable || isUndoProcessing,
           onPressed: () async {
+            setState(() {
+              isUndoProcessing = true;
+            });
+
+            // Allow the `setState` above to take effect before
+            // we start the undo process below. This ensures the button
+            // has a chance to show its loading state before the CPU-intensive
+            // work of undoing begins.
+            await Future.delayed(const Duration(milliseconds: 0));
+
             await ink.undo();
+
+            setState(() {
+              isUndoProcessing = false;
+            });
           },
           tooltipMessage: 'Undo'),
       _ManuBarButtonParams(
