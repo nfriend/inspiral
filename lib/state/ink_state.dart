@@ -29,6 +29,7 @@ class InkState extends ChangeNotifier with Persistable {
 
   final List<InkLine> _lines = [];
   bool _isBaking = false;
+  bool _isUndoing = false;
   final Map<Offset, Image> _tileImages = {};
   final Map<Offset, String> _tilePositionToDatabaseId = {};
   Offset _lastPoint;
@@ -55,7 +56,7 @@ class InkState extends ChangeNotifier with Persistable {
   int _lastSnapshotVersion;
 
   /// Whether or not there is content that can be undone
-  bool get undoAvailable => lastSnapshotVersion > 0 || currentPointCount > 0;
+  bool get undoAvailable => (lastSnapshotVersion > 0 || currentPointCount > 0);
 
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
@@ -130,28 +131,33 @@ class InkState extends ChangeNotifier with Persistable {
   }
 
   Future<void> undo() async {
-    // If there are any "unbaked" points, erase these first.
-    // Once there are no unbaked points left, then we can
-    // move on to updating the actual tiles below.
-    if (currentPointCount > 0) {
-      _lines.removeAll();
-      notifyListeners();
+    if (_isUndoing) {
       return;
     }
 
-    var tileVersionResult = await getTilesForVersion(lastSnapshotVersion - 1);
+    _isUndoing = true;
 
-    _tileImages
-      ..removeAll()
-      ..addAll(tileVersionResult.tileImages);
-    _lines.removeAll();
-    _tilePositionToDatabaseId
-      ..removeAll()
-      ..addAll(tileVersionResult.tilePositionToDatabaseId);
+    if (currentPointCount > 0) {
+      // If there are any "unbaked" points, erase these first.
 
-    // Wait to actually decrement this variable until `undo` is done.
-    // See similar comment above for explanation.
-    _lastSnapshotVersion--;
+      _lines.removeAll();
+    } else {
+      // Otherwise, rollback the actual baked tiles to a previous version
+
+      _lastSnapshotVersion--;
+
+      var tileVersionResult = await getTilesForVersion(lastSnapshotVersion);
+
+      _tileImages
+        ..removeAll()
+        ..addAll(tileVersionResult.tileImages);
+      _lines.removeAll();
+      _tilePositionToDatabaseId
+        ..removeAll()
+        ..addAll(tileVersionResult.tilePositionToDatabaseId);
+    }
+
+    _isUndoing = false;
 
     notifyListeners();
   }
