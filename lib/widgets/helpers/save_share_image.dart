@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/settings_state.dart';
@@ -66,6 +68,14 @@ Future<String> _cropAndSaveToTempFile(BuildContext context) async {
   // Make sure all the lines have been baked into the background tiles
   await ink.pendingCanvasManipulation;
   await ink.bakeImage();
+
+  // Even though the tiles have now been baked, they may not have been rendered
+  // to the screen yet. Now wait until the current frame is complete.
+  var renderCompleter = Completer();
+  SchedulerBinding.instance.addPostFrameCallback((_) {
+    renderCompleter.complete();
+  });
+  await renderCompleter.future;
 
   var canvasKey = settings.includeBackgroundWhenSaving
       ? canvasWithBackgroundGlobalKey

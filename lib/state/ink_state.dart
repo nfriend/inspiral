@@ -127,6 +127,11 @@ class InkState extends ChangeNotifier with Persistable {
   ///
   /// This will gaurantee all unbaked points (at call time) have been baked
   /// into the background tile images.
+  ///
+  /// Important note: the two lines above don't gaurantee the tiles
+  /// have been rendered to the screen. See how this is done in
+  /// `save_share_image.dart` using `addPostFrameCallback`
+  /// for a complete example.
   Future<void> bakeImage() async {
     if (_isBaking || _isUndoing || currentPointCount == 0) {
       return;
