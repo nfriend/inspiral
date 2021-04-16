@@ -7,6 +7,7 @@ import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class InkState extends ChangeNotifier with Persistable {
@@ -107,22 +108,31 @@ class InkState extends ChangeNotifier with Persistable {
 
     _isBaking = true;
 
-    await bakeImage(
-        lines: lines,
-        tileImages: _tileImages,
-        tilePositionToDatabaseId: _tilePositionToDatabaseId,
-        snapshotVersion: lastSnapshotVersion + 1);
+    try {
+      await bakeImage(
+          lines: lines,
+          tileImages: _tileImages,
+          tilePositionToDatabaseId: _tilePositionToDatabaseId,
+          snapshotVersion: lastSnapshotVersion + 1);
 
-    // Wait to actually increment this variable until `bakeImage` is done.
-    // This _usually_ doesn't matter, but there's potential the app could be
-    // closed while `bakeImage` is running. This would trigger the state
-    // object to be persisted, opening up the possibility that the version
-    // will be recorded without the `bakeImage` ever finishing.
-    _lastSnapshotVersion++;
+      // Wait to actually increment this variable until `bakeImage` is done.
+      // This _usually_ doesn't matter, but there's potential the app could be
+      // closed while `bakeImage` is running. This would trigger the state
+      // object to be persisted, opening up the possibility that the version
+      // will be recorded without the `bakeImage` ever finishing.
+      _lastSnapshotVersion++;
+    } catch (err, stackTrace) {
+      // Explicitly catching/handling errors here since `_bakeImage` is often
+      // called in synchronous contexts, and the return value is ignored.
+      // This causes errors to be silently swallowed.
+      await Sentry.captureException(err, stackTrace: stackTrace);
+    } finally {
+      // Regardless of success or failure, set `_isBaking` back to `false`
+      // to prevent blocking future calls to `_isBaking`.
+      _isBaking = false;
 
-    _isBaking = false;
-
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   /// Erases the canvas, including both baked and unbaked lines.
