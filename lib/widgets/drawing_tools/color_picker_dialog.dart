@@ -94,22 +94,23 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 textAlign: TextAlign.center,
               )),
           ColorPicker(
-            color: widget.initialColor,
-            showRecentColors: false,
-            enableOpacity: widget.showOpacity,
-            enableShadesSelection: false,
-            borderRadius: 20,
-            opacityTrackHeight: 22,
-            pickersEnabled: {
-              ColorPickerType.primary: false,
-              ColorPickerType.accent: false,
-              ColorPickerType.wheel: true,
-            },
-            onColorChanged: (Color newColor) => setState(() {
-              _selectedColor = newColor;
-              widget.onColorMove(newColor);
-            }),
-          ),
+              color: _selectedColor,
+              showRecentColors: false,
+              enableOpacity: widget.showOpacity,
+              enableShadesSelection: false,
+              borderRadius: 20,
+              opacityTrackHeight: 22,
+              pickersEnabled: {
+                ColorPickerType.primary: false,
+                ColorPickerType.accent: false,
+                ColorPickerType.wheel: true,
+              },
+              onColorChanged: (Color newColor) {
+                setState(() {
+                  _selectedColor = newColor;
+                });
+                widget.onColorMove(newColor);
+              }),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: OutlinedButton(
