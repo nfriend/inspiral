@@ -46,6 +46,7 @@ dependencies:
   flex_color_picker: ^2.0.0-nullsafety.4
   sqflite: ^2.0.0+3
   sentry_flutter: ^5.0.0
+  image_cropper: ^1.4.0
 
 dev_dependencies:
   flutter_test:

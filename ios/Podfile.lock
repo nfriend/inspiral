@@ -3,6 +3,9 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - image_cropper (0.0.4):
+    - Flutter
+    - TOCropViewController (~> 2.6.0)
   - image_gallery_saver (1.5.0):
     - Flutter
   - integration_test (0.0.1):
@@ -34,9 +37,11 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - TOCropViewController (2.6.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - open_file (from `.symlinks/plugins/open_file/ios`)
@@ -55,10 +60,13 @@ SPEC REPOS:
     - PurchasesCoreSwift
     - PurchasesHybridCommon
     - Sentry
+    - TOCropViewController
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  image_cropper:
+    :path: ".symlinks/plugins/image_cropper/ios"
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   integration_test:
@@ -83,6 +91,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
   open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
@@ -97,6 +106,7 @@ SPEC CHECKSUMS:
   sentry_flutter: 5b3c6d717db5b7482504a313c831b318297d4d37
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

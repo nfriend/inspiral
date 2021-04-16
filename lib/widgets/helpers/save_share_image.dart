@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/settings_state.dart';
 import 'package:inspiral/state/state.dart';
@@ -25,8 +26,11 @@ Future<void> shareImage(BuildContext context) async {
   var progress = Provider.of<ProgressState>(context, listen: false);
   progress.showModalProgress(message: 'Sharing...');
 
-  var filePath = await _saveToTempFile(context);
-  await Share.shareFiles([filePath]);
+  var filePath = await _cropAndSaveToTempFile(context);
+
+  if (filePath != null) {
+    await Share.shareFiles([filePath]);
+  }
 
   progress.hideModalPropress();
 }
@@ -41,17 +45,21 @@ Future<void> saveImage(BuildContext context) async {
   var progress = Provider.of<ProgressState>(context, listen: false);
   progress.showModalProgress(message: 'Saving to the gallery...');
 
-  var filePath = await _saveToTempFile(context);
-  await ImageGallerySaver.saveFile(filePath);
+  var filePath = await _cropAndSaveToTempFile(context);
 
-  await OpenFile.open(filePath, type: 'image/png', uti: 'public.png');
+  if (filePath != null) {
+    await ImageGallerySaver.saveFile(filePath);
+
+    await OpenFile.open(filePath, type: 'image/png', uti: 'public.png');
+  }
 
   progress.hideModalPropress();
 }
 
 /// Saves the canvas as an image in a temporary location,
-/// and returns the file path
-Future<String> _saveToTempFile(BuildContext context) async {
+/// and returns the file path, or returns `null` if the
+/// user cancels the crop operation.
+Future<String> _cropAndSaveToTempFile(BuildContext context) async {
   var settings = Provider.of<SettingsState>(context, listen: false);
 
   var canvasKey = settings.includeBackgroundWhenSaving
@@ -65,10 +73,13 @@ Future<String> _saveToTempFile(BuildContext context) async {
   var pngBytes = byteData.buffer.asUint8List();
 
   var directory = (await getTemporaryDirectory());
-  var filePath = p.join(directory.path, '${Uuid().v4()}.png');
+  var fullImageFilePath = p.join(directory.path, '${Uuid().v4()}.png');
 
-  await File(filePath).writeAsBytes(pngBytes, flush: true);
+  await File(fullImageFilePath).writeAsBytes(pngBytes, flush: true);
   screenshot.dispose();
 
-  return filePath;
+  var croppedImage =
+      await ImageCropper.cropImage(sourcePath: fullImageFilePath);
+
+  return croppedImage?.path;
 }
