@@ -20,6 +20,13 @@ Future<void> bakeImage(
     @required Map<Offset, Image> tileImages,
     @required Map<Offset, String> tilePositionToDatabaseId,
     @required int snapshotVersion}) async {
+  // This function assumes that `lines` has at least one `InkLine`.
+  // If it does not, there is no need to bake the lines - there
+  // is nothing to bake, so exit early.
+  if (lines.isEmpty) {
+    return;
+  }
+
   // Operate on a shallow clone of the points, because the baking process
   // is asynchronous, and more points may be added to `_points` while
   // this method is running

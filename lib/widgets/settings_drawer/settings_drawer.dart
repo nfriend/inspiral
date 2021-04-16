@@ -36,20 +36,28 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var colors = Provider.of<ColorState>(context, listen: false);
     var ink = Provider.of<InkState>(context, listen: false);
     var settings = Provider.of<SettingsState>(context);
+    var eraseAvailable =
+        context.select<InkState, bool>((ink) => ink.eraseAvailable);
 
     var regularSettingsItems = <Widget>[
       ListTile(
-          title: Text('Erase canvas'),
-          onTap: () {
-            showConfirmationDialog(
-                context: context,
-                message: 'Are you sure you want to erase your masterpiece?',
-                confirmButtonText: 'Erase',
-                onConfirm: () {
-                  Navigator.of(context).pop();
-                  ink.eraseCanvas();
-                });
-          }),
+          title: eraseAvailable
+              ? Text('Erase canvas')
+              : Text('One moment...',
+                  style: TextStyle(fontStyle: FontStyle.italic)),
+          onTap: eraseAvailable
+              ? () {
+                  showConfirmationDialog(
+                      context: context,
+                      message:
+                          'Are you sure you want to erase your masterpiece?',
+                      confirmButtonText: 'Erase',
+                      onConfirm: () {
+                        Navigator.of(context).pop();
+                        ink.eraseCanvas();
+                      });
+                }
+              : null),
       ToggleListItem(
           text: 'Include background color when saving or sharing',
           value: settings.includeBackgroundWhenSaving,

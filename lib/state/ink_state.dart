@@ -64,6 +64,10 @@ class InkState extends ChangeNotifier with Persistable {
       !_isUndoing &&
       (lastSnapshotVersion > 0 || currentPointCount > 0);
 
+  /// Whether or not this object is in a state that allows the canvas
+  /// to be erased.
+  bool get eraseAvailable => !_isBaking && !_isUndoing;
+
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
   void addPoints(List<Offset> points) {
@@ -108,6 +112,8 @@ class InkState extends ChangeNotifier with Persistable {
 
     _isBaking = true;
 
+    notifyListeners();
+
     try {
       await bakeImage(
           lines: lines,
@@ -137,6 +143,10 @@ class InkState extends ChangeNotifier with Persistable {
 
   /// Erases the canvas, including both baked and unbaked lines.
   Future<void> eraseCanvas() async {
+    if (_isBaking || _isUndoing) {
+      return;
+    }
+
     _tileImages.removeAll();
     _tilePositionToDatabaseId.removeAll();
     _lines.removeAll();
@@ -151,6 +161,8 @@ class InkState extends ChangeNotifier with Persistable {
     }
 
     _isUndoing = true;
+
+    notifyListeners();
 
     if (currentPointCount > 0) {
       // If there are any "unbaked" points, erase these first.
