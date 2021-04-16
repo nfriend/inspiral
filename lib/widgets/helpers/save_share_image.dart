@@ -60,7 +60,12 @@ Future<void> saveImage(BuildContext context) async {
 /// and returns the file path, or returns `null` if the
 /// user cancels the crop operation.
 Future<String> _cropAndSaveToTempFile(BuildContext context) async {
+  var ink = Provider.of<InkState>(context, listen: false);
   var settings = Provider.of<SettingsState>(context, listen: false);
+
+  // Make sure all the lines have been baked into the background tiles
+  await ink.pendingCanvasManipulation;
+  await ink.bakeImage();
 
   var canvasKey = settings.includeBackgroundWhenSaving
       ? canvasWithBackgroundGlobalKey

@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/models/models.dart';
-import 'package:inspiral/state/helpers/bake_image.dart';
+import 'package:inspiral/state/helpers/bake_image.dart' as helpers;
 import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
@@ -56,6 +57,10 @@ class InkState extends ChangeNotifier with Persistable {
   int get lastSnapshotVersion => _lastSnapshotVersion;
   int _lastSnapshotVersion;
 
+  /// A `Future` that allows other processes to wait until any async canvas
+  /// manipulation (undo or baking) is complete and run code after.
+  Future<void> pendingCanvasManipulation = Future<void>.value();
+
   /// Whether or not there is content that can be undone, and
   /// if it's okay to call undo right now (i.e., there are no
   /// pending operations that would prevent an undo).
@@ -85,7 +90,7 @@ class InkState extends ChangeNotifier with Persistable {
     }
 
     if (currentPointCount > 1000) {
-      _bakeImage();
+      bakeImage();
     }
 
     notifyListeners();
@@ -99,23 +104,43 @@ class InkState extends ChangeNotifier with Persistable {
           color: colors.penColor.color,
           strokeWidth: stroke.width,
           strokeStyle: stroke.style));
-      _bakeImage();
+      bakeImage();
     }
 
     _lastPoint = null;
   }
 
-  Future<void> _bakeImage() async {
+  /// Triggers all un-baked points to be rasterized into the background tiles.
+  /// If there is already another `bakeImage` process in progress, this method
+  /// exits immediately and does nothing.
+  /// To simply trigger a `bakeImage` without caring about when it finishes,
+  /// call `_bakeImage` synchronously:
+  ///
+  /// ink.bakeImage();
+  ///
+  /// If instead it's important that a process wait until the image is fully
+  /// baked (for example, when sharing or saving an image),
+  /// first await `pendingCanvasManipulation`, and then await `bakeImage`:
+  ///
+  /// await ink.pendingCanvasManipulation;
+  /// await ink.bakeImage;
+  ///
+  /// This will gaurantee all unbaked points (at call time) have been baked
+  /// into the background tile images.
+  Future<void> bakeImage() async {
     if (_isBaking || _isUndoing || currentPointCount == 0) {
       return;
     }
 
     _isBaking = true;
 
+    var pendingCanvasManipulationCompleter = Completer();
+    pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
+
     notifyListeners();
 
     try {
-      await bakeImage(
+      await helpers.bakeImage(
           lines: lines,
           tileImages: _tileImages,
           tilePositionToDatabaseId: _tilePositionToDatabaseId,
@@ -128,7 +153,7 @@ class InkState extends ChangeNotifier with Persistable {
       // will be recorded without the `bakeImage` ever finishing.
       _lastSnapshotVersion++;
     } catch (err, stackTrace) {
-      // Explicitly catching/handling errors here since `_bakeImage` is often
+      // Explicitly catching/handling errors here since `bakeImage` is often
       // called in synchronous contexts, and the return value is ignored.
       // This causes errors to be silently swallowed.
       await Sentry.captureException(err, stackTrace: stackTrace);
@@ -138,6 +163,8 @@ class InkState extends ChangeNotifier with Persistable {
       _isBaking = false;
 
       notifyListeners();
+
+      pendingCanvasManipulationCompleter.complete();
     }
   }
 
@@ -146,6 +173,9 @@ class InkState extends ChangeNotifier with Persistable {
     if (_isBaking || _isUndoing) {
       return;
     }
+
+    // This operation is synchronous, so no need to involve
+    // `pendingCanvasManipulation` here
 
     _tileImages.removeAll();
     _tilePositionToDatabaseId.removeAll();
@@ -160,19 +190,24 @@ class InkState extends ChangeNotifier with Persistable {
       return;
     }
 
+    // If there are any "unbaked" points, erase these first and exit early.
+    // Otherwise, rollback the actual baked tiles to a previous version below.
+    if (currentPointCount > 0) {
+      _lines.removeAll();
+      notifyListeners();
+      return;
+    }
+
     _isUndoing = true;
+
+    var pendingCanvasManipulationCompleter = Completer();
+    pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
 
     notifyListeners();
 
-    if (currentPointCount > 0) {
-      // If there are any "unbaked" points, erase these first.
+    _lastSnapshotVersion--;
 
-      _lines.removeAll();
-    } else {
-      // Otherwise, rollback the actual baked tiles to a previous version
-
-      _lastSnapshotVersion--;
-
+    try {
       var tileVersionResult = await getTilesForVersion(lastSnapshotVersion);
 
       _tileImages
@@ -182,11 +217,16 @@ class InkState extends ChangeNotifier with Persistable {
       _tilePositionToDatabaseId
         ..removeAll()
         ..addAll(tileVersionResult.tilePositionToDatabaseId);
+    } catch (err, stackTrace) {
+      // See note about explicitly catching errors in `bakeImage` above
+      await Sentry.captureException(err, stackTrace: stackTrace);
+    } finally {
+      _isUndoing = false;
+
+      notifyListeners();
+
+      pendingCanvasManipulationCompleter.complete();
     }
-
-    _isUndoing = false;
-
-    notifyListeners();
   }
 
   @override
