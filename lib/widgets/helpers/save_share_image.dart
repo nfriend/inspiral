@@ -78,8 +78,9 @@ Future<String> _cropAndSaveToTempFile(BuildContext context) async {
   await File(fullImageFilePath).writeAsBytes(pngBytes, flush: true);
   screenshot.dispose();
 
-  var croppedImage =
-      await ImageCropper.cropImage(sourcePath: fullImageFilePath);
+  var croppedImage = await ImageCropper.cropImage(
+      sourcePath: fullImageFilePath,
+      androidUiSettings: AndroidUiSettings(toolbarTitle: 'Crop/rotate image'));
 
   return croppedImage?.path;
 }
