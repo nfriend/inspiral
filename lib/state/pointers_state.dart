@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/line.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
@@ -214,13 +215,47 @@ class PointersState extends ChangeNotifier
     return totalDelta / count;
   }
 
+  /// Returns a new scale that is avoids zooming beyond the min and max limits
+  double _enforceZoomBounds(
+      double scale, Matrix4TransformDecomposition currentTransformComponents) {
+    // Enforce bounds on the zoom so that the user can't
+    // zoom too far in or out
+    if (currentTransformComponents.scale >= maxScale && scale > 1) {
+      scale = maxScale / currentTransformComponents.scale;
+    } else if (currentTransformComponents.scale <= minScale && scale < 1) {
+      scale = minScale / currentTransformComponents.scale;
+    }
+
+    return scale;
+  }
+
+  /// Returns a new Vector3 that prevents the user from panning too far
+  Vector3 _enforcePanBounds(Vector3 translation,
+      Matrix4TransformDecomposition currentTransformComponents) {
+    // TODO: https://gitlab.com/nfriend/inspiral/-/issues/50
+    // For now, there is no limit on how far the canvas can be panned.
+    // This is mitigated by the "reset view" option in the side panel,
+    // which prevents users from permanently losing the canvas.
+    return translation;
+  }
+
   /// Returns a transform that should be applied to the canvas based on the
   /// previous and current positions of all active pointers
   Matrix4 getTransform() {
+    // Leaving this uninitialized for now, because we skip the `decompose2D()`
+    // logic if `count == 1` because `_enforcePanBounds` doesn't do anything
+    // (yet - see comment in the method body). Once `_enforcePanBounds` is
+    // implemented, this variable will need to be initialized here.
+    Matrix4TransformDecomposition currentTransformComponents;
+
     if (count == 1) {
-      return Matrix4.identity()
-        ..translate(_pointerDeltas[_activePointerIds.first].global.toVector3());
+      var translation =
+          _pointerDeltas[_activePointerIds.first].global.toVector3();
+      translation = _enforcePanBounds(translation, currentTransformComponents);
+      return Matrix4.identity()..translate(translation);
     } else {
+      currentTransformComponents = canvas.transform.decompose2D();
+
       var previousCoM = getPreviousCenterOfMass().global;
       var currentCoM = getCenterOfMass().global;
 
@@ -234,6 +269,7 @@ class PointersState extends ChangeNotifier
       // Scale
       var scale = _getScale(
           centerOfMass: currentCoM, previousCenterOfMass: previousCoM);
+      _enforceZoomBounds(scale, currentTransformComponents);
       transform.scale(scale, scale, 0);
 
       // Rotate
@@ -244,8 +280,10 @@ class PointersState extends ChangeNotifier
       transform.translate(-pivotVector);
 
       // Translate
-      transform.translate(_getTranslation(
-          centerOfMass: currentCoM, previousCenterOfMass: previousCoM));
+      var translation = _getTranslation(
+          centerOfMass: currentCoM, previousCenterOfMass: previousCoM);
+      translation = _enforcePanBounds(translation, currentTransformComponents);
+      transform.translate(translation);
 
       return transform;
     }
