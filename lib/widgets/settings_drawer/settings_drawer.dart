@@ -35,6 +35,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   @override
   Widget build(BuildContext context) {
     var colors = Provider.of<ColorState>(context, listen: false);
+    var canvas = Provider.of<CanvasState>(context, listen: false);
     var ink = Provider.of<InkState>(context, listen: false);
     var settings = Provider.of<SettingsState>(context);
     var eraseAvailable =
@@ -59,6 +60,13 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                       });
                 }
               : null),
+      ListTile(
+        title: Text('Recenter view'),
+        onTap: () {
+          canvas.recenterView(context);
+          Navigator.of(context).pop();
+        },
+      ),
       CanvasSizeListItem(),
       ToggleListItem(
           text: 'Include background color when saving or sharing',
@@ -130,7 +138,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         children: [
                           Expanded(
                               child: Text(
-                            'Settings',
+                            'Additional options',
                             style: TextStyle(fontSize: 20.0),
                           )),
                           IconButton(

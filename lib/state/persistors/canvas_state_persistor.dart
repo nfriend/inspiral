@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/canvas_size.dart';
+import 'package:inspiral/state/helpers/get_center_transform.dart';
 import 'package:inspiral/state/helpers/guess_ideal_canvas_size.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:vector_math/vector_math_64.dart';
-import 'package:inspiral/extensions/extensions.dart';
 
 class CanvasStateRehydrationResult {
   final Matrix4 transform;
@@ -89,29 +89,9 @@ class CanvasStatePersistor {
       // In this case, use compute a new transform instead that places
       // the camera in the correct starting position.
 
-      // Compute an initial canvas translation that will place the
-      // center point of the canvas directly in the center of the screen
-      // By default, the canvas's top-left corner is lined up with
-      // the screen's top-left corner
-      transform = Matrix4.identity();
-
-      // Scale the canvas to the correct zoom level
-      final initialZoom = 0.5;
-      transform.scale(initialZoom, initialZoom, 0);
-
-      // Move the center of the canvas to the
-      // top-left of the screen. Multiplied by 2, because the
-      // canvas itself is offset by `canvasCenter` from its parent.
-      var canvasCenter = canvasSizeAndName.size.toOffset() / 2;
-      var originTranslation = -(canvasCenter.toVector3() * 2);
-      transform.translate(originTranslation);
-
-      // Then, move the canvas back by half the screen dimensions
-      // so that the centor of the canvas is located
-      // in the center of the screen
-      var centerTranslation =
-          (MediaQuery.of(context).size / 2).toVector3() * (1 / initialZoom);
-      transform.translate(centerTranslation);
+      transform = getCenterTransform(
+          canvasSize: canvasSizeAndName.size,
+          screenSize: MediaQuery.of(context).size);
     } else {
       transform = Matrix4.fromList(elements);
     }

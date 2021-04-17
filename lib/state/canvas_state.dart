@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/canvas_size.dart';
+import 'package:inspiral/state/helpers/get_center_transform.dart';
 import 'package:inspiral/state/persistors/canvas_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -112,6 +113,12 @@ class CanvasState extends ChangeNotifier with Persistable {
     // canvas.
     return PointerEvent.transformPosition(unprojection, pixelPosition) -
         canvasCenter;
+  }
+
+  /// Resets the zoom/pan/rotation back to its default
+  void recenterView(BuildContext context) {
+    transform = getCenterTransform(
+        canvasSize: canvasSize, screenSize: MediaQuery.of(context).size);
   }
 
   /// Notifies this state object when either the app background
