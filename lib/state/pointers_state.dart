@@ -269,7 +269,7 @@ class PointersState extends ChangeNotifier
       // Scale
       var scale = _getScale(
           centerOfMass: currentCoM, previousCenterOfMass: previousCoM);
-      _enforceZoomBounds(scale, currentTransformComponents);
+      scale = _enforceZoomBounds(scale, currentTransformComponents);
       transform.scale(scale, scale, 0);
 
       // Rotate
