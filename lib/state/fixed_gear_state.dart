@@ -53,6 +53,13 @@ class FixedGearState extends BaseGearState {
     ink.finishLine();
   }
 
+  /// Resets the position of the gears to the center of the canvas
+  void resetPosition() {
+    position = canvas.canvasCenter;
+    rotatingGear.initializePosition();
+    dragLine.pivotPosition = position;
+  }
+
   @override
   void persist(Batch batch) {
     FixedGearStatePersistor.persist(batch, this);

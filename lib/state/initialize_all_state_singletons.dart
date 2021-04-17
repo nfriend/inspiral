@@ -29,7 +29,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   pointers.canvas = canvas;
   canvas
     ..pointers = pointers
-    ..ink = ink;
+    ..ink = ink
+    ..fixedGear = fixedGear;
   colors.ink = ink;
   stroke.ink = ink;
   purchases.settings = settings;
