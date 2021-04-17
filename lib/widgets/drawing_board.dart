@@ -19,6 +19,8 @@ class DrawingBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pointers = Provider.of<PointersState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context, listen: false);
+    final canvasSize =
+        context.select<CanvasState, Size>((canvas) => canvas.canvasSize);
     final appBackgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.appBackgroundColor);
     final debug =

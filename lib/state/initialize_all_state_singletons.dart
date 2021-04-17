@@ -27,7 +27,9 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
 
   // Link up dependencies between the singletons
   pointers.canvas = canvas;
-  canvas.pointers = pointers;
+  canvas
+    ..pointers = pointers
+    ..ink = ink;
   colors.ink = ink;
   stroke.ink = ink;
   purchases.settings = settings;
@@ -36,7 +38,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     ..colors = colors;
   ink
     ..colors = colors
-    ..stroke = stroke;
+    ..stroke = stroke
+    ..canvas = canvas;
   rotatingGear
     ..canvas = canvas
     ..pointers = pointers
@@ -61,6 +64,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   // here is the order in which they will be hydrated (which matters
   // for some state objects).
   Iterable<Persistable> allStateObjects = [
+    canvas,
     progress,
     settings,
     selectorDrawer,
@@ -69,7 +73,6 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     stroke,
     ink,
     pointers,
-    canvas,
     fixedGear,
     rotatingGear,
     dragLine,

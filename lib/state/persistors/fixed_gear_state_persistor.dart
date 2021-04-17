@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/gears/gears.dart';
@@ -47,10 +46,10 @@ class FixedGearStatePersistor {
     // If these are null, it means we don't have a previously-saved gear
     // position. (For example, when opening the app for the very first time.)
     // In this case, use `canvasCenter` instead.
-    var positionX =
-        state[Schema.state.fixedGearPositionX] as double ?? canvasCenter.dx;
-    var positionY =
-        state[Schema.state.fixedGearPositionY] as double ?? canvasCenter.dy;
+    var positionX = state[Schema.state.fixedGearPositionX] as double ??
+        fixedGear.canvas.canvasCenter.dx;
+    var positionY = state[Schema.state.fixedGearPositionY] as double ??
+        fixedGear.canvas.canvasCenter.dy;
 
     return FixedGearStateRehydrationResult(
         position: Offset(positionX, positionY),

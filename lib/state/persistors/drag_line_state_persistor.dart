@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -29,10 +28,10 @@ class DragLineStatePersistor {
     // If these are null, it means we don't have a previously-saved pivot
     // position. (For example, when opening the app for the very first time.)
     // In this case, use `canvasCenter` instead.
-    var positionX =
-        state[Schema.state.dragLinePositionX] as double ?? canvasCenter.dx;
-    var positionY =
-        state[Schema.state.dragLinePositionY] as double ?? canvasCenter.dy;
+    var positionX = state[Schema.state.dragLinePositionX] as double ??
+        dragLine.canvas.canvasCenter.dx;
+    var positionY = state[Schema.state.dragLinePositionY] as double ??
+        dragLine.canvas.canvasCenter.dy;
 
     return DragLineStateRehydrationResult(
         pivotPosition: Offset(positionX, positionY),

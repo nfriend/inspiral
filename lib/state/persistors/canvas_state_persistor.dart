@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
+import 'package:inspiral/models/canvas_size.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -8,8 +8,10 @@ import 'package:inspiral/extensions/extensions.dart';
 
 class CanvasStateRehydrationResult {
   final Matrix4 transform;
+  final CanvasSizeAndName canvasSizeAndName;
 
-  CanvasStateRehydrationResult({@required this.transform});
+  CanvasStateRehydrationResult(
+      {@required this.transform, @required this.canvasSizeAndName});
 }
 
 class CanvasStatePersistor {
@@ -33,6 +35,7 @@ class CanvasStatePersistor {
       Schema.state.canvasTransform_13: elements[13],
       Schema.state.canvasTransform_14: elements[14],
       Schema.state.canvasTransform_15: elements[15],
+      Schema.state.canvasSize: canvas.canvasSizeAndName.id
     });
   }
 
@@ -40,6 +43,23 @@ class CanvasStatePersistor {
       Database db, BuildContext context, CanvasState canvas) async {
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
+
+    var canvasSizeAndNameId = state[Schema.state.canvasSize] as String;
+    CanvasSizeAndName canvasSizeAndName;
+
+    if (canvasSizeAndNameId == null) {
+      // Similar to below, if either of these are null, it means we're launching
+      // the app for the first time.
+      // In this case, we need to select the canvas size that is most
+      // appropriate for the current device. The older/slower the device, the
+      // smaller canvas we should select.
+
+      // TODO: figure out how to select the right size
+      canvasSizeAndName = CanvasSize.medium;
+    } else {
+      canvasSizeAndName =
+          CanvasSize.all.firstWhere((csan) => csan.id == canvasSizeAndNameId);
+    }
 
     var elements = <double>[
       state[Schema.state.canvasTransform_0] as double,
@@ -82,6 +102,7 @@ class CanvasStatePersistor {
       // Move the center of the canvas to the
       // top-left of the screen. Multiplied by 2, because the
       // canvas itself is offset by `canvasCenter` from its parent.
+      var canvasCenter = canvasSizeAndName.size.toOffset() / 2;
       var originTranslation = -(canvasCenter.toVector3() * 2);
       transform.translate(originTranslation);
 
@@ -95,6 +116,7 @@ class CanvasStatePersistor {
       transform = Matrix4.fromList(elements);
     }
 
-    return CanvasStateRehydrationResult(transform: transform);
+    return CanvasStateRehydrationResult(
+        transform: transform, canvasSizeAndName: canvasSizeAndName);
   }
 }

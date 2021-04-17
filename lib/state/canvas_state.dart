@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/models/canvas_size.dart';
 import 'package:inspiral/state/persistors/canvas_state_persistor.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -22,6 +23,7 @@ class CanvasState extends ChangeNotifier with Persistable {
   CanvasState._internal() : super();
 
   PointersState pointers;
+  InkState ink;
 
   Matrix4 _transform;
 
@@ -48,6 +50,40 @@ class CanvasState extends ChangeNotifier with Persistable {
   set isSelectingHole(bool value) {
     _isSelectingHole = value;
     notifyListeners();
+  }
+
+  /// The currently selected canvas size option
+  CanvasSizeAndName get canvasSizeAndName => _canvasSizeAndName;
+  CanvasSizeAndName _canvasSizeAndName;
+
+  /// The size of drawing canvas, in logical pixels
+  Size get canvasSize => _canvasSize;
+  Size _canvasSize;
+
+  /// The canvas's center point
+  Offset get canvasCenter => _canvasCenter;
+  Offset _canvasCenter;
+
+  /// The size of each tile that makes up the canvas background
+  Size get tileSize => _tileSize;
+  Size _tileSize;
+
+  /// Updates the size of the canvas
+  Future<void> setCanvasSize(CanvasSizeAndName newSize) async {
+    // Wait for any pending canvas manipulations to complete
+    await ink.pendingCanvasManipulation;
+    ink.eraseCanvas();
+    _updateCanvasSizeDependents(newSize);
+    notifyListeners();
+  }
+
+  /// Updates `canvasSizeAndName` and all dependent properties
+  void _updateCanvasSizeDependents(CanvasSizeAndName newSize) {
+    _canvasSizeAndName = newSize;
+    _canvasSize = newSize.size;
+    _canvasCenter = _canvasSize.center(canvasOrigin);
+    _tileSize = Size(
+        canvasSize.width / tileColumnCount, canvasSize.height / tileRowCount);
   }
 
   /// Translates a coordinate in logical pixels to coordinates on the drawing
@@ -107,5 +143,6 @@ class CanvasState extends ChangeNotifier with Persistable {
     var result = await CanvasStatePersistor.rehydrate(db, context, this);
 
     _transform = result.transform;
+    _updateCanvasSizeDependents(result.canvasSizeAndName);
   }
 }

@@ -28,6 +28,7 @@ class InkState extends ChangeNotifier with Persistable {
 
   ColorState colors;
   StrokeState stroke;
+  CanvasState canvas;
 
   final List<InkLine> _lines = [];
   bool _isBaking = false;
@@ -149,6 +150,7 @@ class InkState extends ChangeNotifier with Persistable {
           lines: lines,
           tileImages: _tileImages,
           tilePositionToDatabaseId: _tilePositionToDatabaseId,
+          tileSize: canvas.tileSize,
           snapshotVersion: lastSnapshotVersion + 1);
 
       // Wait to actually increment this variable until `bakeImage` is done.
@@ -174,7 +176,7 @@ class InkState extends ChangeNotifier with Persistable {
   }
 
   /// Erases the canvas, including both baked and unbaked lines.
-  Future<void> eraseCanvas() async {
+  void eraseCanvas() {
     if (_isBaking || _isUndoing) {
       return;
     }

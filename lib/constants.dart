@@ -4,14 +4,8 @@ import 'package:flutter/rendering.dart';
 /// The global scaling factor for all sizes and position calculations
 const double scaleFactor = 4;
 
-/// The size of the drawable area
-final Size canvasSize = Size(1000, 1000) * scaleFactor;
-
 /// The canvas's origin
 const Offset canvasOrigin = Offset.zero;
-
-/// The canvas's center point
-final Offset canvasCenter = canvasSize.center(canvasOrigin);
 
 /// The number of columns to use when dividing the canvas into tiles
 /// It's important that this number evenly divides `canvasSize.width`
@@ -20,10 +14,6 @@ const int tileColumnCount = 10;
 /// The number of rows to use when dividing the canvas into tiles
 /// It's important that this number evenly divides `canvasSize.height`
 const int tileRowCount = 10;
-
-/// The size of each tile
-final Size tileSize =
-    Size(canvasSize.width / tileColumnCount, canvasSize.height / tileRowCount);
 
 /// The size of the debug dots
 final Size debugDotSize = Size(4, 4) * scaleFactor;

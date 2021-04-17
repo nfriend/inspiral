@@ -13,6 +13,10 @@ class DryInkCanvas extends StatelessWidget {
         context.select<SettingsState, bool>((settings) => settings.debug);
     final backgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
+    final tileSize =
+        context.select<CanvasState, Size>((canvas) => canvas.tileSize);
+    final canvasSize =
+        context.select<CanvasState, Size>((canvas) => canvas.canvasSize);
 
     var tiles = ink.tileImages.entries.map((entry) {
       var position = entry.key;

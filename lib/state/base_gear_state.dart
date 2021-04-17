@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 
 abstract class BaseGearState extends ChangeNotifier with Persistable {
-  Offset _position = canvasCenter;
+  Offset _position;
   Offset get position => _position;
   set position(Offset value) {
     _position = value;

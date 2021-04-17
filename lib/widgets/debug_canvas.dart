@@ -25,6 +25,12 @@ class _DebugCanvasPainterParams {
   /// The contact point of the fixed gear
   ContactPoint fixedGearContactPoint;
 
+  /// The size of the canvas
+  Size canvasSize;
+
+  /// The center point of the canvas
+  Offset canvasCenter;
+
   /// Log message
   String logMessage;
 
@@ -36,7 +42,9 @@ class _DebugCanvasPainterParams {
         pointerPosition,
         rotatingGearContactPoint,
         fixedGearContactPoint,
-        logMessage
+        canvasSize,
+        canvasCenter,
+        logMessage,
       ]);
 
   @override
@@ -48,6 +56,8 @@ class _DebugCanvasPainterParams {
       other.pointerPosition == pointerPosition &&
       other.rotatingGearContactPoint == rotatingGearContactPoint &&
       other.fixedGearContactPoint == fixedGearContactPoint &&
+      other.canvasSize == canvasSize &&
+      other.canvasCenter == canvasCenter &&
       other.logMessage == logMessage;
 }
 
@@ -103,9 +113,9 @@ class _DebugCanvasPainter extends CustomPainter {
     );
     textPainter.layout(
       minWidth: 0,
-      maxWidth: canvasSize.width,
+      maxWidth: params.canvasSize.width,
     );
-    final offset = canvasCenter + Offset(-100, 200);
+    final offset = params.canvasCenter + Offset(-100, 200);
     textPainter.paint(canvas, offset);
   }
 
@@ -195,11 +205,17 @@ class DebugCanvas extends StatelessWidget {
     final fixedGear = Provider.of<FixedGearState>(context);
     final dragLine = Provider.of<DragLineState>(context);
     final ink = Provider.of<InkState>(context);
+    final canvasSize =
+        context.select<CanvasState, Size>((canvas) => canvas.canvasSize);
+    final canvasCenter =
+        context.select<CanvasState, Offset>((canvas) => canvas.canvasCenter);
 
     final params = _DebugCanvasPainterParams()
       ..fixedGearPosition = fixedGear.position
       ..rotatingGearPosition = rotatingGear.position
-      ..logMessage = '# of points: ${ink.currentPointCount}';
+      ..logMessage = '# of points: ${ink.currentPointCount}'
+      ..canvasCenter = canvasCenter
+      ..canvasSize = canvasSize;
 
     if (rotatingGear.isDragging) {
       params

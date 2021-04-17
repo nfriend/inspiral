@@ -15,6 +15,8 @@ class HoleSelector extends StatelessWidget {
         (rotatingGear) => rotatingGear.activeHole);
     final areGearsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
+    final canvasSize =
+        context.select<CanvasState, Size>((canvas) => canvas.canvasSize);
 
     if (!isSelectingHole || !areGearsVisible) {
       return Container();

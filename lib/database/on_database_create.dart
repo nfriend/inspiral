@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:inspiral/models/canvas_size.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:inspiral/database/schema.dart';
 
@@ -96,6 +97,9 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.canvasTransform_13} REAL NULL,
       ${Schema.state.canvasTransform_14} REAL NULL,
       ${Schema.state.canvasTransform_15} REAL NULL,
+      ${Schema.state.canvasSize} TEXT
+        CHECK(${Schema.state.canvasSize} IN (${CanvasSize.all.map((t) => "'${t.id}'").join(', ')}))
+        NULL,
       ${Schema.state.strokeWidth} REAL NOT NULL,
       ${Schema.state.strokeStyle} TEXT
         CHECK(${Schema.state.strokeStyle} IN (${StrokeStyleType.all.map((t) => "'$t'").join(', ')}))

@@ -5,6 +5,7 @@ import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/delete_database.dart';
 import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
 import 'package:inspiral/widgets/restart_widget.dart';
+import 'package:inspiral/widgets/settings_drawer/canvas_size_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +59,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                       });
                 }
               : null),
+      CanvasSizeListItem(),
       ToggleListItem(
           text: 'Include background color when saving or sharing',
           value: settings.includeBackgroundWhenSaving,

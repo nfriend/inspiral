@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/fixed_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
@@ -8,12 +7,7 @@ import 'package:sqflite/sqlite_api.dart';
 
 // An arbitrary number that allows even the biggest gear
 // combination to always be draggable.
-final double allowedDistanceFromCanvasEdge = 900.0;
-final Rect dragBounds = Rect.fromLTRB(
-    -allowedDistanceFromCanvasEdge,
-    -allowedDistanceFromCanvasEdge,
-    canvasSize.width + allowedDistanceFromCanvasEdge,
-    canvasSize.height + allowedDistanceFromCanvasEdge);
+const double allowedDistanceFromCanvasEdge = 900.0;
 
 class FixedGearState extends BaseGearState {
   static FixedGearState _instance;
@@ -36,6 +30,12 @@ class FixedGearState extends BaseGearState {
 
   void gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
+      final dragBounds = Rect.fromLTRB(
+          -allowedDistanceFromCanvasEdge,
+          -allowedDistanceFromCanvasEdge,
+          canvas.canvasSize.width + allowedDistanceFromCanvasEdge,
+          canvas.canvasSize.height + allowedDistanceFromCanvasEdge);
+
       final newPosition =
           (canvas.pixelToCanvasPosition(event.position) - dragOffset)
               .clamp(dragBounds);

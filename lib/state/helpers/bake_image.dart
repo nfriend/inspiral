@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/ink_line.dart';
@@ -19,6 +18,7 @@ Future<void> bakeImage(
     {@required List<InkLine> lines,
     @required Map<Offset, Image> tileImages,
     @required Map<Offset, String> tilePositionToDatabaseId,
+    @required Size tileSize,
     @required int snapshotVersion}) async {
   // This function assumes that `lines` has at least one `InkLine`.
   // If it does not, there is no need to bake the lines - there
@@ -38,7 +38,8 @@ Future<void> bakeImage(
   lines.last.markAndSplitCurrentPath();
 
   // Determine which tiles need to update
-  var tilesToUpdate = getTilesToUpdate(linesToBake);
+  var tilesToUpdate =
+      getTilesToUpdate(linesToBake: linesToBake, tileSize: tileSize);
 
   var renderedSize = tileSize;
   var updatedTileImages = <Offset, Image>{};
