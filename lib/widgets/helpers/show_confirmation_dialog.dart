@@ -5,17 +5,25 @@ var _buttonStyle = ButtonStyle(
       MaterialStateProperty.resolveWith((states) => Colors.transparent),
 );
 
-/// Shows a confirm/cancel modal dialog with a custom messag
+/// Shows a confirm/cancel modal dialog with a custom message
 void showConfirmationDialog(
     {@required BuildContext context,
-    @required String message,
+    String message,
+    Widget messageWidget,
     @required void Function() onConfirm,
     String confirmButtonText = 'yes'}) {
+  if (message == null && messageWidget == null) {
+    throw 'either the message or content parameter must be non-null';
+  } else if (message != null && messageWidget != null) {
+    throw 'only the message OR the content must be provided - not both';
+  }
+
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: SingleChildScrollView(child: Text(message)),
+          content: SingleChildScrollView(
+              child: message != null ? Text(message) : messageWidget),
           actions: <Widget>[
             TextButton(
               onPressed: () {

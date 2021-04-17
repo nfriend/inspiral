@@ -190,6 +190,8 @@ class InkState extends ChangeNotifier with Persistable {
     _lastSnapshotVersion = 0;
 
     notifyListeners();
+
+    bakeImage();
   }
 
   Future<void> undo() async {
