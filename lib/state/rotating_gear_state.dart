@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/rotating_gear_state_persistor.dart';
@@ -206,11 +207,14 @@ class RotatingGearState extends BaseGearState {
 
     var rotatingGearRotation = rotatingGearRelativeContactPoint.direction -
         fixedGearContactPoint.direction +
+        fixedGear.rotation +
         pi;
 
     var rotatingGearPosition = (fixedGearContactPoint.position +
             rotatingGearRelativeContactPoint.position)
-        .rotated(rotatingGearRotation - pi, fixedGearContactPoint.position);
+        .rotated(rotatingGearRotation - pi - fixedGear.rotation,
+            fixedGearContactPoint.position)
+        .rotated(fixedGear.rotation, fixedGear.position);
 
     var penAngle = rotatingGearRotation - activeHole.angle;
     var penPosition = Offset(cos(penAngle), sin(penAngle)) *
@@ -220,7 +224,7 @@ class RotatingGearState extends BaseGearState {
 
     var rotatingGearContactPoint = rotatingGearRelativeContactPoint
         .translated(rotatingGearPosition)
-        .rotated(-rotatingGearRotation, fixedGearContactPoint.position);
+        .rotated(rotatingGearRotation, rotatingGearPosition);
 
     return RotationResult(
         rotatingGearContactPoint: rotatingGearContactPoint,

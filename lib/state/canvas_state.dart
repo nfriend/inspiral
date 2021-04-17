@@ -131,7 +131,7 @@ class CanvasState extends ChangeNotifier with Persistable {
   /// empty canvas is moved.
   void appBackgroundOrCanvasMove(PointerMoveEvent event) {
     if (pointers.count > 0) {
-      transform = pointers.getTransform() * transform as Matrix4;
+      transform = pointers.getTransformInfo().transform * transform as Matrix4;
     }
   }
 

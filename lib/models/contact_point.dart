@@ -27,7 +27,7 @@ class ContactPoint {
     var rotatedDirection = (direction + angle + (2 * pi)) % (2 * pi);
 
     return ContactPoint(
-        position: point.rotated(angle, point), direction: rotatedDirection);
+        position: position.rotated(angle, point), direction: rotatedDirection);
   }
 
   @override

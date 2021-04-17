@@ -30,6 +30,15 @@ class Positions {
   }
 }
 
+/// A class to hold a transform matrix and its individual components
+@immutable
+class TransformInfo {
+  final Matrix4 transform;
+  final Matrix4TransformDecomposition transformComponents;
+
+  TransformInfo({@required this.transform, @required this.transformComponents});
+}
+
 class PointersState extends ChangeNotifier
     with Persistable, WidgetsBindingObserver {
   static PointersState _instance;
@@ -241,7 +250,7 @@ class PointersState extends ChangeNotifier
 
   /// Returns a transform that should be applied to the canvas based on the
   /// previous and current positions of all active pointers
-  Matrix4 getTransform() {
+  TransformInfo getTransformInfo() {
     // Leaving this uninitialized for now, because we skip the `decompose2D()`
     // logic if `count == 1` because `_enforcePanBounds` doesn't do anything
     // (yet - see comment in the method body). Once `_enforcePanBounds` is
@@ -252,7 +261,12 @@ class PointersState extends ChangeNotifier
       var translation =
           _pointerDeltas[_activePointerIds.first].global.toVector3();
       translation = _enforcePanBounds(translation, currentTransformComponents);
-      return Matrix4.identity()..translate(translation);
+      return TransformInfo(
+          transform: Matrix4.identity()..translate(translation),
+          transformComponents: Matrix4TransformDecomposition(
+              quaternion: Quaternion.identity(),
+              scale: 1.0,
+              translation: translation.toOffset()));
     } else {
       currentTransformComponents = canvas.transform.decompose2D();
 
@@ -273,8 +287,9 @@ class PointersState extends ChangeNotifier
       transform.scale(scale, scale, 0);
 
       // Rotate
-      transform.rotateZ(_getRotation(
-          centerOfMass: currentCoM, previousCenterOfMass: previousCoM));
+      var rotation = _getRotation(
+          centerOfMass: currentCoM, previousCenterOfMass: previousCoM);
+      transform.rotateZ(rotation);
 
       // Put the origin back in the right spot
       transform.translate(-pivotVector);
@@ -285,7 +300,13 @@ class PointersState extends ChangeNotifier
       translation = _enforcePanBounds(translation, currentTransformComponents);
       transform.translate(translation);
 
-      return transform;
+      return TransformInfo(
+          transform: transform,
+          transformComponents: Matrix4TransformDecomposition(
+              quaternion:
+                  Quaternion.axisAngle(Vector3(0.0, 0.0, 1.0), rotation),
+              scale: scale,
+              translation: translation.toOffset()));
     }
   }
 

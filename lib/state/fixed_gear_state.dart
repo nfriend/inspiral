@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/fixed_gear_state_persistor.dart';
@@ -9,7 +10,7 @@ import 'package:sqflite/sqlite_api.dart';
 // combination to always be draggable.
 const double allowedDistanceFromCanvasEdge = 900.0;
 
-class FixedGearState extends BaseGearState {
+class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   static FixedGearState _instance;
 
   factory FixedGearState.init() {
@@ -22,11 +23,49 @@ class FixedGearState extends BaseGearState {
     return _instance;
   }
 
-  FixedGearState._internal() : super();
+  FixedGearState._internal() : super() {
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  /// When the app is paused and then resumed, reset the state of all our
+  /// pointer tracking, since they are no longer up-to-date
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      pointerIds.removeWhere((element) => true);
+    }
+  }
 
   RotatingGearState rotatingGear;
   DragLineState dragLine;
   InkState ink;
+
+  /// The list of pointer IDs currently touching this gear
+  List<int> pointerIds = [];
+
+  @override
+  void gearPointerDown(PointerDownEvent event) {
+    super.gearPointerDown(event);
+
+    pointerIds.add(event.pointer);
+
+    // If we begin a multi-touch gesture on this gear (which will rotate the
+    // gears in place), we want to cancel any future dragging to prevent
+    // edge casese when transitioning back to dragging and to prevent
+    // accidental drags when lifting fingers. Setting `draggingPointerId` to -1
+    // effectively cancels fixed gear dragging until all the pointers all
+    // lifted from the screen.
+    if (pointerIds.length > 1) {
+      draggingPointerId = -1;
+    }
+  }
+
+  @override
+  void gearPointerUp(PointerUpEvent event) {
+    super.gearPointerUp(event);
+
+    pointerIds.remove(event.pointer);
+  }
 
   void gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging) {
@@ -43,6 +82,25 @@ class FixedGearState extends BaseGearState {
       rotatingGear.fixedGearDrag(position - newPosition);
       dragLine.fixedGearDrag(position - newPosition);
       position = newPosition;
+    } else if (
+        // If more than one finger is touching the screen
+        pointers.count > 1 &&
+            // and all of the pointers are touching the fixed gear
+            pointers.count == pointerIds.length &&
+            // and this is the move event for the most recent finger
+            event.pointer == pointerIds.last) {
+      var rotationDelta =
+          pointers.getTransformInfo().transformComponents.rotation;
+
+      // `rotationDelta` is in the range [0, 2pi), Translate this
+      // into the range [-pi,pi).
+      if (rotationDelta > pi) {
+        rotationDelta -= 2 * pi;
+      }
+
+      rotation += rotationDelta;
+      rotatingGear.initializePosition();
+      ink.finishLine();
     }
   }
 
@@ -72,5 +130,11 @@ class FixedGearState extends BaseGearState {
     definition = result.definition;
     isVisible = result.isVisible;
     position = result.position;
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }
