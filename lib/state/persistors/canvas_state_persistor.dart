@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/canvas_size.dart';
+import 'package:inspiral/state/helpers/guess_ideal_canvas_size.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -54,8 +55,7 @@ class CanvasStatePersistor {
       // appropriate for the current device. The older/slower the device, the
       // smaller canvas we should select.
 
-      // TODO: figure out how to select the right size
-      canvasSizeAndName = CanvasSize.medium;
+      canvasSizeAndName = await guessIdealCanvasSize();
     } else {
       canvasSizeAndName =
           CanvasSize.all.firstWhere((csan) => csan.id == canvasSizeAndNameId);

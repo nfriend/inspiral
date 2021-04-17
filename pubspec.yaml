@@ -47,6 +47,8 @@ dependencies:
   sqflite: ^2.0.0+3
   sentry_flutter: ^5.0.0
   image_cropper: ^1.4.0
+  system_info: ^1.0.0
+  device_info: ^2.0.0
 
 dev_dependencies:
   flutter_test:
