@@ -1,5 +1,7 @@
+import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/environment_config.dart';
 import 'package:inspiral/models/entitlement.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/delete_database.dart';
@@ -8,6 +10,7 @@ import 'package:inspiral/widgets/restart_widget.dart';
 import 'package:inspiral/widgets/settings_drawer/canvas_size_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class SettingsDrawer extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class SettingsDrawer extends StatefulWidget {
 
 class _SettingsDrawerState extends State<SettingsDrawer> {
   Future<bool> _entitlementCheckFuture;
+  final InAppReview _inAppReview = InAppReview.instance;
 
   @override
   void initState() {
@@ -40,6 +44,22 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var settings = Provider.of<SettingsState>(context);
     var eraseAvailable =
         context.select<InkState, bool>((ink) => ink.eraseAvailable);
+
+    Widget appStoreReviewTile = Container();
+    if (io.Platform.isIOS || io.Platform.isAndroid) {
+      var text = Text(io.Platform.isIOS
+          ? 'Review on the App Store'
+          : 'Review on Google Play');
+
+      appStoreReviewTile = ListTile(
+        title: text,
+        onTap: () {
+          _inAppReview.openStoreListing(
+              appStoreId: EnvironmentConfig.appStoreId);
+          Navigator.of(context).pop();
+        },
+      );
+    }
 
     var regularSettingsItems = <Widget>[
       ListTile(
@@ -98,7 +118,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
             } else {
               return Container();
             }
-          })
+          }),
+      appStoreReviewTile
     ];
 
     var debugSettingsItems = <Widget>[];

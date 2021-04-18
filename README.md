@@ -53,6 +53,19 @@ default:
   image: cirrusci/flutter:2.1.0-12.1.pre
 ```
 
+**The app store review link is not working in iOS.**
+
+In order for the app store review link to work (in iOS), the `appStoreId`
+environment variable must be set to the app's store ID.
+
+Environment variables are passed at build-time using `--dart-define`:
+
+```sh
+flutter run --dart-define=appStoreId=ABCD1234
+```
+
+Android does not require this configuration.
+
 ## Attributions
 
 - Icons made by [Freepik](https://www.freepik.com) from

@@ -49,6 +49,7 @@ dependencies:
   image_cropper: ^1.4.0
   system_info: ^1.0.0
   device_info: ^2.0.0
+  in_app_review: ^2.0.2
 
 dev_dependencies:
   flutter_test:
