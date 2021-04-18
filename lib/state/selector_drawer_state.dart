@@ -30,7 +30,7 @@ class SelectorDrawerState extends ChangeNotifier with Persistable {
   void openDrawer({@required DrawerTab activeTab}) {
     _isOpen = true;
     _activeTab = activeTab;
-    _updateIsSelectingHole();
+    _exitHoleSelectionMode();
 
     notifyListeners();
   }
@@ -38,7 +38,7 @@ class SelectorDrawerState extends ChangeNotifier with Persistable {
   /// Closes the drawer
   void closeDrawer() {
     _isOpen = false;
-    _updateIsSelectingHole();
+    _exitHoleSelectionMode();
     notifyListeners();
   }
 
@@ -55,7 +55,7 @@ class SelectorDrawerState extends ChangeNotifier with Persistable {
       }
     }
 
-    _updateIsSelectingHole();
+    _exitHoleSelectionMode();
     _hideColorDeleteButtons();
   }
 
@@ -65,18 +65,17 @@ class SelectorDrawerState extends ChangeNotifier with Persistable {
   /// to the user changing tab with a swipe gesture).
   void syncActiveTab({@required DrawerTab newActiveTab}) {
     _activeTab = newActiveTab;
-    _updateIsSelectingHole();
+    _exitHoleSelectionMode();
     _hideColorDeleteButtons();
 
     notifyListeners();
   }
 
-  /// Updates the canvas's `isSelectingHole` property based on the currently
-  /// selected tab.
+  /// Exits out of hole selection mode
   ///
   /// TODO: It feels like there should be a more declarative way to do this.
-  void _updateIsSelectingHole() {
-    canvas.isSelectingHole = isOpen && activeTab == DrawerTab.pen;
+  void _exitHoleSelectionMode() {
+    canvas.isSelectingHole = false;
   }
 
   /// Hides the pen and canvas color delete buttons (if they are shown)

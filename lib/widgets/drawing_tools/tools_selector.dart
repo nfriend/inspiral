@@ -14,12 +14,23 @@ class ToolsSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final purchases = Provider.of<PurchasesState>(context, listen: false);
+    final canvas = Provider.of<CanvasState>(context, listen: false);
+    final isSelectingHole =
+        context.select<CanvasState, bool>((canvas) => canvas.isSelectingHole);
     final colors = Provider.of<ColorState>(context);
     final colorPicker = Provider.of<ColorPickerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(storageKey: 'tools', label: 'TOOLS', children: [
+        ActionButton(
+          icon: InspiralCustomIcons.select_hole,
+          tooltipMessage: 'Select a pen hole',
+          isActive: isSelectingHole,
+          onButtonTap: () {
+            canvas.isSelectingHole = !isSelectingHole;
+          },
+        ),
         ActionButton(
           icon: InspiralCustomIcons.forward_1,
           tooltipMessage: 'Rotate in place clockwise by one tooth',

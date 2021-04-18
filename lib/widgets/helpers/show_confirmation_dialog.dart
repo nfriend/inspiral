@@ -12,18 +12,14 @@ void showConfirmationDialog(
     Widget messageWidget,
     @required void Function() onConfirm,
     String confirmButtonText = 'yes'}) {
-  if (message == null && messageWidget == null) {
-    throw 'either the message or content parameter must be non-null';
-  } else if (message != null && messageWidget != null) {
-    throw 'only the message OR the content must be provided - not both';
-  }
+  assert((message == null) ^ (messageWidget == null),
+      'Exactly one of the `message` and `messageWidget` parameters must be non-null');
 
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: SingleChildScrollView(
-              child: message != null ? Text(message) : messageWidget),
+          content: SingleChildScrollView(child: messageWidget ?? Text(message)),
           actions: <Widget>[
             TextButton(
               onPressed: () {

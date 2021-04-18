@@ -5,21 +5,34 @@ import 'package:tinycolor/tinycolor.dart';
 
 class ActionButton extends StatelessWidget {
   final IconData icon;
+  final Widget buttonContent;
   final String tooltipMessage;
   final Function onButtonTap;
+  final bool isActive;
 
   ActionButton(
-      {@required this.icon,
+      {this.icon,
+      this.buttonContent,
       @required this.tooltipMessage,
-      @required this.onButtonTap});
+      @required this.onButtonTap,
+      this.isActive = false}) {
+    assert((icon == null) ^ (buttonContent == null),
+        'Exactly one of the `icon` and `buttonContent` parameters must be non-null');
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ColorState>(context, listen: false);
-    final buttonColor =
-        context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
-    final uiTextColor =
-        context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
+
+    final buttonColor = isActive
+        ? context.select<ColorState, TinyColor>((colors) => colors.activeColor)
+        : context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
+
+    final uiTextColor = isActive
+        ? context
+            .select<ColorState, TinyColor>((colors) => colors.activeTextColor)
+        : context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
+
     final borderRadius = BorderRadius.all(Radius.circular(5.0));
 
     return Padding(
@@ -36,10 +49,11 @@ class ActionButton extends StatelessWidget {
                 child: Tooltip(
                     message: tooltipMessage,
                     preferBelow: false,
-                    child: Icon(
-                      icon,
-                      color: uiTextColor.color,
-                      size: 40,
-                    )))));
+                    child: buttonContent ??
+                        Icon(
+                          icon,
+                          color: uiTextColor.color,
+                          size: 40,
+                        )))));
   }
 }

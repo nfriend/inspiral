@@ -27,4 +27,6 @@ class InspiralCustomIcons {
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData rotate_complete =
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData select_hole =
+      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
