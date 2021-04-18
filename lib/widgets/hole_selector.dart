@@ -24,8 +24,15 @@ class HoleSelector extends StatelessWidget {
 
     final gear = Provider.of<RotatingGearState>(context);
     final isDark = context.select<ColorState, bool>((colors) => colors.isDark);
-    final penColor =
+    var penColor =
         context.select<ColorState, TinyColor>((colors) => colors.penColor);
+
+    // If the pen color is fully transparent, replace it with a generic gray
+    // so that the user has some visual indication which hole is active
+    if (penColor.color == Colors.transparent) {
+      penColor = TinyColor(Color(isDark ? 0xBBCCCCCC : 0xBB555555));
+    }
+
     final inactivePenColor = isDark
         ? penColor.desaturate(50).darken()
         : penColor.desaturate(50).lighten();

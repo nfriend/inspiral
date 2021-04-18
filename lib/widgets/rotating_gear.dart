@@ -22,6 +22,8 @@ class RotatingGear extends StatelessWidget {
     final backgroundColor = context
         .select<ColorState, TinyColor>((colors) => colors.backgroundColor);
 
+    final penColorIsTransparent = penColor.color == Colors.transparent;
+
     final colorFilter =
         backgroundColor.isDark() ? invertColorFilter : noFilterColorFilter;
 
@@ -63,7 +65,16 @@ class RotatingGear extends StatelessWidget {
                       width: inkDotSize.width,
                       height: inkDotSize.height,
                       decoration: BoxDecoration(
-                          color: penColor.color, shape: BoxShape.circle),
+                          gradient: penColorIsTransparent
+                              ? RadialGradient(colors: [
+                                  Colors.black,
+                                  Colors.white,
+                                  Colors.black,
+                                  Colors.white,
+                                ])
+                              : null,
+                          color: penColorIsTransparent ? null : penColor.color,
+                          shape: BoxShape.circle),
                     ))
               ])),
         ));
