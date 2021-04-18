@@ -10,17 +10,14 @@ import 'package:inspiral/extensions/extensions.dart';
 
 class FixedGearStateRehydrationResult extends BaseGearStateRehydrationResult {
   final Offset position;
+  final double rotation;
 
   FixedGearStateRehydrationResult(
       {@required GearDefinition definition,
       @required bool isVisible,
-      @required this.position})
+      @required this.position,
+      @required this.rotation})
       : super(definition: definition, isVisible: isVisible);
-
-  @override
-  String toString() {
-    return 'FixedGearStateRehydrationResult(position: $position, definition: $definition, isVisible: $isVisible)';
-  }
 }
 
 class FixedGearStatePersistor {
@@ -28,6 +25,7 @@ class FixedGearStatePersistor {
     batch.update(Schema.state.toString(), {
       Schema.state.fixedGearPositionX: fixedGear.position.dx,
       Schema.state.fixedGearPositionY: fixedGear.position.dy,
+      Schema.state.fixedGearRotation: fixedGear.rotation,
       Schema.state.fixedGearDefinitionId: fixedGear.definition.id,
       Schema.state.gearsAreVisible: fixedGear.isVisible.toInt()
     });
@@ -54,6 +52,7 @@ class FixedGearStatePersistor {
     return FixedGearStateRehydrationResult(
         position: Offset(positionX, positionY),
         definition: definition,
-        isVisible: (state[Schema.state.gearsAreVisible] as int).toBool());
+        isVisible: (state[Schema.state.gearsAreVisible] as int).toBool(),
+        rotation: state[Schema.state.fixedGearRotation] as double);
   }
 }

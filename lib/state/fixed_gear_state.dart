@@ -130,6 +130,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
     definition = result.definition;
     isVisible = result.isVisible;
     position = result.position;
+    rotation = result.rotation;
   }
 
   @override
