@@ -9,6 +9,7 @@ import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/util/calculate_rotation_count.dart';
 import 'package:inspiral/util/select_closest_hole.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:pedantic/pedantic.dart';
 
 /// A utility class to hold the results of a rotation calculation
 @immutable
@@ -146,7 +147,7 @@ class RotatingGearState extends BaseGearState {
 
   /// Draws one complete (clockwise) rotation, so that the rotating gears
   /// ends where it starts
-  Future<void> drawOneRotation() async {
+  Future<void> drawOneRotation({bool triggerBakeAfter = true}) async {
     if (_isDrawingRotation) {
       return;
     }
@@ -167,6 +168,10 @@ class RotatingGearState extends BaseGearState {
 
     dragLine.angle += rotationAmount;
     _isDrawingRotation = false;
+
+    if (triggerBakeAfter) {
+      unawaited(ink.bakeImage());
+    }
   }
 
   /// Keeps track of whether we're in the process of drawing a complete pattern.
@@ -186,10 +191,12 @@ class RotatingGearState extends BaseGearState {
         rotatingGearTeeth: definition.toothCount);
 
     for (var i = 0; i < rotationsToComplete; i++) {
-      await drawOneRotation();
+      await drawOneRotation(triggerBakeAfter: false);
     }
 
     _isDrawingCompletePattern = false;
+
+    unawaited(ink.bakeImage());
   }
 
   /// Updates all state variables with the provide rotation calculation results
