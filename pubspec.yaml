@@ -109,4 +109,5 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "images/inspiral_logo.png"
+  image_path_android: "images/inspiral_logo_android.png"
+  image_path_ios: "images/inspiral_logo_ios.png"
