@@ -101,8 +101,10 @@ class _PurchaseDialogSuccessContentState
                                   _isWaitingForPurchase = false;
                                 });
                               },
-                              child: Text(
-                                  'Unlock ${widget.requestedPackage.product.title}')),
+                              child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                      'Unlock ${widget.requestedPackage.product.title}'))),
                           Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Row(
