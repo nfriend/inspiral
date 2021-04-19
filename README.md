@@ -21,7 +21,7 @@
   <img src="./landing-page/public/images/social-icons/email.svg" alt="Email logo" width="40">
 </a>
 
-<br><br>
+<br>
 
 Relive your childhood in pixel-perfect bliss.
 [nfriend.gitlab.io/inspiral](https://nfriend.gitlab.io/inspiral/)
