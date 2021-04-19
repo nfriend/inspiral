@@ -19,6 +19,8 @@ class ToolsSelector extends StatelessWidget {
         context.select<CanvasState, bool>((canvas) => canvas.isSelectingHole);
     final isAutoDrawing = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isAutoDrawing);
+    final isDrawingCompletePattern = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isDrawingCompletePattern);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
     final colors = Provider.of<ColorState>(context);
@@ -59,15 +61,22 @@ class ToolsSelector extends StatelessWidget {
             rotatingGear.drawOneRotation();
           },
         ),
-        ActionButton(
-          icon: InspiralCustomIcons.rotate_complete,
-          tooltipMessage: 'Draw complete pattern',
-          isDisabled: isAutoDrawing,
-          onButtonTap: () {
-            canvas.isSelectingHole = false;
-            rotatingGear.drawCompletePattern();
-          },
-        ),
+        isDrawingCompletePattern
+            ? ActionButton(
+                icon: Icons.pause,
+                tooltipMessage: 'Pause auto-drawing',
+                onButtonTap: () {
+                  rotatingGear.stopCompletePatternDrawing();
+                },
+              )
+            : ActionButton(
+                icon: InspiralCustomIcons.rotate_complete,
+                tooltipMessage: 'Draw complete pattern',
+                onButtonTap: () {
+                  canvas.isSelectingHole = false;
+                  rotatingGear.drawCompletePattern();
+                },
+              ),
       ]),
       SelectionrRowDefinition(
           storageKey: 'canvasColor',

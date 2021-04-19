@@ -206,18 +206,33 @@ class RotatingGearState extends BaseGearState {
     }
 
     isDrawingCompletePattern = true;
+    _shouldPauseCompletePatternDrawing = false;
 
     var rotationsToComplete = calculateRotationCount(
         fixedGearTeeth: fixedGear.definition.toothCount,
         rotatingGearTeeth: definition.toothCount);
 
     for (var i = 0; i < rotationsToComplete; i++) {
+      if (_shouldPauseCompletePatternDrawing) {
+        break;
+      }
+
       await drawOneRotation(triggerBakeAfter: false);
     }
 
     isDrawingCompletePattern = false;
 
     unawaited(ink.bakeImage());
+  }
+
+  // A flag used to indicate if the complete pattern auto-drawing
+  // process should stop
+  bool _shouldPauseCompletePatternDrawing = false;
+
+  /// Stops auto-drawing if currently drawing a complete pattern.
+  /// Otherwise, does nothing.
+  void stopCompletePatternDrawing() {
+    _shouldPauseCompletePatternDrawing = true;
   }
 
   /// Updates all state variables with the provide rotation calculation results
