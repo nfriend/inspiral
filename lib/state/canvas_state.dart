@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/canvas_size.dart';
@@ -71,12 +72,15 @@ class CanvasState extends ChangeNotifier with Persistable {
   Size _tileSize;
 
   /// Updates the size of the canvas
-  Future<void> setCanvasSize(CanvasSizeAndName newSize) async {
+  Future<void> setCanvasSize(
+      {@required BuildContext context,
+      @required CanvasSizeAndName newSize}) async {
     // Wait for any pending canvas manipulations to complete
     await ink.pendingCanvasManipulation;
     ink.eraseCanvas();
     _updateCanvasSizeDependents(newSize);
     fixedGear.resetPosition();
+    recenterView(context);
     notifyListeners();
   }
 
@@ -115,10 +119,18 @@ class CanvasState extends ChangeNotifier with Persistable {
         canvasCenter;
   }
 
-  /// Resets the zoom/pan/rotation back to its default
+  /// Resets the zoom/pan/rotation back to a view that is:
+  /// - centered with respect to the canvas
+  /// - zoomed out to fully show the canvas
+  /// - not rotated
   void recenterView(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var initialScale =
+        min(screenSize.width, screenSize.height) / (canvasSize.width * 1.1);
     transform = getCenterTransform(
-        canvasSize: canvasSize, screenSize: MediaQuery.of(context).size);
+        canvasSize: canvasSize,
+        screenSize: screenSize,
+        initialScale: initialScale);
   }
 
   /// Notifies this state object when either the app background

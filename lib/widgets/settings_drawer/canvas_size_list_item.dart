@@ -52,7 +52,7 @@ class CanvasSizeListItem extends StatelessWidget {
                   ),
                   onConfirm: () {
                     Navigator.of(context).pop();
-                    canvas.setCanvasSize(newSize);
+                    canvas.setCanvasSize(context: context, newSize: newSize);
                   });
             },
           )
