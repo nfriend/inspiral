@@ -106,8 +106,9 @@ class RotatingGearState extends BaseGearState {
 
   @override
   void gearPointerUp(PointerUpEvent event) {
-    if (event.device == draggingPointerId && isDragging) {
-      ink.finishLine();
+    if (event.device == draggingPointerId) {
+      var result = _getRotationForAngle(dragLine.angle);
+      _drawPoints(result, dragLine.angle, force: true);
     }
 
     super.gearPointerUp(event);
@@ -161,7 +162,7 @@ class RotatingGearState extends BaseGearState {
       var amountToAdd = intervalAmount * i;
       var result = _getRotationForAngle(dragLine.angle + amountToAdd);
       _updateGearState(result);
-      _drawPoints(result, dragLine.angle + amountToAdd);
+      _drawPoints(result, dragLine.angle + amountToAdd, force: true);
 
       await Future.delayed(Duration(milliseconds: 16));
     }
@@ -250,11 +251,12 @@ class RotatingGearState extends BaseGearState {
 
   /// Draws points to the canvas based on the provided angle.
   /// If the provided point is too close to the previous point, no point is
-  /// drawn. If the provided point is within the correct range of the previous
-  /// point, a single point is drawn. If the provided point is too far
-  /// from the previous point, a number of intermediate points are drawn
+  /// drawn (unless the `force` parameter is provided, in which case the
+  /// point is always drawn). If the provided point is within the correct range
+  /// of the previous point, a single point is drawn. If the provided point is
+  /// too far from the previous point, a number of intermediate points are drawn
   /// to keep the drawn line from appearing choppy.
-  void _drawPoints(RotationResult result, double angle) {
+  void _drawPoints(RotationResult result, double angle, {bool force = false}) {
     // If `lastPoint` is `null`, this means there is no last point to compare
     // to, so we should just draw the current point immediately.
     if (ink.lastPoint == null) {
@@ -265,8 +267,10 @@ class RotatingGearState extends BaseGearState {
 
     var segmentLength = Line(result.penPosition, ink.lastPoint).length();
 
-    // If the point is too close to the last drawn point, don't draw a new one
-    if (segmentLength < minLineSegmentLength) {
+    // If the point is too close to the last drawn point, don't draw a new one.
+    // (Unless the `force` parameter is provided,
+    // in which case ignore this check.)
+    if (segmentLength < minLineSegmentLength && !force) {
       return;
     }
 
