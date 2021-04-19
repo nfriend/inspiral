@@ -8,6 +8,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/settings_state.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/hide_system_ui_overlays.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -35,6 +36,8 @@ Future<void> shareImage(BuildContext context) async {
   }
 
   progress.hideModalPropress();
+
+  hideSystemUIOverlays();
 }
 
 /// Saves the current drawing as an image in the OS's image gallery
@@ -56,6 +59,8 @@ Future<void> saveImage(BuildContext context) async {
   }
 
   progress.hideModalPropress();
+
+  hideSystemUIOverlays();
 }
 
 /// Saves the canvas as an image in a temporary location,
