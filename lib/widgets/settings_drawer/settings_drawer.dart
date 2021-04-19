@@ -94,7 +94,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           onChanged: (bool newValue) =>
               settings.includeBackgroundWhenSaving = newValue),
       ToggleListItem(
-          text: 'Close tools drawer when drawing',
+          text: 'Keep tools drawer closed after drawing',
           value: settings.closeDrawingToolsDrawerOnDrag,
           onChanged: (bool newValue) =>
               settings.closeDrawingToolsDrawerOnDrag = newValue),
