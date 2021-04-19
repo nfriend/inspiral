@@ -1,6 +1,46 @@
 import Head from 'next/head';
 
 export default function Home() {
+  const socialIcons = [
+    {
+      icon: 'instagram',
+      alt: 'Instagram logo',
+      link: 'https://www.instagram.com/inspiral.nathanfriend.io/',
+    },
+    {
+      icon: 'facebook',
+      alt: 'Facebook logo',
+      link: 'https://www.facebook.com/inspiral.nathanfriend.io',
+    },
+    {
+      icon: 'twitter',
+      alt: 'Twitter logo',
+      link: 'https://twitter.com/inspiral_app',
+    },
+    {
+      icon: 'tumblr',
+      alt: 'Tumblr logo',
+      link: 'https://inspiral-app.tumblr.com/',
+    },
+    {
+      icon: 'gitlab',
+      alt: 'GitLab logo',
+      link: 'https://gitlab.com/nfriend/inspiral',
+    },
+    {
+      icon: 'email',
+      alt: 'Email logo',
+      link: 'mailto:inspiral@nathanfriend.io',
+    },
+  ].map((iconInfo) => (
+    <a key={iconInfo.icon} href={iconInfo.link}>
+      <img
+        className="w-10 mr-3"
+        src={`images/social-icons/${iconInfo.icon}.svg`}
+      />
+    </a>
+  ));
+
   return (
     <div>
       <Head>
@@ -27,9 +67,10 @@ export default function Home() {
                   className="flex-1 app-store-button"
                 />
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center pb-10">
                 <img src="images/coming-soon.png" className="w-40" />
               </div>
+              <div className="flex justify-center">{socialIcons}</div>
             </div>
           </div>
           <div className="flex-1">
@@ -41,9 +82,6 @@ export default function Home() {
           </div>
         </div>
         <footer className="flex-initial flex justify-center py-2 text-sm">
-          <a href="https://gitlab.com/nfriend/inspiral" className="px-3">
-            Source
-          </a>
           <p className="px-3">
             Copyright <a href="https://nathanfriend.io">Nathan Friend</a> © 2020
           </p>
