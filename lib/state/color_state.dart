@@ -195,13 +195,12 @@ class ColorState extends ChangeNotifier with Persistable {
     _activeTextColor =
         isDark ? TinyColor(Colors.black) : TinyColor(Colors.white);
 
-    _primaryColor = TinyColor.fromHSL(
-        HslColor(h: penHue, s: penSaturation, l: luminance, a: 255.0));
+    _primaryColor = TinyColor(Colors.red);
 
     _splashColor =
         isDark ? _uiBackgroundColor.lighten(30) : _uiBackgroundColor.darken(30);
 
-    _highlightColor = TinyColor(Colors.transparent);
+    _highlightColor = _splashColor;
 
     _accentColor = _primaryColor.spin(240).lighten();
 
