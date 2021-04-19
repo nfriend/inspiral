@@ -33,7 +33,7 @@ export default function Home() {
       link: 'mailto:inspiral@nathanfriend.io',
     },
   ].map((iconInfo) => (
-    <a key={iconInfo.icon} href={iconInfo.link}>
+    <a key={iconInfo.icon} href={iconInfo.link} target="_blank" rel="noopener">
       <img
         className="w-10 mr-3"
         src={`images/social-icons/${iconInfo.icon}.svg`}
