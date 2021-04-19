@@ -78,6 +78,34 @@ class RotatingGearState extends BaseGearState {
     notifyListeners();
   }
 
+  /// Keeps track of whether we're in the process of drawing a complete pattern.
+  /// If we are, we ignore requests to draw another complete pattern.
+  bool get isDrawingCompletePattern => _isDrawingCompletePattern;
+  bool _isDrawingCompletePattern = false;
+  set isDrawingCompletePattern(bool value) {
+    _isDrawingCompletePattern = value;
+    _updateIsAutoDrawing();
+  }
+
+  /// Similar to above, but just for a single rotation.
+  bool get isDrawingOneRotation => _isDrawingOneRotation;
+  bool _isDrawingOneRotation = false;
+  set isDrawingOneRotation(bool value) {
+    _isDrawingOneRotation = value;
+    _updateIsAutoDrawing();
+  }
+
+  /// Whether we're currently drawing a full _or_ a single rotation.
+  bool get isAutoDrawing => _isAutoDrawing;
+  bool _isAutoDrawing = false;
+  void _updateIsAutoDrawing() {
+    var newValue = isDrawingOneRotation || isDrawingCompletePattern;
+    if (newValue != _isAutoDrawing) {
+      _isAutoDrawing = newValue;
+      notifyListeners();
+    }
+  }
+
   /// The position of the pen, relative to the center of the rotating gear
   Offset get relativePenPosition => _activeHole.relativeOffset;
 
@@ -142,18 +170,14 @@ class RotatingGearState extends BaseGearState {
     ink.finishLine();
   }
 
-  /// Keeps track of whether we're in the process of drawing a rotation.
-  /// If we are, we ignore requests to draw another rotation.
-  bool _isDrawingRotation = false;
-
   /// Draws one complete (clockwise) rotation, so that the rotating gears
   /// ends where it starts
   Future<void> drawOneRotation({bool triggerBakeAfter = true}) async {
-    if (_isDrawingRotation) {
+    if (isDrawingOneRotation) {
       return;
     }
 
-    _isDrawingRotation = true;
+    isDrawingOneRotation = true;
 
     var rotationAmount = 2 * pi * -1;
     var intervalsToDraw = (fixedGear.definition.toothCount / 2.5).round();
@@ -168,16 +192,12 @@ class RotatingGearState extends BaseGearState {
     }
 
     dragLine.angle += rotationAmount;
-    _isDrawingRotation = false;
+    isDrawingOneRotation = false;
 
     if (triggerBakeAfter) {
       unawaited(ink.bakeImage());
     }
   }
-
-  /// Keeps track of whether we're in the process of drawing a complete pattern.
-  /// If we are, we ignore requests to draw another complete pattern
-  bool _isDrawingCompletePattern = false;
 
   /// Draws a complete pattern
   Future<void> drawCompletePattern() async {
@@ -185,7 +205,7 @@ class RotatingGearState extends BaseGearState {
       return;
     }
 
-    _isDrawingCompletePattern = true;
+    isDrawingCompletePattern = true;
 
     var rotationsToComplete = calculateRotationCount(
         fixedGearTeeth: fixedGear.definition.toothCount,
@@ -195,7 +215,7 @@ class RotatingGearState extends BaseGearState {
       await drawOneRotation(triggerBakeAfter: false);
     }
 
-    _isDrawingCompletePattern = false;
+    isDrawingCompletePattern = false;
 
     unawaited(ink.bakeImage());
   }

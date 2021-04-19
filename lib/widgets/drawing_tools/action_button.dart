@@ -9,13 +9,15 @@ class ActionButton extends StatelessWidget {
   final String tooltipMessage;
   final Function onButtonTap;
   final bool isActive;
+  final bool isDisabled;
 
   ActionButton(
       {this.icon,
       this.buttonContent,
       @required this.tooltipMessage,
       @required this.onButtonTap,
-      this.isActive = false}) {
+      this.isActive = false,
+      this.isDisabled = false}) {
     assert((icon == null) ^ (buttonContent == null),
         'Exactly one of the `icon` and `buttonContent` parameters must be non-null');
   }
@@ -28,10 +30,14 @@ class ActionButton extends StatelessWidget {
         ? context.select<ColorState, TinyColor>((colors) => colors.activeColor)
         : context.select<ColorState, TinyColor>((colors) => colors.buttonColor);
 
-    final uiTextColor = isActive
+    var uiTextColor = isActive
         ? context
             .select<ColorState, TinyColor>((colors) => colors.activeTextColor)
         : context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
+
+    if (isDisabled) {
+      uiTextColor = TinyColor(uiTextColor.color.withOpacity(0.25));
+    }
 
     final borderRadius = BorderRadius.all(Radius.circular(5.0));
 
@@ -41,10 +47,12 @@ class ActionButton extends StatelessWidget {
             borderRadius: borderRadius,
             color: buttonColor.color,
             child: InkWell(
-                onTap: () {
-                  colors.showCanvasColorDeleteButtons = false;
-                  onButtonTap();
-                },
+                onTap: isDisabled
+                    ? null
+                    : () {
+                        colors.showCanvasColorDeleteButtons = false;
+                        onButtonTap();
+                      },
                 borderRadius: borderRadius,
                 child: Tooltip(
                     message: tooltipMessage,

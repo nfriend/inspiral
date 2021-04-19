@@ -17,6 +17,10 @@ class ToolsSelector extends StatelessWidget {
     final canvas = Provider.of<CanvasState>(context, listen: false);
     final isSelectingHole =
         context.select<CanvasState, bool>((canvas) => canvas.isSelectingHole);
+    final isAutoDrawing = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isAutoDrawing);
+    final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
+        (rotatingGear) => rotatingGear.isVisible);
     final colors = Provider.of<ColorState>(context);
     final colorPicker = Provider.of<ColorPickerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
@@ -27,6 +31,7 @@ class ToolsSelector extends StatelessWidget {
           icon: InspiralCustomIcons.select_hole,
           tooltipMessage: 'Select a pen hole',
           isActive: isSelectingHole,
+          isDisabled: isAutoDrawing || !rotatingGearIsVisible,
           onButtonTap: () {
             canvas.isSelectingHole = !isSelectingHole;
           },
@@ -48,14 +53,18 @@ class ToolsSelector extends StatelessWidget {
         ActionButton(
           icon: Icons.refresh,
           tooltipMessage: 'Draw one rotation',
+          isDisabled: isAutoDrawing,
           onButtonTap: () {
+            canvas.isSelectingHole = false;
             rotatingGear.drawOneRotation();
           },
         ),
         ActionButton(
           icon: InspiralCustomIcons.rotate_complete,
           tooltipMessage: 'Draw complete pattern',
+          isDisabled: isAutoDrawing,
           onButtonTap: () {
+            canvas.isSelectingHole = false;
             rotatingGear.drawCompletePattern();
           },
         ),

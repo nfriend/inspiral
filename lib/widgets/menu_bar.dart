@@ -31,6 +31,7 @@ class _MenuBarState extends State<MenuBar> {
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
     final ink = Provider.of<InkState>(context, listen: false);
+    final canvas = Provider.of<CanvasState>(context, listen: false);
     final undoAvailable =
         context.select<InkState, bool>((ink) => ink.undoAvailable);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
@@ -84,6 +85,9 @@ class _MenuBarState extends State<MenuBar> {
       _ManuBarButtonParams(
           icon: Icon(Icons.menu),
           onPressed: () {
+            // Cancel hole selection mode in the off chance it's active
+            canvas.isSelectingHole = false;
+
             var scaffold = Scaffold.of(context);
             isLandscape ? scaffold.openDrawer() : scaffold.openEndDrawer();
           },
