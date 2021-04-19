@@ -2,6 +2,27 @@
 
 <a href="https://gitlab.com/nfriend/inspiral/pipelines/latest" target="_blank"><img src="https://gitlab.com/nfriend/inspiral/badges/main/pipeline.svg" alt="GitLab pipeline status"></a>
 
+<a href="https://www.instagram.com/inspiral.nathanfriend.io/">
+  <img src="./landing-page/public/images/social-icons/instagram.svg" alt="Instagram logo" width="40">
+</a>
+<a href="https://www.facebook.com/inspiral.nathanfriend.io">
+  <img src="./landing-page/public/images/social-icons/facebook.svg" alt="Facebook logo" width="40">
+</a>
+<a href="https://twitter.com/inspiral_app">
+  <img src="./landing-page/public/images/social-icons/twitter.svg" alt="Twitter logo" width="40">
+</a>
+<a href="https://inspiral-app.tumblr.com/">
+  <img src="./landing-page/public/images/social-icons/tumblr.svg" alt="Tumblr logo" width="40">
+</a>
+<a href="https://gitlab.com/nfriend/inspiral">
+  <img src="./landing-page/public/images/social-icons/gitlab.svg" alt="GitLab logo" width="40">
+</a>
+<a href="mailto:nathanfriend.io">
+  <img src="./landing-page/public/images/social-icons/email.svg" alt="Email logo" width="40">
+</a>
+
+<br><br>
+
 Relive your childhood in pixel-perfect bliss.
 [nfriend.gitlab.io/inspiral](https://nfriend.gitlab.io/inspiral/)
 
