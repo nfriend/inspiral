@@ -12,6 +12,7 @@ class InspiralApp extends StatelessWidget {
     hideSystemUIOverlays();
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: scaffoldMessengerGlobalKey,
       title: 'Inspiral',
       routes: {
