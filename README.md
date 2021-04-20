@@ -26,7 +26,7 @@
 Relive your childhood in pixel-perfect bliss.
 [inspiral.nathanfriend.io](https://inspiral.nathanfriend.io)
 
-<img alt="A screenshot of Inspiral" src="landing-page/public/images/og-image.jpg" />
+<img alt="A screenshot of Inspiral" src="landing-page/public/images/og-image-short.jpg" />
 
 ## Developing
 
