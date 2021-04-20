@@ -173,13 +173,6 @@ class ColorState extends ChangeNotifier with Persistable {
 
   /// Updates all dependt colors based on the background and pen colors
   void _updateDependentColors() {
-    var penHsl = penColor.toHsl();
-    var penHue = penHsl.h;
-    var penSaturation = penHsl.s;
-
-    // Reduce the bottom range of the luminance to avoid complete black
-    var luminance = penHsl.l * .9 + 0.1;
-
     _uiBackgroundColor =
         isDark ? TinyColor(Color(0xCC555555)) : TinyColor(Color(0xCCCCCCCC));
 

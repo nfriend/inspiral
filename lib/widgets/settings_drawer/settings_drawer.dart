@@ -8,6 +8,7 @@ import 'package:inspiral/util/delete_database.dart';
 import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
 import 'package:inspiral/widgets/restart_widget.dart';
 import 'package:inspiral/widgets/settings_drawer/canvas_size_list_item.dart';
+import 'package:inspiral/widgets/settings_drawer/social_button.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -167,7 +168,35 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                               onPressed: () => Navigator.of(context).pop())
                         ])))),
         ...regularSettingsItems,
-        ...debugSettingsItems
+        ...debugSettingsItems,
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: Wrap(alignment: WrapAlignment.center, children: [
+              SocialButton(
+                assetPath: 'images/social_icons/instagram.png',
+                linkHref: 'https://www.instagram.com/inspiral.nathanfriend.io/',
+              ),
+              SocialButton(
+                assetPath: 'images/social_icons/facebook.png',
+                linkHref: 'https://www.facebook.com/inspiral.nathanfriend.io',
+              ),
+              SocialButton(
+                assetPath: 'images/social_icons/twitter.png',
+                linkHref: 'https://twitter.com/inspiral_app',
+              ),
+              SocialButton(
+                assetPath: 'images/social_icons/tumblr.png',
+                linkHref: 'https://inspiral-app.tumblr.com/',
+              ),
+              SocialButton(
+                assetPath: 'images/social_icons/gitlab.png',
+                linkHref: 'https://gitlab.com/nfriend/inspiral',
+              ),
+              SocialButton(
+                assetPath: 'images/social_icons/email.png',
+                onPressed: () async {},
+              )
+            ]))
       ],
     ));
   }

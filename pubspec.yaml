@@ -51,6 +51,7 @@ dependencies:
   device_info: ^2.0.0
   in_app_review: ^2.0.2
   pedantic: ^1.11.0
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
   assets:
     - images/
     - images/gears/
+    - images/social_icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
