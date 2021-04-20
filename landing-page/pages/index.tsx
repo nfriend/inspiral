@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import CustomHead from './custom-head';
 
 export default function Home() {
   const socialIcons = [
@@ -43,9 +43,7 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>Inspiral</title>
-      </Head>
+      <CustomHead />
 
       <main className="sm:h-screen flex flex-col sm:spiral-background">
         <div className="flex-1 flex flex-col sm:flex-row items-center justify-center min-h-0">
