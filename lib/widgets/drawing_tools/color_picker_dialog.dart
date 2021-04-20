@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/rendering.dart';
 import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/util/replace_problematic_color_names.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -82,59 +83,63 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
 
     return Dialog(
         child: SingleChildScrollView(
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-          Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Text(
-                widget.title,
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-                textAlign: TextAlign.center,
-              )),
-          ColorPicker(
-              color: _selectedColor,
-              showRecentColors: false,
-              enableOpacity: widget.showOpacity,
-              enableShadesSelection: false,
-              borderRadius: 20,
-              opacityTrackHeight: 22,
-              pickersEnabled: {
-                ColorPickerType.primary: false,
-                ColorPickerType.accent: false,
-                ColorPickerType.wheel: true,
-              },
-              onColorChanged: (Color newColor) {
-                setState(() {
-                  _selectedColor = newColor;
-                });
-                widget.onColorMove(newColor);
-              }),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: OutlinedButton(
-                onPressed: () {
-                  widget.onSelect(_selectedColor);
-                  Navigator.of(context).pop();
-                },
-                style: _selectButtonStyle,
-                child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      'SELECT $colorName',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: selectButtonTextColor),
-                    )),
-              )),
-          Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-              child: OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: _cancelButtonStyle,
-                child: Text('CANCEL'),
-              )),
-        ])));
+            child: SizedBox(
+                width: 300.0,
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(top: 20.0),
+                          child: Text(
+                            widget.title,
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center,
+                          )),
+                      ColorPicker(
+                          color: _selectedColor,
+                          showRecentColors: false,
+                          enableOpacity: widget.showOpacity,
+                          enableShadesSelection: false,
+                          borderRadius: 20,
+                          opacityTrackHeight: 22,
+                          pickersEnabled: {
+                            ColorPickerType.primary: false,
+                            ColorPickerType.accent: false,
+                            ColorPickerType.wheel: true,
+                          },
+                          onColorChanged: (Color newColor) {
+                            setState(() {
+                              _selectedColor = newColor;
+                            });
+                            widget.onColorMove(newColor);
+                          }),
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              widget.onSelect(_selectedColor);
+                              Navigator.of(context).pop();
+                            },
+                            style: _selectButtonStyle,
+                            child: FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Text(
+                                  'SELECT $colorName',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: selectButtonTextColor),
+                                )),
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: 20.0, right: 20.0, bottom: 20.0),
+                          child: OutlinedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            style: _cancelButtonStyle,
+                            child: Text('CANCEL'),
+                          )),
+                    ]))));
   }
 }
