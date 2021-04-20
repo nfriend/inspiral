@@ -17,6 +17,12 @@ export default function CustomHead() {
         property="og:image"
         content="https://inspiral.nathanfriend.io/images/og-image.jpg"
       />
+
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-4V3M4MTGM3"
+      ></script>
+      <script src="/js/ga.js"></script>
     </Head>
   );
 }
