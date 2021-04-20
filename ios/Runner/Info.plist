@@ -43,5 +43,11 @@
 	<false/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app lets you save your artwork to the photo library.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>http</string>
+		<string>mailto</string>
+	</array>
 </dict>
 </plist>

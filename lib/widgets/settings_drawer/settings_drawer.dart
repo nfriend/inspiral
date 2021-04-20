@@ -194,7 +194,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               ),
               SocialButton(
                 assetPath: 'images/social_icons/email.png',
-                onPressed: () async {},
+                linkHref: 'mailto:inspiral@nathanfriend.io',
               )
             ]))
       ],
