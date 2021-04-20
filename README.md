@@ -24,9 +24,9 @@
 <br>
 
 Relive your childhood in pixel-perfect bliss.
-[nfriend.gitlab.io/inspiral](https://nfriend.gitlab.io/inspiral/)
+[inspiral.nathanfriend.io](https://inspiral.nathanfriend.io)
 
-<img alt="A screenshot of Inspiral" src="screenshot.png" height="840" />
+<img alt="A screenshot of Inspiral" src="landing-page/public/images/og-image.jpg" />
 
 ## Developing
 
