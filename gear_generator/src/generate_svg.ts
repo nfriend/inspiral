@@ -55,10 +55,7 @@ const toothSideAngle = Math.asin((toothLength * (4 / 12)) / toothSideLength);
 export const generateSvgs = async (
   gearDefinition: GearDefinition,
 ): Promise<ImageInfo[]> => {
-  const centerPoint: Point = {
-    x: gearDefinition.size.width / 2,
-    y: gearDefinition.size.height / 2,
-  };
+  const centerPoint: Point = gearDefinition.center;
 
   const svgPath: GearPath = new GearPath();
 

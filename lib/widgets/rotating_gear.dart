@@ -27,15 +27,14 @@ class RotatingGear extends StatelessWidget {
     final colorFilter =
         backgroundColor.isDark() ? invertColorFilter : noFilterColorFilter;
 
-    final gearCenter = gear.definition.size.toOffset() / 2;
-
     // Compute the location of the ink dot (the pen). Multiplying by 1.5
     // due to the margin of the `Container` dot.
-    final penPosition =
-        gear.relativePenPosition + gearCenter - (inkDotSize.toOffset() * 1.5);
+    final penPosition = gear.relativePenPosition +
+        gear.definition.center -
+        (inkDotSize.toOffset() * 1.5);
 
     return Transform.translate(
-        offset: gear.position - gearCenter,
+        offset: gear.position - gear.definition.center,
         child: Transform.rotate(
           angle: gear.rotation,
           child: Listener(

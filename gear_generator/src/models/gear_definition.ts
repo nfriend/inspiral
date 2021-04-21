@@ -2,6 +2,7 @@ import { ContactPoint } from './contact_point';
 import { AngleGearHole } from './gear_hole';
 import { Entitlement } from './entitlement';
 import { Package } from './package';
+import { Point } from './point';
 
 /**
  * A class that holds all the data necessary to
@@ -26,6 +27,9 @@ export interface GearDefinition {
     width: number;
     height: number;
   };
+
+  /** The center point of this gear, in logical pixels */
+  center: Point;
 
   /** The number of teeth on this gear */
   toothCount: number;

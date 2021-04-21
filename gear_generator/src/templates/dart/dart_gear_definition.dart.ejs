@@ -9,6 +9,7 @@ final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
     image: '<%= gearDefinition.image %>',
     thumbnailImage: '<%= gearDefinition.thumbnailImage %>',
     size: Size(<%= gearDefinition.size.width %>, <%= gearDefinition.size.height %>),
+    center: Offset(<%= gearDefinition.center.x %>, <%= gearDefinition.center.y %>),
     toothCount: <%= gearDefinition.toothCount %>,
     entitlement: <%= gearDefinition.entitlement.dart %>,
     package: <%= gearDefinition.package.dart %>,

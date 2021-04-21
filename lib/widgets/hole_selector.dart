@@ -36,14 +36,13 @@ class HoleSelector extends StatelessWidget {
     final inactivePenColor = isDark
         ? penColor.desaturate(50).darken()
         : penColor.desaturate(50).lighten();
-    final gearCenter = gear.definition.size.toOffset() / 2;
     final dotSize = inkDotSize * 2;
 
     return Stack(children: [
       AbsorbPointer(
           child: Container(width: canvasSize.width, height: canvasSize.height)),
       Transform.translate(
-          offset: gear.position - gearCenter,
+          offset: gear.position - gear.definition.center,
           child: Transform.rotate(
               angle: gear.rotation,
               child: Container(
@@ -55,7 +54,7 @@ class HoleSelector extends StatelessWidget {
                         Transform.translate(
                             offset: _getHoleOffset(
                                 hole: hole,
-                                gearCenter: gearCenter,
+                                gearCenter: gear.definition.center,
                                 dotSize: dotSize),
                             child: Container(
                               width: dotSize.width,
@@ -68,7 +67,7 @@ class HoleSelector extends StatelessWidget {
                         Transform.translate(
                             offset: _getHoleOffset(
                                 hole: hole,
-                                gearCenter: gearCenter,
+                                gearCenter: gear.definition.center,
                                 dotSize: dotSize),
                             child: Listener(
                                 onPointerDown: (event) {

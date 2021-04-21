@@ -3,6 +3,7 @@ import { GearDefinition } from './models/gear_definition';
 import { AngleGearHole } from './models/gear_hole';
 import { allEntitlements } from './models/entitlement';
 import { allPackages } from './models/package';
+import { Point } from './models/point';
 
 export interface AnalyzePathParams {
   baseScale: number;
@@ -132,10 +133,24 @@ export const analyzePath = ({
     width: Math.round(boundaries.x.max - boundaries.x.min),
     height: Math.round(boundaries.y.max - boundaries.y.min),
   };
-  const centerPoint = {
-    x: svgSize.width / 2,
-    y: svgSize.height / 2,
-  };
+
+  // Look in the document for a <circle id="center-point"> element.
+  // If found, this point indicates the center point of the gear.
+  // If not found, the center point defaults to the center of the shape.
+  const centerPointCircle = document.querySelector('circle#center-point');
+
+  let centerPoint: Point;
+  if (centerPointCircle) {
+    centerPoint = {
+      x: parseFloat(centerPointCircle.getAttribute('cx')) - boundaries.x.min,
+      y: parseFloat(centerPointCircle.getAttribute('cy')) - boundaries.y.min,
+    };
+  } else {
+    centerPoint = {
+      x: svgSize.width / 2,
+      y: svgSize.height / 2,
+    };
+  }
 
   // Remove any extra whitespace from the top or left of the gear,
   // so that the gear sits flush with the axes. This allows the
@@ -203,8 +218,14 @@ export const analyzePath = ({
     document.querySelectorAll('#holes circle'),
   )
     .map((circle) => {
-      const x = parseFloat(circle.getAttribute('cx')) - centerPoint.x;
-      const y = parseFloat(circle.getAttribute('cy')) - centerPoint.y;
+      const x =
+        parseFloat(circle.getAttribute('cx')) -
+        centerPoint.x -
+        boundaries.x.min;
+      const y =
+        parseFloat(circle.getAttribute('cy')) -
+        centerPoint.y -
+        boundaries.y.min;
 
       const angle = Math.atan2(-y, x);
       const distance = Math.sqrt(x ** 2 + y ** 2);
@@ -232,7 +253,11 @@ export const analyzePath = ({
     thumbnailImage: `images/gears/${gearName}_thumb.png`,
     size: {
       width: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
-      height: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
+      height: (svgSize.height + (toothHeight + meshSpacing) * 2) * baseScale,
+    },
+    center: {
+      x: (centerPoint.x + toothHeight + meshSpacing) * baseScale,
+      y: (centerPoint.y + toothHeight + meshSpacing) * baseScale,
     },
     toothCount,
     points: evaluatedPoints,

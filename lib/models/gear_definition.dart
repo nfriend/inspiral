@@ -18,6 +18,10 @@ class GearDefinition {
   /// The size of the gear, in logical pixels
   final Size size;
 
+  /// The center point of the gear, in logical pixels,
+  /// relative to the top-left cornef of the gear's image.
+  final Offset center;
+
   /// The number of teeth on this gear
   final int toothCount;
 
@@ -38,6 +42,7 @@ class GearDefinition {
       @required this.image,
       @required this.thumbnailImage,
       @required this.size,
+      @required this.center,
       @required this.toothCount,
       @required this.points,
       @required this.holes,
