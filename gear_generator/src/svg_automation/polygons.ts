@@ -6,6 +6,7 @@ import ejs from 'ejs';
 import { polygonVariations, holeSize } from '../constants';
 import { PointGearHole } from '../models/gear_hole';
 import { getHoles } from './get_holes';
+import { Point } from '../models/point';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -18,10 +19,10 @@ const renderFile: any = util.promisify(ejs.renderFile);
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, polygonDef] of polygonVariations.entries()) {
-    for (const [j, radius] of polygonDef.sizes.entries()) {
+    for (const [j, size] of polygonDef.sizes.entries()) {
       const svgPath = path.resolve(
         svgBasePath,
-        `${polygonDef.name}_${radius}.svg`,
+        `${polygonDef.name}_${size.radius}.svg`,
       );
 
       console.info(
@@ -33,32 +34,32 @@ const renderFile: any = util.promisify(ejs.renderFile);
       );
 
       const arcs: {
-        startPoint: { x: number; y: number };
-        endPoint: { x: number; y: number };
+        startPoint: Point;
+        endPoint: Point;
         radius: number;
       }[] = [];
       const interval = (2 * Math.PI) / polygonDef.sides;
-      const offset = radius;
+      const centerPoint = { x: size.radius, y: size.radius };
       for (let k = 0; k < polygonDef.sides; k++) {
         arcs.push({
           startPoint: {
-            x: Math.cos(interval * k) * radius + offset,
-            y: -Math.sin(interval * k) * radius + offset,
+            x: Math.cos(interval * k) * size.radius + centerPoint.x,
+            y: -Math.sin(interval * k) * size.radius + centerPoint.y,
           },
           endPoint: {
-            x: Math.cos(interval * (k + 1)) * radius + offset,
-            y: -Math.sin(interval * (k + 1)) * radius + offset,
+            x: Math.cos(interval * (k + 1)) * size.radius + centerPoint.x,
+            y: -Math.sin(interval * (k + 1)) * size.radius + centerPoint.y,
           },
-          radius: radius * 1.5,
+          radius: size.radius * 1.5,
         });
       }
 
-      const holes: PointGearHole[] = getHoles(radius);
+      const holes: PointGearHole[] = getHoles(centerPoint, size.holes);
 
       const templateParams = {
         arcs,
         entitlement: polygonDef.entitlement,
-        gearOrder: polygonDef.startingOrder + radius,
+        gearOrder: polygonDef.startingOrder + size.radius,
         holeSize,
         holes,
       };

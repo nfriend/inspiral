@@ -1,35 +1,42 @@
 import { holeSize } from '../constants';
 import { PointGearHole } from '../models/gear_hole';
+import { Point } from '../models/point';
 
 /**
  * Generates holes in a pattern of 6 line radiating from
  * the center of the shape.
  *
- * @param radius The radius of the shape.
- * @param lineHoleLineWithTooth Whether or not to line up the lines
- * of holes with the closest tooth. This is only possible with circle gears,
- * so it defaults to `false`.
+ * @param centerPoint The center point of the shape
+ * @param holesToGenerate The list of distances (hole numbers) to generate
+ * @param holeAlignmentParams If provided, nudges the hole lines to align
+ * with the nearest tooth. This only works for circle gears.
  *
  * @returns A list of gear holes
  */
 export function getHoles(
-  radius: number,
-  lineHoleLineWithTooth: boolean = false,
+  centerPoint: Point,
+  holesToGenerate: number[],
+  holeAlignmentParams: {
+    toothCount: number;
+  } = null,
 ): PointGearHole[] {
   const holes: PointGearHole[] = [];
 
   const holeSpacing = holeSize * 2;
   const holeAndSpacing = Math.ceil(holeSize + holeSpacing);
-  const maximumDistance = radius - holeAndSpacing;
-  const toothCount = radius;
-  const anglePerTooth = (Math.PI * 2) / toothCount;
+  const maximumDistance = Math.max(...holesToGenerate);
   const lineCount = 8;
+
   for (let lineIndex = 0; lineIndex < lineCount; lineIndex++) {
     for (
       let distance = lineIndex === 0 ? 0 : lineIndex + holeAndSpacing;
       distance <= maximumDistance;
       distance += holeAndSpacing
     ) {
+      if (!holesToGenerate.includes(distance)) {
+        continue;
+      }
+
       // The lines of holes will approximately divide the gear into
       // six equal parts, but we move the lines slightly so that the
       // line always align with a tooth.
@@ -37,7 +44,8 @@ export function getHoles(
       // This angle is the exact angle that divides the gear into sixths
       let angle = Math.PI * (1 / 2) + Math.PI * (2 / lineCount) * lineIndex;
 
-      if (lineHoleLineWithTooth) {
+      if (holeAlignmentParams?.toothCount) {
+        const anglePerTooth = (Math.PI * 2) / holeAlignmentParams.toothCount;
         // This angle is the "adjusted" angle that matches up with a nearby tooth
         angle = anglePerTooth * Math.round(angle / anglePerTooth);
       }
@@ -46,7 +54,7 @@ export function getHoles(
         getHole({
           angle,
           distanceFromCenter: distance,
-          gearRadius: radius,
+          centerPoint,
         }),
       );
     }
@@ -59,11 +67,11 @@ export function getHoles(
 function getHole({
   angle,
   distanceFromCenter,
-  gearRadius,
+  centerPoint,
 }: {
   angle: number;
   distanceFromCenter: number;
-  gearRadius: number;
+  centerPoint: Point;
 }): PointGearHole {
   // Some special handling for the text for
   // especially cramped numbers
@@ -86,8 +94,8 @@ function getHole({
   return {
     name: distanceFromCenter.toString(),
     point: {
-      x: gearRadius + Math.cos(angle) * distanceFromCenter,
-      y: gearRadius + -1 * Math.sin(angle) * distanceFromCenter,
+      x: centerPoint.x + Math.cos(angle) * distanceFromCenter,
+      y: centerPoint.y + -1 * Math.sin(angle) * distanceFromCenter,
     },
     textPositionAngle:
       angle +

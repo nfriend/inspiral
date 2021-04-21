@@ -17,8 +17,8 @@ const renderFile: any = util.promisify(ejs.renderFile);
   );
   const svgBasePath = path.resolve(__dirname, '../svg');
 
-  for (const [i, radius] of circleGearSizes.entries()) {
-    const svgPath = path.resolve(svgBasePath, `circle_${radius}.svg`);
+  for (const [i, size] of circleGearSizes.entries()) {
+    const svgPath = path.resolve(svgBasePath, `circle_${size.radius}.svg`);
 
     console.info(
       chalk.blueBright(
@@ -28,13 +28,19 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ),
     );
 
-    const holes: PointGearHole[] = getHoles(radius, true);
+    const holes: PointGearHole[] = getHoles(
+      { x: size.radius, y: size.radius },
+      size.holes,
+      {
+        toothCount: size.radius,
+      },
+    );
 
     const rendered = await renderFile(templateFilePath, {
-      radius,
+      radius: size.radius,
       holeSize,
       holes,
-      gearOrder: gearOrder.circles + radius,
+      gearOrder: gearOrder.circles + size.radius,
     });
 
     await writeFile(svgPath, rendered);

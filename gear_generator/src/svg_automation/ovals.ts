@@ -29,7 +29,13 @@ const renderFile: any = util.promisify(ejs.renderFile);
     );
 
     // TODO
-    const holes: PointGearHole[] = [];
+    const holes: PointGearHole[] = getHoles(
+      {
+        x: ovalParams.xRadius,
+        y: ovalParams.yRadius,
+      },
+      [],
+    );
 
     const rendered = await renderFile(templateFilePath, {
       ...ovalParams,

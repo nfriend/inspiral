@@ -1,3 +1,5 @@
+import range from 'lodash.range';
+
 /**
  * The height of each tooth
  */
@@ -37,22 +39,25 @@ export const gearOrder = {
  * All the sizes of circle gears that should be generated
  */
 export const circleGearSizes = [
-  24,
-  30,
-  32,
-  40,
-  42,
-  45,
-  48,
-  52,
-  56,
-  60,
-  63,
-  64,
-  72,
-  75,
-  80,
-  84,
+  { radius: 24, holes: [0, ...range(8, 17)] },
+  { radius: 30, holes: [0, ...range(8, 23)] },
+  { radius: 32, holes: [0, ...range(8, 25)] },
+  { radius: 40, holes: [0, ...range(8, 33)] },
+  { radius: 42, holes: [0, ...range(8, 35)] },
+  { radius: 45, holes: [0, ...range(8, 38)] },
+  { radius: 48, holes: [0, ...range(8, 41)] },
+  { radius: 52, holes: [0, ...range(8, 45)] },
+  { radius: 56, holes: [0, ...range(8, 49)] },
+  { radius: 60, holes: [0, ...range(8, 53)] },
+  { radius: 63, holes: [0, ...range(8, 56)] },
+  { radius: 64, holes: [0, ...range(8, 57)] },
+  { radius: 72, holes: [0, ...range(8, 65)] },
+  { radius: 75, holes: [0, ...range(8, 68)] },
+  { radius: 80, holes: [0, ...range(8, 73)] },
+  { radius: 84, holes: [0, ...range(8, 77)] },
+  { radius: 100, holes: [0, ...range(8, 93)] },
+  { radius: 150, holes: [0, ...range(8, 143)] },
+  { radius: 250, holes: [0, ...range(8, 243)] },
 ];
 
 const xToYRatio = 2 / 3;
@@ -78,48 +83,80 @@ export const ovalGearSizes = [
   { xRadius: 84, yRadius: 84 * xToYRatio },
 ];
 
-const polygonsizes = [
-  24,
-  30,
-  32,
-  40,
-  42,
-  45,
-  48,
-  52,
-  56,
-  60,
-  63,
-  64,
-  72,
-  75,
-  80,
-  84,
-];
-
 /**
  * All the variations of polygons that should be rendered
  */
-export const polygonVariations = [
+export const polygonVariations: {
+  sides: number;
+  name: string;
+  entitlement: string;
+  sizes: {
+    radius: number;
+    holes: number[];
+  }[];
+  startingOrder: number;
+}[] = [
   {
     sides: 3,
     name: 'triangle',
     entitlement: 'io.nathanfriend.inspiral.trianglegears',
-    sizes: [...polygonsizes],
+    sizes: [
+      { radius: 24, holes: [0, ...range(8, 18)] },
+      { radius: 30, holes: [0, ...range(8, 21), 22] },
+      { radius: 32, holes: [0, ...range(8, 23)] },
+      { radius: 40, holes: [0, ...range(8, 29), 30] },
+      { radius: 42, holes: [0, ...range(8, 31)] },
+      { radius: 45, holes: [0, ...range(8, 33), 38] },
+      { radius: 48, holes: [0, ...range(8, 33), 38] },
+      { radius: 52, holes: [0, ...range(8, 39), 46] },
+      { radius: 56, holes: [0, ...range(8, 41), 46] },
+      { radius: 60, holes: [0, ...range(8, 45), 46, 54] },
+      { radius: 63, holes: [0, ...range(8, 47), 54] },
+      { radius: 64, holes: [0, ...range(8, 47), 48, 54] },
+      { radius: 72, holes: [0, ...range(8, 53), 54, 62] },
+      { radius: 75, holes: [0, ...range(8, 57), 62] },
+      { radius: 80, holes: [0, ...range(8, 58), 59, 60, 62, 70] },
+      { radius: 84, holes: [0, ...range(8, 63), 64, 70, 78] },
+      { radius: 100, holes: [0, ...range(8, 74), 75, 76, 78, 86, 94] },
+      {
+        radius: 150,
+        holes: [0, ...range(8, 114), 115, 116, 118, 126, 134, 142],
+      },
+      {
+        radius: 250,
+        holes: [
+          0,
+          ...range(8, 194),
+          195,
+          196,
+          198,
+          200,
+          201,
+          203,
+          206,
+          209,
+          211,
+          214,
+          222,
+          230,
+          238,
+        ],
+      },
+    ],
     startingOrder: gearOrder.triangles,
   },
   {
     sides: 4,
     name: 'square',
     entitlement: 'io.nathanfriend.inspiral.squaregears',
-    sizes: [...polygonsizes],
+    sizes: [],
     startingOrder: gearOrder.squares,
   },
   {
     sides: 5,
     name: 'pentagon',
     entitlement: 'io.nathanfriend.inspiral.pentagongears',
-    sizes: [...polygonsizes],
+    sizes: [],
     startingOrder: gearOrder.pentagons,
   },
 ];
