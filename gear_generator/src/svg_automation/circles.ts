@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { circleGearSizes, holeSize } from '../constants';
+import { circleGearSizes, holeSize, gearOrder } from '../constants';
 import { PointGearHole } from '../models/gear_hole';
 
 const writeFile = util.promisify(fs.writeFile);
@@ -66,6 +66,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       radius,
       holeSize,
       holes,
+      gearOrder: gearOrder.circles + radius,
     });
 
     await writeFile(svgPath, rendered);

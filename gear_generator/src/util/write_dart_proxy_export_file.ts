@@ -23,7 +23,14 @@ export const writeDartProxyExportFile = async (
     '../templates/dart/dart_proxy_export.dart.ejs',
   );
 
-  const rendered = await renderFile(templateFilePath, { gearDefinitions });
+  // Sort the gears from lowest `gearOrder` to highest
+  const sortedGearDefinitions = gearDefinitions.sort(
+    (gd1, gd2) => gd1.gearOrder - gd2.gearOrder,
+  );
+
+  const rendered = await renderFile(templateFilePath, {
+    gearDefinitions: sortedGearDefinitions,
+  });
 
   await writeFile(filePath, rendered);
 };

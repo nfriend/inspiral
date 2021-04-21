@@ -22,6 +22,18 @@ export const baseScale = 4;
 export const padding = 0.25;
 
 /**
+ * The starting order for each class of gear. The order
+ * determines the order the gears are displayed in the app.
+ */
+export const gearOrder = {
+  circles: 10000,
+  ovals: 20000,
+  triangles: 30000,
+  squares: 40000,
+  pentagons: 50000,
+};
+
+/**
  * All the sizes of circle gears that should be generated
  */
 export const circleGearSizes = [
@@ -94,18 +106,21 @@ export const polygonVariations = [
     name: 'triangle',
     entitlement: 'io.nathanfriend.inspiral.trianglegears',
     sizes: [...polygonsizes],
+    startingOrder: gearOrder.triangles,
   },
   {
     sides: 4,
     name: 'square',
     entitlement: 'io.nathanfriend.inspiral.squaregears',
     sizes: [...polygonsizes],
+    startingOrder: gearOrder.squares,
   },
   {
     sides: 5,
     name: 'pentagon',
     entitlement: 'io.nathanfriend.inspiral.pentagongears',
     sizes: [...polygonsizes],
+    startingOrder: gearOrder.pentagons,
   },
 ];
 

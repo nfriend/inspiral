@@ -64,6 +64,17 @@ export const analyzePath = ({
     throw new Error(`Unrecognized package id: "${packageId}"`);
   }
 
+  // Find the gear's relative order
+  const gearOrder = parseInt(
+    document.querySelector('svg desc gear-order')?.textContent,
+    10,
+  );
+  if (Number.isNaN(gearOrder)) {
+    throw new Error(
+      'Gear must contain a <gear-order> element, and it must be an integer',
+    );
+  }
+
   // The total length of the path
   const totalLength = path.getTotalLength();
 
@@ -228,6 +239,7 @@ export const analyzePath = ({
     holes,
     entitlement,
     package: gearPackage,
+    gearOrder,
   };
 
   return gearDefinition;

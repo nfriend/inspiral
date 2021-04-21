@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { ovalGearSizes } from '../constants';
+import { gearOrder, ovalGearSizes } from '../constants';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -26,7 +26,10 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ),
     );
 
-    const rendered = await renderFile(templateFilePath, { ...ovalParams });
+    const rendered = await renderFile(templateFilePath, {
+      ...ovalParams,
+      gearOrder: gearOrder.ovals + ovalParams.xRadius,
+    });
 
     await writeFile(svgPath, rendered);
 

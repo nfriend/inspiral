@@ -36,9 +36,12 @@ export interface GearDefinition {
   /** The holes in the gear */
   holes: AngleGearHole[];
 
-  // The entitlement of this gear.
+  /** The entitlement of this gear. */
   entitlement: Entitlement;
 
-  // The package that will unlock the gear's entitlement
+  /** The package that will unlock the gear's entitlement */
   package: Package;
+
+  /** The order of this gear, relative to all other gears */
+  gearOrder: number;
 }

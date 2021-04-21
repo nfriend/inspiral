@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { polygonVariations } from '../constants';
+import { gearOrder, polygonVariations } from '../constants';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -55,6 +55,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
 
       const rendered = await renderFile(templateFilePath, {
         ...templateParams,
+        gearOrder: polygonDef.startingOrder + radius,
       });
 
       await writeFile(svgPath, rendered);
