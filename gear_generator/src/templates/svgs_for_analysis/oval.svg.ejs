@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
   <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
-		<entitlement-id>
-			io.nathanfriend.inspiral.ovalgears
-		</entitlement-id>
+    <entitlement-id>
+      io.nathanfriend.inspiral.ovalgears
+    </entitlement-id>
     <package-id>
-			io.nathanfriend.inspiral.ovalgears
-		</package-id>
+      io.nathanfriend.inspiral.ovalgears
+    </package-id>
     <gear-order>
-			<%= gearOrder %>
-		</gear-order>
-	</desc>
+      <%= gearOrder %>
+    </gear-order>
+  </desc>
   <g>
-    <path d="M <%= xRadius * 2 %> <%= yRadius %>
+    <%- include('gear_holes') %>
+    <path mask="url(#holes)"
+          d="M <%= xRadius * 2 %> <%= yRadius %>
              A <%= xRadius %> <%= yRadius %> 0 1 0 0 <%= yRadius %>
              A <%= xRadius %> <%= yRadius %> 0 0 0 <%= xRadius * 2 %> <%= yRadius %>
              Z" />

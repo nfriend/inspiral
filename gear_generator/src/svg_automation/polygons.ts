@@ -3,7 +3,9 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { gearOrder, polygonVariations } from '../constants';
+import { polygonVariations, holeSize } from '../constants';
+import { PointGearHole } from '../models/gear_hole';
+import { getHoles } from './get_holes';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -51,12 +53,17 @@ const renderFile: any = util.promisify(ejs.renderFile);
         });
       }
 
-      const templateParams = { arcs, entitlement: polygonDef.entitlement };
+      const holes: PointGearHole[] = getHoles(radius);
 
-      const rendered = await renderFile(templateFilePath, {
-        ...templateParams,
+      const templateParams = {
+        arcs,
+        entitlement: polygonDef.entitlement,
         gearOrder: polygonDef.startingOrder + radius,
-      });
+        holeSize,
+        holes,
+      };
+
+      const rendered = await renderFile(templateFilePath, templateParams);
 
       await writeFile(svgPath, rendered);
 

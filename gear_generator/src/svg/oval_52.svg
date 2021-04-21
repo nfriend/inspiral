@@ -1,18 +1,23 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
   <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
-		<entitlement-id>
-			io.nathanfriend.inspiral.ovalgears
-		</entitlement-id>
+    <entitlement-id>
+      io.nathanfriend.inspiral.ovalgears
+    </entitlement-id>
     <package-id>
-			io.nathanfriend.inspiral.ovalgears
-		</package-id>
+      io.nathanfriend.inspiral.ovalgears
+    </package-id>
     <gear-order>
-			20052
-		</gear-order>
-	</desc>
+      20052
+    </gear-order>
+  </desc>
   <g>
-    <path d="M 104 34.666666666666664
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 104 34.666666666666664
              A 52 34.666666666666664 0 1 0 0 34.666666666666664
              A 52 34.666666666666664 0 0 0 104 34.666666666666664
              Z" />

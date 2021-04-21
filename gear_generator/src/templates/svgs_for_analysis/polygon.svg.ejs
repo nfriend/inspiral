@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
   <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
-		<entitlement-id>
-			<%= entitlement %>
-		</entitlement-id>
+    <entitlement-id>
+      <%= entitlement %>
+    </entitlement-id>
     <package-id>
-			<%= entitlement %>
-		</package-id>
+      <%= entitlement %>
+    </package-id>
     <gear-order>
       <%= gearOrder %>
     </gear-order>
-	</desc>
+  </desc>
   <style>
     text {
       font-family: monospace;
@@ -18,7 +18,9 @@
     }
   </style>
   <g>
-    <path d="M <%= arcs[0].startPoint.x %> <%= arcs[0].startPoint.y %>
+    <%- include('gear_holes') %>
+    <path mask="url(#holes)"
+          d="M <%= arcs[0].startPoint.x %> <%= arcs[0].startPoint.y %>
              <%_ for (const arc of arcs) { _%>
              A <%= arc.radius %> <%= arc.radius %> 0 0 0 <%= arc.endPoint.x %> <%= arc.endPoint.y %>
              <%_ } _%>

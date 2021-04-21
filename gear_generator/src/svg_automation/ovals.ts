@@ -3,7 +3,9 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { gearOrder, ovalGearSizes } from '../constants';
+import { holeSize, gearOrder, ovalGearSizes } from '../constants';
+import { getHoles } from './get_holes';
+import { PointGearHole } from '../models/gear_hole';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -26,8 +28,13 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ),
     );
 
+    // TODO
+    const holes: PointGearHole[] = [];
+
     const rendered = await renderFile(templateFilePath, {
       ...ovalParams,
+      holeSize,
+      holes,
       gearOrder: gearOrder.ovals + ovalParams.xRadius,
     });
 
