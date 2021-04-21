@@ -16,6 +16,7 @@ final square24 = GearDefinition(
     image: 'images/gears/square_24.png',
     thumbnailImage: 'images/gears/square_24_thumb.png',
     size: Size(236, 236),
+    center: Offset(118, 118),
     toothCount: 23,
     entitlement: Entitlement.squaregears,
     package: Package.squaregears,
@@ -90,4 +91,22 @@ final square24 = GearDefinition(
           position: Offset(95.55531112039057, 28.281918401394023),
           direction: 5.817948819057413),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: -3.0975197688770795, distance: 0.5167699448048456),
+      GearHole(name: '8', angle: 1.6354239037634752, distance: 7.9939202186155),
+      GearHole(
+          name: '9', angle: 2.396941842528982, distance: 9.356723799545563),
+      GearHole(
+          name: '10', angle: -3.1394276142643744, distance: 10.516292781118075),
+      GearHole(
+          name: '11', angle: -2.3868458471562204, distance: 11.386504649852368),
+      GearHole(
+          name: '12', angle: -1.613710833560216, distance: 12.033847566229577),
+      GearHole(
+          name: '13', angle: -0.8155174954971147, distance: 12.656783348053192),
+      GearHole(
+          name: '14',
+          angle: -0.0016885642809213919,
+          distance: 13.48375108864644),
+    ]);

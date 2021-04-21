@@ -16,6 +16,7 @@ final triangle24 = GearDefinition(
     image: 'images/gears/triangle_24.png',
     thumbnailImage: 'images/gears/triangle_24_thumb.png',
     size: Size(216, 216),
+    center: Offset(108, 108),
     toothCount: 21,
     entitlement: Entitlement.trianglegears,
     package: Package.trianglegears,
@@ -84,4 +85,27 @@ final triangle24 = GearDefinition(
           position: Offset(83.17042975538374, 28.050712988919795),
           direction: 5.675765933562145),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: 3.0672722676641886, distance: 2.5396630898426067),
+      GearHole(
+          name: '8', angle: 1.870755008194726, distance: 8.571294480991748),
+      GearHole(
+          name: '9', angle: 2.5067745401228536, distance: 11.049228885457696),
+      GearHole(
+          name: '13', angle: -0.9339474970875781, distance: 11.199139763074914),
+      GearHole(
+          name: '14', angle: 0.016443038098546116, distance: 11.46889803004653),
+      GearHole(
+          name: '12', angle: -1.7820218215451005, distance: 12.079904300322617),
+      GearHole(
+          name: '10', angle: 3.126547091461883, distance: 12.534071013503729),
+      GearHole(
+          name: '11', angle: -2.507059649405975, distance: 12.802936161899144),
+      GearHole(
+          name: '15', angle: 0.9286265151553654, distance: 13.480522947681557),
+      GearHole(
+          name: '16', angle: 1.725985270338809, distance: 16.38549021390115),
+      GearHole(
+          name: '17', angle: 2.4435585009601177, distance: 18.996647930901695),
+    ]);

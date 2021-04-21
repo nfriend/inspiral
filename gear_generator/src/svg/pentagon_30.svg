@@ -11,13 +11,13 @@
       50030
     </gear-order>
   </desc>
-  <style>
-    text {
-      font-family: monospace;
-      font-size: 4px;
-    }
-  </style>
   <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
     <mask id="holes">
       <rect width="100%" height="100%" fill="white" />
       <circle cx="30"
@@ -90,13 +90,6 @@
               inspiral:hole-text-position-angle="6.083185307179586"
               inspiral:hole-text-rotation-angle="-3.141592653589793" />
       <text x="26.999999999999996" y="43" text-anchor="end">12</text>
-      <circle cx="29.999999999999996"
-              cy="50"
-              r="2.5"
-              inspiral:hole-name="20"
-              inspiral:hole-text-position-angle="6.283185307179586"
-              inspiral:hole-text-rotation-angle="-3.141592653589793" />
-      <text x="26.999999999999996" y="51" text-anchor="end">20</text>
       <circle cx="39.192388155425114"
               cy="39.19238815542512"
               r="2.5"
@@ -104,13 +97,6 @@
               inspiral:hole-text-position-angle="6.668583470577034"
               inspiral:hole-text-rotation-angle="-3.9269908169872414" />
       <text x="36.192388155425114" y="40.19238815542512" text-anchor="end">13</text>
-      <circle cx="44.84924240491749"
-              cy="44.849242404917504"
-              r="2.5"
-              inspiral:hole-name="21"
-              inspiral:hole-text-position-angle="7.0685834705770345"
-              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
-      <text x="41.84924240491749" y="45.849242404917504" text-anchor="end">21</text>
       <circle cx="44"
               cy="30.000000000000004"
               r="2.5"
@@ -118,13 +104,6 @@
               inspiral:hole-text-position-angle="7.653981633974483"
               inspiral:hole-text-rotation-angle="-4.71238898038469" />
       <text x="41" y="31.000000000000004" text-anchor="end">14</text>
-      <circle cx="52"
-              cy="30.000000000000007"
-              r="2.5"
-              inspiral:hole-name="22"
-              inspiral:hole-text-position-angle="7.853981633974483"
-              inspiral:hole-text-rotation-angle="-4.71238898038469" />
-      <text x="49" y="31.000000000000007" text-anchor="end">22</text>
       <circle cx="40.60660171779821"
               cy="19.39339828220179"
               r="2.5"

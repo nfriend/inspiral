@@ -16,6 +16,7 @@ final circle24 = GearDefinition(
     image: 'images/gears/circle_24.png',
     thumbnailImage: 'images/gears/circle_24_thumb.png',
     size: Size(240, 240),
+    center: Offset(120, 120),
     toothCount: 24,
     entitlement: Entitlement.free,
     package: Package.free,
@@ -94,17 +95,24 @@ final circle24 = GearDefinition(
           direction: 6.021706349429267),
     ],
     holes: [
-      GearHole(name: '0', angle: 0, distance: 0),
-      GearHole(name: '8', angle: 1.5707963267948966, distance: 8),
       GearHole(
-          name: '9', angle: 2.356194490192345, distance: 9.000000000000002),
-      GearHole(name: '10', angle: -3.141592653589793, distance: 10),
+          name: '0',
+          angle: 1.5707963267948966,
+          distance: 1.2077417288480774e-8),
       GearHole(
-          name: '11', angle: -2.3561944901923457, distance: 11.000000000000002),
-      GearHole(name: '12', angle: -1.570796326794897, distance: 12),
-      GearHole(name: '13', angle: -0.7853981633974486, distance: 13),
-      GearHole(name: '14', angle: -2.5376526277146434e-16, distance: 14),
+          name: '8', angle: 1.5707963267948966, distance: 8.000000012077418),
       GearHole(
-          name: '15', angle: 0.7853981633974471, distance: 15.000000000000002),
-      GearHole(name: '16', angle: 1.5707963267948966, distance: 16),
+          name: '9', angle: 2.356194489243453, distance: 9.000000008540026),
+      GearHole(name: '10', angle: 3.1415926523820517, distance: 10),
+      GearHole(
+          name: '11', angle: -2.3561944909687114, distance: 10.999999991459978),
+      GearHole(
+          name: '12', angle: -1.570796326794897, distance: 11.999999987922582),
+      GearHole(
+          name: '13', angle: -0.7853981627405238, distance: 12.999999991459976),
+      GearHole(name: '14', angle: 8.626724096976496e-10, distance: 14),
+      GearHole(
+          name: '15', angle: 0.7853981639667819, distance: 15.000000008540024),
+      GearHole(
+          name: '16', angle: 1.5707963267948966, distance: 16.000000012077418),
     ]);

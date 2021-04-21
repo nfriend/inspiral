@@ -15,7 +15,8 @@ final pentagon32 = GearDefinition(
     id: 'pentagon32',
     image: 'images/gears/pentagon_32.png',
     thumbnailImage: 'images/gears/pentagon_32_thumb.png',
-    size: Size(296, 296),
+    size: Size(296, 292),
+    center: Offset(148, 146),
     toothCount: 31,
     entitlement: Entitlement.pentagongears,
     package: Package.pentagongears,
@@ -114,4 +115,37 @@ final pentagon32 = GearDefinition(
           position: Offset(126.61388671793975, 28.51743261961527),
           direction: 5.927637805263853),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: -3.057331480856293, distance: 1.378796021010834),
+      GearHole(
+          name: '8', angle: 1.7433295089983205, distance: 8.002775381701184),
+      GearHole(
+          name: '9', angle: 2.4623270583801853, distance: 9.945403798388131),
+      GearHole(
+          name: '10', angle: -3.131390570577759, distance: 11.374496166062226),
+      GearHole(
+          name: '11', angle: -2.4298519655857533, distance: 12.086322646831007),
+      GearHole(
+          name: '13', angle: -0.8721741072329859, distance: 12.156296900588451),
+      GearHole(
+          name: '12', angle: -1.6837094796362237, distance: 12.193689985149879),
+      GearHole(
+          name: '14',
+          angle: -0.009190352752138127,
+          distance: 12.62662900689106),
+      GearHole(
+          name: '15', angle: 0.8490875132081278, distance: 13.97478285180761),
+      GearHole(
+          name: '16', angle: 1.6570779164457905, distance: 15.943266577222177),
+      GearHole(
+          name: '17', angle: 2.415018862747105, distance: 17.920439405514458),
+      GearHole(
+          name: '18', angle: -3.1356031456363804, distance: 19.374251745116027),
+      GearHole(
+          name: '19', angle: -2.400518843981891, distance: 20.073265983306477),
+      GearHole(
+          name: '21', angle: -0.8377382617445476, distance: 20.138134535292338),
+      GearHole(
+          name: '20', angle: -1.6389893597345961, distance: 20.162905051394187),
+    ]);

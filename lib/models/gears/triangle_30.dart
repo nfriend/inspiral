@@ -15,7 +15,8 @@ final triangle30 = GearDefinition(
     id: 'triangle30',
     image: 'images/gears/triangle_30.png',
     thumbnailImage: 'images/gears/triangle_30_thumb.png',
-    size: Size(260, 260),
+    size: Size(260, 256),
+    center: Offset(130, 128),
     toothCount: 26,
     entitlement: Entitlement.trianglegears,
     package: Package.trianglegears,
@@ -99,4 +100,37 @@ final triangle30 = GearDefinition(
           position: Offset(104.80846370570353, 29.585083592445855),
           direction: 5.709650753789216),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: -3.088770528803553, distance: 3.2468734787789835),
+      GearHole(
+          name: '8', angle: 1.9634565657885625, distance: 8.473450017753127),
+      GearHole(
+          name: '14',
+          angle: -0.015934002433331585,
+          distance: 10.759020931843963),
+      GearHole(
+          name: '13', angle: -1.004732358862452, distance: 11.094325114312298),
+      GearHole(
+          name: '9', angle: 2.569000196389466, distance: 11.429286520701709),
+      GearHole(
+          name: '12', angle: -1.831140280380576, distance: 12.595889633644589),
+      GearHole(
+          name: '15', angle: 0.9562452382714286, distance: 12.77204565736662),
+      GearHole(
+          name: '10', angle: -3.128648009853635, distance: 13.243454402550812),
+      GearHole(
+          name: '11', angle: -2.5166840660227088, distance: 13.588525107738818),
+      GearHole(
+          name: '16', angle: 1.7728425822167544, distance: 16.157243670240373),
+      GearHole(
+          name: '22', angle: -0.00913878828496162, distance: 18.75843846677173),
+      GearHole(
+          name: '17', angle: 2.481446505995909, distance: 19.322837775347036),
+      GearHole(
+          name: '20', angle: -1.7301725356256847, distance: 20.43035163296983),
+      GearHole(
+          name: '18', angle: -3.133522768115742, distance: 21.243036558190965),
+      GearHole(
+          name: '19', angle: -2.457253583383477, distance: 21.52371795014583),
+    ]);

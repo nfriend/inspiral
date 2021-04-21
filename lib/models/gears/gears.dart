@@ -8,6 +8,7 @@
 
 import 'package:inspiral/models/gear_definition.dart';
 
+import 'package:inspiral/models/gears/egg.dart';
 import 'package:inspiral/models/gears/circle_24.dart';
 import 'package:inspiral/models/gears/circle_30.dart';
 import 'package:inspiral/models/gears/circle_32.dart';
@@ -24,6 +25,9 @@ import 'package:inspiral/models/gears/circle_72.dart';
 import 'package:inspiral/models/gears/circle_75.dart';
 import 'package:inspiral/models/gears/circle_80.dart';
 import 'package:inspiral/models/gears/circle_84.dart';
+import 'package:inspiral/models/gears/circle_100.dart';
+import 'package:inspiral/models/gears/circle_150.dart';
+import 'package:inspiral/models/gears/circle_250.dart';
 import 'package:inspiral/models/gears/oval_24.dart';
 import 'package:inspiral/models/gears/oval_30.dart';
 import 'package:inspiral/models/gears/oval_32.dart';
@@ -55,6 +59,9 @@ import 'package:inspiral/models/gears/triangle_72.dart';
 import 'package:inspiral/models/gears/triangle_75.dart';
 import 'package:inspiral/models/gears/triangle_80.dart';
 import 'package:inspiral/models/gears/triangle_84.dart';
+import 'package:inspiral/models/gears/triangle_100.dart';
+import 'package:inspiral/models/gears/triangle_150.dart';
+import 'package:inspiral/models/gears/triangle_250.dart';
 import 'package:inspiral/models/gears/square_24.dart';
 import 'package:inspiral/models/gears/square_30.dart';
 import 'package:inspiral/models/gears/square_32.dart';
@@ -88,6 +95,7 @@ import 'package:inspiral/models/gears/pentagon_75.dart';
 import 'package:inspiral/models/gears/pentagon_80.dart';
 import 'package:inspiral/models/gears/pentagon_84.dart';
 
+export 'package:inspiral/models/gears/egg.dart';
 export 'package:inspiral/models/gears/circle_24.dart';
 export 'package:inspiral/models/gears/circle_30.dart';
 export 'package:inspiral/models/gears/circle_32.dart';
@@ -104,6 +112,9 @@ export 'package:inspiral/models/gears/circle_72.dart';
 export 'package:inspiral/models/gears/circle_75.dart';
 export 'package:inspiral/models/gears/circle_80.dart';
 export 'package:inspiral/models/gears/circle_84.dart';
+export 'package:inspiral/models/gears/circle_100.dart';
+export 'package:inspiral/models/gears/circle_150.dart';
+export 'package:inspiral/models/gears/circle_250.dart';
 export 'package:inspiral/models/gears/oval_24.dart';
 export 'package:inspiral/models/gears/oval_30.dart';
 export 'package:inspiral/models/gears/oval_32.dart';
@@ -135,6 +146,9 @@ export 'package:inspiral/models/gears/triangle_72.dart';
 export 'package:inspiral/models/gears/triangle_75.dart';
 export 'package:inspiral/models/gears/triangle_80.dart';
 export 'package:inspiral/models/gears/triangle_84.dart';
+export 'package:inspiral/models/gears/triangle_100.dart';
+export 'package:inspiral/models/gears/triangle_150.dart';
+export 'package:inspiral/models/gears/triangle_250.dart';
 export 'package:inspiral/models/gears/square_24.dart';
 export 'package:inspiral/models/gears/square_30.dart';
 export 'package:inspiral/models/gears/square_32.dart';
@@ -169,6 +183,7 @@ export 'package:inspiral/models/gears/pentagon_80.dart';
 export 'package:inspiral/models/gears/pentagon_84.dart';
 
 Map<String, GearDefinition> allGears = {
+  'egg': egg,
   'circle24': circle24,
   'circle30': circle30,
   'circle32': circle32,
@@ -185,6 +200,9 @@ Map<String, GearDefinition> allGears = {
   'circle75': circle75,
   'circle80': circle80,
   'circle84': circle84,
+  'circle100': circle100,
+  'circle150': circle150,
+  'circle250': circle250,
   'oval24': oval24,
   'oval30': oval30,
   'oval32': oval32,
@@ -216,6 +234,9 @@ Map<String, GearDefinition> allGears = {
   'triangle75': triangle75,
   'triangle80': triangle80,
   'triangle84': triangle84,
+  'triangle100': triangle100,
+  'triangle150': triangle150,
+  'triangle250': triangle250,
   'square24': square24,
   'square30': square30,
   'square32': square32,

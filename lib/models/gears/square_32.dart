@@ -15,7 +15,8 @@ final square32 = GearDefinition(
     id: 'square32',
     image: 'images/gears/square_32.png',
     thumbnailImage: 'images/gears/square_32_thumb.png',
-    size: Size(304, 304),
+    size: Size(304, 296),
+    center: Offset(152, 148),
     toothCount: 30,
     entitlement: Entitlement.squaregears,
     package: Package.squaregears,
@@ -111,4 +112,37 @@ final square32 = GearDefinition(
           position: Offset(130.0858481788229, 28.420549685187815),
           direction: 5.857819752715117),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: 1.5713141649750018, distance: 0.009452821091635867),
+      GearHole(
+          name: '8', angle: 1.570796937951684, distance: 8.009452819825714),
+      GearHole(
+          name: '9', angle: 2.355452742421136, distance: 9.006690092003176),
+      GearHole(
+          name: '10', angle: 3.1406473723516437, distance: 10.000009362818398),
+      GearHole(
+          name: '11', angle: -2.3568028245176253, distance: 10.993321342463627),
+      GearHole(
+          name: '12', angle: -1.5707967350357703, distance: 11.99054718017678),
+      GearHole(
+          name: '13', angle: -0.7848839995797797, distance: 12.993314103176036),
+      GearHole(
+          name: '14',
+          angle: 0.0006752015494890745,
+          distance: 13.999998296247965),
+      GearHole(
+          name: '15', angle: 0.7858438058418805, distance: 15.006682181831522),
+      GearHole(
+          name: '16', angle: 1.5707966325537197, distance: 16.00945281982497),
+      GearHole(
+          name: '17', angle: 2.3558016628824667, distance: 17.00668892648806),
+      GearHole(
+          name: '18', angle: 3.141067497123984, distance: 18.000007377136235),
+      GearHole(
+          name: '19', angle: -2.3565465936832646, distance: 18.993320485677078),
+      GearHole(
+          name: '20', angle: -1.5707965716622039, distance: 19.99054718017638),
+      GearHole(
+          name: '21', angle: -0.7850799338898394, distance: 20.993313448687648),
+    ]);

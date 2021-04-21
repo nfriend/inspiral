@@ -11,13 +11,13 @@
       30024
     </gear-order>
   </desc>
-  <style>
-    text {
-      font-family: monospace;
-      font-size: 4px;
-    }
-  </style>
   <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
     <mask id="holes">
       <rect width="100%" height="100%" fill="white" />
       <circle cx="24"
@@ -48,6 +48,13 @@
               inspiral:hole-text-position-angle="3.1269908169872416"
               inspiral:hole-text-rotation-angle="-1.4853981633974482" />
       <text x="14.63603896932107" y="18.63603896932107" text-anchor="end">9</text>
+      <circle cx="11.979184719828693"
+              cy="11.979184719828691"
+              r="2.5"
+              inspiral:hole-name="17"
+              inspiral:hole-text-position-angle="3.5269908169872415"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="8.979184719828693" y="12.979184719828691" text-anchor="end">17</text>
       <circle cx="14"
               cy="24"
               r="2.5"

@@ -15,7 +15,8 @@ final triangle45 = GearDefinition(
     id: 'triangle45',
     image: 'images/gears/triangle_45.png',
     thumbnailImage: 'images/gears/triangle_45_thumb.png',
-    size: Size(368, 368),
+    size: Size(368, 360),
+    center: Offset(184, 180),
     toothCount: 40,
     entitlement: Entitlement.trianglegears,
     package: Package.trianglegears,
@@ -141,4 +142,65 @@ final triangle45 = GearDefinition(
           position: Offset(158.48242686272783, 29.03279607828443),
           direction: 5.759428209087604),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: -3.0975655530789883, distance: 5.118475842487409),
+      GearHole(
+          name: '14',
+          angle: -0.025345300803975998,
+          distance: 8.889339179119885),
+      GearHole(
+          name: '8', angle: 2.152572862105151, distance: 9.305607625523725),
+      GearHole(
+          name: '13', angle: -1.1620777425698896, distance: 10.263023490165194),
+      GearHole(
+          name: '15', angle: 1.0841159601848576, distance: 11.74503540663428),
+      GearHole(
+          name: '9', angle: 2.650458414278352, distance: 13.015986113136345),
+      GearHole(
+          name: '12', angle: -1.9669561964840392, distance: 13.251622068826519),
+      GearHole(
+          name: '10', angle: -3.1266879699653987, distance: 15.1151947399881),
+      GearHole(
+          name: '11', angle: -2.5860029154347783, distance: 15.174022197974372),
+      GearHole(
+          name: '16', angle: 1.884267268732371, distance: 16.582818566524914),
+      GearHole(
+          name: '22', angle: -0.013339987712999045, distance: 16.8879867769763),
+      GearHole(
+          name: '21', angle: -0.9973512019635762, distance: 17.945070706833537),
+      GearHole(
+          name: '23', angle: 0.9632907274952884, distance: 19.533158721466627),
+      GearHole(
+          name: '17', angle: 2.538684014604085, distance: 20.80192257902585),
+      GearHole(
+          name: '20', angle: -1.818434816723895, distance: 20.861686152488534),
+      GearHole(
+          name: '19', angle: -2.5068119871907846, distance: 23.035896264953617),
+      GearHole(
+          name: '18', angle: -3.1318463336178315, distance: 23.11461368247095),
+      GearHole(
+          name: '24', angle: 1.7826509139919888, distance: 24.318417093642456),
+      GearHole(
+          name: '30',
+          angle: -0.00905200991756187,
+          distance: 24.887503766292372),
+      GearHole(
+          name: '29', angle: -0.9321269979656578, distance: 25.820950295967567),
+      GearHole(
+          name: '31', angle: 0.9116836917639773, distance: 27.44344589465621),
+      GearHole(
+          name: '28', angle: -1.750020328366311, distance: 28.68474177668075),
+      GearHole(
+          name: '25', angle: 2.488086392284434, distance: 28.705819470452557),
+      GearHole(
+          name: '27', angle: -2.4680407740078882, distance: 30.968598350503196),
+      GearHole(
+          name: '26', angle: -3.1343522337424994, distance: 31.114331414188907),
+      GearHole(
+          name: '32', angle: 1.7303585496161404, distance: 32.183550895922586),
+      GearHole(
+          name: '38',
+          angle: -0.006850088617500016,
+          distance: 32.88725573919338),
+    ]);

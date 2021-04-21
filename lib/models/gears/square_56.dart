@@ -16,6 +16,7 @@ final square56 = GearDefinition(
     image: 'images/gears/square_56.png',
     thumbnailImage: 'images/gears/square_56_thumb.png',
     size: Size(492, 492),
+    center: Offset(246, 246),
     toothCount: 53,
     entitlement: Entitlement.squaregears,
     package: Package.squaregears,
@@ -180,4 +181,85 @@ final square56 = GearDefinition(
           position: Offset(225.2611612010125, 27.996411819141915),
           direction: 5.914660787711881),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: -3.0664712385444695, distance: 0.45943862533003565),
+      GearHole(
+          name: '8', angle: 1.6282487917973831, distance: 7.978683112649509),
+      GearHole(
+          name: '9', angle: 2.393634384538233, distance: 9.306095652968253),
+      GearHole(
+          name: '10', angle: -3.1382955957028593, distance: 10.458199719977927),
+      GearHole(
+          name: '11', angle: -2.3825864139708037, distance: 11.352291241424272),
+      GearHole(
+          name: '12', angle: -1.6088471357239935, distance: 12.043198632755137),
+      GearHole(
+          name: '13', angle: -0.8128185458629189, distance: 12.705202052620743),
+      GearHole(
+          name: '14',
+          angle: -0.002546264708339199,
+          distance: 13.541901022564868),
+      GearHole(
+          name: '15', angle: 0.8058417339727245, distance: 14.654724443486725),
+      GearHole(
+          name: '16', angle: 1.5994842255767314, distance: 15.972090801573593),
+      GearHole(
+          name: '17', angle: 2.376327400884369, distance: 17.303080670902204),
+      GearHole(
+          name: '18', angle: -3.139724579021369, distance: 18.458175083386422),
+      GearHole(
+          name: '19', angle: -2.371676444873089, distance: 19.35065688659193),
+      GearHole(
+          name: '20', angle: -1.5936600604348714, distance: 20.03971888391556),
+      GearHole(
+          name: '21', angle: -0.8022241442380551, distance: 20.703356606994028),
+      GearHole(
+          name: '22',
+          angle: -0.0016006604143813435,
+          distance: 21.541884719748698),
+      GearHole(
+          name: '23', angle: 0.7986226481602146, distance: 22.65364304040385),
+      GearHole(
+          name: '24', angle: 1.5899107504690368, distance: 23.96989747444375),
+      GearHole(
+          name: '25', angle: 2.3699621463177714, distance: 25.30197196080386),
+      GearHole(
+          name: '26', angle: -3.1402894174542317, distance: 26.45816534521901),
+      GearHole(
+          name: '27', angle: -2.367148064250926, distance: 27.349978564070163),
+      GearHole(
+          name: '28', angle: -1.5871369929486454, distance: 28.03822449059014),
+      GearHole(
+          name: '29', angle: -0.7975345944767849, distance: 28.70253978996995),
+      GearHole(
+          name: '30',
+          angle: -0.0011671985141419523,
+          distance: 29.541877246595917),
+      GearHole(
+          name: '31', angle: 0.7951713523865828, distance: 30.653126063903304),
+      GearHole(
+          name: '32', angle: 1.5851277541524513, distance: 31.968801749470973),
+      GearHole(
+          name: '33', angle: 2.366654838401682, distance: 33.30139590928374),
+      GearHole(
+          name: '34', angle: -3.140591983994446, distance: 34.458160128784435),
+      GearHole(
+          name: '35', angle: -2.364669198522627, distance: 35.34960725337111),
+      GearHole(
+          name: '36', angle: -1.5835096551886847, distance: 36.03739352704487),
+      GearHole(
+          name: '37', angle: -0.7948892626334526, distance: 36.70207904183704),
+      GearHole(
+          name: '38',
+          angle: -0.0009184739473210371,
+          distance: 37.541872958430574),
+      GearHole(
+          name: '39', angle: 0.7931486199092527, distance: 38.65282307900755),
+      GearHole(
+          name: '40', angle: 1.582259278458575, distance: 39.96814463618009),
+      GearHole(
+          name: '41', angle: 2.364628707564421, distance: 41.3010430123552),
+      GearHole(
+          name: '42', angle: -3.140780530932486, distance: 42.45815687811884),
+    ]);

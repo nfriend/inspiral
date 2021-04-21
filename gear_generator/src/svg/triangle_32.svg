@@ -11,13 +11,13 @@
       30032
     </gear-order>
   </desc>
-  <style>
-    text {
-      font-family: monospace;
-      font-size: 4px;
-    }
-  </style>
   <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
     <mask id="holes">
       <rect width="100%" height="100%" fill="white" />
       <circle cx="32"
@@ -41,13 +41,6 @@
               inspiral:hole-text-position-angle="2.741592653589793"
               inspiral:hole-text-rotation-angle="0" />
       <text x="29" y="17" text-anchor="end">16</text>
-      <circle cx="32"
-              cy="8"
-              r="2.5"
-              inspiral:hole-name="24"
-              inspiral:hole-text-position-angle="3.141592653589793"
-              inspiral:hole-text-rotation-angle="0" />
-      <text x="29" y="9" text-anchor="end">24</text>
       <circle cx="25.63603896932107"
               cy="25.63603896932107"
               r="2.5"
@@ -139,13 +132,6 @@
               inspiral:hole-text-position-angle="8.439379797371931"
               inspiral:hole-text-rotation-angle="-5.497787143782138" />
       <text x="39.60660171779821" y="22.39339828220179" text-anchor="end">15</text>
-      <circle cx="48.2634559672906"
-              cy="15.73654403270941"
-              r="2.5"
-              inspiral:hole-name="23"
-              inspiral:hole-text-position-angle="8.63937979737193"
-              inspiral:hole-text-rotation-angle="-5.497787143782138" />
-      <text x="45.2634559672906" y="16.73654403270941" text-anchor="end">23</text>
     </mask>
 
     <path mask="url(#holes)"

@@ -16,6 +16,7 @@ final pentagon24 = GearDefinition(
     image: 'images/gears/pentagon_24.png',
     thumbnailImage: 'images/gears/pentagon_24_thumb.png',
     size: Size(232, 232),
+    center: Offset(116, 116),
     toothCount: 23,
     entitlement: Entitlement.pentagongears,
     package: Package.pentagongears,
@@ -90,4 +91,23 @@ final pentagon24 = GearDefinition(
           position: Offset(95.92330159564338, 28.474318851662975),
           direction: 5.882450429876171),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: 3.094315965189541, distance: 0.8432544140063396),
+      GearHole(
+          name: '8', angle: 1.675182655282943, distance: 8.083854330700989),
+      GearHole(
+          name: '9', angle: 2.4150870540178326, distance: 9.640497295827727),
+      GearHole(
+          name: '10', angle: 3.1379171232394905, distance: 10.842385454406044),
+      GearHole(
+          name: '11', angle: -2.410068214653535, distance: 11.584232312033782),
+      GearHole(
+          name: '12', angle: -1.6411068037996854, distance: 11.989772464766096),
+      GearHole(
+          name: '13', angle: -0.831214136339838, distance: 12.389216954482388),
+      GearHole(
+          name: '14',
+          angle: 0.0030287468344144383,
+          distance: 13.15774813322921),
+    ]);
