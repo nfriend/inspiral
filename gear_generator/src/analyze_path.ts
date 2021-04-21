@@ -126,6 +126,18 @@ export const analyzePath = ({
     y: svgSize.height / 2,
   };
 
+  // Remove any extra whitespace from the top or left of the gear,
+  // so that the gear sits flush with the axes. This allows the
+  // SVG source images to not worry about being perfectly
+  // flush with the edge of the their bounds.
+  evaluatedPoints = evaluatedPoints.map((point) => ({
+    ...point,
+    position: {
+      x: point.position.x - boundaries.x.min,
+      y: point.position.y - boundaries.y.min,
+    },
+  }));
+
   // Update each point so that:
   //   1. each point has the correct direction (A.K.A normal line)
   //      by computing the angle perpendicular to the line between

@@ -23,9 +23,17 @@ export const allEntitlements: { [name: string]: Entitlement } = {
     id: 'io.nathanfriend.inspiral.ovalgears',
     dart: 'Entitlement.ovalgears',
   },
+  triangleGears: {
+    id: 'io.nathanfriend.inspiral.trianglegears',
+    dart: 'Entitlement.trianglegears',
+  },
   squareGears: {
     id: 'io.nathanfriend.inspiral.squaregears',
     dart: 'Entitlement.squaregears',
+  },
+  pentagonGears: {
+    id: 'io.nathanfriend.inspiral.pentagongears',
+    dart: 'Entitlement.pentagongears',
   },
   specialGears: {
     id: 'io.nathanfriend.inspiral.specialgears',

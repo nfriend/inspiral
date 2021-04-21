@@ -43,10 +43,11 @@ export const circleGearSizes = [
   84,
 ];
 
+const xToYRatio = 2 / 3;
+
 /**
  * All the sizes of oval gears that should be generated
  */
-const xToYRatio = 2 / 3;
 export const ovalGearSizes = [
   { xRadius: 24, yRadius: 24 * xToYRatio },
   { xRadius: 30, yRadius: 30 * xToYRatio },
@@ -63,6 +64,49 @@ export const ovalGearSizes = [
   { xRadius: 75, yRadius: 75 * xToYRatio },
   { xRadius: 80, yRadius: 80 * xToYRatio },
   { xRadius: 84, yRadius: 84 * xToYRatio },
+];
+
+const polygonsizes = [
+  24,
+  30,
+  32,
+  40,
+  42,
+  45,
+  48,
+  52,
+  56,
+  60,
+  63,
+  64,
+  72,
+  75,
+  80,
+  84,
+];
+
+/**
+ * All the variations of polygons that should be rendered
+ */
+export const polygonVariations = [
+  {
+    sides: 3,
+    name: 'triangle',
+    entitlement: 'io.nathanfriend.inspiral.trianglegears',
+    sizes: [...polygonsizes],
+  },
+  {
+    sides: 4,
+    name: 'square',
+    entitlement: 'io.nathanfriend.inspiral.squaregears',
+    sizes: [...polygonsizes],
+  },
+  {
+    sides: 5,
+    name: 'pentagon',
+    entitlement: 'io.nathanfriend.inspiral.pentagongears',
+    sizes: [...polygonsizes],
+  },
 ];
 
 /** The scale factors to generate when rendering PNGs */

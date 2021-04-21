@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<entitlement-id>
+			<%= entitlement %>
+		</entitlement-id>
+    <package-id>
+			<%= entitlement %>
+		</package-id>
+	</desc>
+  <style>
+    text {
+      font-family: monospace;
+      font-size: 4px;
+    }
+  </style>
+  <g>
+    <path d="M <%= arcs[0].startPoint.x %> <%= arcs[0].startPoint.y %>
+             <%_ for (const arc of arcs) { _%>
+             A <%= arc.radius %> <%= arc.radius %> 0 0 0 <%= arc.endPoint.x %> <%= arc.endPoint.y %>
+             <%_ } _%>
+             Z" />
+  </g>
+</svg>

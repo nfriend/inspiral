@@ -23,9 +23,17 @@ export const allPackages: { [name: string]: Package } = {
     id: 'io.nathanfriend.inspiral.ovalgears',
     dart: 'Package.ovalgears',
   },
+  triangleGears: {
+    id: 'io.nathanfriend.inspiral.trianglegears',
+    dart: 'Package.trianglegears',
+  },
   squareGears: {
     id: 'io.nathanfriend.inspiral.squaregears',
     dart: 'Package.squaregears',
+  },
+  pentagonGears: {
+    id: 'io.nathanfriend.inspiral.pentagongears',
+    dart: 'Package.pentagongears',
   },
   specialGears: {
     id: 'io.nathanfriend.inspiral.specialgears',
