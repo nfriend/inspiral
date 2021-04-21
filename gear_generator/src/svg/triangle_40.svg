@@ -7,6 +7,9 @@
     <package-id>
 			io.nathanfriend.inspiral.trianglegears
 		</package-id>
+    <gear-order>
+      30040
+    </gear-order>
 	</desc>
   <style>
     text {

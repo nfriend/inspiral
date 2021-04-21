@@ -7,6 +7,9 @@
     <package-id>
 			io.nathanfriend.inspiral.squaregears
 		</package-id>
+    <gear-order>
+      40075
+    </gear-order>
 	</desc>
   <style>
     text {

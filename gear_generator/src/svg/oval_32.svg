@@ -7,6 +7,9 @@
     <package-id>
 			io.nathanfriend.inspiral.ovalgears
 		</package-id>
+    <gear-order>
+			20032
+		</gear-order>
 	</desc>
   <g>
     <path d="M 64 21.333333333333332

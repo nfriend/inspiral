@@ -7,6 +7,9 @@
     <package-id>
 			io.nathanfriend.inspiral.pentagongears
 		</package-id>
+    <gear-order>
+      50042
+    </gear-order>
 	</desc>
   <style>
     text {
