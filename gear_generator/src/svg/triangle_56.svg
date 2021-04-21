@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<entitlement-id>
+			io.nathanfriend.inspiral.trianglegears
+		</entitlement-id>
+    <package-id>
+			io.nathanfriend.inspiral.trianglegears
+		</package-id>
+	</desc>
+  <style>
+    text {
+      font-family: monospace;
+      font-size: 4px;
+    }
+  </style>
+  <g>
+    <path d="M 112 56
+             A 84 84 0 0 0 28.000000000000014 7.50257738807143
+             A 84 84 0 0 0 27.999999999999975 104.49742261192856
+             A 84 84 0 0 0 112 56.000000000000014
+             Z" />
+  </g>
+</svg>

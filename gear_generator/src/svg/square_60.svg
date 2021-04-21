@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<entitlement-id>
+			io.nathanfriend.inspiral.squaregears
+		</entitlement-id>
+    <package-id>
+			io.nathanfriend.inspiral.squaregears
+		</package-id>
+	</desc>
+  <style>
+    text {
+      font-family: monospace;
+      font-size: 4px;
+    }
+  </style>
+  <g>
+    <path d="M 120 60
+             A 90 90 0 0 0 60.00000000000001 0
+             A 90 90 0 0 0 0 59.99999999999999
+             A 90 90 0 0 0 59.999999999999986 120
+             A 90 90 0 0 0 120 60.000000000000014
+             Z" />
+  </g>
+</svg>

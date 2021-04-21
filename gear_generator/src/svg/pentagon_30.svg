@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<entitlement-id>
+			io.nathanfriend.inspiral.pentagongears
+		</entitlement-id>
+    <package-id>
+			io.nathanfriend.inspiral.pentagongears
+		</package-id>
+	</desc>
+  <style>
+    text {
+      font-family: monospace;
+      font-size: 4px;
+    }
+  </style>
+  <g>
+    <path d="M 60 30
+             A 45 45 0 0 0 39.270509831248425 1.4683045111453943
+             A 45 45 0 0 0 5.729490168751578 12.366442431225803
+             A 45 45 0 0 0 5.729490168751575 47.633557568774194
+             A 45 45 0 0 0 39.27050983124842 58.53169548885461
+             A 45 45 0 0 0 60 30.000000000000007
+             Z" />
+  </g>
+</svg>
