@@ -3,7 +3,8 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { beamSizes, gearOrder } from '../constants';
+import { beamSizes, gearOrder, holeSize } from '../constants';
+import { getHoles } from './get_holes';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -29,11 +30,18 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ),
     );
 
+    const centerPoint = {
+      x: beamOptions.length + beamOptions.endCapRadius,
+      y: beamOptions.endCapRadius,
+    };
+
     const templateParams = {
       ...beamOptions,
       // Order the beams by the order in which they appear in constants.ts
       gearOrder: gearOrder.beams + i,
-      holes: <any>[],
+      centerPoint,
+      holes: getHoles(centerPoint, beamOptions.holes),
+      holeSize,
     };
 
     const rendered = await renderFile(templateFilePath, templateParams);

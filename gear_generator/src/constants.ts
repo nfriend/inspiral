@@ -251,11 +251,28 @@ export const polygonVariations: {
 export const beamSizes: {
   endCapRadius: number;
   length: number;
+  holes: number[];
 }[] = [
-  { endCapRadius: 20, length: 50 },
-  { endCapRadius: 20, length: 100 },
-  { endCapRadius: 20, length: 194 },
-  { endCapRadius: 20, length: 204 },
+  {
+    endCapRadius: 20,
+    length: 50,
+    holes: [0, ...range(14, 63, 8), ...range(10, 67, 8)],
+  },
+  {
+    endCapRadius: 20,
+    length: 100,
+    holes: [0, ...range(14, 111, 8), ...range(10, 115, 8)],
+  },
+  {
+    endCapRadius: 20,
+    length: 194,
+    holes: [0, ...range(14, 207, 8), ...range(10, 203, 8)],
+  },
+  {
+    endCapRadius: 20,
+    length: 204,
+    holes: [0, ...range(14, 215, 8), ...range(10, 219, 8)],
+  },
 ];
 
 /** The scale factors to generate when rendering PNGs */
