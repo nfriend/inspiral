@@ -103,4 +103,35 @@ final oval32 = GearDefinition(
           position: Offset(132.4086839532856, 28.27288318125151),
           direction: 5.879315950579459),
     ],
-    holes: []);
+    holes: [
+      GearHole(
+          name: '0', angle: 2.6249008414655877, distance: 0.3882794486100365),
+      GearHole(
+          name: '8', angle: 1.6119840158034264, distance: 8.198765892972204),
+      GearHole(
+          name: '9', angle: 2.3671902432464607, distance: 9.374912836159009),
+      GearHole(
+          name: '10', angle: 3.1230399233820663, distance: 10.339372125325967),
+      GearHole(
+          name: '11', angle: -2.3898972355166754, distance: 11.109390991979192),
+      GearHole(
+          name: '12', angle: -1.5993782593278942, distance: 11.813012277733641),
+      GearHole(
+          name: '13', angle: -0.793562481827, distance: 12.626074702562319),
+      GearHole(
+          name: '14', angle: 0.01403851992350852, distance: 13.663753653669124),
+      GearHole(
+          name: '15', angle: 0.8105219732223476, distance: 14.901620598248272),
+      GearHole(
+          name: '16', angle: 1.5916429024395005, distance: 16.1953315311949),
+      GearHole(
+          name: '17', angle: 2.362127429431143, distance: 17.374651888481228),
+      GearHole(
+          name: '18', angle: 3.1311329610441647, distance: 18.33859591022637),
+      GearHole(
+          name: '19', angle: -2.375788092334393, distance: 19.106749660785027),
+      GearHole(
+          name: '22',
+          angle: 0.008854397500213395,
+          distance: 21.663256447163075),
+    ]);

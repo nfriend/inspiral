@@ -48,6 +48,13 @@
               inspiral:hole-text-position-angle="3.141592653589793"
               inspiral:hole-text-rotation-angle="0" />
       <text x="37" y="17" text-anchor="end">24</text>
+      <circle cx="40"
+              cy="8"
+              r="2.5"
+              inspiral:hole-name="32"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="37" y="9" text-anchor="end">32</text>
       <circle cx="33.63603896932107"
               cy="33.63603896932107"
               r="2.5"
@@ -146,6 +153,13 @@
               inspiral:hole-text-position-angle="7.0685834705770345"
               inspiral:hole-text-rotation-angle="-3.9269908169872414" />
       <text x="51.84924240491749" y="55.849242404917504" text-anchor="end">21</text>
+      <circle cx="60.50609665440987"
+              cy="60.50609665440989"
+              r="2.5"
+              inspiral:hole-name="29"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="57.50609665440987" y="61.50609665440989" text-anchor="end">29</text>
       <circle cx="54"
               cy="40"
               r="2.5"
@@ -160,6 +174,13 @@
               inspiral:hole-text-position-angle="7.853981633974483"
               inspiral:hole-text-rotation-angle="-4.71238898038469" />
       <text x="59" y="41.00000000000001" text-anchor="end">22</text>
+      <circle cx="70"
+              cy="40.00000000000001"
+              r="2.5"
+              inspiral:hole-name="30"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="67" y="41.00000000000001" text-anchor="end">30</text>
       <circle cx="50.60660171779821"
               cy="29.39339828220179"
               r="2.5"
@@ -183,5 +204,6 @@
              A 60 60 0 0 0 39.99999999999999 80
              A 60 60 0 0 0 80 40.00000000000001
              Z" />
+    <circle id="center-point" cx="40" cy="40" r="1" fill="#42d7f5" />
   </g>
 </svg>

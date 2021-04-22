@@ -48,6 +48,13 @@
               inspiral:hole-text-position-angle="3.141592653589793"
               inspiral:hole-text-rotation-angle="0" />
       <text x="39" y="19" text-anchor="end">24</text>
+      <circle cx="42"
+              cy="10"
+              r="2.5"
+              inspiral:hole-name="32"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="39" y="11" text-anchor="end">32</text>
       <circle cx="35.63603896932107"
               cy="35.63603896932107"
               r="2.5"
@@ -90,6 +97,13 @@
               inspiral:hole-text-position-angle="4.71238898038469"
               inspiral:hole-text-rotation-angle="-1.5707963267948966" />
       <text x="13" y="43" text-anchor="end">26</text>
+      <circle cx="8"
+              cy="41.99999999999999"
+              r="2.5"
+              inspiral:hole-name="34"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="5" y="42.99999999999999" text-anchor="end">34</text>
       <circle cx="34.22182540694798"
               cy="49.77817459305202"
               r="2.5"
@@ -188,6 +202,13 @@
               inspiral:hole-text-position-angle="8.63937979737193"
               inspiral:hole-text-rotation-angle="-5.497787143782138" />
       <text x="55.2634559672906" y="26.73654403270941" text-anchor="end">23</text>
+      <circle cx="63.92031021678298"
+              cy="20.07968978321703"
+              r="2.5"
+              inspiral:hole-name="31"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="60.92031021678298" y="21.07968978321703" text-anchor="end">31</text>
     </mask>
 
     <path mask="url(#holes)"
@@ -197,5 +218,6 @@
              A 63 63 0 0 0 41.99999999999999 84
              A 63 63 0 0 0 84 42.00000000000001
              Z" />
+    <circle id="center-point" cx="42" cy="42" r="1" fill="#42d7f5" />
   </g>
 </svg>
