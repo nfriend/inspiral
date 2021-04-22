@@ -334,10 +334,18 @@ const generateHole = ({
     })
     .closePath();
 
+  // Controls the distance between the hole text and the hole.
+  // Make it larger for 3-digit numbers (since the text is
+  // effectively left-aligned).
+  const holeMargin = hole.distance > 99 ? 2.6 : 2.1;
+
   const textPosition: Point = {
-    x: holeCenter.x + Math.cos(hole.textPositionAngle) * 2.1 * scaledRadius,
+    x:
+      holeCenter.x +
+      Math.cos(hole.textPositionAngle) * holeMargin * scaledRadius,
     y:
-      holeCenter.y + -1 * Math.sin(hole.textPositionAngle) * 2.1 * scaledRadius,
+      holeCenter.y +
+      -1 * Math.sin(hole.textPositionAngle) * holeMargin * scaledRadius,
   };
 
   return {

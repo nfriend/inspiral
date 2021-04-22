@@ -62,6 +62,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
         gearOrder: polygonDef.startingOrder + size.radius,
         holeSize,
         holes,
+        centerPoint,
       };
 
       const rendered = await renderFile(templateFilePath, templateParams);
