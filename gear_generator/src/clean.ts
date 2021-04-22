@@ -17,13 +17,14 @@ const deleteFile = util.promisify(fs.unlink);
     'src/svg/pentagon_*.svg',
     'tmp/**/!(.gitkeep)',
     '../lib/models/gears/!(README.md)',
+    '../images/gears/!(README.md)',
   ];
 
   let deleteCount = 0;
   for (const pattern of patternsToDelete) {
     console.info(chalk.blueBright(`Deleting files in "${pattern}"`));
 
-    const files = await glob(pattern);
+    const files = await glob(pattern, { nodir: true });
 
     if (files.length === 0) {
       console.warn(
