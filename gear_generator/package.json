@@ -5,12 +5,13 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "yarn svg:all && yarn render && yarn dart:fmt-generated && yarn png:compress",
+    "start": "yarn clean && yarn svg:all && yarn render && yarn dart:fmt-generated && yarn png:compress",
     "render": "ts-node src/index.ts",
     "svg:circles": "ts-node src/svg_automation/circles.ts",
     "svg:ovals": "ts-node src/svg_automation/ovals.ts",
     "svg:polygons": "ts-node src/svg_automation/polygons.ts",
     "svg:all": "yarn svg:circles && yarn svg:ovals && yarn svg:polygons",
+    "clean": "ts-node src/clean.ts",
     "dart:fmt-generated": "ts-node src/format_generated_dart_files.ts",
     "png:compress": "ts-node src/compress_png.ts",
     "lint": "eslint . --ext .ts"
