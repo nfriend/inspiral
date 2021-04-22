@@ -36,6 +36,8 @@ class RotatingGear extends StatelessWidget {
     return Transform.translate(
         offset: gear.position - gear.definition.center,
         child: Transform.rotate(
+          origin:
+              gear.definition.center - gear.definition.size.toOffset() / 2.0,
           angle: gear.rotation,
           child: Listener(
               onPointerDown: (event) {
