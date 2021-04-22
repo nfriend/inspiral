@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/widgets/color_filters.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 class FixedGear extends StatelessWidget {
   @override
@@ -21,6 +22,8 @@ class FixedGear extends StatelessWidget {
     return Transform.translate(
         offset: gear.position - gear.definition.center,
         child: Transform.rotate(
+          origin:
+              gear.definition.center - gear.definition.size.toOffset() / 2.0,
           angle: gear.rotation,
           child: Listener(
               onPointerDown: (event) {
