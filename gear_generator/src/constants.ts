@@ -29,10 +29,11 @@ export const padding = 0.25;
  */
 export const gearOrder = {
   circles: 10000,
-  ovals: 20000,
-  triangles: 30000,
-  squares: 40000,
-  pentagons: 50000,
+  beams: 20000,
+  ovals: 30000,
+  triangles: 40000,
+  squares: 50000,
+  pentagons: 60000,
 };
 
 /**
@@ -55,6 +56,9 @@ export const circleGearSizes = [
   { radius: 75, holes: [0, ...range(8, 68)] },
   { radius: 80, holes: [0, ...range(8, 73)] },
   { radius: 84, holes: [0, ...range(8, 77)] },
+  { radius: 100, holes: [0, ...range(8, 93)] },
+  { radius: 144, holes: [0, ...range(8, 137)] },
+  { radius: 150, holes: [0, ...range(8, 143)] },
 ];
 
 const xToYRatio = 2 / 3;
@@ -242,6 +246,16 @@ export const polygonVariations: {
     ],
     startingOrder: gearOrder.pentagons,
   },
+];
+
+export const beamSizes: {
+  endCapRadius: number;
+  length: number;
+}[] = [
+  { endCapRadius: 20, length: 50 },
+  { endCapRadius: 20, length: 100 },
+  { endCapRadius: 20, length: 194 },
+  { endCapRadius: 20, length: 204 },
 ];
 
 /** The scale factors to generate when rendering PNGs */

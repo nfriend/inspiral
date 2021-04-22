@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      io.nathanfriend.inspiral.free
+    </entitlement-id>
+    <package-id>
+      io.nathanfriend.inspiral.free
+    </package-id>
+    <gear-order>
+      <%= gearOrder %>
+    </gear-order>
+  </desc>
+  <g>
+    <%- include('gear_holes') %>
+    <path mask="url(#holes)"
+          d="M <%= length * 2 + endCapRadius * 2 %> <%= endCapRadius %>
+             A <%= endCapRadius %> <%= endCapRadius %> 0 0 0 <%= length * 2 + endCapRadius %> 0
+             L <%= endCapRadius %> 0
+             A <%= endCapRadius %> <%= endCapRadius %> 0 0 0 <%= 0 %> <%= endCapRadius %>
+             A <%= endCapRadius %> <%= endCapRadius %> 0 0 0 <%= endCapRadius %> <%= endCapRadius * 2 %>
+             L <%= length * 2 + endCapRadius %> <%= endCapRadius * 2 %>
+             A <%= endCapRadius %> <%= endCapRadius %> 0 0 0 <%= length * 2 + endCapRadius * 2 %> <%= endCapRadius %>
+             Z" />
+    <circle id="center-point" cx="<%= length + endCapRadius %>" cy="<%= endCapRadius %>" r="1" fill="#42d7f5" />
+  </g>
+</svg>
