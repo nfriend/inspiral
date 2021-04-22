@@ -44,6 +44,8 @@ class HoleSelector extends StatelessWidget {
       Transform.translate(
           offset: gear.position - gear.definition.center,
           child: Transform.rotate(
+              origin: gear.definition.center -
+                  gear.definition.size.toOffset() / 2.0,
               angle: gear.rotation,
               child: Container(
                   width: gear.definition.size.width,
