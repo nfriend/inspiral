@@ -1,0 +1,467 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      io.nathanfriend.inspiral.trianglegears
+    </entitlement-id>
+    <package-id>
+      io.nathanfriend.inspiral.trianglegears
+    </package-id>
+    <gear-order>
+      30085
+    </gear-order>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+      <circle cx="85"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="0"
+              inspiral:hole-text-position-angle="0"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="86" text-anchor="end">0</text>
+      <circle cx="85"
+              cy="77"
+              r="2.5"
+              inspiral:hole-name="8"
+              inspiral:hole-text-position-angle="2.3415926535897933"
+              inspiral:hole-text-rotation-angle="-0.7" />
+      <text x="82" y="78" text-anchor="end">8</text>
+      <circle cx="85"
+              cy="69"
+              r="2.5"
+              inspiral:hole-name="16"
+              inspiral:hole-text-position-angle="2.741592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="70" text-anchor="end">16</text>
+      <circle cx="85"
+              cy="61"
+              r="2.5"
+              inspiral:hole-name="24"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="62" text-anchor="end">24</text>
+      <circle cx="85"
+              cy="53"
+              r="2.5"
+              inspiral:hole-name="32"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="54" text-anchor="end">32</text>
+      <circle cx="85"
+              cy="45"
+              r="2.5"
+              inspiral:hole-name="40"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="46" text-anchor="end">40</text>
+      <circle cx="85"
+              cy="37"
+              r="2.5"
+              inspiral:hole-name="48"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="38" text-anchor="end">48</text>
+      <circle cx="85"
+              cy="29"
+              r="2.5"
+              inspiral:hole-name="56"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="30" text-anchor="end">56</text>
+      <circle cx="85"
+              cy="21"
+              r="2.5"
+              inspiral:hole-name="64"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="82" y="22" text-anchor="end">64</text>
+      <circle cx="78.63603896932108"
+              cy="78.63603896932108"
+              r="2.5"
+              inspiral:hole-name="9"
+              inspiral:hole-text-position-angle="3.1269908169872416"
+              inspiral:hole-text-rotation-angle="-1.4853981633974482" />
+      <text x="75.63603896932108" y="79.63603896932108" text-anchor="end">9</text>
+      <circle cx="72.9791847198287"
+              cy="72.9791847198287"
+              r="2.5"
+              inspiral:hole-name="17"
+              inspiral:hole-text-position-angle="3.5269908169872415"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="69.9791847198287" y="73.9791847198287" text-anchor="end">17</text>
+      <circle cx="67.32233047033631"
+              cy="67.32233047033631"
+              r="2.5"
+              inspiral:hole-name="25"
+              inspiral:hole-text-position-angle="3.9269908169872414"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="64.32233047033631" y="68.32233047033631" text-anchor="end">25</text>
+      <circle cx="61.665476220843935"
+              cy="61.66547622084393"
+              r="2.5"
+              inspiral:hole-name="33"
+              inspiral:hole-text-position-angle="3.9269908169872414"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="58.665476220843935" y="62.66547622084393" text-anchor="end">33</text>
+      <circle cx="56.00862197135156"
+              cy="56.008621971351545"
+              r="2.5"
+              inspiral:hole-name="41"
+              inspiral:hole-text-position-angle="3.9269908169872414"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="53.00862197135156" y="57.008621971351545" text-anchor="end">41</text>
+      <circle cx="50.351767721859176"
+              cy="50.35176772185917"
+              r="2.5"
+              inspiral:hole-name="49"
+              inspiral:hole-text-position-angle="3.9269908169872414"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="47.351767721859176" y="51.35176772185917" text-anchor="end">49</text>
+      <circle cx="44.69491347236679"
+              cy="44.694913472366785"
+              r="2.5"
+              inspiral:hole-name="57"
+              inspiral:hole-text-position-angle="3.9269908169872414"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="41.69491347236679" y="45.694913472366785" text-anchor="end">57</text>
+      <circle cx="39.038059222874416"
+              cy="39.03805922287441"
+              r="2.5"
+              inspiral:hole-name="65"
+              inspiral:hole-text-position-angle="3.9269908169872414"
+              inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+      <text x="36.038059222874416" y="40.03805922287441" text-anchor="end">65</text>
+      <circle cx="75"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="10"
+              inspiral:hole-text-position-angle="4.312388980384689"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="72" y="86" text-anchor="end">10</text>
+      <circle cx="67"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="18"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="64" y="86" text-anchor="end">18</text>
+      <circle cx="59"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="26"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="56" y="86" text-anchor="end">26</text>
+      <circle cx="51"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="34"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="48" y="86" text-anchor="end">34</text>
+      <circle cx="43"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="42"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="40" y="86" text-anchor="end">42</text>
+      <circle cx="35"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="50"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="32" y="86" text-anchor="end">50</text>
+      <circle cx="27"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="58"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="24" y="86" text-anchor="end">58</text>
+      <circle cx="77.22182540694797"
+              cy="92.77817459305203"
+              r="2.5"
+              inspiral:hole-name="11"
+              inspiral:hole-text-position-angle="4.997787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="74.22182540694797" y="93.77817459305203" text-anchor="end">11</text>
+      <circle cx="71.56497115745559"
+              cy="98.4350288425444"
+              r="2.5"
+              inspiral:hole-name="19"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="68.56497115745559" y="99.4350288425444" text-anchor="end">19</text>
+      <circle cx="65.9081169079632"
+              cy="104.09188309203678"
+              r="2.5"
+              inspiral:hole-name="27"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="62.908116907963205" y="105.09188309203678" text-anchor="end">27</text>
+      <circle cx="60.251262658470836"
+              cy="109.74873734152916"
+              r="2.5"
+              inspiral:hole-name="35"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="57.251262658470836" y="110.74873734152916" text-anchor="end">35</text>
+      <circle cx="54.59440840897845"
+              cy="115.40559159102153"
+              r="2.5"
+              inspiral:hole-name="43"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="51.59440840897845" y="116.40559159102153" text-anchor="end">43</text>
+      <circle cx="48.93755415948607"
+              cy="121.06244584051393"
+              r="2.5"
+              inspiral:hole-name="51"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="45.93755415948607" y="122.06244584051393" text-anchor="end">51</text>
+      <circle cx="43.280699909993686"
+              cy="126.7193000900063"
+              r="2.5"
+              inspiral:hole-name="59"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="40.280699909993686" y="127.7193000900063" text-anchor="end">59</text>
+      <circle cx="37.6238456605013"
+              cy="132.37615433949867"
+              r="2.5"
+              inspiral:hole-name="67"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="34.6238456605013" y="133.37615433949867" text-anchor="end">67</text>
+      <circle cx="85"
+              cy="97"
+              r="2.5"
+              inspiral:hole-name="12"
+              inspiral:hole-text-position-angle="6.083185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="82" y="98" text-anchor="end">12</text>
+      <circle cx="85"
+              cy="105"
+              r="2.5"
+              inspiral:hole-name="20"
+              inspiral:hole-text-position-angle="6.283185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="82" y="106" text-anchor="end">20</text>
+      <circle cx="85"
+              cy="113"
+              r="2.5"
+              inspiral:hole-name="28"
+              inspiral:hole-text-position-angle="6.283185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="82" y="114" text-anchor="end">28</text>
+      <circle cx="85"
+              cy="121"
+              r="2.5"
+              inspiral:hole-name="36"
+              inspiral:hole-text-position-angle="6.283185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="82" y="122" text-anchor="end">36</text>
+      <circle cx="84.99999999999999"
+              cy="129"
+              r="2.5"
+              inspiral:hole-name="44"
+              inspiral:hole-text-position-angle="6.283185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="81.99999999999999" y="130" text-anchor="end">44</text>
+      <circle cx="84.99999999999999"
+              cy="137"
+              r="2.5"
+              inspiral:hole-name="52"
+              inspiral:hole-text-position-angle="6.283185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="81.99999999999999" y="138" text-anchor="end">52</text>
+      <circle cx="84.99999999999999"
+              cy="145"
+              r="2.5"
+              inspiral:hole-name="60"
+              inspiral:hole-text-position-angle="6.283185307179586"
+              inspiral:hole-text-rotation-angle="-3.141592653589793" />
+      <text x="81.99999999999999" y="146" text-anchor="end">60</text>
+      <circle cx="94.19238815542512"
+              cy="94.19238815542512"
+              r="2.5"
+              inspiral:hole-name="13"
+              inspiral:hole-text-position-angle="6.668583470577034"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="91.19238815542512" y="95.19238815542512" text-anchor="end">13</text>
+      <circle cx="99.84924240491749"
+              cy="99.8492424049175"
+              r="2.5"
+              inspiral:hole-name="21"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="96.84924240491749" y="100.8492424049175" text-anchor="end">21</text>
+      <circle cx="105.50609665440987"
+              cy="105.50609665440989"
+              r="2.5"
+              inspiral:hole-name="29"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="102.50609665440987" y="106.50609665440989" text-anchor="end">29</text>
+      <circle cx="111.16295090390226"
+              cy="111.16295090390227"
+              r="2.5"
+              inspiral:hole-name="37"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="108.16295090390226" y="112.16295090390227" text-anchor="end">37</text>
+      <circle cx="116.81980515339463"
+              cy="116.81980515339464"
+              r="2.5"
+              inspiral:hole-name="45"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="113.81980515339463" y="117.81980515339464" text-anchor="end">45</text>
+      <circle cx="122.47665940288701"
+              cy="122.47665940288704"
+              r="2.5"
+              inspiral:hole-name="53"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="119.47665940288701" y="123.47665940288704" text-anchor="end">53</text>
+      <circle cx="128.13351365237938"
+              cy="128.1335136523794"
+              r="2.5"
+              inspiral:hole-name="61"
+              inspiral:hole-text-position-angle="7.0685834705770345"
+              inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+      <text x="125.13351365237938" y="129.1335136523794" text-anchor="end">61</text>
+      <circle cx="99"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="14"
+              inspiral:hole-text-position-angle="7.653981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="96" y="86" text-anchor="end">14</text>
+      <circle cx="107"
+              cy="85"
+              r="2.5"
+              inspiral:hole-name="22"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="104" y="86" text-anchor="end">22</text>
+      <circle cx="115"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="30"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="112" y="86.00000000000001" text-anchor="end">30</text>
+      <circle cx="123"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="38"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="120" y="86.00000000000001" text-anchor="end">38</text>
+      <circle cx="131"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="46"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="128" y="86.00000000000001" text-anchor="end">46</text>
+      <circle cx="139"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="54"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="136" y="86.00000000000001" text-anchor="end">54</text>
+      <circle cx="147"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="62"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="144" y="86.00000000000001" text-anchor="end">62</text>
+      <circle cx="155"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="70"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="152" y="86.00000000000001" text-anchor="end">70</text>
+      <circle cx="163"
+              cy="85.00000000000001"
+              r="2.5"
+              inspiral:hole-name="78"
+              inspiral:hole-text-position-angle="7.853981633974483"
+              inspiral:hole-text-rotation-angle="-4.71238898038469" />
+      <text x="160" y="86.00000000000001" text-anchor="end">78</text>
+      <circle cx="95.60660171779821"
+              cy="74.39339828220179"
+              r="2.5"
+              inspiral:hole-name="15"
+              inspiral:hole-text-position-angle="8.439379797371931"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="92.60660171779821" y="75.39339828220179" text-anchor="end">15</text>
+      <circle cx="101.2634559672906"
+              cy="68.73654403270942"
+              r="2.5"
+              inspiral:hole-name="23"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="98.2634559672906" y="69.73654403270942" text-anchor="end">23</text>
+      <circle cx="106.92031021678298"
+              cy="63.079689783217034"
+              r="2.5"
+              inspiral:hole-name="31"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="103.92031021678298" y="64.07968978321703" text-anchor="end">31</text>
+      <circle cx="112.57716446627536"
+              cy="57.42283553372465"
+              r="2.5"
+              inspiral:hole-name="39"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="109.57716446627536" y="58.42283553372465" text-anchor="end">39</text>
+      <circle cx="118.23401871576775"
+              cy="51.765981284232275"
+              r="2.5"
+              inspiral:hole-name="47"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="115.23401871576775" y="52.765981284232275" text-anchor="end">47</text>
+      <circle cx="123.89087296526012"
+              cy="46.1091270347399"
+              r="2.5"
+              inspiral:hole-name="55"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="120.89087296526012" y="47.1091270347399" text-anchor="end">55</text>
+      <circle cx="129.5477272147525"
+              cy="40.452272785247516"
+              r="2.5"
+              inspiral:hole-name="63"
+              inspiral:hole-text-position-angle="8.63937979737193"
+              inspiral:hole-text-rotation-angle="-5.497787143782138" />
+      <text x="126.54772721475251" y="41.452272785247516" text-anchor="end">63</text>
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 170 85
+             A 127.5 127.5 0 0 0 42.50000000000002 11.387840678322704
+             A 127.5 127.5 0 0 0 42.499999999999964 158.61215932167727
+             A 127.5 127.5 0 0 0 170 85.00000000000001
+             Z" />
+    <circle id="center-point" cx="85" cy="85" r="1" fill="#42d7f5" />
+  </g>
+</svg>

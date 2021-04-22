@@ -24,73 +24,70 @@ import 'package:inspiral/models/gears/circle_72.dart';
 import 'package:inspiral/models/gears/circle_75.dart';
 import 'package:inspiral/models/gears/circle_80.dart';
 import 'package:inspiral/models/gears/circle_84.dart';
-import 'package:inspiral/models/gears/circle_100.dart';
-import 'package:inspiral/models/gears/circle_150.dart';
-import 'package:inspiral/models/gears/circle_250.dart';
-import 'package:inspiral/models/gears/oval_24.dart';
-import 'package:inspiral/models/gears/oval_30.dart';
-import 'package:inspiral/models/gears/oval_32.dart';
-import 'package:inspiral/models/gears/oval_40.dart';
-import 'package:inspiral/models/gears/oval_42.dart';
-import 'package:inspiral/models/gears/oval_45.dart';
-import 'package:inspiral/models/gears/oval_48.dart';
-import 'package:inspiral/models/gears/oval_52.dart';
-import 'package:inspiral/models/gears/oval_56.dart';
-import 'package:inspiral/models/gears/oval_60.dart';
-import 'package:inspiral/models/gears/oval_63.dart';
-import 'package:inspiral/models/gears/oval_64.dart';
-import 'package:inspiral/models/gears/oval_72.dart';
+import 'package:inspiral/models/gears/oval_28.dart';
+import 'package:inspiral/models/gears/oval_36.dart';
+import 'package:inspiral/models/gears/oval_38.dart';
+import 'package:inspiral/models/gears/oval_47.dart';
+import 'package:inspiral/models/gears/oval_50.dart';
+import 'package:inspiral/models/gears/oval_53.dart';
+import 'package:inspiral/models/gears/oval_57.dart';
+import 'package:inspiral/models/gears/oval_62.dart';
+import 'package:inspiral/models/gears/oval_66.dart';
+import 'package:inspiral/models/gears/oval_71.dart';
 import 'package:inspiral/models/gears/oval_75.dart';
-import 'package:inspiral/models/gears/oval_80.dart';
-import 'package:inspiral/models/gears/oval_84.dart';
-import 'package:inspiral/models/gears/triangle_24.dart';
-import 'package:inspiral/models/gears/triangle_30.dart';
-import 'package:inspiral/models/gears/triangle_32.dart';
-import 'package:inspiral/models/gears/triangle_40.dart';
-import 'package:inspiral/models/gears/triangle_42.dart';
+import 'package:inspiral/models/gears/oval_76.dart';
+import 'package:inspiral/models/gears/oval_85.dart';
+import 'package:inspiral/models/gears/oval_89.dart';
+import 'package:inspiral/models/gears/oval_95.dart';
+import 'package:inspiral/models/gears/oval_100.dart';
+import 'package:inspiral/models/gears/triangle_27.dart';
+import 'package:inspiral/models/gears/triangle_34.dart';
+import 'package:inspiral/models/gears/triangle_36.dart';
 import 'package:inspiral/models/gears/triangle_45.dart';
 import 'package:inspiral/models/gears/triangle_48.dart';
-import 'package:inspiral/models/gears/triangle_52.dart';
-import 'package:inspiral/models/gears/triangle_56.dart';
-import 'package:inspiral/models/gears/triangle_60.dart';
+import 'package:inspiral/models/gears/triangle_51.dart';
+import 'package:inspiral/models/gears/triangle_54.dart';
+import 'package:inspiral/models/gears/triangle_59.dart';
 import 'package:inspiral/models/gears/triangle_63.dart';
-import 'package:inspiral/models/gears/triangle_64.dart';
-import 'package:inspiral/models/gears/triangle_72.dart';
-import 'package:inspiral/models/gears/triangle_75.dart';
-import 'package:inspiral/models/gears/triangle_80.dart';
-import 'package:inspiral/models/gears/triangle_84.dart';
-import 'package:inspiral/models/gears/square_24.dart';
-import 'package:inspiral/models/gears/square_30.dart';
+import 'package:inspiral/models/gears/triangle_68.dart';
+import 'package:inspiral/models/gears/triangle_71.dart';
+import 'package:inspiral/models/gears/triangle_73.dart';
+import 'package:inspiral/models/gears/triangle_82.dart';
+import 'package:inspiral/models/gears/triangle_85.dart';
+import 'package:inspiral/models/gears/triangle_91.dart';
+import 'package:inspiral/models/gears/triangle_95.dart';
+import 'package:inspiral/models/gears/square_26.dart';
 import 'package:inspiral/models/gears/square_32.dart';
-import 'package:inspiral/models/gears/square_40.dart';
-import 'package:inspiral/models/gears/square_42.dart';
+import 'package:inspiral/models/gears/square_34.dart';
+import 'package:inspiral/models/gears/square_43.dart';
 import 'package:inspiral/models/gears/square_45.dart';
 import 'package:inspiral/models/gears/square_48.dart';
-import 'package:inspiral/models/gears/square_52.dart';
-import 'package:inspiral/models/gears/square_56.dart';
+import 'package:inspiral/models/gears/square_51.dart';
+import 'package:inspiral/models/gears/square_55.dart';
 import 'package:inspiral/models/gears/square_60.dart';
-import 'package:inspiral/models/gears/square_63.dart';
 import 'package:inspiral/models/gears/square_64.dart';
-import 'package:inspiral/models/gears/square_72.dart';
-import 'package:inspiral/models/gears/square_75.dart';
+import 'package:inspiral/models/gears/square_67.dart';
+import 'package:inspiral/models/gears/square_68.dart';
+import 'package:inspiral/models/gears/square_77.dart';
 import 'package:inspiral/models/gears/square_80.dart';
-import 'package:inspiral/models/gears/square_84.dart';
-import 'package:inspiral/models/gears/pentagon_24.dart';
-import 'package:inspiral/models/gears/pentagon_30.dart';
-import 'package:inspiral/models/gears/pentagon_32.dart';
-import 'package:inspiral/models/gears/pentagon_40.dart';
+import 'package:inspiral/models/gears/square_85.dart';
+import 'package:inspiral/models/gears/square_90.dart';
+import 'package:inspiral/models/gears/pentagon_25.dart';
+import 'package:inspiral/models/gears/pentagon_31.dart';
+import 'package:inspiral/models/gears/pentagon_33.dart';
 import 'package:inspiral/models/gears/pentagon_42.dart';
-import 'package:inspiral/models/gears/pentagon_45.dart';
-import 'package:inspiral/models/gears/pentagon_48.dart';
-import 'package:inspiral/models/gears/pentagon_52.dart';
-import 'package:inspiral/models/gears/pentagon_56.dart';
-import 'package:inspiral/models/gears/pentagon_60.dart';
-import 'package:inspiral/models/gears/pentagon_63.dart';
-import 'package:inspiral/models/gears/pentagon_64.dart';
-import 'package:inspiral/models/gears/pentagon_72.dart';
+import 'package:inspiral/models/gears/pentagon_44.dart';
+import 'package:inspiral/models/gears/pentagon_47.dart';
+import 'package:inspiral/models/gears/pentagon_50.dart';
+import 'package:inspiral/models/gears/pentagon_54.dart';
+import 'package:inspiral/models/gears/pentagon_58.dart';
+import 'package:inspiral/models/gears/pentagon_62.dart';
+import 'package:inspiral/models/gears/pentagon_66.dart';
+import 'package:inspiral/models/gears/pentagon_67.dart';
 import 'package:inspiral/models/gears/pentagon_75.dart';
-import 'package:inspiral/models/gears/pentagon_80.dart';
-import 'package:inspiral/models/gears/pentagon_84.dart';
+import 'package:inspiral/models/gears/pentagon_78.dart';
+import 'package:inspiral/models/gears/pentagon_83.dart';
+import 'package:inspiral/models/gears/pentagon_87.dart';
 
 export 'package:inspiral/models/gears/circle_24.dart';
 export 'package:inspiral/models/gears/circle_30.dart';
@@ -108,73 +105,70 @@ export 'package:inspiral/models/gears/circle_72.dart';
 export 'package:inspiral/models/gears/circle_75.dart';
 export 'package:inspiral/models/gears/circle_80.dart';
 export 'package:inspiral/models/gears/circle_84.dart';
-export 'package:inspiral/models/gears/circle_100.dart';
-export 'package:inspiral/models/gears/circle_150.dart';
-export 'package:inspiral/models/gears/circle_250.dart';
-export 'package:inspiral/models/gears/oval_24.dart';
-export 'package:inspiral/models/gears/oval_30.dart';
-export 'package:inspiral/models/gears/oval_32.dart';
-export 'package:inspiral/models/gears/oval_40.dart';
-export 'package:inspiral/models/gears/oval_42.dart';
-export 'package:inspiral/models/gears/oval_45.dart';
-export 'package:inspiral/models/gears/oval_48.dart';
-export 'package:inspiral/models/gears/oval_52.dart';
-export 'package:inspiral/models/gears/oval_56.dart';
-export 'package:inspiral/models/gears/oval_60.dart';
-export 'package:inspiral/models/gears/oval_63.dart';
-export 'package:inspiral/models/gears/oval_64.dart';
-export 'package:inspiral/models/gears/oval_72.dart';
+export 'package:inspiral/models/gears/oval_28.dart';
+export 'package:inspiral/models/gears/oval_36.dart';
+export 'package:inspiral/models/gears/oval_38.dart';
+export 'package:inspiral/models/gears/oval_47.dart';
+export 'package:inspiral/models/gears/oval_50.dart';
+export 'package:inspiral/models/gears/oval_53.dart';
+export 'package:inspiral/models/gears/oval_57.dart';
+export 'package:inspiral/models/gears/oval_62.dart';
+export 'package:inspiral/models/gears/oval_66.dart';
+export 'package:inspiral/models/gears/oval_71.dart';
 export 'package:inspiral/models/gears/oval_75.dart';
-export 'package:inspiral/models/gears/oval_80.dart';
-export 'package:inspiral/models/gears/oval_84.dart';
-export 'package:inspiral/models/gears/triangle_24.dart';
-export 'package:inspiral/models/gears/triangle_30.dart';
-export 'package:inspiral/models/gears/triangle_32.dart';
-export 'package:inspiral/models/gears/triangle_40.dart';
-export 'package:inspiral/models/gears/triangle_42.dart';
+export 'package:inspiral/models/gears/oval_76.dart';
+export 'package:inspiral/models/gears/oval_85.dart';
+export 'package:inspiral/models/gears/oval_89.dart';
+export 'package:inspiral/models/gears/oval_95.dart';
+export 'package:inspiral/models/gears/oval_100.dart';
+export 'package:inspiral/models/gears/triangle_27.dart';
+export 'package:inspiral/models/gears/triangle_34.dart';
+export 'package:inspiral/models/gears/triangle_36.dart';
 export 'package:inspiral/models/gears/triangle_45.dart';
 export 'package:inspiral/models/gears/triangle_48.dart';
-export 'package:inspiral/models/gears/triangle_52.dart';
-export 'package:inspiral/models/gears/triangle_56.dart';
-export 'package:inspiral/models/gears/triangle_60.dart';
+export 'package:inspiral/models/gears/triangle_51.dart';
+export 'package:inspiral/models/gears/triangle_54.dart';
+export 'package:inspiral/models/gears/triangle_59.dart';
 export 'package:inspiral/models/gears/triangle_63.dart';
-export 'package:inspiral/models/gears/triangle_64.dart';
-export 'package:inspiral/models/gears/triangle_72.dart';
-export 'package:inspiral/models/gears/triangle_75.dart';
-export 'package:inspiral/models/gears/triangle_80.dart';
-export 'package:inspiral/models/gears/triangle_84.dart';
-export 'package:inspiral/models/gears/square_24.dart';
-export 'package:inspiral/models/gears/square_30.dart';
+export 'package:inspiral/models/gears/triangle_68.dart';
+export 'package:inspiral/models/gears/triangle_71.dart';
+export 'package:inspiral/models/gears/triangle_73.dart';
+export 'package:inspiral/models/gears/triangle_82.dart';
+export 'package:inspiral/models/gears/triangle_85.dart';
+export 'package:inspiral/models/gears/triangle_91.dart';
+export 'package:inspiral/models/gears/triangle_95.dart';
+export 'package:inspiral/models/gears/square_26.dart';
 export 'package:inspiral/models/gears/square_32.dart';
-export 'package:inspiral/models/gears/square_40.dart';
-export 'package:inspiral/models/gears/square_42.dart';
+export 'package:inspiral/models/gears/square_34.dart';
+export 'package:inspiral/models/gears/square_43.dart';
 export 'package:inspiral/models/gears/square_45.dart';
 export 'package:inspiral/models/gears/square_48.dart';
-export 'package:inspiral/models/gears/square_52.dart';
-export 'package:inspiral/models/gears/square_56.dart';
+export 'package:inspiral/models/gears/square_51.dart';
+export 'package:inspiral/models/gears/square_55.dart';
 export 'package:inspiral/models/gears/square_60.dart';
-export 'package:inspiral/models/gears/square_63.dart';
 export 'package:inspiral/models/gears/square_64.dart';
-export 'package:inspiral/models/gears/square_72.dart';
-export 'package:inspiral/models/gears/square_75.dart';
+export 'package:inspiral/models/gears/square_67.dart';
+export 'package:inspiral/models/gears/square_68.dart';
+export 'package:inspiral/models/gears/square_77.dart';
 export 'package:inspiral/models/gears/square_80.dart';
-export 'package:inspiral/models/gears/square_84.dart';
-export 'package:inspiral/models/gears/pentagon_24.dart';
-export 'package:inspiral/models/gears/pentagon_30.dart';
-export 'package:inspiral/models/gears/pentagon_32.dart';
-export 'package:inspiral/models/gears/pentagon_40.dart';
+export 'package:inspiral/models/gears/square_85.dart';
+export 'package:inspiral/models/gears/square_90.dart';
+export 'package:inspiral/models/gears/pentagon_25.dart';
+export 'package:inspiral/models/gears/pentagon_31.dart';
+export 'package:inspiral/models/gears/pentagon_33.dart';
 export 'package:inspiral/models/gears/pentagon_42.dart';
-export 'package:inspiral/models/gears/pentagon_45.dart';
-export 'package:inspiral/models/gears/pentagon_48.dart';
-export 'package:inspiral/models/gears/pentagon_52.dart';
-export 'package:inspiral/models/gears/pentagon_56.dart';
-export 'package:inspiral/models/gears/pentagon_60.dart';
-export 'package:inspiral/models/gears/pentagon_63.dart';
-export 'package:inspiral/models/gears/pentagon_64.dart';
-export 'package:inspiral/models/gears/pentagon_72.dart';
+export 'package:inspiral/models/gears/pentagon_44.dart';
+export 'package:inspiral/models/gears/pentagon_47.dart';
+export 'package:inspiral/models/gears/pentagon_50.dart';
+export 'package:inspiral/models/gears/pentagon_54.dart';
+export 'package:inspiral/models/gears/pentagon_58.dart';
+export 'package:inspiral/models/gears/pentagon_62.dart';
+export 'package:inspiral/models/gears/pentagon_66.dart';
+export 'package:inspiral/models/gears/pentagon_67.dart';
 export 'package:inspiral/models/gears/pentagon_75.dart';
-export 'package:inspiral/models/gears/pentagon_80.dart';
-export 'package:inspiral/models/gears/pentagon_84.dart';
+export 'package:inspiral/models/gears/pentagon_78.dart';
+export 'package:inspiral/models/gears/pentagon_83.dart';
+export 'package:inspiral/models/gears/pentagon_87.dart';
 
 Map<String, GearDefinition> allGears = {
   'circle24': circle24,
@@ -193,71 +187,68 @@ Map<String, GearDefinition> allGears = {
   'circle75': circle75,
   'circle80': circle80,
   'circle84': circle84,
-  'circle100': circle100,
-  'circle150': circle150,
-  'circle250': circle250,
-  'oval24': oval24,
-  'oval30': oval30,
-  'oval32': oval32,
-  'oval40': oval40,
-  'oval42': oval42,
-  'oval45': oval45,
-  'oval48': oval48,
-  'oval52': oval52,
-  'oval56': oval56,
-  'oval60': oval60,
-  'oval63': oval63,
-  'oval64': oval64,
-  'oval72': oval72,
+  'oval28': oval28,
+  'oval36': oval36,
+  'oval38': oval38,
+  'oval47': oval47,
+  'oval50': oval50,
+  'oval53': oval53,
+  'oval57': oval57,
+  'oval62': oval62,
+  'oval66': oval66,
+  'oval71': oval71,
   'oval75': oval75,
-  'oval80': oval80,
-  'oval84': oval84,
-  'triangle24': triangle24,
-  'triangle30': triangle30,
-  'triangle32': triangle32,
-  'triangle40': triangle40,
-  'triangle42': triangle42,
+  'oval76': oval76,
+  'oval85': oval85,
+  'oval89': oval89,
+  'oval95': oval95,
+  'oval100': oval100,
+  'triangle27': triangle27,
+  'triangle34': triangle34,
+  'triangle36': triangle36,
   'triangle45': triangle45,
   'triangle48': triangle48,
-  'triangle52': triangle52,
-  'triangle56': triangle56,
-  'triangle60': triangle60,
+  'triangle51': triangle51,
+  'triangle54': triangle54,
+  'triangle59': triangle59,
   'triangle63': triangle63,
-  'triangle64': triangle64,
-  'triangle72': triangle72,
-  'triangle75': triangle75,
-  'triangle80': triangle80,
-  'triangle84': triangle84,
-  'square24': square24,
-  'square30': square30,
+  'triangle68': triangle68,
+  'triangle71': triangle71,
+  'triangle73': triangle73,
+  'triangle82': triangle82,
+  'triangle85': triangle85,
+  'triangle91': triangle91,
+  'triangle95': triangle95,
+  'square26': square26,
   'square32': square32,
-  'square40': square40,
-  'square42': square42,
+  'square34': square34,
+  'square43': square43,
   'square45': square45,
   'square48': square48,
-  'square52': square52,
-  'square56': square56,
+  'square51': square51,
+  'square55': square55,
   'square60': square60,
-  'square63': square63,
   'square64': square64,
-  'square72': square72,
-  'square75': square75,
+  'square67': square67,
+  'square68': square68,
+  'square77': square77,
   'square80': square80,
-  'square84': square84,
-  'pentagon24': pentagon24,
-  'pentagon30': pentagon30,
-  'pentagon32': pentagon32,
-  'pentagon40': pentagon40,
+  'square85': square85,
+  'square90': square90,
+  'pentagon25': pentagon25,
+  'pentagon31': pentagon31,
+  'pentagon33': pentagon33,
   'pentagon42': pentagon42,
-  'pentagon45': pentagon45,
-  'pentagon48': pentagon48,
-  'pentagon52': pentagon52,
-  'pentagon56': pentagon56,
-  'pentagon60': pentagon60,
-  'pentagon63': pentagon63,
-  'pentagon64': pentagon64,
-  'pentagon72': pentagon72,
+  'pentagon44': pentagon44,
+  'pentagon47': pentagon47,
+  'pentagon50': pentagon50,
+  'pentagon54': pentagon54,
+  'pentagon58': pentagon58,
+  'pentagon62': pentagon62,
+  'pentagon66': pentagon66,
+  'pentagon67': pentagon67,
   'pentagon75': pentagon75,
-  'pentagon80': pentagon80,
-  'pentagon84': pentagon84,
+  'pentagon78': pentagon78,
+  'pentagon83': pentagon83,
+  'pentagon87': pentagon87,
 };

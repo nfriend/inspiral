@@ -178,4 +178,8 @@ final pentagon42 = GearDefinition(
           name: '31', angle: 0.7853981633974481, distance: 31.000000000000004),
       GearHole(name: '32', angle: 1.5707963267948966, distance: 32),
       GearHole(name: '33', angle: 2.356194490192345, distance: 33),
+      GearHole(name: '34', angle: 3.141592653589793, distance: 34),
+      GearHole(name: '35', angle: -2.356194490192345, distance: 35),
+      GearHole(name: '36', angle: -1.570796326794897, distance: 36),
+      GearHole(name: '38', angle: -1.8698493046318425e-16, distance: 38),
     ]);

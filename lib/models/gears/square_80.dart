@@ -323,8 +323,12 @@ final square80 = GearDefinition(
       GearHole(
           name: '63', angle: 0.785398163397448, distance: 63.00000000000001),
       GearHole(name: '64', angle: 1.5707963267948966, distance: 64),
+      GearHole(name: '65', angle: 2.356194490192345, distance: 65),
       GearHole(name: '66', angle: 3.141592653589793, distance: 66),
+      GearHole(
+          name: '67', angle: -2.356194490192345, distance: 67.00000000000001),
       GearHole(name: '68', angle: -1.570796326794897, distance: 68),
       GearHole(name: '70', angle: -2.0301221021717148e-16, distance: 70),
       GearHole(name: '72', angle: 1.5707963267948966, distance: 72),
+      GearHole(name: '74', angle: 3.141592653589793, distance: 74),
     ]);

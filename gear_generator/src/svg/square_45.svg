@@ -55,6 +55,13 @@
               inspiral:hole-text-position-angle="3.141592653589793"
               inspiral:hole-text-rotation-angle="0" />
       <text x="42" y="14" text-anchor="end">32</text>
+      <circle cx="45"
+              cy="5"
+              r="2.5"
+              inspiral:hole-name="40"
+              inspiral:hole-text-position-angle="3.141592653589793"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="42" y="6" text-anchor="end">40</text>
       <circle cx="38.63603896932107"
               cy="38.63603896932107"
               r="2.5"
@@ -132,6 +139,13 @@
               inspiral:hole-text-position-angle="5.497787143782138"
               inspiral:hole-text-rotation-angle="-2.356194490192345" />
       <text x="22.908116907963212" y="65.09188309203678" text-anchor="end">27</text>
+      <circle cx="20.251262658470832"
+              cy="69.74873734152916"
+              r="2.5"
+              inspiral:hole-name="35"
+              inspiral:hole-text-position-angle="5.497787143782138"
+              inspiral:hole-text-rotation-angle="-2.356194490192345" />
+      <text x="17.251262658470832" y="70.74873734152916" text-anchor="end">35</text>
       <circle cx="45"
               cy="57"
               r="2.5"

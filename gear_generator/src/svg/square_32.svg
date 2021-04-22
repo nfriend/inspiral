@@ -76,6 +76,13 @@
               inspiral:hole-text-position-angle="4.71238898038469"
               inspiral:hole-text-rotation-angle="-1.5707963267948966" />
       <text x="11" y="33" text-anchor="end">18</text>
+      <circle cx="6"
+              cy="31.999999999999996"
+              r="2.5"
+              inspiral:hole-name="26"
+              inspiral:hole-text-position-angle="4.71238898038469"
+              inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+      <text x="3" y="33" text-anchor="end">26</text>
       <circle cx="24.221825406947975"
               cy="39.77817459305202"
               r="2.5"
