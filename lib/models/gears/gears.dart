@@ -24,6 +24,13 @@ import 'package:inspiral/models/gears/circle_72.dart';
 import 'package:inspiral/models/gears/circle_75.dart';
 import 'package:inspiral/models/gears/circle_80.dart';
 import 'package:inspiral/models/gears/circle_84.dart';
+import 'package:inspiral/models/gears/circle_100.dart';
+import 'package:inspiral/models/gears/circle_144.dart';
+import 'package:inspiral/models/gears/circle_150.dart';
+import 'package:inspiral/models/gears/beam_20_50.dart';
+import 'package:inspiral/models/gears/beam_20_100.dart';
+import 'package:inspiral/models/gears/beam_20_194.dart';
+import 'package:inspiral/models/gears/beam_20_204.dart';
 import 'package:inspiral/models/gears/oval_28.dart';
 import 'package:inspiral/models/gears/oval_36.dart';
 import 'package:inspiral/models/gears/oval_38.dart';
@@ -105,6 +112,13 @@ export 'package:inspiral/models/gears/circle_72.dart';
 export 'package:inspiral/models/gears/circle_75.dart';
 export 'package:inspiral/models/gears/circle_80.dart';
 export 'package:inspiral/models/gears/circle_84.dart';
+export 'package:inspiral/models/gears/circle_100.dart';
+export 'package:inspiral/models/gears/circle_144.dart';
+export 'package:inspiral/models/gears/circle_150.dart';
+export 'package:inspiral/models/gears/beam_20_50.dart';
+export 'package:inspiral/models/gears/beam_20_100.dart';
+export 'package:inspiral/models/gears/beam_20_194.dart';
+export 'package:inspiral/models/gears/beam_20_204.dart';
 export 'package:inspiral/models/gears/oval_28.dart';
 export 'package:inspiral/models/gears/oval_36.dart';
 export 'package:inspiral/models/gears/oval_38.dart';
@@ -187,6 +201,13 @@ Map<String, GearDefinition> allGears = {
   'circle75': circle75,
   'circle80': circle80,
   'circle84': circle84,
+  'circle100': circle100,
+  'circle144': circle144,
+  'circle150': circle150,
+  'beam2050': beam2050,
+  'beam20100': beam20100,
+  'beam20194': beam20194,
+  'beam20204': beam20204,
   'oval28': oval28,
   'oval36': oval36,
   'oval38': oval38,
