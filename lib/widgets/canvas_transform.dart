@@ -104,8 +104,9 @@ class _CanvasTransformState extends State<CanvasTransform>
     gearViewTransform.rotateZ(canvasRotation);
 
     gearViewTransform.scale(newScale);
-    gearViewTransform
-        .translate((-canvasCenter - rotatingGear.position).toVector3());
+    gearViewTransform.translate(
+        (-rotatingGear.position - Offset(canvasPadding, canvasPadding))
+            .toVector3());
 
     return AnimatedBuilder(
         animation: _animation,
