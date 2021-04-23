@@ -186,6 +186,24 @@ export const ovalGearSizes: OvalGearSize[] = [
       94,
     ],
   },
+  {
+    xRadius: 96,
+    yRadius: 96 * xToYRatio,
+    holes: [],
+    isRing: true,
+  },
+  {
+    xRadius: 105,
+    yRadius: 105 * xToYRatio,
+    holes: [],
+    isRing: true,
+  },
+  {
+    xRadius: 150,
+    yRadius: 150 * xToYRatio,
+    holes: [],
+    isRing: true,
+  },
 ];
 
 /**
@@ -219,6 +237,9 @@ export const polygonVariations: {
       { radius: 85, holes: [0, ...range(8, 66), 67, 70, 78] },
       { radius: 91, holes: [0, ...range(8, 69), 70, 73, 75, 78] },
       { radius: 95, holes: [0, ...range(8, 74), 75, 78, 81, 86] },
+      { radius: 96, holes: [], isRing: true },
+      { radius: 105, holes: [], isRing: true },
+      { radius: 150, holes: [], isRing: true },
     ],
     startingOrder: gearOrder.triangles,
   },
@@ -243,6 +264,9 @@ export const polygonVariations: {
       { radius: 80, holes: [0, ...range(8, 69), 70, 72, 74] },
       { radius: 85, holes: [0, ...range(8, 73), 74, 76, 78, 80] },
       { radius: 90, holes: [0, ...range(8, 77), 78, 80, 82, 84] },
+      { radius: 96, holes: [], isRing: true },
+      { radius: 105, holes: [], isRing: true },
+      { radius: 150, holes: [], isRing: true },
     ],
     startingOrder: gearOrder.squares,
   },
@@ -267,6 +291,9 @@ export const polygonVariations: {
       { radius: 78, holes: [0, ...range(8, 71)] },
       { radius: 83, holes: [0, ...range(8, 76), 78] },
       { radius: 87, holes: [0, ...range(8, 79)] },
+      { radius: 96, holes: [], isRing: true },
+      { radius: 105, holes: [], isRing: true },
+      { radius: 150, holes: [], isRing: true },
     ],
     startingOrder: gearOrder.pentagons,
   },
@@ -292,6 +319,24 @@ export const beamSizes: BeamGearSize[] = [
     endCapRadius: 20,
     length: 204,
     holes: [0, ...range(14, 215, 8), ...range(10, 219, 8)],
+  },
+  {
+    endCapRadius: 75,
+    length: 100,
+    holes: [],
+    isRing: true,
+  },
+  {
+    endCapRadius: 75,
+    length: 194,
+    holes: [],
+    isRing: true,
+  },
+  {
+    endCapRadius: 75,
+    length: 204,
+    holes: [],
+    isRing: true,
   },
 ];
 
