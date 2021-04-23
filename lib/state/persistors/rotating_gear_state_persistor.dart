@@ -40,10 +40,10 @@ class RotatingGearStatePersistor {
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
 
-    // Defaulting to circle24 just in case we didn't find a match in `allGears`.
+    // Defaulting to circle52 just in case we didn't find a match in `allGears`.
     // This _should_ never happen.
     var definition =
-        allGears[state[Schema.state.rotatingGearDefinitionId]] ?? circle24;
+        allGears[state[Schema.state.rotatingGearDefinitionId]] ?? circle52;
 
     return RotatingGearStateRehydrationResult(
         angle: state[Schema.state.rotatingGearAngle] as double,

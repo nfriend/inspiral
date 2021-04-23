@@ -35,10 +35,10 @@ class FixedGearStatePersistor {
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
 
-    // Defaulting to oval36 just in case we didn't find a match in `allGears`.
+    // Defaulting to circle96Ring just in case we didn't find a match in `allGears`.
     // This _should_ never happen.
     var definition =
-        allGears[state[Schema.state.fixedGearDefinitionId]] ?? oval36;
+        allGears[state[Schema.state.fixedGearDefinitionId]] ?? circle96Ring;
 
     // If these are null, it means we don't have a previously-saved gear
     // position. (For example, when opening the app for the very first time.)

@@ -1,5 +1,24 @@
 import range from 'lodash.range';
 
+interface BaseGearSize {
+  holes: number[];
+  isRing?: boolean;
+}
+
+interface CircularGearSize extends BaseGearSize {
+  radius: number;
+}
+
+interface OvalGearSize extends BaseGearSize {
+  xRadius: number;
+  yRadius: number;
+}
+
+interface BeamGearSize extends BaseGearSize {
+  endCapRadius: number;
+  length: number;
+}
+
 /**
  * The height of each tooth
  */
@@ -44,7 +63,7 @@ export const gearOrder = {
 /**
  * All the sizes of circle gears that should be generated
  */
-export const circleGearSizes = [
+export const circleGearSizes: CircularGearSize[] = [
   { radius: 24, holes: [0, ...range(8, 17)] },
   { radius: 30, holes: [0, ...range(8, 23)] },
   { radius: 32, holes: [0, ...range(8, 25)] },
@@ -64,6 +83,8 @@ export const circleGearSizes = [
   { radius: 100, holes: [0, ...range(8, 93)] },
   { radius: 144, holes: [0, ...range(8, 137)] },
   { radius: 150, holes: [0, ...range(8, 143)] },
+  { radius: 96, holes: [], isRing: true },
+  { radius: 105, holes: [], isRing: true },
 ];
 
 const xToYRatio = 2 / 3;
@@ -71,7 +92,7 @@ const xToYRatio = 2 / 3;
 /**
  * All the sizes of oval gears that should be generated
  */
-export const ovalGearSizes = [
+export const ovalGearSizes: OvalGearSize[] = [
   { xRadius: 28, yRadius: 28 * xToYRatio, holes: [0, ...range(8, 16), 18, 22] },
   {
     xRadius: 36,
@@ -173,10 +194,7 @@ export const polygonVariations: {
   sides: number;
   name: string;
   entitlement: string;
-  sizes: {
-    radius: number;
-    holes: number[];
-  }[];
+  sizes: CircularGearSize[];
   startingOrder: number;
 }[] = [
   {
@@ -253,11 +271,7 @@ export const polygonVariations: {
   },
 ];
 
-export const beamSizes: {
-  endCapRadius: number;
-  length: number;
-  holes: number[];
-}[] = [
+export const beamSizes: BeamGearSize[] = [
   {
     endCapRadius: 20,
     length: 50,

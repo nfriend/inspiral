@@ -18,7 +18,11 @@ const renderFile: any = util.promisify(ejs.renderFile);
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, size] of circleGearSizes.entries()) {
-    const svgPath = path.resolve(svgBasePath, `circle_${size.radius}.svg`);
+    const ringSuffix = size.isRing ? '_ring' : '';
+    const svgPath = path.resolve(
+      svgBasePath,
+      `circle_${size.radius}${ringSuffix}.svg`,
+    );
 
     console.info(
       chalk.blueBright(
@@ -40,7 +44,8 @@ const renderFile: any = util.promisify(ejs.renderFile);
       radius: size.radius,
       holeSize,
       holes,
-      gearOrder: gearOrder.circles + size.radius,
+      isRing: size.isRing,
+      gearOrder: gearOrder.circles + size.radius + (size.isRing ? 0 : 500),
     });
 
     await writeFile(svgPath, rendered);
