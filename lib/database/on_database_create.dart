@@ -15,6 +15,8 @@ Future<void> onDatabaseCreate(Database db, int version) async {
   await batch.commit(continueOnError: false, noResult: true);
 }
 
+const _startingAngle = -pi / 2;
+
 void _createTableColorsV1(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.colors}');
   batch.execute('''
@@ -138,7 +140,7 @@ void _createTableStateV1(Batch batch) {
         'c0ed2d30-86cf-46a1-b7cf-271fd56b1756',
         1,
         0,
-        ${pi / 2},
+        $_startingAngle,
         'circle52',
         '30',
         1,
@@ -146,7 +148,7 @@ void _createTableStateV1(Batch batch) {
         'circle96Ring',
         5.0,
         '${StrokeStyleType.normal}',
-        ${pi / 2},
+        $_startingAngle,
         0
       )
   ''');
