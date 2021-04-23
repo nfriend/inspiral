@@ -92,7 +92,7 @@ class CanvasStatePersistor {
       transform = getCenterTransform(
           canvasSize: canvasSizeAndName.size,
           screenSize: MediaQuery.of(context).size,
-          initialScale: 0.5);
+          initialScale: 0.3);
     } else {
       transform = Matrix4.fromList(elements);
     }
