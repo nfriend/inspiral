@@ -85,6 +85,7 @@ export const circleGearSizes: CircularGearSize[] = [
   { radius: 150, holes: [0, ...range(8, 143)] },
   { radius: 96, holes: [], isRing: true },
   { radius: 105, holes: [], isRing: true },
+  { radius: 150, holes: [], isRing: true },
 ];
 
 const xToYRatio = 2 / 3;
