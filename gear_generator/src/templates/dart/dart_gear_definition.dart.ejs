@@ -27,4 +27,6 @@ final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
           angle: <%= hole.angle %>,
           distance: <%= hole.distance %>),
       <%_ } _%>
-    ]);
+    ],
+    isRing: <%= Boolean(gearDefinition.isRing) %>
+    );

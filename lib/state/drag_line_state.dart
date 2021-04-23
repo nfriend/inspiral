@@ -25,6 +25,7 @@ class DragLineState extends ChangeNotifier with Persistable {
 
   CanvasState canvas;
   RotatingGearState rotatingGear;
+  FixedGearState fixedGear;
 
   Offset _pointerPosition = Offset.zero;
 
@@ -109,7 +110,9 @@ class DragLineState extends ChangeNotifier with Persistable {
     var eventPosition = canvas.pixelToCanvasPosition(event.position);
     final lineAngle = Line(pivotPosition, eventPosition).angle();
 
-    return -_translateToRange(lineAngle);
+    var conditionalReverse = fixedGear.definition.isRing ? 1 : -1;
+
+    return _translateToRange(lineAngle) * conditionalReverse;
   }
 
   /// Translates an angle (in radians) into the range [0, 2pi)

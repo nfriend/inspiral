@@ -31,6 +31,10 @@ class GearDefinition {
   /// The list of all holes in this gear
   final List<GearHole> holes;
 
+  /// Whether or not this gear is a ring gear (i.e. its teeth
+  /// appear on the inside of the gear.)
+  final bool isRing;
+
   /// The entitlement that includes this gear
   final String entitlement;
 
@@ -46,6 +50,7 @@ class GearDefinition {
       @required this.toothCount,
       @required this.points,
       @required this.holes,
+      @required this.isRing,
       @required this.entitlement,
       @required this.package});
 

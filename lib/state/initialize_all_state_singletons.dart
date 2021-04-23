@@ -51,7 +51,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     ..selectorDrawer = selectorDrawer;
   dragLine
     ..canvas = canvas
-    ..rotatingGear = rotatingGear;
+    ..rotatingGear = rotatingGear
+    ..fixedGear = fixedGear;
   fixedGear
     ..canvas = canvas
     ..pointers = pointers
