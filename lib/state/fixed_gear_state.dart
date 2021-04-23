@@ -8,7 +8,7 @@ import 'package:sqflite/sqlite_api.dart';
 
 // An arbitrary number that allows even the biggest gear
 // combination to always be draggable.
-const double allowedDistanceFromCanvasEdge = 900.0;
+const double allowedDistanceFromCanvasEdge = 2200.0;
 
 class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   static FixedGearState _instance;

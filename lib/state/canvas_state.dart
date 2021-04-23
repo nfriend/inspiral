@@ -111,12 +111,12 @@ class CanvasState extends ChangeNotifier with Persistable {
       return Offset.zero;
     }
 
-    // Subtracting `canvasCenter` accounts for the fact that the canvas
+    // Subtracting `canvasPadding` accounts for the fact that the canvas
     // is offset in its parent by `canvasCenter`. This is to allow pointer
     // events to work even when the gears are outside of the bounds of the
     // canvas.
     return PointerEvent.transformPosition(unprojection, pixelPosition) -
-        canvasCenter;
+        Offset(canvasPadding, canvasPadding);
   }
 
   /// Resets the zoom/pan/rotation back to a view that is:

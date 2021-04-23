@@ -15,6 +15,11 @@ const int tileColumnCount = 10;
 /// It's important that this number evenly divides `canvasSize.height`
 const int tileRowCount = 10;
 
+/// The amount of padding to add to all sides of the canvas.
+/// This padding allows gears to respond to pointer events even
+/// when outside the canvas.
+const double canvasPadding = 5000.0;
+
 /// The size of the debug dots
 final Size debugDotSize = Size(4, 4) * scaleFactor;
 

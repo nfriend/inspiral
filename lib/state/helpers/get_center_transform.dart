@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 /// Returns a transform matrix that centers the canvas in the view
@@ -17,10 +18,10 @@ Matrix4 getCenterTransform(
   transform.scale(initialScale, initialScale, 0);
 
   // Move the center of the canvas to the
-  // top-left of the screen. Multiplied by 2, because the
-  // canvas itself is offset by `canvasCenter` from its parent.
+  // top-left of the screen.
   var canvasCenter = canvasSize.toOffset() / 2;
-  var originTranslation = -(canvasCenter.toVector3() * 2);
+  var originTranslation =
+      -(canvasCenter + Offset(canvasPadding, canvasPadding)).toVector3();
   transform.translate(originTranslation);
 
   // Then, move the canvas back by half the screen dimensions

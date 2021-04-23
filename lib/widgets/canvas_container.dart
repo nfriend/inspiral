@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/canvas_transform.dart';
 import 'package:inspiral/widgets/debug_canvas.dart';
@@ -86,7 +87,6 @@ class CanvasContainer extends StatelessWidget {
   /// of the parent.
   Widget _wrapInPositioned(
       {@required Widget child, @required Size canvasSize}) {
-    return Positioned(
-        top: canvasSize.height / 2, left: canvasSize.width / 2, child: child);
+    return Positioned(top: canvasPadding, left: canvasPadding, child: child);
   }
 }

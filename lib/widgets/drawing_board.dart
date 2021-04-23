@@ -45,15 +45,15 @@ class DrawingBoard extends StatelessWidget {
           canvas.globalPointerUp(event);
         },
         child: Stack(children: [
-          // This `OverflowBox` should be twice the size of the canvas.
-          // The canvas will be centered in `OverflowBox`, leaving a large
-          // amount of padding on every side. This padding allows the gears
-          // to respond to pointer events even when outside the canvas.
+          // This `OverflowBox` should be much larger than the size of the
+          // canvas. The canvas will be centered in `OverflowBox`, leaving a
+          // large amount of padding on every side. This padding allows the
+          // gears to respond to pointer events even when outside the canvas.
           OverflowBox(
-            maxHeight: canvasSize.height * 2,
-            minHeight: canvasSize.height * 2,
-            maxWidth: canvasSize.width * 2,
-            minWidth: canvasSize.width * 2,
+            maxHeight: canvasSize.height + (canvasPadding * 2),
+            minHeight: canvasSize.height + (canvasPadding * 2),
+            maxWidth: canvasSize.width + (canvasPadding * 2),
+            minWidth: canvasSize.width + (canvasPadding * 2),
             alignment: Alignment.topLeft,
             child: Container(
                 color: appBackgroundColor.color, child: CanvasContainer()),
