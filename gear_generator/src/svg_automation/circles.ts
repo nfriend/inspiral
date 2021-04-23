@@ -44,8 +44,8 @@ const renderFile: any = util.promisify(ejs.renderFile);
       radius: size.radius,
       holeSize,
       holes,
-      isRing: size.isRing,
-      gearOrder: gearOrder.circles + size.radius + (size.isRing ? 0 : 500),
+      isRing: Boolean(size.isRing),
+      gearOrder: gearOrder.circles + size.radius + (size.isRing ? 0 : 5000),
     });
 
     await writeFile(svgPath, rendered);

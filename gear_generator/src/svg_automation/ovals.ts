@@ -18,7 +18,11 @@ const renderFile: any = util.promisify(ejs.renderFile);
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, ovalParams] of ovalGearSizes.entries()) {
-    const svgPath = path.resolve(svgBasePath, `oval_${ovalParams.xRadius}.svg`);
+    const ringSuffix = ovalParams.isRing ? '_ring' : '';
+    const svgPath = path.resolve(
+      svgBasePath,
+      `oval_${ovalParams.xRadius}${ringSuffix}.svg`,
+    );
 
     console.info(
       chalk.blueBright(
@@ -40,7 +44,9 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ...ovalParams,
       holeSize,
       holes,
-      gearOrder: gearOrder.ovals + ovalParams.xRadius,
+      gearOrder:
+        gearOrder.ovals + ovalParams.xRadius + +(ovalParams.isRing ? 0 : 5000),
+      isRing: Boolean(ovalParams.isRing),
     });
 
     await writeFile(svgPath, rendered);

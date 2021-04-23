@@ -10,6 +10,11 @@
     <gear-order>
       <%= gearOrder %>
     </gear-order>
+    <%_ if (isRing) { _%>
+    <inverted>
+      true
+    </inverted>
+    <%_ } _%>
   </desc>
   <g>
     <%- include('gear_holes') %>
