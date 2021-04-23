@@ -8,6 +8,9 @@
 
 import 'package:inspiral/models/gear_definition.dart';
 
+import 'package:inspiral/models/gears/circle_96_ring.dart';
+import 'package:inspiral/models/gears/circle_105_ring.dart';
+import 'package:inspiral/models/gears/circle_150_ring.dart';
 import 'package:inspiral/models/gears/circle_24.dart';
 import 'package:inspiral/models/gears/circle_30.dart';
 import 'package:inspiral/models/gears/circle_32.dart';
@@ -96,6 +99,9 @@ import 'package:inspiral/models/gears/pentagon_78.dart';
 import 'package:inspiral/models/gears/pentagon_83.dart';
 import 'package:inspiral/models/gears/pentagon_87.dart';
 
+export 'package:inspiral/models/gears/circle_96_ring.dart';
+export 'package:inspiral/models/gears/circle_105_ring.dart';
+export 'package:inspiral/models/gears/circle_150_ring.dart';
 export 'package:inspiral/models/gears/circle_24.dart';
 export 'package:inspiral/models/gears/circle_30.dart';
 export 'package:inspiral/models/gears/circle_32.dart';
@@ -185,6 +191,9 @@ export 'package:inspiral/models/gears/pentagon_83.dart';
 export 'package:inspiral/models/gears/pentagon_87.dart';
 
 Map<String, GearDefinition> allGears = {
+  'circle96Ring': circle96Ring,
+  'circle105Ring': circle105Ring,
+  'circle150Ring': circle150Ring,
   'circle24': circle24,
   'circle30': circle30,
   'circle32': circle32,

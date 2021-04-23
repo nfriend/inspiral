@@ -187,4 +187,5 @@ final beam2050 = GearDefinition(
       GearHole(name: '58', angle: 3.141592653589793, distance: 58),
       GearHole(name: '62', angle: -2.2920733411616134e-16, distance: 62),
       GearHole(name: '66', angle: 3.141592653589793, distance: 66),
-    ]);
+    ],
+    isRing: false);

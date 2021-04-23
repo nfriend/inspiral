@@ -330,4 +330,5 @@ final triangle85 = GearDefinition(
       GearHole(name: '67', angle: -2.3561944901923453, distance: 67),
       GearHole(name: '70', angle: -2.0301221021717148e-16, distance: 70),
       GearHole(name: '78', angle: -1.8219044506669235e-16, distance: 78),
-    ]);
+    ],
+    isRing: false);

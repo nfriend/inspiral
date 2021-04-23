@@ -134,4 +134,5 @@ final square32 = GearDefinition(
       GearHole(name: '23', angle: 0.7853981633974481, distance: 23),
       GearHole(name: '24', angle: 1.5707963267948966, distance: 24),
       GearHole(name: '26', angle: 3.141592653589793, distance: 26),
-    ]);
+    ],
+    isRing: false);

@@ -279,4 +279,5 @@ final pentagon66 = GearDefinition(
           name: '57', angle: 2.356194490192345, distance: 57.00000000000001),
       GearHole(
           name: '59', angle: -2.356194490192345, distance: 59.00000000000001),
-    ]);
+    ],
+    isRing: false);

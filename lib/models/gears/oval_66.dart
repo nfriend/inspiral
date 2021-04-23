@@ -291,4 +291,5 @@ final oval66 = GearDefinition(
           name: '62',
           angle: 3.08641198710307e-10,
           distance: 61.999999981884024),
-    ]);
+    ],
+    isRing: false);

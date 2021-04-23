@@ -149,4 +149,5 @@ final circle30 = GearDefinition(
           name: '22',
           angle: 0.007364205665154773,
           distance: 22.000596499866834),
-    ]);
+    ],
+    isRing: false);

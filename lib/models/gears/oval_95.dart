@@ -415,4 +415,5 @@ final oval95 = GearDefinition(
           distance: 86.00016149127185),
       GearHole(
           name: '90', angle: 3.139740845619755, distance: 90.0001543138946),
-    ]);
+    ],
+    isRing: false);

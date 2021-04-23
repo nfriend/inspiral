@@ -416,4 +416,5 @@ final circle84 = GearDefinition(
           name: '75', angle: -2.3187945794115157, distance: 75.00000002069497),
       GearHole(
           name: '76', angle: -1.5707963282546837, distance: 75.99999992529047),
-    ]);
+    ],
+    isRing: false);
