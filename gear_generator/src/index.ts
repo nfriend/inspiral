@@ -5,7 +5,12 @@ import globSync from 'glob';
 import util from 'util';
 import puppeteer from 'puppeteer';
 import camelcase from 'camelcase';
-import { baseScale, toothHeight, meshSpacing } from './constants';
+import {
+  baseScale,
+  toothHeight,
+  meshSpacing,
+  ringGearWidth,
+} from './constants';
 import { analyzePath, AnalyzePathParams } from './analyze_path';
 import { GearDefinition } from './models/gear_definition';
 import { generateSvgs } from './generate_svg';
@@ -62,6 +67,7 @@ const readFile = util.promisify(fs.readFile);
       camelCasedGearName: camelcase(gearName),
       allEntitlements,
       allPackages,
+      ringGearWidth,
     };
 
     const gearDefinition: GearDefinition = await page.evaluate(

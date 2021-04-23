@@ -24,6 +24,11 @@ export const baseScale = 4;
 export const padding = 0.25;
 
 /**
+ * The thickness of ring gears
+ */
+export const ringGearWidth = 10.0;
+
+/**
  * The starting order for each class of gear. The order
  * determines the order the gears are displayed in the app.
  */

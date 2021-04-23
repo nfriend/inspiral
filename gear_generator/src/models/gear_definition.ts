@@ -48,4 +48,16 @@ export interface GearDefinition {
 
   /** The order of this gear, relative to all other gears */
   gearOrder: number;
+
+  /**
+   * Whether or not this gear is a ring gear (i.e. its teeth
+   * appear on the inside of the gear.)
+   */
+  isRing: boolean;
+
+  /**
+   * If this gear is a ring gear, this indicates how much of a
+   * border radius should be rendered on its outside border.
+   */
+  ringBorderRadius: number;
 }

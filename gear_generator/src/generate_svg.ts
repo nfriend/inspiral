@@ -108,6 +108,10 @@ export const generateSvgs = async (
     generateHole({ hole: h, centerPoint }),
   );
 
+  if (gearDefinition.isRing) {
+    addOuterShape({ gearDefinition, svgPath });
+  }
+
   for (const options of allOptions) {
     const imageInfo: ImageInfo = {
       svgPath: path.resolve(
@@ -356,4 +360,53 @@ const generateHole = ({
       rotation: radiansToDegrees(hole.textRotationAngle),
     },
   };
+};
+
+/**
+ * Adds a path around the gear that forms the outer edge of ring gears.
+ */
+const addOuterShape = ({
+  svgPath,
+  gearDefinition,
+}: {
+  svgPath: GearPath;
+  gearDefinition: GearDefinition;
+}): void => {
+  const {
+    ringBorderRadius: radius,
+    size: { width, height },
+  } = gearDefinition;
+
+  // Offset the stroke from the edge, othewise it gets partially cut off
+  const edgeOffset = 2.0;
+
+  svgPath
+    .moveTo({ point: { x: width - edgeOffset, y: height / 2 + edgeOffset } })
+    .lineTo({ point: { x: width - edgeOffset, y: radius + edgeOffset } })
+    .arc({
+      radiusX: radius,
+      radiusY: radius,
+      newPosition: { x: width - radius, y: edgeOffset },
+    })
+    .lineTo({ point: { x: radius + edgeOffset, y: edgeOffset } })
+    .arc({
+      radiusX: radius,
+      radiusY: radius,
+      newPosition: { x: edgeOffset, y: radius + edgeOffset },
+    })
+    .lineTo({ point: { x: edgeOffset, y: height - radius - edgeOffset } })
+    .arc({
+      radiusX: radius,
+      radiusY: radius,
+      newPosition: { x: radius + edgeOffset, y: height - edgeOffset },
+    })
+    .lineTo({
+      point: { x: width - radius - edgeOffset, y: height - edgeOffset },
+    })
+    .arc({
+      radiusX: radius,
+      radiusY: radius,
+      newPosition: { x: width - edgeOffset, y: height - radius - edgeOffset },
+    })
+    .closePath();
 };

@@ -13,6 +13,7 @@ export interface AnalyzePathParams {
   camelCasedGearName: string;
   allEntitlements: typeof allEntitlements;
   allPackages: typeof allPackages;
+  ringGearWidth: number;
 }
 
 /**
@@ -33,6 +34,7 @@ export const analyzePath = ({
   camelCasedGearName,
   allEntitlements,
   allPackages,
+  ringGearWidth,
 }: AnalyzePathParams): GearDefinition => {
   const pi2 = 2 * Math.PI;
 
@@ -75,6 +77,17 @@ export const analyzePath = ({
       'Gear must contain a <gear-order> element, and it must be an integer',
     );
   }
+
+  // Whether or not the contact points should be inverted (so that the teeth
+  // appear on the inside of the path instead of the outside).
+  const inverted =
+    svg.querySelector('svg desc inverted')?.textContent.trim() === 'true';
+
+  // Ring gears can optionally specify how much of a border radius should
+  // be rendered on the outside edge of the gear.
+  const ringBorderRadius = parseFloat(
+    svg.querySelector('svg desc ring-border-radius')?.textContent ?? '20.0',
+  );
 
   // The total length of the path
   const totalLength = path.getTotalLength();
@@ -129,7 +142,7 @@ export const analyzePath = ({
 
   // Compute the final image size and the center point of the
   // image from the boundary points we found above.
-  const svgSize = {
+  let svgSize = {
     width: Math.round(boundaries.x.max - boundaries.x.min),
     height: Math.round(boundaries.y.max - boundaries.y.min),
   };
@@ -163,6 +176,41 @@ export const analyzePath = ({
       y: point.position.y - boundaries.y.min,
     },
   }));
+
+  // If this is a ring gear, offset the points by the thickness of the
+  // ring gear and expand the size of the image appropriately
+  if (inverted) {
+    evaluatedPoints = evaluatedPoints
+      .map((point) => ({
+        ...point,
+        position: {
+          x: point.position.x + ringGearWidth,
+          y: point.position.y + ringGearWidth,
+        },
+      }))
+      .reverse();
+
+    centerPoint = {
+      x: centerPoint.x + ringGearWidth,
+      y: centerPoint.y + ringGearWidth,
+    };
+
+    boundaries = {
+      x: {
+        min: boundaries.x.min + ringGearWidth,
+        max: boundaries.x.max + ringGearWidth,
+      },
+      y: {
+        min: boundaries.y.min + ringGearWidth,
+        max: boundaries.y.max + ringGearWidth,
+      },
+    };
+
+    svgSize = {
+      width: svgSize.width + 2 * ringGearWidth,
+      height: svgSize.height + 2 * ringGearWidth,
+    };
+  }
 
   // Update each point so that:
   //   1. each point has the correct direction (A.K.A normal line)
@@ -265,6 +313,8 @@ export const analyzePath = ({
     entitlement,
     package: gearPackage,
     gearOrder,
+    isRing: inverted,
+    ringBorderRadius: ringBorderRadius * baseScale,
   };
 
   return gearDefinition;
