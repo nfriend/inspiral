@@ -42,8 +42,10 @@ class GearSelectorThumbnail extends StatelessWidget {
           isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
     }
 
-    var toothCountTextStyle =
-        TextStyle(fontWeight: FontWeight.bold, color: toothCountTextColor);
+    var toothCountTextStyle = TextStyle(
+        fontWeight: FontWeight.bold,
+        color: toothCountTextColor,
+        letterSpacing: gear.toothCount > 99 ? -1.5 : 0);
 
     return Stack(children: [
       Positioned.fill(
