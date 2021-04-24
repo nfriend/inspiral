@@ -20,6 +20,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
     const fileNameSegments = [
       'beam',
       beamOptions.endCapRadius,
+      beamOptions.length,
       ...(beamOptions.isRing ? ['ring'] : []),
       ...(beamOptions.suffix ? [beamOptions.suffix] : []),
     ];
