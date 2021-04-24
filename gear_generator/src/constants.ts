@@ -1,8 +1,20 @@
 import range from 'lodash.range';
 
 interface BaseGearSize {
+  /** The list of hole numbers that should be generated in this gear */
   holes: number[];
+
+  /**
+   * Whether or not this gears is a ring gear (i.e. its teeth appear
+   * on the inside). Defaults to `false` if not provided.
+   */
   isRing?: boolean;
+
+  /**
+   * An optional suffix to append to the file name/gear identifier.
+   * User to disambiguate when two gears have the same shape and tooth count.
+   */
+  suffix?: string;
 }
 
 interface CircularGearSize extends BaseGearSize {
@@ -64,6 +76,31 @@ export const gearOrder = {
  * All the sizes of circle gears that should be generated
  */
 export const circleGearSizes: CircularGearSize[] = [
+  // Fixed
+  { radius: 96, holes: [], isRing: true },
+  { radius: 105, holes: [], isRing: true },
+  { radius: 150, holes: [], isRing: true },
+  { radius: 24, holes: [], suffix: 'noholes' },
+  { radius: 30, holes: [], suffix: 'noholes' },
+  { radius: 32, holes: [], suffix: 'noholes' },
+  { radius: 40, holes: [], suffix: 'noholes' },
+  { radius: 42, holes: [], suffix: 'noholes' },
+  { radius: 45, holes: [], suffix: 'noholes' },
+  { radius: 48, holes: [], suffix: 'noholes' },
+  { radius: 52, holes: [], suffix: 'noholes' },
+  { radius: 56, holes: [], suffix: 'noholes' },
+  { radius: 60, holes: [], suffix: 'noholes' },
+  { radius: 63, holes: [], suffix: 'noholes' },
+  { radius: 64, holes: [], suffix: 'noholes' },
+  { radius: 72, holes: [], suffix: 'noholes' },
+  { radius: 75, holes: [], suffix: 'noholes' },
+  { radius: 80, holes: [], suffix: 'noholes' },
+  { radius: 84, holes: [], suffix: 'noholes' },
+  { radius: 100, holes: [], suffix: 'noholes' },
+  { radius: 144, holes: [], suffix: 'noholes' },
+  { radius: 150, holes: [], suffix: 'noholes' },
+
+  // Rotating
   { radius: 24, holes: [0, ...range(8, 17)] },
   { radius: 30, holes: [0, ...range(8, 23)] },
   { radius: 32, holes: [0, ...range(8, 25)] },
@@ -83,9 +120,6 @@ export const circleGearSizes: CircularGearSize[] = [
   { radius: 100, holes: [0, ...range(8, 93)] },
   { radius: 144, holes: [0, ...range(8, 137)] },
   { radius: 150, holes: [0, ...range(8, 143)] },
-  { radius: 96, holes: [], isRing: true },
-  { radius: 105, holes: [], isRing: true },
-  { radius: 150, holes: [], isRing: true },
 ];
 
 const xToYRatio = 2 / 3;
@@ -94,12 +128,30 @@ const xToYRatio = 2 / 3;
  * All the sizes of oval gears that should be generated
  */
 export const ovalGearSizes: OvalGearSize[] = [
+  // Fixed
+  { xRadius: 96, yRadius: 96 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 105, yRadius: 105 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 150, yRadius: 150 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 28, yRadius: 28 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 36, yRadius: 36 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 38, yRadius: 38 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 47, yRadius: 47 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 50, yRadius: 50 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 53, yRadius: 53 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 57, yRadius: 57 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 62, yRadius: 62 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 66, yRadius: 66 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 71, yRadius: 71 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 75, yRadius: 75 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 76, yRadius: 76 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 85, yRadius: 85 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 89, yRadius: 89 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 95, yRadius: 95 * xToYRatio, holes: [], suffix: 'noholes' },
+  { xRadius: 100, yRadius: 100 * xToYRatio, holes: [], suffix: 'noholes' },
+
+  // Rotating
   { xRadius: 28, yRadius: 28 * xToYRatio, holes: [0, ...range(8, 16), 18, 22] },
-  {
-    xRadius: 36,
-    yRadius: 36 * xToYRatio,
-    holes: [0, ...range(8, 23), 26, 30],
-  },
+  { xRadius: 36, yRadius: 36 * xToYRatio, holes: [0, ...range(8, 23), 26, 30] },
   {
     xRadius: 38,
     yRadius: 38 * xToYRatio,
@@ -186,24 +238,6 @@ export const ovalGearSizes: OvalGearSize[] = [
       94,
     ],
   },
-  {
-    xRadius: 96,
-    yRadius: 96 * xToYRatio,
-    holes: [],
-    isRing: true,
-  },
-  {
-    xRadius: 105,
-    yRadius: 105 * xToYRatio,
-    holes: [],
-    isRing: true,
-  },
-  {
-    xRadius: 150,
-    yRadius: 150 * xToYRatio,
-    holes: [],
-    isRing: true,
-  },
 ];
 
 /**
@@ -221,6 +255,28 @@ export const polygonVariations: {
     name: 'triangle',
     entitlement: 'io.nathanfriend.inspiral.trianglegears',
     sizes: [
+      // Fixed
+      { radius: 96, holes: [], isRing: true },
+      { radius: 105, holes: [], isRing: true },
+      { radius: 150, holes: [], isRing: true },
+      { radius: 27, holes: [], suffix: 'noholes' },
+      { radius: 34, holes: [], suffix: 'noholes' },
+      { radius: 36, holes: [], suffix: 'noholes' },
+      { radius: 45, holes: [], suffix: 'noholes' },
+      { radius: 48, holes: [], suffix: 'noholes' },
+      { radius: 51, holes: [], suffix: 'noholes' },
+      { radius: 54, holes: [], suffix: 'noholes' },
+      { radius: 59, holes: [], suffix: 'noholes' },
+      { radius: 63, holes: [], suffix: 'noholes' },
+      { radius: 68, holes: [], suffix: 'noholes' },
+      { radius: 71, holes: [], suffix: 'noholes' },
+      { radius: 73, holes: [], suffix: 'noholes' },
+      { radius: 82, holes: [], suffix: 'noholes' },
+      { radius: 85, holes: [], suffix: 'noholes' },
+      { radius: 91, holes: [], suffix: 'noholes' },
+      { radius: 95, holes: [], suffix: 'noholes' },
+
+      // Rotating
       { radius: 27, holes: [0, ...range(8, 17)] },
       { radius: 34, holes: [0, ...range(8, 23), 24] },
       { radius: 36, holes: [0, ...range(8, 26), 27] },
@@ -237,9 +293,6 @@ export const polygonVariations: {
       { radius: 85, holes: [0, ...range(8, 66), 67, 70, 78] },
       { radius: 91, holes: [0, ...range(8, 69), 70, 73, 75, 78] },
       { radius: 95, holes: [0, ...range(8, 74), 75, 78, 81, 86] },
-      { radius: 96, holes: [], isRing: true },
-      { radius: 105, holes: [], isRing: true },
-      { radius: 150, holes: [], isRing: true },
     ],
     startingOrder: gearOrder.triangles,
   },
@@ -248,6 +301,28 @@ export const polygonVariations: {
     name: 'square',
     entitlement: 'io.nathanfriend.inspiral.squaregears',
     sizes: [
+      // Fixed
+      { radius: 96, holes: [], isRing: true },
+      { radius: 105, holes: [], isRing: true },
+      { radius: 150, holes: [], isRing: true },
+      { radius: 26, holes: [], suffix: 'noholes' },
+      { radius: 32, holes: [], suffix: 'noholes' },
+      { radius: 34, holes: [], suffix: 'noholes' },
+      { radius: 43, holes: [], suffix: 'noholes' },
+      { radius: 45, holes: [], suffix: 'noholes' },
+      { radius: 48, holes: [], suffix: 'noholes' },
+      { radius: 51, holes: [], suffix: 'noholes' },
+      { radius: 55, holes: [], suffix: 'noholes' },
+      { radius: 60, holes: [], suffix: 'noholes' },
+      { radius: 64, holes: [], suffix: 'noholes' },
+      { radius: 67, holes: [], suffix: 'noholes' },
+      { radius: 68, holes: [], suffix: 'noholes' },
+      { radius: 77, holes: [], suffix: 'noholes' },
+      { radius: 80, holes: [], suffix: 'noholes' },
+      { radius: 85, holes: [], suffix: 'noholes' },
+      { radius: 90, holes: [], suffix: 'noholes' },
+
+      // Rotating
       { radius: 26, holes: [0, ...range(8, 21)] },
       { radius: 32, holes: [0, ...range(8, 25), 26] },
       { radius: 34, holes: [0, ...range(8, 27), 28] },
@@ -264,9 +339,6 @@ export const polygonVariations: {
       { radius: 80, holes: [0, ...range(8, 69), 70, 72, 74] },
       { radius: 85, holes: [0, ...range(8, 73), 74, 76, 78, 80] },
       { radius: 90, holes: [0, ...range(8, 77), 78, 80, 82, 84] },
-      { radius: 96, holes: [], isRing: true },
-      { radius: 105, holes: [], isRing: true },
-      { radius: 150, holes: [], isRing: true },
     ],
     startingOrder: gearOrder.squares,
   },
@@ -275,6 +347,28 @@ export const polygonVariations: {
     name: 'pentagon',
     entitlement: 'io.nathanfriend.inspiral.pentagongears',
     sizes: [
+      // Fixed
+      { radius: 96, holes: [], isRing: true },
+      { radius: 105, holes: [], isRing: true },
+      { radius: 150, holes: [], isRing: true },
+      { radius: 25, holes: [], suffix: 'noholes' },
+      { radius: 31, holes: [], suffix: 'noholes' },
+      { radius: 33, holes: [], suffix: 'noholes' },
+      { radius: 42, holes: [], suffix: 'noholes' },
+      { radius: 44, holes: [], suffix: 'noholes' },
+      { radius: 47, holes: [], suffix: 'noholes' },
+      { radius: 50, holes: [], suffix: 'noholes' },
+      { radius: 54, holes: [], suffix: 'noholes' },
+      { radius: 58, holes: [], suffix: 'noholes' },
+      { radius: 62, holes: [], suffix: 'noholes' },
+      { radius: 66, holes: [], suffix: 'noholes' },
+      { radius: 67, holes: [], suffix: 'noholes' },
+      { radius: 75, holes: [], suffix: 'noholes' },
+      { radius: 78, holes: [], suffix: 'noholes' },
+      { radius: 83, holes: [], suffix: 'noholes' },
+      { radius: 87, holes: [], suffix: 'noholes' },
+
+      // Rotating
       { radius: 25, holes: [0, ...range(8, 21)] },
       { radius: 31, holes: [0, ...range(8, 26)] },
       { radius: 33, holes: [0, ...range(8, 28)] },
@@ -291,15 +385,22 @@ export const polygonVariations: {
       { radius: 78, holes: [0, ...range(8, 71)] },
       { radius: 83, holes: [0, ...range(8, 76), 78] },
       { radius: 87, holes: [0, ...range(8, 79)] },
-      { radius: 96, holes: [], isRing: true },
-      { radius: 105, holes: [], isRing: true },
-      { radius: 150, holes: [], isRing: true },
     ],
     startingOrder: gearOrder.pentagons,
   },
 ];
 
 export const beamSizes: BeamGearSize[] = [
+  // Fixed
+  { endCapRadius: 100, length: 100, holes: [], isRing: true },
+  { endCapRadius: 100, length: 194, holes: [], isRing: true },
+  { endCapRadius: 100, length: 204, holes: [], isRing: true },
+  { endCapRadius: 20, length: 50, holes: [], suffix: 'noholes' },
+  { endCapRadius: 20, length: 100, holes: [], suffix: 'noholes' },
+  { endCapRadius: 20, length: 194, holes: [], suffix: 'noholes' },
+  { endCapRadius: 20, length: 204, holes: [], suffix: 'noholes' },
+
+  // Rotating
   {
     endCapRadius: 20,
     length: 50,
@@ -319,24 +420,6 @@ export const beamSizes: BeamGearSize[] = [
     endCapRadius: 20,
     length: 204,
     holes: [0, ...range(14, 215, 8), ...range(10, 219, 8)],
-  },
-  {
-    endCapRadius: 75,
-    length: 100,
-    holes: [],
-    isRing: true,
-  },
-  {
-    endCapRadius: 75,
-    length: 194,
-    holes: [],
-    isRing: true,
-  },
-  {
-    endCapRadius: 75,
-    length: 204,
-    holes: [],
-    isRing: true,
   },
 ];
 

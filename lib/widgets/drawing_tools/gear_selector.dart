@@ -3,9 +3,14 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
-
 import 'package:provider/provider.dart';
 import 'package:inspiral/models/gears/gears.dart';
+
+final onlyGearsWithHoles =
+    allGears.values.where((gear) => gear.holes.isNotEmpty);
+
+final onlyGearsWithoutHoles =
+    allGears.values.where((gear) => gear.holes.isEmpty);
 
 class GearSelector extends StatelessWidget {
   @override
@@ -18,15 +23,12 @@ class GearSelector extends StatelessWidget {
         (fixedGear) => fixedGear.definition);
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
 
-    final onlyGearsWithHoles =
-        allGears.values.where((gear) => gear.holes.isNotEmpty);
-
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(
           storageKey: 'fixedGears',
           label: 'FIXED',
           children: [
-            for (var gear in allGears.values)
+            for (var gear in onlyGearsWithoutHoles)
               GearSelectorThumbnail(
                   isActive: gear == fixedGearDefinition,
                   gear: gear,
