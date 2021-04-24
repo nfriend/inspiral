@@ -34,10 +34,10 @@ const double toothLength = 5;
 const double imagePadding = 0.25;
 
 /// The smallest length of line segment to draw
-const double minLineSegmentLength = 10;
+const double minLineSegmentLength = 5;
 
 /// The largest length of line segment to draw
-const double maxLineSegmentLength = 20;
+const double maxLineSegmentLength = 10;
 
 /// The default width of the line
 const double defaultStokeWidth = 5;
