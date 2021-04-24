@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <gear-order>
+      10023
+    </gear-order>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 300 150
+             A 150 150 0 1 0 0 150
+             A 150 150 0 0 0 300 150
+             Z" />
+  </g>
+</svg>

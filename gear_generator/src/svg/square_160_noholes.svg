@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      io.nathanfriend.inspiral.squaregears
+    </entitlement-id>
+    <package-id>
+      io.nathanfriend.inspiral.squaregears
+    </package-id>
+    <gear-order>
+      50518
+    </gear-order>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 320 160
+             A 240 240 0 0 0 160 0
+             A 240 240 0 0 0 0 159.99999999999997
+             A 240 240 0 0 0 159.99999999999997 320
+             A 240 240 0 0 0 320 160.00000000000003
+             Z" />
+    <circle id="center-point" cx="160" cy="160" r="1" fill="#42d7f5" />
+  </g>
+</svg>

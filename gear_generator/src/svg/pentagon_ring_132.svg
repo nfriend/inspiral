@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      io.nathanfriend.inspiral.pentagongears
+    </entitlement-id>
+    <package-id>
+      io.nathanfriend.inspiral.pentagongears
+    </package-id>
+    <gear-order>
+      60002
+    </gear-order>
+    <inverted>
+      true
+    </inverted>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 505.06351820971133 338.3582476643981
+             A 132 132 0 0 0 505.06351820971133 189.6417523356019
+             A 660 660 0 0 0 409.2116198321301 57.71293236585889
+             A 132 132 0 0 0 267.77382786910067 11.757007965378364
+             A 660 660 0 0 0 112.68219840797343 62.149333098154315
+             A 132 132 0 0 0 25.26883568108451 182.46350516303295
+             A 660 660 0 0 0 25.26883568108451 345.536494836967
+             A 132 132 0 0 0 112.68219840797335 465.8506669018456
+             A 660 660 0 0 0 267.7738278691007 516.2429920346217
+             A 132 132 0 0 0 409.21161983213005 470.2870676341412
+             A 660 660 0 0 0 505.06351820971133 338.3582476643981
+             Z" />
+    <circle id="center-point" cx="264" cy="264" r="1" fill="#42d7f5" />
+  </g>
+</svg>

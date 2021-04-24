@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      io.nathanfriend.inspiral.trianglegears
+    </entitlement-id>
+    <package-id>
+      io.nathanfriend.inspiral.trianglegears
+    </package-id>
+    <gear-order>
+      40000
+    </gear-order>
+    <inverted>
+      true
+    </inverted>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 309.21816033318834 216.22513000546093
+             A 82 82 0 0 0 309.21816033318834 111.77486999453909
+             A 410 410 0 0 0 136.61920913407997 12.124819057886768
+             A 82 82 0 0 0 46.16263053273177 64.34994906334768
+             A 410 410 0 0 0 46.16263053273171 263.6500509366523
+             A 82 82 0 0 0 136.61920913407985 315.8751809421132
+             A 410 410 0 0 0 309.21816033318834 216.22513000546093
+             Z" />
+    <circle id="center-point" cx="164" cy="164" r="1" fill="#42d7f5" />
+  </g>
+</svg>

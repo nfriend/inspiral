@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      io.nathanfriend.inspiral.pentagongears
+    </entitlement-id>
+    <package-id>
+      io.nathanfriend.inspiral.pentagongears
+    </package-id>
+    <gear-order>
+      60511
+    </gear-order>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 134 67
+             A 100.5 100.5 0 0 0 87.70413862312148 3.279213408224713
+             A 100.5 100.5 0 0 0 12.795861376878527 27.618388096404296
+             A 100.5 100.5 0 0 0 12.79586137687852 106.38161190359568
+             A 100.5 100.5 0 0 0 87.70413862312147 130.7207865917753
+             A 100.5 100.5 0 0 0 134 67.00000000000001
+             Z" />
+    <circle id="center-point" cx="67" cy="67" r="1" fill="#42d7f5" />
+  </g>
+</svg>
