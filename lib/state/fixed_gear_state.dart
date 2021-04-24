@@ -68,6 +68,11 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   }
 
   void gearPointerMove(PointerMoveEvent event) {
+    // Disable any gear interactions if we're currently auto-drawing
+    if (rotatingGear.isAutoDrawing) {
+      return;
+    }
+
     if (event.device == draggingPointerId && isDragging) {
       final dragBounds = Rect.fromLTRB(
           -allowedDistanceFromCanvasEdge,

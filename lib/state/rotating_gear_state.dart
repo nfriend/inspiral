@@ -118,14 +118,14 @@ class RotatingGearState extends BaseGearState {
   void gearPointerDown(PointerDownEvent event) {
     super.gearPointerDown(event);
 
-    if (event.device == draggingPointerId && isDragging) {
+    if (event.device == draggingPointerId && isDragging && !isAutoDrawing) {
       var result = _getRotationForAngle(dragLine.angle);
       ink.addPoints([result.penPosition]);
     }
   }
 
   void gearPointerMove(PointerMoveEvent event) {
-    if (event.device == draggingPointerId && isDragging) {
+    if (event.device == draggingPointerId && isDragging && !isAutoDrawing) {
       var result = _getRotationForAngle(dragLine.angle);
       _updateGearState(result);
       _drawPoints(result, dragLine.angle);
@@ -134,7 +134,7 @@ class RotatingGearState extends BaseGearState {
 
   @override
   void gearPointerUp(PointerUpEvent event) {
-    if (event.device == draggingPointerId) {
+    if (event.device == draggingPointerId && !isAutoDrawing) {
       var result = _getRotationForAngle(dragLine.angle);
       _drawPoints(result, dragLine.angle, force: true);
     }

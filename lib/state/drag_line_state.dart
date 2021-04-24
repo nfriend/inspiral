@@ -59,12 +59,22 @@ class DragLineState extends ChangeNotifier with Persistable {
   double _angleDragOffset = 0;
 
   void gearPointerDown(PointerDownEvent event) {
+    // Disable any gear interactions if we're currently auto-drawing
+    if (rotatingGear.isAutoDrawing) {
+      return;
+    }
+
     var pointerAngle = _getPointerAngle(event);
     _angleDragOffset = pointerAngle - _translateToRange(angle);
     _updatePointerPositionAndAngle(event);
   }
 
   void gearPointerMove(PointerMoveEvent event) {
+    // Disable any gear interactions if we're currently auto-drawing
+    if (rotatingGear.isAutoDrawing) {
+      return;
+    }
+
     _updatePointerPositionAndAngle(event);
   }
 
