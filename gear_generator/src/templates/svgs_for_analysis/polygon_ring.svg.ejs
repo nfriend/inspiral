@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <entitlement-id>
+      <%= entitlement %>
+    </entitlement-id>
+    <package-id>
+      <%= entitlement %>
+    </package-id>
+    <gear-order>
+      <%= gearOrder %>
+    </gear-order>
+    <%_ if (isRing) { _%>
+    <inverted>
+      true
+    </inverted>
+    <%_ } _%>
+  </desc>
+  <g>
+    <%- include('gear_holes') %>
+    <path mask="url(#holes)"
+          d="M <%= caps[0].startPoint.x %> <%= caps[0].startPoint.y %>
+             <%_ for (const [i, cap] of caps.entries()) { _%>
+             A <%= endPointRadius %> <%= endPointRadius %> 0 0 0 <%= cap.endPoint.x %> <%= cap.endPoint.y %>
+             A <%= sideRadius %> <%= sideRadius %> 0 0 0 <%= caps[(i + 1) % caps.length].startPoint.x %> <%= caps[(i + 1) % caps.length].startPoint.y %>
+             <%_ } _%>
+             Z" />
+    <circle id="center-point" cx="<%= centerPoint.x %>" cy="<%= centerPoint.y %>" r="1" fill="#42d7f5" />
+  </g>
+</svg>

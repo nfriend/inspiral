@@ -1,4 +1,5 @@
 import range from 'lodash.range';
+import { allEntitlements } from './models/entitlement';
 
 interface BaseGearSize {
   /** The list of hole numbers that should be generated in this gear */
@@ -80,6 +81,8 @@ export const circleGearSizes: CircularGearSize[] = [
   { radius: 96, holes: [], isRing: true },
   { radius: 105, holes: [], isRing: true },
   { radius: 150, holes: [], isRing: true },
+  { radius: 200, holes: [], isRing: true },
+  { radius: 256, holes: [], isRing: true },
   { radius: 24, holes: [], suffix: 'noholes' },
   { radius: 30, holes: [], suffix: 'noholes' },
   { radius: 32, holes: [], suffix: 'noholes' },
@@ -129,9 +132,9 @@ const xToYRatio = 2 / 3;
  */
 export const ovalGearSizes: OvalGearSize[] = [
   // Fixed
-  { xRadius: 114, yRadius: 114 * xToYRatio, holes: [], isRing: true },
-  { xRadius: 125, yRadius: 125 * xToYRatio, holes: [], isRing: true },
   { xRadius: 178, yRadius: 178 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 238, yRadius: 238 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 304, yRadius: 304 * xToYRatio, holes: [], isRing: true },
   { xRadius: 28, yRadius: 28 * xToYRatio, holes: [], suffix: 'noholes' },
   { xRadius: 36, yRadius: 36 * xToYRatio, holes: [], suffix: 'noholes' },
   { xRadius: 38, yRadius: 38 * xToYRatio, holes: [], suffix: 'noholes' },
@@ -341,12 +344,9 @@ export const polygonVariations: {
   {
     sides: 3,
     name: 'triangle',
-    entitlement: 'io.nathanfriend.inspiral.trianglegears',
+    entitlement: allEntitlements.triangleGears.id,
     sizes: [
       // Fixed
-      { radius: 109, holes: [], isRing: true },
-      { radius: 119, holes: [], isRing: true },
-      { radius: 170, holes: [], isRing: true },
       { radius: 27, holes: [], suffix: 'noholes' },
       { radius: 34, holes: [], suffix: 'noholes' },
       { radius: 36, holes: [], suffix: 'noholes' },
@@ -420,17 +420,14 @@ export const polygonVariations: {
         ],
       },
     ],
-    startingOrder: gearOrder.triangles,
+    startingOrder: gearOrder.triangles + 500,
   },
   {
     sides: 4,
     name: 'square',
-    entitlement: 'io.nathanfriend.inspiral.squaregears',
+    entitlement: allEntitlements.squareGears.id,
     sizes: [
       // Fixed
-      { radius: 102, holes: [], isRing: true },
-      { radius: 112, holes: [], isRing: true },
-      { radius: 160, holes: [], isRing: true },
       { radius: 26, holes: [], suffix: 'noholes' },
       { radius: 32, holes: [], suffix: 'noholes' },
       { radius: 34, holes: [], suffix: 'noholes' },
@@ -478,17 +475,14 @@ export const polygonVariations: {
         holes: [0, ...range(8, 139), 140, 142, 144, 146, 148, 150, 152, 154],
       },
     ],
-    startingOrder: gearOrder.squares,
+    startingOrder: gearOrder.squares + 500,
   },
   {
     sides: 5,
     name: 'pentagon',
-    entitlement: 'io.nathanfriend.inspiral.pentagongears',
+    entitlement: allEntitlements.pentagonGears.id,
     sizes: [
       // Fixed
-      { radius: 100, holes: [], isRing: true },
-      { radius: 109, holes: [], isRing: true },
-      { radius: 156, holes: [], isRing: true },
       { radius: 25, holes: [], suffix: 'noholes' },
       { radius: 31, holes: [], suffix: 'noholes' },
       { radius: 33, holes: [], suffix: 'noholes' },
@@ -530,7 +524,49 @@ export const polygonVariations: {
       { radius: 150, holes: [0, ...range(8, 138), 139, 142] },
       { radius: 156, holes: [0, ...range(8, 143), 145, 150] },
     ],
+    startingOrder: gearOrder.pentagons + 500,
+  },
+];
+
+export const polygonRingVariations: {
+  sides: number;
+  name: string;
+  entitlement: string;
+  sizes: CircularGearSize[];
+  startingOrder: number;
+}[] = [
+  {
+    sides: 3,
+    name: 'triangle',
+    entitlement: allEntitlements.triangleGears.id,
+    startingOrder: gearOrder.triangles,
+    sizes: [
+      { radius: 82, holes: [] },
+      { radius: 109, holes: [] },
+      { radius: 140, holes: [] },
+    ],
+  },
+  {
+    sides: 4,
+    name: 'square',
+    entitlement: allEntitlements.squareGears.id,
+    startingOrder: gearOrder.squares,
+    sizes: [
+      { radius: 79, holes: [] },
+      { radius: 105, holes: [] },
+      { radius: 134.5, holes: [] },
+    ],
+  },
+  {
+    sides: 5,
+    name: 'pentagon',
+    entitlement: allEntitlements.pentagonGears.id,
     startingOrder: gearOrder.pentagons,
+    sizes: [
+      { radius: 77.5, holes: [] },
+      { radius: 103, holes: [] },
+      { radius: 132, holes: [] },
+    ],
   },
 ];
 
