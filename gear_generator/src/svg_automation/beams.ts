@@ -17,10 +17,16 @@ const renderFile: any = util.promisify(ejs.renderFile);
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, beamOptions] of beamSizes.entries()) {
-    const ringSuffix = beamOptions.isRing ? '_ring' : '';
+    const fileNameSegments = [
+      'beam',
+      beamOptions.endCapRadius,
+      ...(beamOptions.isRing ? ['ring'] : []),
+      ...(beamOptions.suffix ? [beamOptions.suffix] : []),
+    ];
+
     const svgPath = path.resolve(
       svgBasePath,
-      `beam_${beamOptions.endCapRadius}_${beamOptions.length}${ringSuffix}.svg`,
+      `${fileNameSegments.join('_')}.svg`,
     );
 
     console.info(
@@ -38,8 +44,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
 
     const templateParams = {
       ...beamOptions,
-      // Order the beams by the order in which they appear in constants.ts
-      gearOrder: gearOrder.beams + i + (beamOptions.isRing ? 0 : 5000),
+      gearOrder: gearOrder.beams + i,
       centerPoint,
       holes: getHoles(centerPoint, beamOptions.holes),
       holeSize,

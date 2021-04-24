@@ -20,10 +20,16 @@ const renderFile: any = util.promisify(ejs.renderFile);
 
   for (const [i, polygonDef] of polygonVariations.entries()) {
     for (const [j, size] of polygonDef.sizes.entries()) {
-      const ringSuffix = size.isRing ? '_ring' : '';
+      const fileNameSegments = [
+        polygonDef.name,
+        size.radius,
+        ...(size.isRing ? ['ring'] : []),
+        ...(size.suffix ? [size.suffix] : []),
+      ];
+
       const svgPath = path.resolve(
         svgBasePath,
-        `${polygonDef.name}_${size.radius}${ringSuffix}.svg`,
+        `${fileNameSegments.join('_')}.svg`,
       );
 
       console.info(
@@ -60,8 +66,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       const templateParams = {
         arcs,
         entitlement: polygonDef.entitlement,
-        gearOrder:
-          polygonDef.startingOrder + size.radius + (size.isRing ? 0 : 5000),
+        gearOrder: polygonDef.startingOrder + j,
         holeSize,
         holes,
         centerPoint,

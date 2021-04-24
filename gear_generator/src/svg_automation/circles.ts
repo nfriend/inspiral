@@ -18,10 +18,16 @@ const renderFile: any = util.promisify(ejs.renderFile);
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, size] of circleGearSizes.entries()) {
-    const ringSuffix = size.isRing ? '_ring' : '';
+    const fileNameSegments = [
+      'circle',
+      size.radius,
+      ...(size.isRing ? ['ring'] : []),
+      ...(size.suffix ? [size.suffix] : []),
+    ];
+
     const svgPath = path.resolve(
       svgBasePath,
-      `circle_${size.radius}${ringSuffix}.svg`,
+      `${fileNameSegments.join('_')}.svg`,
     );
 
     console.info(
@@ -45,7 +51,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       holeSize,
       holes,
       isRing: Boolean(size.isRing),
-      gearOrder: gearOrder.circles + size.radius + (size.isRing ? 0 : 5000),
+      gearOrder: gearOrder.circles + i,
     });
 
     await writeFile(svgPath, rendered);

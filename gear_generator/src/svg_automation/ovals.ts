@@ -18,10 +18,16 @@ const renderFile: any = util.promisify(ejs.renderFile);
   const svgBasePath = path.resolve(__dirname, '../svg');
 
   for (const [i, ovalParams] of ovalGearSizes.entries()) {
-    const ringSuffix = ovalParams.isRing ? '_ring' : '';
+    const fileNameSegments = [
+      'oval',
+      ovalParams.xRadius,
+      ...(ovalParams.isRing ? ['ring'] : []),
+      ...(ovalParams.suffix ? [ovalParams.suffix] : []),
+    ];
+
     const svgPath = path.resolve(
       svgBasePath,
-      `oval_${ovalParams.xRadius}${ringSuffix}.svg`,
+      `${fileNameSegments.join('_')}.svg`,
     );
 
     console.info(
@@ -44,8 +50,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ...ovalParams,
       holeSize,
       holes,
-      gearOrder:
-        gearOrder.ovals + ovalParams.xRadius + +(ovalParams.isRing ? 0 : 5000),
+      gearOrder: gearOrder.ovals + i,
       isRing: Boolean(ovalParams.isRing),
     });
 
