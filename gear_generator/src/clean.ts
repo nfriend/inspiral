@@ -17,8 +17,8 @@ const deleteFile = util.promisify(fs.unlink);
     'src/svg/pentagon_*.svg',
     'src/svg/beam_*.svg',
     'tmp/**/!(.gitkeep)',
-    '../lib/models/gears/!(README.md)',
-    '../images/gears/!(README.md)',
+    '../lib/models/gears/**/!(README.md)',
+    '../images/gears/**/!(README.md)',
   ];
 
   let deleteCount = 0;
