@@ -14,7 +14,7 @@
 
 At a high level:
 
-1. The program accepts an SVG with a single `path` element at input.
+1. The program accepts an SVG with a single `path` element as input.
    - SVG input files are located in
      [`gear_generator/src/svg`](gear_generator/src/svg)
 1. The SVG is loaded into a headless Chrome instance (using
@@ -67,7 +67,7 @@ the free tier.
 
 ##### Package
 
-Similarly to above, a gear can be associated with a RevenueCat package:
+Similar to above, a gear can be associated with a RevenueCat package:
 
 ```xml
 <package-id>
@@ -106,6 +106,12 @@ To specify that the gear's teeth should appear on the _inside_ of the gear:
 
 Holes can be specified by included `<circle>` elements inside a `<mask id="holes">` element. See the existing gear SVGs for examples of this.
 
+##### Center point
+
+The center point of the gear is specified using a `<circle id="center-point">`
+element. If this element is omitted, the center of the (final) image is assumed
+to be center of the gear.
+
 ## Troubleshooting/FAQ
 
 **The rotating gear is rendered on the wrong side of the fixed gear!**
@@ -133,3 +139,8 @@ within a 8192x8192 box.
 Important note: this limit applies to the raw image size, not the logical pixel
 size! For example, my Android phone renders at 3.0x, so this means the largest
 image size in _logical_ pixels is 8192 / 3 ~= 2730px.
+
+**Does my input SVG have to sit flush with the X/Y axes?**
+
+No, any extra whitespace around the gear will be trimmed during the analysis
+process.
