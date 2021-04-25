@@ -51,9 +51,8 @@ import 'package:inspiral/models/gears/circle_84.dart';
 import 'package:inspiral/models/gears/circle_100.dart';
 import 'package:inspiral/models/gears/circle_144.dart';
 import 'package:inspiral/models/gears/circle_150.dart';
-import 'package:inspiral/models/gears/beam_100_79_ring.dart';
-import 'package:inspiral/models/gears/beam_100_157_ring.dart';
-import 'package:inspiral/models/gears/beam_100_245_ring.dart';
+import 'package:inspiral/models/gears/beam_84_103_ring.dart';
+import 'package:inspiral/models/gears/beam_84_182_ring.dart';
 import 'package:inspiral/models/gears/beam_20_50_noholes.dart';
 import 'package:inspiral/models/gears/beam_20_100_noholes.dart';
 import 'package:inspiral/models/gears/beam_20_194_noholes.dart';
@@ -226,6 +225,21 @@ import 'package:inspiral/models/gears/pentagon_87.dart';
 import 'package:inspiral/models/gears/pentagon_104.dart';
 import 'package:inspiral/models/gears/pentagon_150.dart';
 import 'package:inspiral/models/gears/pentagon_156.dart';
+import 'package:inspiral/models/gears/wave_circle_ring.dart';
+import 'package:inspiral/models/gears/wave_circle.dart';
+import 'package:inspiral/models/gears/egg_24_noholes.dart';
+import 'package:inspiral/models/gears/egg_24.dart';
+import 'package:inspiral/models/gears/egg_42_noholes.dart';
+import 'package:inspiral/models/gears/egg_42.dart';
+import 'package:inspiral/models/gears/egg_84_noholes.dart';
+import 'package:inspiral/models/gears/egg_84.dart';
+import 'package:inspiral/models/gears/letter_s.dart';
+import 'package:inspiral/models/gears/letter_c.dart';
+import 'package:inspiral/models/gears/heart.dart';
+import 'package:inspiral/models/gears/heart_ring_84.dart';
+import 'package:inspiral/models/gears/tilde.dart';
+import 'package:inspiral/models/gears/heart_ring_144.dart';
+import 'package:inspiral/models/gears/heart_ring_200.dart';
 
 export 'package:inspiral/models/gears/circle_96_ring.dart';
 export 'package:inspiral/models/gears/circle_105_ring.dart';
@@ -270,9 +284,8 @@ export 'package:inspiral/models/gears/circle_84.dart';
 export 'package:inspiral/models/gears/circle_100.dart';
 export 'package:inspiral/models/gears/circle_144.dart';
 export 'package:inspiral/models/gears/circle_150.dart';
-export 'package:inspiral/models/gears/beam_100_79_ring.dart';
-export 'package:inspiral/models/gears/beam_100_157_ring.dart';
-export 'package:inspiral/models/gears/beam_100_245_ring.dart';
+export 'package:inspiral/models/gears/beam_84_103_ring.dart';
+export 'package:inspiral/models/gears/beam_84_182_ring.dart';
 export 'package:inspiral/models/gears/beam_20_50_noholes.dart';
 export 'package:inspiral/models/gears/beam_20_100_noholes.dart';
 export 'package:inspiral/models/gears/beam_20_194_noholes.dart';
@@ -445,6 +458,21 @@ export 'package:inspiral/models/gears/pentagon_87.dart';
 export 'package:inspiral/models/gears/pentagon_104.dart';
 export 'package:inspiral/models/gears/pentagon_150.dart';
 export 'package:inspiral/models/gears/pentagon_156.dart';
+export 'package:inspiral/models/gears/wave_circle_ring.dart';
+export 'package:inspiral/models/gears/wave_circle.dart';
+export 'package:inspiral/models/gears/egg_24_noholes.dart';
+export 'package:inspiral/models/gears/egg_24.dart';
+export 'package:inspiral/models/gears/egg_42_noholes.dart';
+export 'package:inspiral/models/gears/egg_42.dart';
+export 'package:inspiral/models/gears/egg_84_noholes.dart';
+export 'package:inspiral/models/gears/egg_84.dart';
+export 'package:inspiral/models/gears/letter_s.dart';
+export 'package:inspiral/models/gears/letter_c.dart';
+export 'package:inspiral/models/gears/heart.dart';
+export 'package:inspiral/models/gears/heart_ring_84.dart';
+export 'package:inspiral/models/gears/tilde.dart';
+export 'package:inspiral/models/gears/heart_ring_144.dart';
+export 'package:inspiral/models/gears/heart_ring_200.dart';
 
 Map<String, GearDefinition> allGears = {
   'circle96Ring': circle96Ring,
@@ -490,9 +518,8 @@ Map<String, GearDefinition> allGears = {
   'circle100': circle100,
   'circle144': circle144,
   'circle150': circle150,
-  'beam10079Ring': beam10079Ring,
-  'beam100157Ring': beam100157Ring,
-  'beam100245Ring': beam100245Ring,
+  'beam84103Ring': beam84103Ring,
+  'beam84182Ring': beam84182Ring,
   'beam2050Noholes': beam2050Noholes,
   'beam20100Noholes': beam20100Noholes,
   'beam20194Noholes': beam20194Noholes,
@@ -665,4 +692,19 @@ Map<String, GearDefinition> allGears = {
   'pentagon104': pentagon104,
   'pentagon150': pentagon150,
   'pentagon156': pentagon156,
+  'waveCircleRing': waveCircleRing,
+  'waveCircle': waveCircle,
+  'egg24Noholes': egg24Noholes,
+  'egg24': egg24,
+  'egg42Noholes': egg42Noholes,
+  'egg42': egg42,
+  'egg84Noholes': egg84Noholes,
+  'egg84': egg84,
+  'letterS': letterS,
+  'letterC': letterC,
+  'heart': heart,
+  'heartRing84': heartRing84,
+  'tilde': tilde,
+  'heartRing144': heartRing144,
+  'heartRing200': heartRing200,
 };
