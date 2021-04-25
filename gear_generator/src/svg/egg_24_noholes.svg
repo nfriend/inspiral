@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+	<desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+		<entitlement-id>
+			io.nathanfriend.inspiral.specialgears
+		</entitlement-id>
+		<package-id>
+			io.nathanfriend.inspiral.specialgears
+		</package-id>
+		<gear-order>
+			70002
+		</gear-order>
+		<inverted>
+			false
+		</inverted>
+	</desc>
+	<g>
+		<path d="m 93.699083,67.577348 c -15.185185,0 -35.039625,9.007335 -35.039625,20.118446 0,11.111114 19.85444,20.118446 35.039625,20.118446 15.185187,0 20.453747,-9.174987 20.453747,-20.286099 0,-11.111112 -5.26856,-19.950793 -20.453747,-19.950793 z" />
+		<circle id="center-point" cx="93" cy="87.7" r="1" fill="#42d7f5" />
+	</g>
+</svg>

@@ -15,6 +15,68 @@
 		</inverted>
 	</desc>
 	<g>
-		<path d="m 93.699083,67.577348 c -15.185185,0 -35.039625,9.007335 -35.039625,20.118446 0,11.111114 19.85444,20.118446 35.039625,20.118446 15.185187,0 20.453747,-9.174987 20.453747,-20.286099 0,-11.111112 -5.26856,-19.950793 -20.453747,-19.950793 z" />
+		<style>
+			text {
+			font-family: monospace;
+			font-size: 4px;
+			}
+		</style>
+		<mask id="holes">
+			<rect width="100%" height="100%" fill="white" />
+			<circle cx="93" cy="87.7" r="2.5" inspiral:hole-name="0" inspiral:hole-text-position-angle="0" inspiral:hole-text-rotation-angle="0" />
+			<text x="90" y="88.7" text-anchor="end">
+				0
+			</text>
+			<circle cx="93" cy="79.7" r="2.5" inspiral:hole-name="8" inspiral:hole-text-position-angle="2.3415926535897933" inspiral:hole-text-rotation-angle="-0.7" />
+			<text x="90" y="80.7" text-anchor="end">
+				8
+			</text>
+			<circle cx="86.63603896932108" cy="81.33603896932108" r="2.5" inspiral:hole-name="9" inspiral:hole-text-position-angle="3.1269908169872416" inspiral:hole-text-rotation-angle="-1.4853981633974482" />
+			<text x="83.63603896932108" y="82.33603896932108" text-anchor="end">
+				9
+			</text>
+			<circle cx="80.9791847198287" cy="75.6791847198287" r="2.5" inspiral:hole-name="17" inspiral:hole-text-position-angle="3.5269908169872415" inspiral:hole-text-rotation-angle="-0.7853981633974483" />
+			<text x="77.9791847198287" y="76.6791847198287" text-anchor="end">
+				17
+			</text>
+			<circle cx="83" cy="87.7" r="2.5" inspiral:hole-name="10" inspiral:hole-text-position-angle="4.312388980384689" inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+			<text x="80" y="88.7" text-anchor="end">
+				10
+			</text>
+			<circle cx="75" cy="87.7" r="2.5" inspiral:hole-name="18" inspiral:hole-text-position-angle="4.71238898038469" inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+			<text x="72" y="88.7" text-anchor="end">
+				18
+			</text>
+			<circle cx="67" cy="87.7" r="2.5" inspiral:hole-name="26" inspiral:hole-text-position-angle="4.71238898038469" inspiral:hole-text-rotation-angle="-1.5707963267948966" />
+			<text x="64" y="88.7" text-anchor="end">
+				26
+			</text>
+			<circle cx="85.22182540694797" cy="95.47817459305202" r="2.5" inspiral:hole-name="11" inspiral:hole-text-position-angle="4.997787143782138" inspiral:hole-text-rotation-angle="-2.356194490192345" />
+			<text x="82.22182540694797" y="96.47817459305202" text-anchor="end">
+				11
+			</text>
+			<circle cx="79.56497115745559" cy="101.1350288425444" r="2.5" inspiral:hole-name="19" inspiral:hole-text-position-angle="5.497787143782138" inspiral:hole-text-rotation-angle="-2.356194490192345" />
+			<text x="76.56497115745559" y="102.1350288425444" text-anchor="end">
+				19
+			</text>
+			<circle cx="93" cy="99.7" r="2.5" inspiral:hole-name="12" inspiral:hole-text-position-angle="6.083185307179586" inspiral:hole-text-rotation-angle="-3.141592653589793" />
+			<text x="90" y="100.7" text-anchor="end">
+				12
+			</text>
+			<circle cx="102.19238815542512" cy="96.89238815542512" r="2.5" inspiral:hole-name="13" inspiral:hole-text-position-angle="6.668583470577034" inspiral:hole-text-rotation-angle="-3.9269908169872414" />
+			<text x="99.19238815542512" y="97.89238815542512" text-anchor="end">
+				13
+			</text>
+			<circle cx="107" cy="87.7" r="2.5" inspiral:hole-name="14" inspiral:hole-text-position-angle="7.653981633974483" inspiral:hole-text-rotation-angle="-4.71238898038469" />
+			<text x="104" y="88.7" text-anchor="end">
+				14
+			</text>
+			<circle cx="103.60660171779821" cy="77.09339828220179" r="2.5" inspiral:hole-name="15" inspiral:hole-text-position-angle="8.439379797371931" inspiral:hole-text-rotation-angle="-5.497787143782138" />
+			<text x="100.60660171779821" y="78.09339828220179" text-anchor="end">
+				15
+			</text>
+		</mask>
+		<path mask="url(#holes)" d="m 93.699083,67.577348 c -15.185185,0 -35.039625,9.007335 -35.039625,20.118446 0,11.111114 19.85444,20.118446 35.039625,20.118446 15.185187,0 20.453747,-9.174987 20.453747,-20.286099 0,-11.111112 -5.26856,-19.950793 -20.453747,-19.950793 z" />
+		<circle id="center-point" cx="93" cy="87.7" r="1" fill="#42d7f5" />
 	</g>
 </svg>
