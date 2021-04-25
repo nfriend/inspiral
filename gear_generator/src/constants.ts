@@ -71,6 +71,7 @@ export const gearOrder = {
   triangles: 40000,
   squares: 50000,
   pentagons: 60000,
+  special: 70000,
 };
 
 /**
@@ -572,9 +573,8 @@ export const polygonRingVariations: {
 
 export const beamSizes: BeamGearSize[] = [
   // Fixed
-  { endCapRadius: 100, length: 79, holes: [], isRing: true },
-  { endCapRadius: 100, length: 157, holes: [], isRing: true },
-  { endCapRadius: 100, length: 245, holes: [], isRing: true },
+  { endCapRadius: 84, length: 103, holes: [], isRing: true },
+  { endCapRadius: 84, length: 182, holes: [], isRing: true },
   { endCapRadius: 20, length: 50, holes: [], suffix: 'noholes' },
   { endCapRadius: 20, length: 100, holes: [], suffix: 'noholes' },
   { endCapRadius: 20, length: 194, holes: [], suffix: 'noholes' },
