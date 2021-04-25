@@ -122,3 +122,14 @@ length of the path. To change the number of teeth, scale the path.
 Gears without holes are only available to be selected as fixed gears.
 
 Gears with holes are only available to be selected as rotating gears.
+
+**The gear teeth aren't lining up for large fixed gears.**
+
+The maximum size for an image in Flutter is 8192x8192px (at least in the devices
+I've test on. It's possible this is smaller or larger based on the device.) If
+the image is larger than 8192, it seems that the image is scaled down to fit
+within a 8192x8192 box.
+
+Important note: this limit applies to the raw image size, not the logical pixel
+size! For example, my Android phone renders at 3.0x, so this means the largest
+image size in _logical_ pixels is 8192 / 3 ~= 2730px.
