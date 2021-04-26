@@ -6,7 +6,7 @@ int calculateRotationCount(
     {@required int fixedGearTeeth,
     @required int rotatingGearTeeth,
     @required double selectedHoleDistance}) {
-  if (selectedHoleDistance < 0.0001) {
+  if (selectedHoleDistance < 1) {
     return 1;
   }
 
