@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
 
 final noFilterColorFilter = ColorFilter.matrix([
   1,
@@ -114,5 +115,28 @@ final activeThumbnailGearColorFilter = ColorFilter.matrix([
   0,
   0,
   2.0,
+  0,
+]);
+
+final disabledThumbnailGearColorFilter = ColorFilter.matrix([
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  incompatibleGearDisplayOpacity,
   0,
 ]);

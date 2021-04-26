@@ -8,6 +8,7 @@ import 'package:inspiral/widgets/menu_bar.dart';
 import 'package:inspiral/widgets/modal_progress.dart';
 import 'package:inspiral/widgets/drawing_tools/selector_drawer.dart';
 import 'package:inspiral/widgets/settings_drawer/settings_drawer.dart';
+import 'package:inspiral/widgets/snackbar_container.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
@@ -83,6 +84,7 @@ class DrawingBoard extends StatelessWidget {
                   translateY: isLandscape ? 0.0 : translationAmount,
                   translateX: isLandscape ? translationAmount : 0.0,
                   child: DrawingTools())),
+          SnackbarContainer()
         ]));
 
     return DynamicTheme(

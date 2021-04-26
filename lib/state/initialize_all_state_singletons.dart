@@ -1,5 +1,6 @@
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/state/snackbar_state.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final rotatingGear = RotatingGearState.init();
   final dragLine = DragLineState.init();
   final fixedGear = FixedGearState.init();
+  final snackbarState = SnackbarState.init();
 
   // Link up dependencies between the singletons
   pointers.canvas = canvas;
@@ -78,7 +80,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     fixedGear,
     rotatingGear,
     dragLine,
-    colorPicker
+    colorPicker,
+    snackbarState
   ];
 
   var db = await getDatabase();

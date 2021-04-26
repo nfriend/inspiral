@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/initialize_all_state_singletons.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/state/snackbar_state.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
@@ -52,7 +53,8 @@ class _InspiralProvidersState extends State<InspiralProviders>
               ChangeNotifierProvider(create: (context) => RotatingGearState()),
               ChangeNotifierProvider(create: (context) => DragLineState()),
               ChangeNotifierProvider(create: (context) => FixedGearState()),
-              ChangeNotifierProvider(create: (context) => ColorPickerState())
+              ChangeNotifierProvider(create: (context) => ColorPickerState()),
+              ChangeNotifierProvider(create: (context) => SnackbarState())
             ], child: widget.child);
           } else {
             // Note: If the startup time is slow enough, consider

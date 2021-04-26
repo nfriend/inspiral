@@ -35,6 +35,22 @@ class GearDefinition {
   /// appear on the inside of the gear.)
   final bool isRing;
 
+  /// The smallest angle difference in a convex direction between
+  /// any two consecutive teeth on this gear.
+  final double smallestConvexDiff;
+
+  /// The biggest angle difference in a convex direction between
+  /// any two consecutive teeth on this gear.
+  final double biggestConvexDiff;
+
+  /// The smallest angle difference in a concave direction between
+  /// any two consecutive teeth on this gear.
+  final double smallestConcaveDiff;
+
+  /// The biggest angle difference in a concave direction between
+  /// any two consecutive teeth on this gear.
+  final double biggestConcaveDiff;
+
   /// The entitlement that includes this gear
   final String entitlement;
 
@@ -52,7 +68,11 @@ class GearDefinition {
       @required this.holes,
       @required this.isRing,
       @required this.entitlement,
-      @required this.package});
+      @required this.package,
+      @required this.smallestConvexDiff,
+      @required this.biggestConvexDiff,
+      @required this.smallestConcaveDiff,
+      @required this.biggestConcaveDiff});
 
   /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {

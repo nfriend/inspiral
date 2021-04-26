@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/settings_state.dart';
+import 'package:inspiral/state/snackbar_state.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/hide_system_ui_overlays.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,12 +18,6 @@ import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
 import 'package:open_file/open_file.dart';
-
-/// Shows a SnackBar message
-void _showSnackBarMessage(String message) {
-  scaffoldMessengerGlobalKey.currentState.showSnackBar(
-      SnackBar(content: Text(message), behavior: SnackBarBehavior.fixed));
-}
 
 /// Shares the current drawing using the OS's "share" feature
 Future<void> shareImage(BuildContext context) async {
@@ -43,7 +38,8 @@ Future<void> shareImage(BuildContext context) async {
 /// Saves the current drawing as an image in the OS's image gallery
 Future<void> saveImage(BuildContext context) async {
   if (!(await Permission.storage.request().isGranted)) {
-    _showSnackBarMessage('You must grant storage permission to save');
+    var snackbar = Provider.of<SnackbarState>(context, listen: false);
+    snackbar.showSnackbar('You must grant storage permission to save');
     return;
   }
 

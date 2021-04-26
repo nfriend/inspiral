@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/state/snackbar_state.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/if_purchased.dart';
 import 'package:inspiral/widgets/color_filters.dart';
@@ -13,11 +14,19 @@ class GearSelectorThumbnail extends StatelessWidget {
   final bool isActive;
   final void Function() onGearTap;
 
+  /// Whether or not this gear is compatible with the currently selected
+  /// fixed gear. Only applies when showing a rotating gear.
+  final bool isCompatibleWithFixedGear;
+
   GearSelectorThumbnail(
-      {@required this.gear, @required this.isActive, @required this.onGearTap});
+      {@required this.gear,
+      @required this.isActive,
+      @required this.onGearTap,
+      this.isCompatibleWithFixedGear = true});
 
   @override
   Widget build(BuildContext context) {
+    final snackbar = Provider.of<SnackbarState>(context, listen: false);
     final isDark = context.select<ColorState, bool>((colors) => colors.isDark);
     final activeColor =
         context.select<ColorState, TinyColor>((colors) => colors.activeColor);
@@ -42,6 +51,22 @@ class GearSelectorThumbnail extends StatelessWidget {
           isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
     }
 
+    ColorFilter gearFilter;
+    if (!isCompatibleWithFixedGear) {
+      // Incompatible rotating gears are rendered partially transparent
+      gearFilter = disabledThumbnailGearColorFilter;
+      toothCountBubbleBackgroundColor = toothCountBubbleBackgroundColor
+          .withOpacity(incompatibleGearDisplayOpacity);
+      toothCountBubbleBorderColor = toothCountBubbleBorderColor
+          .withOpacity(incompatibleGearDisplayOpacity);
+      toothCountTextColor =
+          toothCountTextColor.withOpacity(incompatibleGearDisplayOpacity);
+    } else if (isActive) {
+      gearFilter = activeThumbnailGearColorFilter;
+    } else {
+      gearFilter = noFilterColorFilter;
+    }
+
     var toothCountTextStyle = TextStyle(
         fontWeight: FontWeight.bold,
         color: toothCountTextColor,
@@ -59,12 +84,17 @@ class GearSelectorThumbnail extends StatelessWidget {
                           context: context,
                           entitlement: gear.entitlement,
                           package: gear.package,
-                          callbackIfPurchased: onGearTap),
+                          callbackIfPurchased: () {
+                            if (isCompatibleWithFixedGear) {
+                              onGearTap();
+                            } else {
+                              snackbar.showSnackbar(
+                                  'This gear is not compatible with the currently selected fixed gear');
+                            }
+                          }),
                       borderRadius: borderRadius,
                       child: ColorFiltered(
-                          colorFilter: isActive
-                              ? activeThumbnailGearColorFilter
-                              : noFilterColorFilter,
+                          colorFilter: gearFilter,
                           child: Image.asset(gear.thumbnailImage,
                               width: thumbnailSize, height: thumbnailSize)))))),
       Positioned(

@@ -28,5 +28,9 @@ final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
           distance: <%= hole.distance %>),
       <%_ } _%>
     ],
-    isRing: <%= Boolean(gearDefinition.isRing) %>
+    isRing: <%= Boolean(gearDefinition.isRing) %>,
+    smallestConvexDiff: <%= gearDefinition.smallestConvexDiff %>,
+    biggestConvexDiff: <%= gearDefinition.biggestConvexDiff %>,
+    smallestConcaveDiff: <%= gearDefinition.smallestConcaveDiff %>,
+    biggestConcaveDiff: <%= gearDefinition.biggestConcaveDiff %>
     );

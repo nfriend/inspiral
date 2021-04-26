@@ -261,6 +261,51 @@ export const analyzePath = ({
     };
   });
 
+  // Finds the difference between two angles
+  // Inspired by https://stackoverflow.com/a/7869457/1063392
+  const angleDiff = (angle1: number, angle2: number): number => {
+    let modulo = (a: number, n: number) => a - Math.floor(a / n) * n;
+    let diff = angle1 - angle2;
+    diff = modulo(diff + Math.PI, pi2) - Math.PI;
+
+    const epsilon = 0.00000000001;
+    if (diff > -epsilon && diff < epsilon) {
+      diff = 0;
+    }
+
+    return diff;
+  };
+
+  // Find the sharpest and shallowest angles of the gears
+  // in both the convex and concave directions
+  let smallestConvexDiff = pi2;
+  let smallestConcaveDiff = pi2;
+  let biggestConvexDiff = 0;
+  let biggestConcaveDiff = 0;
+  for (const [index, point] of evaluatedPoints.entries()) {
+    const next = evaluatedPoints[(index + 1) % evaluatedPoints.length];
+    let diff = angleDiff(next.direction, point.direction);
+
+    const epsilon = 0.0000000001;
+    if (diff > -epsilon && diff < epsilon) {
+      diff = 0;
+    }
+
+    if (diff > 0) {
+      // This is a convex angle
+      smallestConvexDiff = Math.min(diff, smallestConvexDiff);
+      biggestConvexDiff = Math.max(diff, biggestConvexDiff);
+    } else if (diff < 0) {
+      // This is a concave angle
+      smallestConcaveDiff = Math.min(-diff, smallestConcaveDiff);
+      biggestConcaveDiff = Math.max(-diff, biggestConcaveDiff);
+    } else {
+      // The angle is perfectly flat
+      smallestConvexDiff = 0;
+      smallestConcaveDiff = 0;
+    }
+  }
+
   // Read each hole definition from the SVG
   const holes: AngleGearHole[] = Array.from(
     document.querySelectorAll('#holes circle'),
@@ -315,6 +360,10 @@ export const analyzePath = ({
     gearOrder,
     isRing: inverted,
     ringBorderRadius: ringBorderRadius * baseScale,
+    smallestConvexDiff,
+    biggestConvexDiff,
+    smallestConcaveDiff,
+    biggestConcaveDiff,
   };
 
   return gearDefinition;

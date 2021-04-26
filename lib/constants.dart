@@ -80,3 +80,7 @@ const double maxScale = 2.0;
 
 /// The minimum zoom scale
 const double minScale = .05;
+
+/// How much opacity to use when rendering UI related
+/// to incompatible gear pairings
+const double incompatibleGearDisplayOpacity = 0.35;

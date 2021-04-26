@@ -60,4 +60,28 @@ export interface GearDefinition {
    * border radius should be rendered on its outside border.
    */
   ringBorderRadius: number;
+
+  /**
+   * The smallest angle difference in a convex direction between
+   * any two consecutive teeth on this gear.
+   */
+  smallestConvexDiff: number;
+
+  /**
+   * The biggest angle difference in a convex direction between
+   * any two consecutive teeth on this gear.
+   */
+  biggestConvexDiff: number;
+
+  /**
+   * The smallest angle difference in a concave direction between
+   * any two consecutive teeth on this gear.
+   */
+  smallestConcaveDiff: number;
+
+  /**
+   * The biggest angle difference in a concave direction between
+   * any two consecutive teeth on this gear.
+   */
+  biggestConcaveDiff: number;
 }

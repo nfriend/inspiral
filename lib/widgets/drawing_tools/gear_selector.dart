@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/are_gears_compatible.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,8 @@ class GearSelector extends StatelessWidget {
             for (var gear in onlyGearsWithHoles)
               GearSelectorThumbnail(
                   isActive: gear == rotatingGearDefinition,
+                  isCompatibleWithFixedGear: areGearsCompatible(
+                      fixedGear: fixedGearDefinition, rotatingGear: gear),
                   gear: gear,
                   onGearTap: () => rotatingGear.selectNewGear(gear))
           ])
