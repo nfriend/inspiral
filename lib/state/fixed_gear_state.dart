@@ -4,6 +4,7 @@ import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/fixed_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:inspiral/util/find_closest_compatible_gear.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 // An arbitrary number that allows even the biggest gear
@@ -112,6 +113,13 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   /// Swaps the current fixed gear for a new one
   void selectNewGear(GearDefinition newGear) {
     definition = newGear;
+
+    // Update the current rotating gear selection if the newly selected
+    // fixed gear is incompatible with the existing rotating gear selection.
+    rotatingGear.selectNewGear(findClosestCompatibleGear(
+        fixedGear: definition,
+        currentlySelectedRotatingGear: rotatingGear.definition));
+
     rotatingGear.initializePosition();
     ink.finishLine();
   }

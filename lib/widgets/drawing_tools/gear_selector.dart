@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/are_gears_compatible.dart';
+import 'package:inspiral/util/gear_lists.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:provider/provider.dart';
-import 'package:inspiral/models/gears/gears.dart';
-
-final onlyGearsWithHoles =
-    allGears.values.where((gear) => gear.holes.isNotEmpty);
-
-final onlyGearsWithoutHoles =
-    allGears.values.where((gear) => gear.holes.isEmpty);
 
 class GearSelector extends StatelessWidget {
   @override
