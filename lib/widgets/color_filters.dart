@@ -137,6 +137,6 @@ final disabledThumbnailGearColorFilter = ColorFilter.matrix([
   0,
   0,
   0,
-  incompatibleGearDisplayOpacity,
+  0.3,
   0,
 ]);

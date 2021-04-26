@@ -37,34 +37,28 @@ class GearSelectorThumbnail extends StatelessWidget {
     Color toothCountTextColor;
     Color toothCountBubbleBackgroundColor;
     Color toothCountBubbleBorderColor;
-    if (isActive) {
+    ColorFilter gearFilter;
+    if (!isCompatibleWithFixedGear) {
+      gearFilter = disabledThumbnailGearColorFilter;
+      toothCountTextColor = isDark ? Color(0xFF777777) : Color(0xFF888888);
+      toothCountBubbleBackgroundColor =
+          isDark ? Color(0xFF444444) : Color(0xFFDDDDDD);
+      toothCountBubbleBorderColor =
+          isDark ? Color(0xFF777777) : Color(0xFFA6A6A6);
+    } else if (isActive) {
+      gearFilter = activeThumbnailGearColorFilter;
       toothCountTextColor = isDark ? Colors.white : Colors.black;
       toothCountBubbleBackgroundColor =
           isDark ? Color(0xFF222222) : Colors.white;
       toothCountBubbleBorderColor =
           isDark ? Color(0xFFF0F0F0) : Color(0xFF666666);
     } else {
+      gearFilter = noFilterColorFilter;
       toothCountTextColor = uiTextColor.color;
       toothCountBubbleBackgroundColor =
           isDark ? Color(0xFF333333) : Color(0xFFF3F3F3);
       toothCountBubbleBorderColor =
           isDark ? Color(0xFFD0D0D0) : Color(0xFF888888);
-    }
-
-    ColorFilter gearFilter;
-    if (!isCompatibleWithFixedGear) {
-      // Incompatible rotating gears are rendered partially transparent
-      gearFilter = disabledThumbnailGearColorFilter;
-      toothCountBubbleBackgroundColor = toothCountBubbleBackgroundColor
-          .withOpacity(incompatibleGearDisplayOpacity);
-      toothCountBubbleBorderColor = toothCountBubbleBorderColor
-          .withOpacity(incompatibleGearDisplayOpacity);
-      toothCountTextColor =
-          toothCountTextColor.withOpacity(incompatibleGearDisplayOpacity);
-    } else if (isActive) {
-      gearFilter = activeThumbnailGearColorFilter;
-    } else {
-      gearFilter = noFilterColorFilter;
     }
 
     var toothCountTextStyle = TextStyle(
