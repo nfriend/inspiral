@@ -65,6 +65,8 @@ class StateTable extends Table {
   final String lastSelectedCanvasColor = 'lastSelectedCanvasColor';
   final String includeBackgroundWhenSaving = 'includeBackgroundWhenSaving';
   final String closeDrawingToolsDrawerOnDrag = 'closeDrawingToolsDrawerOnDrag';
+  final String preventIncompatibleGearPairings =
+      'preventIncompatibleGearPairings';
   final String rotatingGearAngle = 'rotatingGearAngle';
   final String rotatingGearDefinitionId = 'rotatingGearDefinitionId';
   final String rotatingGearActiveHoleName = 'rotatingGearActiveHoleName';

@@ -16,6 +16,8 @@ class GearSelector extends StatelessWidget {
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final fixedGearDefinition = context.select<FixedGearState, GearDefinition>(
         (fixedGear) => fixedGear.definition);
+    final preventIncompatibleGearPairings = context.select<SettingsState, bool>(
+        (settings) => settings.preventIncompatibleGearPairings);
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
@@ -36,8 +38,9 @@ class GearSelector extends StatelessWidget {
             for (var gear in onlyGearsWithHoles)
               GearSelectorThumbnail(
                   isActive: gear == rotatingGearDefinition,
-                  isCompatibleWithFixedGear: areGearsCompatible(
-                      fixedGear: fixedGearDefinition, rotatingGear: gear),
+                  isCompatibleWithFixedGear: !preventIncompatibleGearPairings ||
+                      areGearsCompatible(
+                          fixedGear: fixedGearDefinition, rotatingGear: gear),
                   gear: gear,
                   onGearTap: () => rotatingGear.selectNewGear(gear))
           ])

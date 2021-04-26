@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/persistors/settings_state_persistor.dart';
+import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/find_closest_compatible_gear.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class SettingsState extends ChangeNotifier with Persistable {
@@ -18,6 +20,9 @@ class SettingsState extends ChangeNotifier with Persistable {
   }
 
   SettingsState._internal() : super();
+
+  RotatingGearState rotatingGear;
+  FixedGearState fixedGear;
 
   /// Whether or not to show various debugging aids
   bool get debug => _debug;
@@ -44,6 +49,23 @@ class SettingsState extends ChangeNotifier with Persistable {
     notifyListeners();
   }
 
+  /// Whether to prevent incompatible gear pairings from being selected
+  bool get preventIncompatibleGearPairings => _preventIncompatibleGearPairings;
+  bool _preventIncompatibleGearPairings = true;
+  set preventIncompatibleGearPairings(bool value) {
+    _preventIncompatibleGearPairings = value;
+
+    // If an incompatible pairing is selected when this setting is enabled,
+    // update the rotating gear selection to ensure compatibility.
+    if (_preventIncompatibleGearPairings == true) {
+      rotatingGear.selectNewGear(findClosestCompatibleGear(
+          fixedGear: fixedGear.definition,
+          currentlySelectedRotatingGear: rotatingGear.definition));
+    }
+
+    notifyListeners();
+  }
+
   @override
   void persist(Batch batch) {
     SettingsStatePersistor.persist(batch, this);
@@ -53,7 +75,8 @@ class SettingsState extends ChangeNotifier with Persistable {
   Future<void> rehydrate(Database db, BuildContext context) async {
     var result = await SettingsStatePersistor.rehydrate(db, this);
 
-    includeBackgroundWhenSaving = result.includeBackgroundWhenSaving;
-    closeDrawingToolsDrawerOnDrag = result.closeDrawingToolsDrawerOnDrag;
+    _includeBackgroundWhenSaving = result.includeBackgroundWhenSaving;
+    _closeDrawingToolsDrawerOnDrag = result.closeDrawingToolsDrawerOnDrag;
+    _preventIncompatibleGearPairings = result.preventIncompatibleGearPairings;
   }
 }

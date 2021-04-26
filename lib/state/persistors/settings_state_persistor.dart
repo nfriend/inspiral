@@ -7,10 +7,12 @@ import 'package:inspiral/extensions/extensions.dart';
 class SettingsStateRehydrationResult {
   final bool includeBackgroundWhenSaving;
   final bool closeDrawingToolsDrawerOnDrag;
+  final bool preventIncompatibleGearPairings;
 
   SettingsStateRehydrationResult(
       {@required this.includeBackgroundWhenSaving,
-      @required this.closeDrawingToolsDrawerOnDrag});
+      @required this.closeDrawingToolsDrawerOnDrag,
+      @required this.preventIncompatibleGearPairings});
 }
 
 class SettingsStatePersistor {
@@ -19,7 +21,9 @@ class SettingsStatePersistor {
       Schema.state.includeBackgroundWhenSaving:
           settings.includeBackgroundWhenSaving.toInt(),
       Schema.state.closeDrawingToolsDrawerOnDrag:
-          settings.closeDrawingToolsDrawerOnDrag.toInt()
+          settings.closeDrawingToolsDrawerOnDrag.toInt(),
+      Schema.state.preventIncompatibleGearPairings:
+          settings.preventIncompatibleGearPairings.toInt(),
     });
   }
 
@@ -33,6 +37,8 @@ class SettingsStatePersistor {
           (state[Schema.state.includeBackgroundWhenSaving] as int).toBool(),
       closeDrawingToolsDrawerOnDrag:
           (state[Schema.state.closeDrawingToolsDrawerOnDrag] as int).toBool(),
+      preventIncompatibleGearPairings:
+          (state[Schema.state.preventIncompatibleGearPairings] as int).toBool(),
     );
   }
 }

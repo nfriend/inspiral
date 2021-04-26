@@ -28,6 +28,9 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final snackbarState = SnackbarState.init();
 
   // Link up dependencies between the singletons
+  settings
+    ..fixedGear = fixedGear
+    ..rotatingGear = rotatingGear;
   pointers.canvas = canvas;
   canvas
     ..pointers = pointers

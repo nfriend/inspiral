@@ -99,6 +99,23 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           value: settings.closeDrawingToolsDrawerOnDrag,
           onChanged: (bool newValue) =>
               settings.closeDrawingToolsDrawerOnDrag = newValue),
+      ToggleListItem(
+          text: 'Prevent incompatible gear pairings',
+          value: settings.preventIncompatibleGearPairings,
+          onChanged: (bool newValue) {
+            if (newValue) {
+              settings.preventIncompatibleGearPairings = true;
+            } else {
+              showConfirmationDialog(
+                  context: context,
+                  message:
+                      'This will allow gear pairings that are impossible with physical gears.\n\nGears will overlap in strange (but entertaining!) ways.',
+                  confirmButtonText: 'OK',
+                  onConfirm: () {
+                    settings.preventIncompatibleGearPairings = false;
+                  });
+            }
+          }),
       FutureBuilder(
           future: _entitlementCheckFuture,
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {

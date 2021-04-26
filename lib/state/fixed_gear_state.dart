@@ -114,11 +114,13 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   void selectNewGear(GearDefinition newGear) {
     definition = newGear;
 
-    // Update the current rotating gear selection if the newly selected
-    // fixed gear is incompatible with the existing rotating gear selection.
-    rotatingGear.selectNewGear(findClosestCompatibleGear(
-        fixedGear: definition,
-        currentlySelectedRotatingGear: rotatingGear.definition));
+    if (settings.preventIncompatibleGearPairings) {
+      // Update the current rotating gear selection if the newly selected
+      // fixed gear is incompatible with the existing rotating gear selection.
+      rotatingGear.selectNewGear(findClosestCompatibleGear(
+          fixedGear: definition,
+          currentlySelectedRotatingGear: rotatingGear.definition));
+    }
 
     rotatingGear.initializePosition();
     ink.finishLine();
