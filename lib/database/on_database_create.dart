@@ -49,7 +49,7 @@ void _createTableColorsV1(Batch batch) {
       /* Green */
       ('2f3e09e1-727e-455b-a5cc-8559e9e9f8ea', '80009600', '${ColorsTableType.pen}', 4),
       /* Light blue */
-      ('d59187e5-44de-43b3-a244-54dc0aa8ca1e', 'B392d4de', '${ColorsTableType.pen}', 5),
+      ('d59187e5-44de-43b3-a244-54dc0aa8ca1e', 'B392D4DE', '${ColorsTableType.pen}', 5),
       /* Blue */
       ('7513e7ed-7c49-4dc5-9ee7-fac49b8ffb17', '660000FF', '${ColorsTableType.pen}', 6),
       /* Purple */
@@ -57,7 +57,7 @@ void _createTableColorsV1(Batch batch) {
       /* Pink */
       ('4a8e131d-5ee4-41f5-b302-0ceebdaa4ee3', 'B3F0A3BA', '${ColorsTableType.pen}', 8),
       /* Brown */
-      ('afe32b1e-59c9-483a-b5d4-f0fff028f17f', '96401b13', '${ColorsTableType.pen}', 9),
+      ('afe32b1e-59c9-483a-b5d4-f0fff028f17f', '96401B13', '${ColorsTableType.pen}', 9),
       /* White */
       ('5555409d-2e9c-4ddb-979d-df4f71196f0d', 'CCFFFFFF', '${ColorsTableType.pen}', 10),
       /* Light gray */

@@ -215,27 +215,30 @@ class ColorState extends ChangeNotifier with Persistable {
     _availableCanvasColors.removeWhere((c) => true);
 
     _availablePenColors.addAll([
-      TinyColor(Color(0x66FF0000)),
-      TinyColor(Color(0xB3FF9500)),
-      TinyColor(Color(0xB3FFFF00)),
-      TinyColor(Color(0x80009600)),
-      TinyColor(Color(0x660000FF)),
-      TinyColor(Color(0x80960096)),
-      TinyColor(Color(0xCCFFFFFF)),
-      TinyColor(Color(0xCCC8C8C8)),
-      TinyColor(Color(0xCC969696)),
-      TinyColor(Color(0xCC646464)),
+      TinyColor(Color(0x66FF0000)), // Red
+      TinyColor(Color(0xB3FF9500)), // Orange
+      TinyColor(Color(0xB3FFFF00)), // Yellow
+      TinyColor(Color(0x80009600)), // Green
+      TinyColor(Color(0xB392D4DE)), // Light blue
+      TinyColor(Color(0x660000FF)), // Blue
+      TinyColor(Color(0x80960096)), // Purple
+      TinyColor(Color(0xB3F0A3BA)), // Pink
+      TinyColor(Color(0x96401B13)), // Brown
+      TinyColor(Color(0xCCFFFFFF)), // White
+      TinyColor(Color(0xCCC8C8C8)), // Light gray
+      TinyColor(Color(0xCC969696)), // Medium gray
+      TinyColor(Color(0xCC646464)), // Dark gray
     ]);
 
     _availableCanvasColors.addAll([
-      TinyColor(Color(0xFFFFFFFF)),
-      TinyColor(Color(0xFFF0F0F0)),
-      TinyColor(Color(0xFFE3E3E3)),
-      TinyColor(Color(0xFFF7EFDA)),
-      TinyColor(Color(0xFF3B2507)),
-      TinyColor(Color(0xFF0E1247)),
-      TinyColor(Color(0xFF333333)),
-      TinyColor(Color(0xFF121212)),
+      TinyColor(Color(0xFFFFFFFF)), // White
+      TinyColor(Color(0xFFF0F0F0)), // Light gray
+      TinyColor(Color(0xFFE3E3E3)), // Medium-light gray
+      TinyColor(Color(0xFFF7EFDA)), // Beige
+      TinyColor(Color(0xFF3B2507)), // Brown
+      TinyColor(Color(0xFF0E1247)), // Navy
+      TinyColor(Color(0xFF333333)), // Medium gray
+      TinyColor(Color(0xFF121212)), // Dark gray
     ]);
 
     penColor = _availablePenColors.first;
