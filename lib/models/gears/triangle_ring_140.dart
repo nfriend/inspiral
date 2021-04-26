@@ -791,4 +791,8 @@ final triangleRing140 = GearDefinition(
           direction: 2.404370726203646),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 6.283185307179586,
+    biggestConvexDiff: 0,
+    smallestConcaveDiff: 0.008948712402062853,
+    biggestConcaveDiff: 0.09133285580964001);

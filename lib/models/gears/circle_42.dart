@@ -207,4 +207,8 @@ final circle42 = GearDefinition(
       GearHole(
           name: '34', angle: 3.1381929807911977, distance: 34.00019653859577),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.14844664591893864,
+    biggestConvexDiff: 0.1505043100771939,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

@@ -150,4 +150,8 @@ final circle30 = GearDefinition(
           angle: 0.007364205665154773,
           distance: 22.000596499866834),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.20853063739998312,
+    biggestConvexDiff: 0.2103430567031408,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

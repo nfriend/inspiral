@@ -473,4 +473,8 @@ final circle150Ring = GearDefinition(
           direction: 3.141592653589793),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 6.283185307179586,
+    biggestConvexDiff: 0,
+    smallestConcaveDiff: 0.041188696287789206,
+    biggestConcaveDiff: 0.042237866852626205);

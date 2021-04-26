@@ -282,4 +282,8 @@ final beam20100 = GearDefinition(
       GearHole(name: '110', angle: -2.583791766400364e-16, distance: 110),
       GearHole(name: '114', angle: 3.141592653589793, distance: 114),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0,
+    biggestConvexDiff: 0.3133030769686984,
+    smallestConcaveDiff: 0,
+    biggestConcaveDiff: 0);

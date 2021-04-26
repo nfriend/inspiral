@@ -239,4 +239,8 @@ final square77Noholes = GearDefinition(
           direction: 5.934216994527504),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.05448333168208208,
+    biggestConvexDiff: 0.3489695893779441,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

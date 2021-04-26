@@ -149,4 +149,8 @@ final egg42Noholes = GearDefinition(
           direction: 1.4593174392562656),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.0666385928389639,
+    biggestConvexDiff: 0.3495721004302026,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

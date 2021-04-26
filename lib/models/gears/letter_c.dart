@@ -455,4 +455,8 @@ final letterC = GearDefinition(
           direction: 1.5282274631937138),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.03379939531853404,
+    biggestConvexDiff: 0.31172525333483847,
+    smallestConcaveDiff: 0.059057195528543716,
+    biggestConcaveDiff: 0.060339958777560376);

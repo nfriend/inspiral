@@ -292,4 +292,8 @@ final oval66 = GearDefinition(
           angle: 3.08641198710307e-10,
           distance: 61.999999981884024),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.06262578563101151,
+    biggestConvexDiff: 0.2062264066845665,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

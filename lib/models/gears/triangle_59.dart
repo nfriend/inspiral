@@ -226,4 +226,8 @@ final triangle59 = GearDefinition(
       GearHole(name: '44', angle: -1.5707963267948968, distance: 44),
       GearHole(name: '46', angle: -3.089316242435218e-16, distance: 46),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.07086706204537307,
+    biggestConvexDiff: 0.5260620606974893,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

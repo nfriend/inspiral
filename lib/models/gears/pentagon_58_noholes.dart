@@ -191,4 +191,8 @@ final pentagon58Noholes = GearDefinition(
           direction: 5.985637602541312),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.07187087437336004,
+    biggestConvexDiff: 0.30182102215274087,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

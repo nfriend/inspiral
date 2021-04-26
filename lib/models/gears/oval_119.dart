@@ -518,4 +518,8 @@ final oval119 = GearDefinition(
       GearHole(
           name: '114', angle: 3.1401306659049264, distance: 114.00012194105996),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.03480307646296943,
+    biggestConvexDiff: 0.11673208445355243,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

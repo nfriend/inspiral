@@ -791,4 +791,8 @@ final oval304Ring = GearDefinition(
           direction: 3.141592653589793),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 6.283185307179586,
+    biggestConvexDiff: 0,
+    smallestConcaveDiff: 0.013524963419392577,
+    biggestConcaveDiff: 0.04568507849920689);

@@ -623,4 +623,8 @@ final heartRing200 = GearDefinition(
           direction: 4.712312426762102),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 0.0005422027121069206,
+    biggestConvexDiff: 0.11357627480985677,
+    smallestConcaveDiff: 0.00013199764019766747,
+    biggestConcaveDiff: 0.13446406641087982);

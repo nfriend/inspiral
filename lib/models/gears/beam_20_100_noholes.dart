@@ -253,4 +253,8 @@ final beam20100Noholes = GearDefinition(
           direction: 5.970438562586122),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0,
+    biggestConvexDiff: 0.3133030769686984,
+    smallestConcaveDiff: 0,
+    biggestConcaveDiff: 0);

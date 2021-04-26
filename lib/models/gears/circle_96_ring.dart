@@ -311,4 +311,8 @@ final circle96Ring = GearDefinition(
           direction: 3.141592653589793),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 6.283185307179586,
+    biggestConvexDiff: 0,
+    smallestConcaveDiff: 0.06459552119837486,
+    biggestConcaveDiff: 0.0659585634905735);

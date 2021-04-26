@@ -117,4 +117,8 @@ final triangle36Noholes = GearDefinition(
           direction: 5.736327088493658),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.11518486514404547,
+    biggestConvexDiff: 0.5738888768588253,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

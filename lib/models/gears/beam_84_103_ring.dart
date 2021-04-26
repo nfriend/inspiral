@@ -459,4 +459,8 @@ final beam84103Ring = GearDefinition(
           direction: 3.141592653589793),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 0,
+    biggestConvexDiff: 0,
+    smallestConcaveDiff: 0,
+    biggestConcaveDiff: 0.07514288110826772);

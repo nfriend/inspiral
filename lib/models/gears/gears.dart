@@ -226,20 +226,21 @@ import 'package:inspiral/models/gears/pentagon_104.dart';
 import 'package:inspiral/models/gears/pentagon_150.dart';
 import 'package:inspiral/models/gears/pentagon_156.dart';
 import 'package:inspiral/models/gears/wave_circle_ring.dart';
-import 'package:inspiral/models/gears/wave_circle.dart';
-import 'package:inspiral/models/gears/egg_24_noholes.dart';
-import 'package:inspiral/models/gears/egg_24.dart';
-import 'package:inspiral/models/gears/egg_42_noholes.dart';
-import 'package:inspiral/models/gears/egg_42.dart';
-import 'package:inspiral/models/gears/egg_84_noholes.dart';
-import 'package:inspiral/models/gears/egg_84.dart';
-import 'package:inspiral/models/gears/letter_s.dart';
-import 'package:inspiral/models/gears/letter_c.dart';
-import 'package:inspiral/models/gears/heart.dart';
 import 'package:inspiral/models/gears/heart_ring_84.dart';
-import 'package:inspiral/models/gears/tilde.dart';
 import 'package:inspiral/models/gears/heart_ring_144.dart';
 import 'package:inspiral/models/gears/heart_ring_200.dart';
+import 'package:inspiral/models/gears/letter_c.dart';
+import 'package:inspiral/models/gears/letter_s.dart';
+import 'package:inspiral/models/gears/letter_s_inverted.dart';
+import 'package:inspiral/models/gears/tilde.dart';
+import 'package:inspiral/models/gears/heart.dart';
+import 'package:inspiral/models/gears/wave_circle.dart';
+import 'package:inspiral/models/gears/egg_24.dart';
+import 'package:inspiral/models/gears/egg_24_noholes.dart';
+import 'package:inspiral/models/gears/egg_42.dart';
+import 'package:inspiral/models/gears/egg_42_noholes.dart';
+import 'package:inspiral/models/gears/egg_84.dart';
+import 'package:inspiral/models/gears/egg_84_noholes.dart';
 
 export 'package:inspiral/models/gears/circle_96_ring.dart';
 export 'package:inspiral/models/gears/circle_105_ring.dart';
@@ -459,20 +460,21 @@ export 'package:inspiral/models/gears/pentagon_104.dart';
 export 'package:inspiral/models/gears/pentagon_150.dart';
 export 'package:inspiral/models/gears/pentagon_156.dart';
 export 'package:inspiral/models/gears/wave_circle_ring.dart';
-export 'package:inspiral/models/gears/wave_circle.dart';
-export 'package:inspiral/models/gears/egg_24_noholes.dart';
-export 'package:inspiral/models/gears/egg_24.dart';
-export 'package:inspiral/models/gears/egg_42_noholes.dart';
-export 'package:inspiral/models/gears/egg_42.dart';
-export 'package:inspiral/models/gears/egg_84_noholes.dart';
-export 'package:inspiral/models/gears/egg_84.dart';
-export 'package:inspiral/models/gears/letter_s.dart';
-export 'package:inspiral/models/gears/letter_c.dart';
-export 'package:inspiral/models/gears/heart.dart';
 export 'package:inspiral/models/gears/heart_ring_84.dart';
-export 'package:inspiral/models/gears/tilde.dart';
 export 'package:inspiral/models/gears/heart_ring_144.dart';
 export 'package:inspiral/models/gears/heart_ring_200.dart';
+export 'package:inspiral/models/gears/letter_c.dart';
+export 'package:inspiral/models/gears/letter_s.dart';
+export 'package:inspiral/models/gears/letter_s_inverted.dart';
+export 'package:inspiral/models/gears/tilde.dart';
+export 'package:inspiral/models/gears/heart.dart';
+export 'package:inspiral/models/gears/wave_circle.dart';
+export 'package:inspiral/models/gears/egg_24.dart';
+export 'package:inspiral/models/gears/egg_24_noholes.dart';
+export 'package:inspiral/models/gears/egg_42.dart';
+export 'package:inspiral/models/gears/egg_42_noholes.dart';
+export 'package:inspiral/models/gears/egg_84.dart';
+export 'package:inspiral/models/gears/egg_84_noholes.dart';
 
 Map<String, GearDefinition> allGears = {
   'circle96Ring': circle96Ring,
@@ -693,18 +695,19 @@ Map<String, GearDefinition> allGears = {
   'pentagon150': pentagon150,
   'pentagon156': pentagon156,
   'waveCircleRing': waveCircleRing,
-  'waveCircle': waveCircle,
-  'egg24Noholes': egg24Noholes,
-  'egg24': egg24,
-  'egg42Noholes': egg42Noholes,
-  'egg42': egg42,
-  'egg84Noholes': egg84Noholes,
-  'egg84': egg84,
-  'letterS': letterS,
-  'letterC': letterC,
-  'heart': heart,
   'heartRing84': heartRing84,
-  'tilde': tilde,
   'heartRing144': heartRing144,
   'heartRing200': heartRing200,
+  'letterC': letterC,
+  'letterS': letterS,
+  'letterSInverted': letterSInverted,
+  'tilde': tilde,
+  'heart': heart,
+  'waveCircle': waveCircle,
+  'egg24': egg24,
+  'egg24Noholes': egg24Noholes,
+  'egg42': egg42,
+  'egg42Noholes': egg42Noholes,
+  'egg84': egg84,
+  'egg84Noholes': egg84Noholes,
 };

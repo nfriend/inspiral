@@ -261,4 +261,8 @@ final oval95Noholes = GearDefinition(
           direction: 6.137616734479375),
     ],
     holes: [],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.043605841616320085,
+    biggestConvexDiff: 0.14556857270021162,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);

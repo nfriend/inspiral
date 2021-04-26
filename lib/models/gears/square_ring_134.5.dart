@@ -791,4 +791,8 @@ final squareRing1345 = GearDefinition(
           direction: 2.5230457679867335),
     ],
     holes: [],
-    isRing: true);
+    isRing: true,
+    smallestConvexDiff: 6.283185307179586,
+    biggestConvexDiff: 0,
+    smallestConcaveDiff: 0.005192250239353768,
+    biggestConcaveDiff: 0.04694724192649513);

@@ -115,4 +115,8 @@ final egg24 = GearDefinition(
           name: '19', angle: -2.3561944901923457, distance: 19.000000000000004),
       GearHole(name: '26', angle: -3.141592653589793, distance: 26),
     ],
-    isRing: false);
+    isRing: false,
+    smallestConvexDiff: 0.11957307944370044,
+    biggestConvexDiff: 0.5507835336731799,
+    smallestConcaveDiff: 6.283185307179586,
+    biggestConcaveDiff: 0);
