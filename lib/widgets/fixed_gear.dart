@@ -19,7 +19,7 @@ class FixedGear extends StatelessWidget {
     final colorFilter =
         colors.isDark ? fixedGearInvertedColorFilter : fixedGearColorFilter;
 
-    return Transform.translate(
+    var widgetContent = Transform.translate(
         offset: gear.position - gear.definition.center,
         child: Transform.rotate(
           origin:
@@ -41,5 +41,10 @@ class FixedGear extends StatelessWidget {
                       width: gear.definition.size.width,
                       height: gear.definition.size.height))),
         ));
+
+    // When the gear is locked, prevent this widget from absorbing pointer
+    // events. Instead, allow the user to manipulate the canvas through
+    // the fixed gear.
+    return gear.isLocked ? IgnorePointer(child: widgetContent) : widgetContent;
   }
 }
