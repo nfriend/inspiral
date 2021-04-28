@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+const String appName = 'Inspiral';
+
 /// The global scaling factor for all sizes and position calculations
 const double scaleFactor = 4;
 

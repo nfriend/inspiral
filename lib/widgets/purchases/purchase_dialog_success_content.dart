@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:inspiral/models/package.dart' as package_model;
 import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/state/purchases_state.dart';
+import 'package:inspiral/util/prepare_iap_title.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -36,10 +38,26 @@ class _PurchaseDialogSuccessContentState
   /// Whether or not the dialog should show a modal progress spinner
   bool _isWaitingForPurchase = false;
 
+  List<Package> _sortedPackages = [];
+
   final ButtonStyle _buttonStyle = ButtonStyle(
       shape: MaterialStateProperty.resolveWith((states) => StadiumBorder()),
       backgroundColor:
           MaterialStateProperty.resolveWith((states) => Colors.green));
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Attempts to sort the list into the ideal order.
+    // This is a bit brittle, but it's not a huge deal if things are
+    // out of order.
+    _sortedPackages = widget.allIndividuallyPurchasablePackages.toList()
+      ..sort((p1, p2) {
+        return package_model.Package.order.indexOf(p1.identifier) -
+            package_model.Package.order.indexOf(p2.identifier);
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +85,9 @@ class _PurchaseDialogSuccessContentState
                           Text('Unlock', textAlign: TextAlign.center),
                           Padding(
                               padding: EdgeInsets.only(top: 2.0, bottom: 5.0),
-                              child: Text(widget.requestedPackage.product.title,
+                              child: Text(
+                                  prepareIAPTitle(
+                                      widget.requestedPackage.product.title),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -104,7 +124,7 @@ class _PurchaseDialogSuccessContentState
                               child: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Text(
-                                      'Unlock ${widget.requestedPackage.product.title}'))),
+                                      'Unlock ${prepareIAPTitle(widget.requestedPackage.product.title)}'))),
                           Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Row(
@@ -129,7 +149,8 @@ class _PurchaseDialogSuccessContentState
                           Padding(
                               padding: EdgeInsets.only(top: 2.0, bottom: 5.0),
                               child: GradientText(
-                                widget.everythingPackage.product.title,
+                                prepareIAPTitle(
+                                    widget.everythingPackage.product.title),
                                 gradient: colors.isDark
                                     ? Gradients.hotLinear
                                     : Gradients.cosmicFusion,
@@ -157,13 +178,14 @@ class _PurchaseDialogSuccessContentState
                                   child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  for (Package includedPackage in widget
-                                      .allIndividuallyPurchasablePackages)
+                                  for (Package includedPackage
+                                      in _sortedPackages)
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.check, color: Colors.green),
-                                        Text(includedPackage.product.title)
+                                        Text(prepareIAPTitle(
+                                            includedPackage.product.title))
                                       ],
                                     ),
                                 ],
@@ -187,7 +209,7 @@ class _PurchaseDialogSuccessContentState
                             shadowColor:
                                 Gradients.jShine.colors.last.withOpacity(0.25),
                             child: Text(
-                              'Unlock ${widget.everythingPackage.product.title}',
+                              'Unlock ${prepareIAPTitle(widget.everythingPackage.product.title)}',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),

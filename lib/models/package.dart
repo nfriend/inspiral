@@ -14,4 +14,18 @@ class Package {
   static const String custombackgroundcolors =
       'io.nathanfriend.inspiral.custombackgroundcolors';
   static const String everything = 'io.nathanfriend.inspiral.everything';
+
+  /// The order in which the packages should be displayed
+  static const List<String> order = [
+    free,
+    ovalgears,
+    trianglegears,
+    squaregears,
+    pentagongears,
+    specialgears,
+    custompencolors,
+    custombackgroundcolors,
+    airbrushpens,
+    everything
+  ];
 }

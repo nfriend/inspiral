@@ -10,3 +10,4 @@ export 'package:inspiral/extensions/bool_extensions.dart';
 export 'package:inspiral/extensions/int_extensions.dart';
 export 'package:inspiral/extensions/list_extensions.dart';
 export 'package:inspiral/extensions/map_extensions.dart';
+export 'package:inspiral/extensions/string_extensions.dart';
