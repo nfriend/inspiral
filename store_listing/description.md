@@ -9,7 +9,7 @@ Inspiral creates breathtaking, geometric line drawings using a clever system of 
 • Rotate gears in-place tooth-by-tooth for precision drawing
 • Select from over 5000 pen holes
 • Zoom, pan, and rotate the canvas using intuitive multi-touch gestures
-• Rotate the fixed gear using a two-finger gesture
+• Rotate and move the fixed gear, or lock it into place
 • Infinite undo
 • Multiple canvas sizes
 • Crop and rotate your masterpiece before saving or sharing

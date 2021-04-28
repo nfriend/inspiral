@@ -44,6 +44,15 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   /// The list of pointer IDs currently touching this gear
   List<int> pointerIds = [];
 
+  /// Whether or not this gear is locked into place (i.e. it can't
+  /// be moved or rotated)
+  bool get isLocked => _isLocked;
+  bool _isLocked = false;
+  set isLocked(bool value) {
+    _isLocked = value;
+    notifyListeners();
+  }
+
   @override
   void gearPointerDown(PointerDownEvent event) {
     super.gearPointerDown(event);
@@ -70,7 +79,8 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
 
   void gearPointerMove(PointerMoveEvent event) {
     // Disable any gear interactions if we're currently auto-drawing
-    if (rotatingGear.isAutoDrawing) {
+    // or if the fixed gear is locked
+    if (rotatingGear.isAutoDrawing || isLocked) {
       return;
     }
 

@@ -23,9 +23,12 @@ class ToolsSelector extends StatelessWidget {
         (rotatingGear) => rotatingGear.isDrawingCompletePattern);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
+    final isFixedGearLocked =
+        context.select<FixedGearState, bool>((fixedGear) => fixedGear.isLocked);
     final colors = Provider.of<ColorState>(context);
     final colorPicker = Provider.of<ColorPickerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
+    final fixedGear = Provider.of<FixedGearState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(storageKey: 'tools', label: 'TOOLS', children: [
@@ -77,6 +80,15 @@ class ToolsSelector extends StatelessWidget {
                   rotatingGear.drawCompletePattern();
                 },
               ),
+        ActionButton(
+          icon: isFixedGearLocked ? Icons.lock_open : Icons.lock,
+          tooltipMessage:
+              isFixedGearLocked ? 'Unlock fixed gear' : 'Lock fixed gear',
+          isActive: isFixedGearLocked,
+          onButtonTap: () {
+            fixedGear.isLocked = !fixedGear.isLocked;
+          },
+        ),
       ]),
       SelectionrRowDefinition(
           storageKey: 'canvasColor',
