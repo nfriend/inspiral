@@ -156,6 +156,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
     isVisible = result.isVisible;
     position = result.position;
     rotation = result.rotation;
+    isLocked = result.isLocked;
   }
 
   @override

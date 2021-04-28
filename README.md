@@ -55,6 +55,13 @@ _Note:_ I've mostly been using the [VSCode
 plugin](https://flutter.dev/docs/development/tools/devtools/vscode) to launch
 and debug the app.
 
+### Database migrations
+
+Changing the structure of the save data must be managed through
+[`sqflite`])(https://pub.dev/packages/sqflite) migrations. See [the
+docs](https://github.com/tekartik/sqflite/blob/master/sqflite/doc/migration_example.md)
+for an example of how to do this.
+
 ### Building a release
 
 First, bump the version in [`pubspec.yaml`](pubspec.yaml).

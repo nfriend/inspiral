@@ -75,6 +75,7 @@ class StateTable extends Table {
   final String fixedGearPositionY = 'fixedGearPositionY';
   final String fixedGearRotation = 'fixedGearRotation';
   final String fixedGearDefinitionId = 'fixedGearDefinitionId';
+  final String fixedGearIsLocked = 'fixedGearIsLocked';
   final String canvasTransform_0 = 'canvasTransform_0';
   final String canvasTransform_1 = 'canvasTransform_1';
   final String canvasTransform_2 = 'canvasTransform_2';

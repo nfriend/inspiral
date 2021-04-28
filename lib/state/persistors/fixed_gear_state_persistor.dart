@@ -10,12 +10,14 @@ import 'package:inspiral/extensions/extensions.dart';
 class FixedGearStateRehydrationResult extends BaseGearStateRehydrationResult {
   final Offset position;
   final double rotation;
+  final bool isLocked;
 
   FixedGearStateRehydrationResult(
       {@required GearDefinition definition,
       @required bool isVisible,
       @required this.position,
-      @required this.rotation})
+      @required this.rotation,
+      @required this.isLocked})
       : super(definition: definition, isVisible: isVisible);
 }
 
@@ -26,7 +28,8 @@ class FixedGearStatePersistor {
       Schema.state.fixedGearPositionY: fixedGear.position.dy,
       Schema.state.fixedGearRotation: fixedGear.rotation,
       Schema.state.fixedGearDefinitionId: fixedGear.definition.id,
-      Schema.state.gearsAreVisible: fixedGear.isVisible.toInt()
+      Schema.state.gearsAreVisible: fixedGear.isVisible.toInt(),
+      Schema.state.fixedGearIsLocked: fixedGear.isLocked.toInt()
     });
   }
 
@@ -52,6 +55,7 @@ class FixedGearStatePersistor {
         position: Offset(positionX, positionY),
         definition: definition,
         isVisible: (state[Schema.state.gearsAreVisible] as int).toBool(),
+        isLocked: (state[Schema.state.fixedGearIsLocked] as int).toBool(),
         rotation: state[Schema.state.fixedGearRotation] as double);
   }
 }

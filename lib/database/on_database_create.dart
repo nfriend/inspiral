@@ -5,19 +5,19 @@ import 'package:inspiral/database/schema.dart';
 
 Future<void> onDatabaseCreate(Database db, int version) async {
   var batch = db.batch();
-  _createTableColorsV1(batch);
-  _createTableStateV1(batch);
-  _createTableInkLinesV1(batch);
-  _createTableLineSegmentsV1(batch);
-  _createTablePointsV1(batch);
-  _createTableTileDataV1(batch);
-  _createTableTileSnapshotsV1(batch);
+  _createTableColorsV2(batch);
+  _createTableStateV2(batch);
+  _createTableInkLinesV2(batch);
+  _createTableLineSegmentsV2(batch);
+  _createTablePointsV2(batch);
+  _createTableTileDataV2(batch);
+  _createTableTileSnapshotsV2(batch);
   await batch.commit(continueOnError: false, noResult: true);
 }
 
 const _startingAngle = -pi / 2;
 
-void _createTableColorsV1(Batch batch) {
+void _createTableColorsV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.colors}');
   batch.execute('''
     CREATE TABLE ${Schema.colors}(
@@ -90,7 +90,7 @@ void _createTableColorsV1(Batch batch) {
   ''');
 }
 
-void _createTableStateV1(Batch batch) {
+void _createTableStateV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.state}');
   batch.execute('''
     CREATE TABLE ${Schema.state}(
@@ -109,6 +109,7 @@ void _createTableStateV1(Batch batch) {
       ${Schema.state.fixedGearPositionY} REAL NULL,
       ${Schema.state.fixedGearRotation} REAL NOT NULL,
       ${Schema.state.fixedGearDefinitionId} TEXT NOT NULL,
+      ${Schema.state.fixedGearIsLocked} INTEGER CHECK(${Schema.state.fixedGearIsLocked} IN (0, 1)) NOT NULL DEFAULT 0,
       ${Schema.state.canvasTransform_0} REAL NULL,
       ${Schema.state.canvasTransform_1} REAL NULL,
       ${Schema.state.canvasTransform_2} REAL NULL,
@@ -181,7 +182,7 @@ void _createTableStateV1(Batch batch) {
   ''');
 }
 
-void _createTableInkLinesV1(Batch batch) {
+void _createTableInkLinesV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.inkLines}');
   batch.execute('''
     CREATE TABLE ${Schema.inkLines}(
@@ -196,7 +197,7 @@ void _createTableInkLinesV1(Batch batch) {
   ''');
 }
 
-void _createTableLineSegmentsV1(Batch batch) {
+void _createTableLineSegmentsV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.lineSegments}');
   batch.execute('''
     CREATE TABLE ${Schema.lineSegments}(
@@ -207,7 +208,7 @@ void _createTableLineSegmentsV1(Batch batch) {
   ''');
 }
 
-void _createTablePointsV1(Batch batch) {
+void _createTablePointsV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.points}');
   batch.execute('''
     CREATE TABLE ${Schema.points}(
@@ -220,7 +221,7 @@ void _createTablePointsV1(Batch batch) {
   ''');
 }
 
-void _createTableTileDataV1(Batch batch) {
+void _createTableTileDataV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.tileData}');
   batch.execute('''
     CREATE TABLE ${Schema.tileData}(
@@ -232,7 +233,7 @@ void _createTableTileDataV1(Batch batch) {
   ''');
 }
 
-void _createTableTileSnapshotsV1(Batch batch) {
+void _createTableTileSnapshotsV2(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.tileSnapshots}');
   batch.execute('''
     CREATE TABLE ${Schema.tileSnapshots}(

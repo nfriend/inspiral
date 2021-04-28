@@ -1,5 +1,6 @@
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/on_database_create.dart';
+import 'package:inspiral/database/on_database_upgrade.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -15,10 +16,13 @@ Future<Database> getDatabase() async {
   if (_databaseFuture == null || !(await _databaseFuture).isOpen) {
     var databasePath = join(await getDatabasesPath(), localDatabaseName);
 
-    _databaseFuture = openDatabase(databasePath, version: 1,
+    _databaseFuture = openDatabase(databasePath, version: 2,
         onConfigure: (Database db) async {
       await db.execute('PRAGMA foreign_keys = ON;');
-    }, onCreate: onDatabaseCreate, onDowngrade: onDatabaseDowngradeDelete);
+    },
+        onCreate: onDatabaseCreate,
+        onUpgrade: onDatabaseUpgrade,
+        onDowngrade: onDatabaseDowngradeDelete);
   }
 
   return _databaseFuture;
