@@ -57,6 +57,8 @@ and debug the app.
 
 ### Building a release
 
+First, bump the version in [`pubspec.yaml`](pubspec.yaml).
+
 #### Android
 
 ```sh
