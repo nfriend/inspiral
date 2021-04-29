@@ -72,6 +72,9 @@ First, bump the version in [`pubspec.yaml`](pubspec.yaml).
 flutter clean && flutter build appbundle
 ```
 
+Upload the generated file (`build/app/outputs/bundle/release/app-release.aab`)
+through the Google Play Console website.
+
 #### iOS
 
 Make sure to replace `ABCD1234` with the app's real Apple ID.
@@ -79,6 +82,10 @@ Make sure to replace `ABCD1234` with the app's real Apple ID.
 ```sh
 flutter clean && flutter build ipa --dart-define=appStoreId=ABCD1234
 ```
+
+Then, open the generated file (`build/ios/archive/Runner.xcarchive`) in Xcode.
+Validate (optional) and then Distribute the app, uploading directly through App
+Store Connect.
 
 ### Generating gears
 
