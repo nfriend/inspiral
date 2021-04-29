@@ -56,19 +56,20 @@ export default function Home() {
               </header>
               <p>Relive your childhood in pixel-perfect bliss.</p>
               <div className="flex justify-center">
-                <img
-                  src="images/google-play-badge.svg"
+                <a
+                  href="https://play.google.com/store/apps/details?id=io.nathanfriend.inspiral"
                   className="flex-1 app-store-button mr-5"
-                />
-                <img
-                  src="images/app-store-badge.svg"
+                >
+                  <img src="images/google-play-badge.svg" />
+                </a>
+                <a
+                  href="https://apps.apple.com/us/app/inspiral-gear-art/id1558340425"
                   className="flex-1 app-store-button"
-                />
+                >
+                  <img src="images/app-store-badge.svg" />
+                </a>
               </div>
-              <div className="flex justify-center pb-10">
-                <img src="images/coming-soon.png" className="w-40" />
-              </div>
-              <div className="flex justify-center">{socialIcons}</div>
+              <div className="flex justify-center mt-2">{socialIcons}</div>
             </div>
           </div>
           <div className="flex-1">
