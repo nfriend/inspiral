@@ -7,6 +7,7 @@ import 'package:inspiral/widgets/purchases/purchase_dialog_success_content.dart'
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:inspiral/models/package.dart' as inspiral_package;
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class PurchaseDialog extends StatefulWidget {
   /// The current PurchasesState object. This must be manually passed since
@@ -32,17 +33,58 @@ class PurchaseDialog extends StatefulWidget {
   _PurchaseDialogState createState() => _PurchaseDialogState();
 }
 
+class _SuccessContentParams {
+  final Iterable<Package> allIndividuallyPurchasablePackages;
+  final Package everythingPackage;
+  final Package requestedPackage;
+
+  _SuccessContentParams(
+      {this.allIndividuallyPurchasablePackages,
+      this.everythingPackage,
+      this.requestedPackage});
+}
+
 class _PurchaseDialogState extends State<PurchaseDialog> {
   /// Whether or not to show the error message in the dialog
   bool _showErrorMessage = false;
 
-  Future<Offering> _offeringFuture;
+  Future<_SuccessContentParams> _successContentFuture;
 
   @override
   void initState() {
     super.initState();
 
-    _offeringFuture = widget.purchases.getCurrentOffering();
+    _successContentFuture =
+        widget.purchases.getCurrentOffering().then((Offering offering) {
+      var allIndividuallyPurchasablePackages = offering.availablePackages
+          .where((p) => p.identifier != inspiral_package.Package.everything);
+
+      if (allIndividuallyPurchasablePackages.isEmpty) {
+        throw 'no available packages were found';
+      }
+
+      var everythingPackage =
+          offering.getPackage(inspiral_package.Package.everything);
+
+      if (everythingPackage == null) {
+        throw 'the ${inspiral_package.Package.everything} package was not found';
+      }
+
+      var requestedPackage = offering.getPackage(widget.package);
+
+      if (requestedPackage == null) {
+        throw 'the $requestedPackage package was not found';
+      }
+
+      return _SuccessContentParams(
+          allIndividuallyPurchasablePackages:
+              allIndividuallyPurchasablePackages,
+          everythingPackage: everythingPackage,
+          requestedPackage: requestedPackage);
+    }).catchError((error, stackTrace) {
+      Sentry.captureException(error, stackTrace: stackTrace);
+      throw error;
+    });
   }
 
   @override
@@ -59,25 +101,15 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
         ChangeNotifierProvider.value(value: widget.colors)
       ],
       child: FutureBuilder(
-          future: _offeringFuture,
-          builder: (BuildContext context, AsyncSnapshot<Offering> snapshot) {
+          future: _successContentFuture,
+          builder: (BuildContext context,
+              AsyncSnapshot<_SuccessContentParams> snapshot) {
             if (snapshot.hasData) {
-              final offering = snapshot.data;
-
-              var allIndividuallyPurchasablePackages =
-                  offering.availablePackages.where((p) =>
-                      p.identifier != inspiral_package.Package.everything);
-
-              var everythingPackage =
-                  offering.getPackage(inspiral_package.Package.everything);
-
-              var requestedPackage = offering.getPackage(widget.package);
-
               return PurchaseDialogSuccessContent(
-                requestedPackage: requestedPackage,
-                everythingPackage: everythingPackage,
+                requestedPackage: snapshot.data.requestedPackage,
+                everythingPackage: snapshot.data.everythingPackage,
                 allIndividuallyPurchasablePackages:
-                    allIndividuallyPurchasablePackages,
+                    snapshot.data.allIndividuallyPurchasablePackages,
                 onPurchaseButtonPressed: _purchaseButtonPressed,
               );
             } else if (snapshot.hasError) {
