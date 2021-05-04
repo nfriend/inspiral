@@ -15,7 +15,6 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final settings = SettingsState.init();
   final selectorDrawer = SelectorDrawerState.init();
   final purchases = PurchasesState.init();
-
   final colors = ColorState.init();
   final colorPicker = ColorPickerState.init();
   final stroke = StrokeState.init();
@@ -26,6 +25,7 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
   final dragLine = DragLineState.init();
   final fixedGear = FixedGearState.init();
   final snackbarState = SnackbarState.init();
+  final snapPoints = SnapPointState.init();
 
   // Link up dependencies between the singletons
   settings
@@ -53,7 +53,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     ..fixedGear = fixedGear
     ..ink = ink
     ..settings = settings
-    ..selectorDrawer = selectorDrawer;
+    ..selectorDrawer = selectorDrawer
+    ..snapPoints = snapPoints;
   dragLine
     ..canvas = canvas
     ..rotatingGear = rotatingGear
@@ -65,7 +66,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     ..ink = ink
     ..dragLine = dragLine
     ..settings = settings
-    ..selectorDrawer = selectorDrawer;
+    ..selectorDrawer = selectorDrawer
+    ..snapPoints = snapPoints;
 
   // Order matters. The order in which these state object are specified
   // here is the order in which they will be hydrated (which matters
@@ -84,7 +86,8 @@ Future<Iterable<Persistable>> initializeAllStateSingletons(
     rotatingGear,
     dragLine,
     colorPicker,
-    snackbarState
+    snackbarState,
+    snapPoints
   ];
 
   var db = await getDatabase();

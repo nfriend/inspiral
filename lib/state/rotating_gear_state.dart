@@ -68,6 +68,7 @@ class RotatingGearState extends BaseGearState {
   FixedGearState fixedGear;
   DragLineState dragLine;
   InkState ink;
+  SnapPointState snapPoints;
 
   GearHole _activeHole;
   GearHole get activeHole => _activeHole;
@@ -293,6 +294,9 @@ class RotatingGearState extends BaseGearState {
   /// too far from the previous point, a number of intermediate points are drawn
   /// to keep the drawn line from appearing choppy.
   void _drawPoints(RotationResult result, double angle, {bool force = false}) {
+    // Add a new snap point at the fixed gear's center
+    snapPoints.addSnapPoint(fixedGear.position);
+
     // If `lastPoint` is `null`, this means there is no last point to compare
     // to, so we should just draw the current point immediately.
     if (ink.lastPoint == null) {

@@ -40,6 +40,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   RotatingGearState rotatingGear;
   DragLineState dragLine;
   InkState ink;
+  SnapPointState snapPoints;
 
   /// The list of pointer IDs currently touching this gear
   List<int> pointerIds = [];
@@ -91,9 +92,12 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
           canvas.canvasSize.width + allowedDistanceFromCanvasEdge,
           canvas.canvasSize.height + allowedDistanceFromCanvasEdge);
 
-      final newPosition =
+      final unSnappedNewPosition =
           (canvas.pixelToCanvasPosition(event.position) - dragOffset)
               .clamp(dragBounds);
+
+      final newPosition =
+          snapPoints.snapPositionToNearestPoint(unSnappedNewPosition);
 
       rotatingGear.fixedGearDrag(position - newPosition);
       dragLine.fixedGearDrag(position - newPosition);

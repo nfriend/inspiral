@@ -8,6 +8,7 @@ import 'package:inspiral/widgets/fixed_gear.dart';
 import 'package:inspiral/widgets/fresh_ink_canvas.dart';
 import 'package:inspiral/widgets/hole_selector.dart';
 import 'package:inspiral/widgets/rotating_gear.dart';
+import 'package:inspiral/widgets/snap_points.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -66,6 +67,7 @@ class CanvasContainer extends StatelessWidget {
                     canvas.appBackgroundOrCanvasMove(event);
                   }),
             )),
+        SnapPoints(),
         _wrapInPositioned(canvasSize: canvasSize, child: FixedGear()),
         _wrapInPositioned(canvasSize: canvasSize, child: RotatingGear()),
         _wrapInPositioned(canvasSize: canvasSize, child: HoleSelector()),

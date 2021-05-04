@@ -34,4 +34,9 @@ extension OffsetExtensions on Offset {
       dy.clamp(bounds.top, bounds.bottom).toDouble(),
     );
   }
+
+  /// Returns the distance from this Offset to a second Offset
+  double distanceTo(Offset other) {
+    return sqrt((pow(dx - other.dx, 2) + pow(dy - other.dy, 2)).toDouble());
+  }
 }

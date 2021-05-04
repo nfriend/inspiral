@@ -54,7 +54,8 @@ class _InspiralProvidersState extends State<InspiralProviders>
               ChangeNotifierProvider(create: (context) => DragLineState()),
               ChangeNotifierProvider(create: (context) => FixedGearState()),
               ChangeNotifierProvider(create: (context) => ColorPickerState()),
-              ChangeNotifierProvider(create: (context) => SnackbarState())
+              ChangeNotifierProvider(create: (context) => SnackbarState()),
+              ChangeNotifierProvider(create: (context) => SnapPointState()),
             ], child: widget.child);
           } else {
             // Note: If the startup time is slow enough, consider

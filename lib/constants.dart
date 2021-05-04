@@ -28,6 +28,16 @@ final Size debugDotSize = Size(4, 4) * scaleFactor;
 /// The size of the ink dot that renders inside the active gear hole
 final Size inkDotSize = debugDotSize;
 
+/// The size of the outside of the "snap point" dots
+final Size snapPointOuterSize = Size(7, 7) * scaleFactor;
+
+/// The size of the inside of the "snap point" dots
+final Size snapPointInnerSize = Size(4, 4) * scaleFactor;
+
+/// How close to the snap points the fixed gear needs to be
+/// in order to be snapped to its position
+final double snapPointThreshold = 8.0 * scaleFactor;
+
 /// The length of each gear tooth
 const double toothLength = 5;
 
