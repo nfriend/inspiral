@@ -50,11 +50,11 @@ class SnapPointState extends ChangeNotifier with Persistable {
     }
   }
 
-  /// Whether or not the snap points are visible
-  bool get areVisible => _areVisible;
-  bool _areVisible = true;
-  set areVisible(bool value) {
-    _areVisible = value;
+  /// Whether or not the snap points are active
+  bool get areActive => _areActive;
+  bool _areActive = true;
+  set areActive(bool value) {
+    _areActive = value;
     notifyListeners();
   }
 
@@ -73,6 +73,11 @@ class SnapPointState extends ChangeNotifier with Persistable {
   /// If the position is not close enough to snap to any snap points,
   /// the original Offset is returned.
   Offset snapPositionToNearestPoint(Offset position) {
+    if (!areActive) {
+      activeSnapPoint = null;
+      return position;
+    }
+
     _SnapPointAndDistance closestSnapPoint;
     for (var point in _snapPoints) {
       var distance = point.distanceTo(position);

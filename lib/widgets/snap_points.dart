@@ -15,7 +15,7 @@ class SnapPoints extends StatelessWidget {
         context.select<FixedGearState, bool>((state) => state.isVisible);
     final snapPointsState = Provider.of<SnapPointState>(context);
 
-    if (!isFixedGearVisible || !snapPointsState.areVisible) {
+    if (!isFixedGearVisible || !snapPointsState.areActive) {
       return Container();
     }
 

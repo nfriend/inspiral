@@ -25,10 +25,13 @@ class ToolsSelector extends StatelessWidget {
         (rotatingGear) => rotatingGear.isVisible);
     final isFixedGearLocked =
         context.select<FixedGearState, bool>((fixedGear) => fixedGear.isLocked);
+    final areSnapPointsActive = context
+        .select<SnapPointState, bool>((snapPoints) => snapPoints.areActive);
     final colors = Provider.of<ColorState>(context);
     final colorPicker = Provider.of<ColorPickerState>(context);
     final rotatingGear = Provider.of<RotatingGearState>(context, listen: false);
     final fixedGear = Provider.of<FixedGearState>(context, listen: false);
+    final snapPoints = Provider.of<SnapPointState>(context, listen: false);
 
     return SelectionRows(rowDefs: [
       SelectionrRowDefinition(storageKey: 'tools', label: 'TOOLS', children: [
@@ -87,6 +90,15 @@ class ToolsSelector extends StatelessWidget {
           isActive: isFixedGearLocked,
           onButtonTap: () {
             fixedGear.isLocked = !fixedGear.isLocked;
+          },
+        ),
+        ActionButton(
+          icon: Icons.adjust,
+          tooltipMessage:
+              areSnapPointsActive ? 'Hide snap points' : 'Show snap points',
+          isActive: areSnapPointsActive,
+          onButtonTap: () {
+            snapPoints.areActive = !snapPoints.areActive;
           },
         ),
       ]),
