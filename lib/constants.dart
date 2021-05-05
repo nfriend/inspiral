@@ -36,7 +36,7 @@ final Size snapPointInnerSize = Size(4, 4) * scaleFactor;
 
 /// How close to the snap points the fixed gear needs to be
 /// in order to be snapped to its position
-final double snapPointThreshold = 8.0 * scaleFactor;
+final double snapPointThreshold = 10.0 * scaleFactor;
 
 /// The length of each gear tooth
 const double toothLength = 5;
