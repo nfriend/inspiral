@@ -7,6 +7,8 @@ import 'package:sqflite/sqlite_api.dart';
 Future<Database> _databaseFuture;
 
 /// Returns a `Database` instance that is ready to read/write local data
+/// A database name and version can optionally be supplied. These parameters
+/// should only be used in tests.
 Future<Database> getDatabase(
     {int version = localDatabaseVersion,
     String databaseName = localDatabaseName}) async {

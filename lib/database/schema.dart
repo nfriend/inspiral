@@ -10,6 +10,7 @@ class Schema {
   static const PointsTable points = PointsTable();
   static const TileDataTable tileData = TileDataTable();
   static const TileSnapshots tileSnapshots = TileSnapshots();
+  static const SnapPoints snapPoints = SnapPoints();
 }
 
 class Table {
@@ -99,6 +100,7 @@ class StateTable extends Table {
   final String dragLinePositionY = 'dragLinePositionY';
   final String dragLineAngle = 'dragLineAngle';
   final String lastTileSnapshotVersion = 'lastTileSnapshotVersion';
+  final String snapPointsAreActive = 'snapPointsAreActive';
 }
 
 class InkLinesTable extends Table {
@@ -143,5 +145,15 @@ class TileSnapshots extends Table {
 
   final String id = 'id';
   final String tileDataId = 'tileDataId';
+  final String version = 'version';
+}
+
+class SnapPoints extends Table {
+  const SnapPoints() : super(name: 'snapPoints');
+
+  final String id = 'id';
+  final String x = 'x';
+  final String y = 'y';
+  final String isActive = 'isActive';
   final String version = 'version';
 }

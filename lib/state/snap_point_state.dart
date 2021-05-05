@@ -3,6 +3,8 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:inspiral/state/persistors/snap_point_state_persistor.dart';
+import 'package:sqflite/sqflite.dart';
 
 class _SnapPointAndDistance {
   final Offset snapPoint;
@@ -96,5 +98,20 @@ class SnapPointState extends ChangeNotifier with Persistable {
       activeSnapPoint = null;
       return position;
     }
+  }
+
+  @override
+  void persist(Batch batch) {
+    SnapPointStatePersistor.persist(batch, this);
+  }
+
+  @override
+  Future<void> rehydrate(Database db, BuildContext context) async {
+    var result = await SnapPointStatePersistor.rehydrate(db);
+
+    _snapPoints.removeWhere((element) => true);
+    _snapPoints.addAll(result.snapPoints);
+    _areActive = result.areActive;
+    _activeSnapPoint = result.activeSnapPoint;
   }
 }

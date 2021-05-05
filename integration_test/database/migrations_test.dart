@@ -6,6 +6,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:sqflite/sqflite.dart' hide deleteDatabase;
 
 import 'helpers/seed_v1_data.dart';
+import 'helpers/seed_v3_data.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,22 @@ void main() {
 
       expect(rows.length, 1);
       expect(rows[0][Schema.state.fixedGearIsLocked], 0);
+    });
+
+    testWidgets('upgrade from version 2 to version 3',
+        (WidgetTester tester) async {
+      db = await getDatabase(version: 3, databaseName: testDatabaseName);
+
+      await seedV3Data(db);
+
+      final stateRows = await db.query(Schema.state.toString());
+
+      expect(stateRows.length, 1);
+      expect(stateRows[0][Schema.state.snapPointsAreActive], 1);
+
+      final snapPointRows = await db.query(Schema.snapPoints.toString());
+
+      expect(snapPointRows.length, 3);
     });
   });
 }

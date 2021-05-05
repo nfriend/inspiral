@@ -5,18 +5,18 @@ import 'package:sqflite/sqflite.dart';
 
 /// The very first migration. Called when the database is first created.
 void upgradeV0ToV1(Batch batch) {
-  _createTableColorsV2(batch);
-  _createTableStateV2(batch);
-  _createTableInkLinesV2(batch);
-  _createTableLineSegmentsV2(batch);
-  _createTablePointsV2(batch);
-  _createTableTileDataV2(batch);
-  _createTableTileSnapshotsV2(batch);
+  _createTableColors(batch);
+  _createTableState(batch);
+  _createTableInkLines(batch);
+  _createTableLineSegments(batch);
+  _createTablePoints(batch);
+  _createTableTileData(batch);
+  _createTableTileSnapshots(batch);
 }
 
 const _startingAngle = -pi / 2;
 
-void _createTableColorsV2(Batch batch) {
+void _createTableColors(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.colors}');
   batch.execute('''
     CREATE TABLE ${Schema.colors}(
@@ -89,7 +89,7 @@ void _createTableColorsV2(Batch batch) {
   ''');
 }
 
-void _createTableStateV2(Batch batch) {
+void _createTableState(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.state}');
   batch.execute('''
     CREATE TABLE ${Schema.state}(
@@ -180,7 +180,7 @@ void _createTableStateV2(Batch batch) {
   ''');
 }
 
-void _createTableInkLinesV2(Batch batch) {
+void _createTableInkLines(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.inkLines}');
   batch.execute('''
     CREATE TABLE ${Schema.inkLines}(
@@ -195,7 +195,7 @@ void _createTableInkLinesV2(Batch batch) {
   ''');
 }
 
-void _createTableLineSegmentsV2(Batch batch) {
+void _createTableLineSegments(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.lineSegments}');
   batch.execute('''
     CREATE TABLE ${Schema.lineSegments}(
@@ -206,7 +206,7 @@ void _createTableLineSegmentsV2(Batch batch) {
   ''');
 }
 
-void _createTablePointsV2(Batch batch) {
+void _createTablePoints(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.points}');
   batch.execute('''
     CREATE TABLE ${Schema.points}(
@@ -219,7 +219,7 @@ void _createTablePointsV2(Batch batch) {
   ''');
 }
 
-void _createTableTileDataV2(Batch batch) {
+void _createTableTileData(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.tileData}');
   batch.execute('''
     CREATE TABLE ${Schema.tileData}(
@@ -231,7 +231,7 @@ void _createTableTileDataV2(Batch batch) {
   ''');
 }
 
-void _createTableTileSnapshotsV2(Batch batch) {
+void _createTableTileSnapshots(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.tileSnapshots}');
   batch.execute('''
     CREATE TABLE ${Schema.tileSnapshots}(
