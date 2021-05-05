@@ -42,6 +42,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var colors = Provider.of<ColorState>(context, listen: false);
     var canvas = Provider.of<CanvasState>(context, listen: false);
     var ink = Provider.of<InkState>(context, listen: false);
+    var snapPoints = Provider.of<SnapPointState>(context, listen: false);
     var settings = Provider.of<SettingsState>(context);
     var eraseAvailable =
         context.select<InkState, bool>((ink) => ink.eraseAvailable);
@@ -78,6 +79,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                       onConfirm: () {
                         Navigator.of(context).pop();
                         ink.eraseCanvas();
+                        snapPoints.eraseAllSnapPoints();
                       });
                 }
               : null),

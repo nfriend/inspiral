@@ -27,6 +27,7 @@ class CanvasState extends ChangeNotifier with Persistable {
   PointersState pointers;
   InkState ink;
   FixedGearState fixedGear;
+  SnapPointState snapPoints;
 
   Matrix4 _transform;
 
@@ -78,6 +79,7 @@ class CanvasState extends ChangeNotifier with Persistable {
     // Wait for any pending canvas manipulations to complete
     await ink.pendingCanvasManipulation;
     ink.eraseCanvas();
+    snapPoints.eraseAllSnapPoints();
     _updateCanvasSizeDependents(newSize);
     fixedGear.resetPosition();
     recenterView(context);

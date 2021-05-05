@@ -100,6 +100,12 @@ class SnapPointState extends ChangeNotifier with Persistable {
     }
   }
 
+  /// Erases all snap points
+  void eraseAllSnapPoints() {
+    _snapPoints.removeWhere((element) => true);
+    notifyListeners();
+  }
+
   @override
   void persist(Batch batch) {
     SnapPointStatePersistor.persist(batch, this);
