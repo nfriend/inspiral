@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:inspiral/models/canvas_size.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:inspiral/database/schema.dart';
+import 'package:inspiral/models/canvas_size.dart';
+import 'package:sqflite/sqflite.dart';
 
-Future<void> onDatabaseCreate(Database db, int version) async {
-  var batch = db.batch();
+/// The very first migration. Called when the database is first created.
+void upgradeV0ToV1(Batch batch) {
   _createTableColorsV2(batch);
   _createTableStateV2(batch);
   _createTableInkLinesV2(batch);
@@ -12,7 +12,6 @@ Future<void> onDatabaseCreate(Database db, int version) async {
   _createTablePointsV2(batch);
   _createTableTileDataV2(batch);
   _createTableTileSnapshotsV2(batch);
-  await batch.commit(continueOnError: false, noResult: true);
 }
 
 const _startingAngle = -pi / 2;
@@ -109,7 +108,6 @@ void _createTableStateV2(Batch batch) {
       ${Schema.state.fixedGearPositionY} REAL NULL,
       ${Schema.state.fixedGearRotation} REAL NOT NULL,
       ${Schema.state.fixedGearDefinitionId} TEXT NOT NULL,
-      ${Schema.state.fixedGearIsLocked} INTEGER CHECK(${Schema.state.fixedGearIsLocked} IN (0, 1)) NOT NULL DEFAULT 0,
       ${Schema.state.canvasTransform_0} REAL NULL,
       ${Schema.state.canvasTransform_1} REAL NULL,
       ${Schema.state.canvasTransform_2} REAL NULL,
@@ -216,7 +214,7 @@ void _createTablePointsV2(Batch batch) {
       ${Schema.points.lineSegmentId} TEXT NULL REFERENCES ${Schema.lineSegments}(${Schema.lineSegments.id}),
       ${Schema.points.x} REAL NOT NULL,
       ${Schema.points.y} REAL NOT NULL,
-      "${Schema.inkLines.order}" INTEGER NOT NULL
+      "${Schema.points.order}" INTEGER NOT NULL
     )
   ''');
 }

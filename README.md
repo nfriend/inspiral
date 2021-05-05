@@ -62,6 +62,26 @@ Changing the structure of the save data must be managed through
 docs](https://github.com/tekartik/sqflite/blob/master/sqflite/doc/migration_example.md)
 for an example of how to do this.
 
+#### Database migration tests
+
+Database migrations are covered by an [integration
+test](integration_test/database/migrations_test.dart) that upgrades a test
+database from version 0 all the way to the latest version. It makes sure no
+errors occur while running some smoke tests along the way. When a new migration
+is added, be sure to add a test case for the new migration, and seed the
+database with semi-realistic data for each new version.
+
+The test can be run like this:
+
+```sh
+flutter drive \
+  --driver=test_driver/integration_test.dart \
+  --target=integration_test/database/migrations_test.dart \
+  -d <device id here>
+```
+
+`<device id here>` can be found by running `flutter devices`.
+
 ### Building a release
 
 First, bump the version in [`pubspec.yaml`](pubspec.yaml).

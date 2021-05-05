@@ -58,6 +58,8 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  flutter_driver:
+    sdk: flutter
   xml: ^5.1.0
   ansicolor: ^2.0.1
   test: ^1.15.7

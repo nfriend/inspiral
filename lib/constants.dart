@@ -87,6 +87,9 @@ const double selectorDrawerHeight = 168.0;
 /// The name of the local SQLite database to use for persisting app state
 const String localDatabaseName = 'inspiral.db';
 
+/// The version of the local database file. Used for performing migrations.
+const int localDatabaseVersion = 3;
+
 /// The maximum zoom scale
 const double maxScale = 2.0;
 
