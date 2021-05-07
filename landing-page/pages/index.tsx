@@ -69,14 +69,14 @@ export default function Home() {
                   <img src="images/app-store-badge.svg" />
                 </a>
               </div>
-              <div className="flex justify-center mt-2">{socialIcons}</div>
+              <div className="flex justify-center mt-2 mb-4">{socialIcons}</div>
             </div>
           </div>
           <div className="flex-1">
             <img
               className="sm:flex-1 sm:py-10 max-h-90-screen"
               alt="A screenshot of the Inspiral app"
-              src="images/screenshot.png"
+              src="images/screenshot_2.png"
             />
           </div>
         </div>
