@@ -57,4 +57,9 @@ class PurchasesState extends InspiralStateObject {
 
     return offerings.current;
   }
+
+  /// Restores purchases in the case when the app is reinstalled.
+  Future<void> restorePurchases() async {
+    await Purchases.restoreTransactions();
+  }
 }

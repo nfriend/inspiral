@@ -87,9 +87,26 @@ level 16 - Android 4.1, Jelly Bean). It's wise to run these tests on both the
 newest and oldest supported devices, to make sure the SQLite code in this
 project is compatible with all compatible OSs.
 
+### Passing environment variables at build time
+
+To pass an environment variable to the app at compile time, use `--dart-define`:
+
+```sh
+flutter run --dart-define=mySecret=ABCD1234
+```
+
+Environment variables are then referenced in the app using the
+[`EnvironmentConfig](`lib/environment_config.dart`) class.
+
 ### Building a release
 
 First, bump the version in [`pubspec.yaml`](pubspec.yaml).
+
+Bump the _semantic version_ portion (`1.2.3`) according to the type of change
+(i.e. major, minor, or patch).
+
+Bump the _build number_ portion (`+13`) by one, regardless of the type of
+change.
 
 #### Android
 
@@ -102,10 +119,8 @@ through the Google Play Console website.
 
 #### iOS
 
-Make sure to replace `ABCD1234` with the app's real Apple ID.
-
 ```sh
-flutter clean && flutter build ipa --dart-define=appStoreId=ABCD1234
+flutter clean && flutter build ipa
 ```
 
 Then, open the generated file (`build/ios/archive/Runner.xcarchive`) in Xcode.
@@ -142,17 +157,6 @@ version of Flutter you are using locally:
 ```yml
 default:
   image: cirrusci/flutter:2.1.0-12.1.pre
-```
-
-**The app store review link is not working in iOS.**
-
-In order for the app store review link to work (in iOS), the `appStoreId`
-environment variable must be set to the app's store ID.
-
-Environment variables are passed at build-time using `--dart-define`:
-
-```sh
-flutter run --dart-define=appStoreId=ABCD1234
 ```
 
 Android does not require this configuration.

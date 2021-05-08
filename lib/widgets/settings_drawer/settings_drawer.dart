@@ -44,6 +44,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var canvas = Provider.of<CanvasState>(context, listen: false);
     var ink = Provider.of<InkState>(context, listen: false);
     var snapPoints = Provider.of<SnapPointState>(context, listen: false);
+    var purchases = Provider.of<PurchasesState>(context, listen: false);
+    var progress = Provider.of<ProgressState>(context, listen: false);
     var settings = Provider.of<SettingsState>(context);
     var inkIsBaking = context.select<InkState, bool>((ink) => ink.isBaking);
     var isUndoing =
@@ -143,13 +145,22 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               return Container();
             }
           }),
-      appStoreReviewTile,
+      ListTile(
+        title: Text('Restore purchases'),
+        onTap: () async {
+          progress.showModalProgress(message: 'Restoring purchases...');
+          await purchases.restorePurchases();
+          progress.hideModalPropress();
+          Navigator.of(context).pop();
+        },
+      ),
       ListTile(
         title: Text('Help'),
         onTap: () {
           Navigator.pushNamed(context, InspiralRoutes.help);
         },
       ),
+      appStoreReviewTile
     ];
 
     var debugSettingsItems = <Widget>[];
