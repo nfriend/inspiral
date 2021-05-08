@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/environment_config.dart';
 import 'package:inspiral/models/entitlement.dart';
+import 'package:inspiral/routes.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/delete_database.dart';
 import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
@@ -142,7 +143,13 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               return Container();
             }
           }),
-      appStoreReviewTile
+      appStoreReviewTile,
+      ListTile(
+        title: Text('Help'),
+        onTap: () {
+          Navigator.pushNamed(context, InspiralRoutes.help);
+        },
+      ),
     ];
 
     var debugSettingsItems = <Widget>[];
