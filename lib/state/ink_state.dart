@@ -3,15 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/helpers/bake_image.dart' as helpers;
-import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/state/undoers/ink_state_undoer.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqlite_api.dart';
 
-class InkState extends ChangeNotifier with Persistable {
+class InkState extends InspiralStateObject {
   static InkState _instance;
 
   factory InkState.init() {
@@ -29,13 +28,23 @@ class InkState extends ChangeNotifier with Persistable {
   ColorState colors;
   StrokeState stroke;
   CanvasState canvas;
+  UndoRedoState undoRedo;
 
   final List<InkLine> _lines = [];
-  bool _isBaking = false;
-  bool _isUndoing = false;
+
   final Map<Offset, Image> _tileImages = {};
   final Map<Offset, String> _tilePositionToDatabaseId = {};
+  final Map<Offset, Image> _unsavedTiles = {};
+
   Offset _lastPoint;
+
+  /// Whether or not this state object is currently in the "ink baking" state
+  bool get isBaking => _isBaking;
+  bool _isBaking = false;
+  set isBaking(bool value) {
+    _isBaking = value;
+    notifyListeners();
+  }
 
   /// The total number of points included in the the drawing.
   int get currentPointCount =>
@@ -46,6 +55,12 @@ class InkState extends ChangeNotifier with Persistable {
   /// the position of the tile's top-left corner in canvas coordinates.
   Map<Offset, Image> get tileImages => _tileImages;
 
+  /// A map of positions to the database ID of the Image data at that position
+  Map<Offset, String> get tilePositionToDatabaseId => _tilePositionToDatabaseId;
+
+  /// A map of positions to Image data that has not yet been persisted
+  Map<Offset, Image> get unsavedTiles => _unsavedTiles;
+
   /// A list of Path objects that describe the lines drawn on the Canvas
   List<InkLine> get lines => _lines;
 
@@ -53,26 +68,9 @@ class InkState extends ChangeNotifier with Persistable {
   /// if there is no current line
   Offset get lastPoint => _lastPoint;
 
-  /// The most recent snapshot version number. Used to keep track of the
-  /// undo/redo stack.
-  int get lastSnapshotVersion => _lastSnapshotVersion;
-  int _lastSnapshotVersion;
-
   /// A `Future` that allows other processes to wait until any async canvas
   /// manipulation (undo or baking) is complete and run code after.
   Future<void> pendingCanvasManipulation = Future<void>.value();
-
-  /// Whether or not there is content that can be undone, and
-  /// if it's okay to call undo right now (i.e., there are no
-  /// pending operations that would prevent an undo).
-  bool get undoAvailable =>
-      !_isBaking &&
-      !_isUndoing &&
-      (lastSnapshotVersion > 0 || currentPointCount > 0);
-
-  /// Whether or not this object is in a state that allows the canvas
-  /// to be erased.
-  bool get eraseAvailable => !_isBaking && !_isUndoing;
 
   /// Add points to the current line.
   /// If there is no current line, a new one is created.
@@ -134,11 +132,14 @@ class InkState extends ChangeNotifier with Persistable {
   /// `save_share_image.dart` using `addPostFrameCallback`
   /// for a complete example.
   Future<void> bakeImage() async {
-    if (_isBaking || _isUndoing || currentPointCount == 0) {
+    if (isBaking ||
+        undoRedo.isUndoing ||
+        lines.isEmpty ||
+        currentPointCount == 0) {
       return;
     }
 
-    _isBaking = true;
+    isBaking = true;
 
     var pendingCanvasManipulationCompleter = Completer();
     pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
@@ -146,28 +147,25 @@ class InkState extends ChangeNotifier with Persistable {
     notifyListeners();
 
     try {
-      await helpers.bakeImage(
+      var updatedTiles = await helpers.bakeImage(
           lines: lines,
           tileImages: _tileImages,
           tilePositionToDatabaseId: _tilePositionToDatabaseId,
-          tileSize: canvas.tileSize,
-          snapshotVersion: lastSnapshotVersion + 1);
+          tileSize: canvas.tileSize);
 
-      // Wait to actually increment this variable until `bakeImage` is done.
-      // This _usually_ doesn't matter, but there's potential the app could be
-      // closed while `bakeImage` is running. This would trigger the state
-      // object to be persisted, opening up the possibility that the version
-      // will be recorded without the `bakeImage` ever finishing.
-      _lastSnapshotVersion++;
+      _unsavedTiles.addAll(updatedTiles);
+
+      await undoRedo.createSnapshot();
     } catch (err, stackTrace) {
       // Explicitly catching/handling errors here since `bakeImage` is often
       // called in synchronous contexts, and the return value is ignored.
       // This causes errors to be silently swallowed.
+      print('an error occured while baking the image: $err');
       await Sentry.captureException(err, stackTrace: stackTrace);
     } finally {
-      // Regardless of success or failure, set `_isBaking` back to `false`
-      // to prevent blocking future calls to `_isBaking`.
-      _isBaking = false;
+      // Regardless of success or failure, set `isBaking` back to `false`
+      // to prevent blocking future calls to `isBaking`.
+      isBaking = false;
 
       notifyListeners();
 
@@ -177,7 +175,7 @@ class InkState extends ChangeNotifier with Persistable {
 
   /// Erases the canvas, including both baked and unbaked lines.
   void eraseCanvas() {
-    if (_isBaking || _isUndoing) {
+    if (isBaking || undoRedo.isUndoing) {
       return;
     }
 
@@ -187,55 +185,49 @@ class InkState extends ChangeNotifier with Persistable {
     _tileImages.removeAll();
     _tilePositionToDatabaseId.removeAll();
     _lines.removeAll();
-    _lastSnapshotVersion = 0;
+    undoRedo.clearAllSnapshots();
 
     notifyListeners();
 
     bakeImage();
   }
 
-  Future<void> undo() async {
-    if (_isUndoing || _isBaking) {
-      return;
-    }
-
-    // If there are any "unbaked" points, erase these first and exit early.
-    // Otherwise, rollback the actual baked tiles to a previous version below.
-    if (currentPointCount > 0) {
-      _lines.removeAll();
-      notifyListeners();
-      return;
-    }
-
-    _isUndoing = true;
-
+  @override
+  Future<void> undo(int version) async {
     var pendingCanvasManipulationCompleter = Completer();
     pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
 
     notifyListeners();
 
-    _lastSnapshotVersion--;
+    await InkStateUndoer.undo(version, this);
 
-    try {
-      var tileVersionResult = await getTilesForVersion(lastSnapshotVersion);
+    notifyListeners();
 
-      _tileImages
-        ..removeAll()
-        ..addAll(tileVersionResult.tileImages);
-      _lines.removeAll();
-      _tilePositionToDatabaseId
-        ..removeAll()
-        ..addAll(tileVersionResult.tilePositionToDatabaseId);
-    } catch (err, stackTrace) {
-      // See note about explicitly catching errors in `bakeImage` above
-      await Sentry.captureException(err, stackTrace: stackTrace);
-    } finally {
-      _isUndoing = false;
+    pendingCanvasManipulationCompleter.complete();
+  }
 
-      notifyListeners();
+  @override
+  Future<void> redo(int version) async {
+    var pendingCanvasManipulationCompleter = Completer();
+    pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
 
-      pendingCanvasManipulationCompleter.complete();
-    }
+    notifyListeners();
+
+    await InkStateUndoer.redo(version, this);
+
+    notifyListeners();
+
+    pendingCanvasManipulationCompleter.complete();
+  }
+
+  @override
+  Future<void> snapshot(int version, Batch batch) async {
+    await InkStateUndoer.snapshot(version, batch, this);
+  }
+
+  @override
+  Future<void> cleanUpOldRedoSnapshots(int version, Batch batch) async {
+    await InkStateUndoer.cleanUpOldRedoSnapshots(version, batch);
   }
 
   @override
@@ -255,6 +247,5 @@ class InkState extends ChangeNotifier with Persistable {
     _tilePositionToDatabaseId
       ..removeAll()
       ..addAll(result.tilePositionToDatabaseId);
-    _lastSnapshotVersion = result.lastSnapshotVersion;
   }
 }

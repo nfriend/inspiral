@@ -1,3 +1,4 @@
+export 'package:inspiral/state/inspiral_state_object.dart';
 export 'package:inspiral/state/pointers_state.dart';
 export 'package:inspiral/state/rotating_gear_state.dart';
 export 'package:inspiral/state/base_gear_state.dart';
@@ -13,3 +14,4 @@ export 'package:inspiral/state/selector_drawer_state.dart';
 export 'package:inspiral/state/purchases_state.dart';
 export 'package:inspiral/state/color_picker_state.dart';
 export 'package:inspiral/state/snap_point_state.dart';
+export 'package:inspiral/state/undo_redo_state.dart';

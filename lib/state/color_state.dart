@@ -2,12 +2,11 @@ import 'dart:collection';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/state/persistors/color_state_persistor.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class ColorState extends ChangeNotifier with Persistable {
+class ColorState extends InspiralStateObject {
   static ColorState _instance;
 
   factory ColorState.init() {

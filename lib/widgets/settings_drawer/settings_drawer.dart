@@ -44,8 +44,11 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
     var ink = Provider.of<InkState>(context, listen: false);
     var snapPoints = Provider.of<SnapPointState>(context, listen: false);
     var settings = Provider.of<SettingsState>(context);
-    var eraseAvailable =
-        context.select<InkState, bool>((ink) => ink.eraseAvailable);
+    var inkIsBaking = context.select<InkState, bool>((ink) => ink.isBaking);
+    var isUndoing =
+        context.select<UndoRedoState, bool>((undoRedo) => undoRedo.isUndoing);
+
+    var eraseAvailable = !inkIsBaking && !isUndoing;
 
     Widget appStoreReviewTile = Container();
     if (io.Platform.isIOS || io.Platform.isAndroid) {

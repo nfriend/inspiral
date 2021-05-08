@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/state/state.dart';
 
 const _snackBarDisplayDuration = Duration(milliseconds: 4000);
 
-class SnackbarState extends ChangeNotifier with Persistable {
+class SnackbarState extends InspiralStateObject {
   static SnackbarState _instance;
 
   factory SnackbarState.init() {

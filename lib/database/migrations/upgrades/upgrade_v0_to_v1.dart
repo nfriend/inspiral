@@ -134,7 +134,7 @@ void _createTableState(Batch batch) {
       ${Schema.state.dragLinePositionX} REAL NULL,
       ${Schema.state.dragLinePositionY} REAL NULL,
       ${Schema.state.dragLineAngle} REAL NOT NULL,
-      ${Schema.state.lastTileSnapshotVersion} INTEGER NOT NULL
+      ${Schema.state.currentSnapshotVersion} INTEGER NOT NULL
     )
   ''');
   batch.execute('''
@@ -155,7 +155,7 @@ void _createTableState(Batch batch) {
       ${Schema.state.strokeWidth},
       ${Schema.state.strokeStyle},
       ${Schema.state.dragLineAngle},
-      ${Schema.state.lastTileSnapshotVersion}
+      ${Schema.state.currentSnapshotVersion}
     )
     VALUES
       (

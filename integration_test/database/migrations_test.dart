@@ -78,5 +78,16 @@ void main() {
 
       expect(snapPointRows.length, 3);
     });
+
+    testWidgets('upgrade from version 3 to version 4',
+        (WidgetTester tester) async {
+      db = await getDatabase(version: 4, databaseName: testDatabaseName);
+
+      final stateRows = await db.query(Schema.state.toString());
+
+      expect(stateRows.length, 1);
+      expect(stateRows[0][Schema.state.currentSnapshotVersion], 2);
+      expect(stateRows[0][Schema.state.maxSnapshotVersion], 2);
+    });
   });
 }

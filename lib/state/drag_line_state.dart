@@ -2,13 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
 import 'package:inspiral/state/persistors/drag_line_state_persistor.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 final double _pi2 = 2 * pi;
 
-class DragLineState extends ChangeNotifier with Persistable {
+class DragLineState extends InspiralStateObject {
   static DragLineState _instance;
 
   factory DragLineState.init() {

@@ -88,7 +88,7 @@ const double selectorDrawerHeight = 168.0;
 const String localDatabaseName = 'inspiral.db';
 
 /// The version of the local database file. Used for performing migrations.
-const int localDatabaseVersion = 3;
+const int localDatabaseVersion = 4;
 
 /// The maximum zoom scale
 const double maxScale = 2.0;

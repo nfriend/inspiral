@@ -39,8 +39,7 @@ class TransformInfo {
   TransformInfo({@required this.transform, @required this.transformComponents});
 }
 
-class PointersState extends ChangeNotifier
-    with Persistable, WidgetsBindingObserver {
+class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   static PointersState _instance;
 
   factory PointersState.init() {

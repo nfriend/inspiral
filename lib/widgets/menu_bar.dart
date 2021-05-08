@@ -32,8 +32,9 @@ class _MenuBarState extends State<MenuBar> {
     final colors = context.watch<ColorState>();
     final ink = Provider.of<InkState>(context, listen: false);
     final canvas = Provider.of<CanvasState>(context, listen: false);
-    final undoAvailable =
-        context.select<InkState, bool>((ink) => ink.undoAvailable);
+    final undoRedo = Provider.of<UndoRedoState>(context, listen: false);
+    final undoAvailable = context
+        .select<UndoRedoState, bool>((undoRedo) => undoRedo.undoAvailable);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
     final isLandscape =
@@ -75,7 +76,7 @@ class _MenuBarState extends State<MenuBar> {
             // work of undoing begins.
             await Future.delayed(const Duration(milliseconds: 0));
 
-            await ink.undo();
+            await undoRedo.triggerUndo();
 
             setState(() {
               isUndoProcessing = false;
