@@ -4,12 +4,11 @@ import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/canvas_size.dart';
 import 'package:inspiral/state/helpers/get_center_transform.dart';
 import 'package:inspiral/state/persistors/canvas_state_persistor.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/state/state.dart';
 
-class CanvasState extends ChangeNotifier with Persistable {
+class CanvasState extends InspiralStateObject {
   static CanvasState _instance;
 
   factory CanvasState.init() {

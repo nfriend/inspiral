@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inspiral/models/entitlement.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-class PurchasesState extends ChangeNotifier with Persistable {
+class PurchasesState extends InspiralStateObject {
   static PurchasesState _instance;
 
   factory PurchasesState.init() {

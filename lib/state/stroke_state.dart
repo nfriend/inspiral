@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/persistors/stroke_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/models/ink_line.dart';
 import 'package:sqflite/sqlite_api.dart';
 
-class StrokeState extends ChangeNotifier with Persistable {
+class StrokeState extends InspiralStateObject {
   static StrokeState _instance;
 
   factory StrokeState.init() {

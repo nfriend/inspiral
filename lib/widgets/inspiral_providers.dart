@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/initialize_all_state_singletons.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/snackbar_state.dart';
 import 'package:inspiral/state/stroke_state.dart';
+import 'package:inspiral/state/undo_redo_state.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 
@@ -18,7 +18,7 @@ class InspiralProviders extends StatefulWidget {
 
 class _InspiralProvidersState extends State<InspiralProviders>
     with WidgetsBindingObserver {
-  Future<Iterable<Persistable>> _stateFuture;
+  Future<AllStateObjects> _stateFuture;
 
   @override
   void initState() {
@@ -34,8 +34,8 @@ class _InspiralProvidersState extends State<InspiralProviders>
 
     return FutureBuilder(
         future: _stateFuture,
-        builder: (BuildContext context,
-            AsyncSnapshot<Iterable<Persistable>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<AllStateObjects> snapshot) {
           if (snapshot.hasError) {
             throw ('Something went wrong while initializing state! ${snapshot.error}');
           } else if (snapshot.connectionState == ConnectionState.done) {
@@ -56,6 +56,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
               ChangeNotifierProvider(create: (context) => ColorPickerState()),
               ChangeNotifierProvider(create: (context) => SnackbarState()),
               ChangeNotifierProvider(create: (context) => SnapPointState()),
+              ChangeNotifierProvider(create: (context) => UndoRedoState()),
             ], child: widget.child);
           } else {
             // Note: If the startup time is slow enough, consider
@@ -80,7 +81,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
       await db.transaction((txn) async {
         var batch = txn.batch();
 
-        allStateObjects.forEach((state) => state.persist(batch));
+        allStateObjects.list.forEach((state) => state.persist(batch));
 
         await batch.commit(noResult: true);
       });

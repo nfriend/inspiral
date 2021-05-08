@@ -13,17 +13,15 @@ class InkStateRehydrationResult {
   final List<InkLine> lines;
   final Map<Offset, Image> tileImages;
   final Map<Offset, String> tilePositionToDatabaseId;
-  final int lastSnapshotVersion;
 
   InkStateRehydrationResult(
       {@required this.lines,
       @required this.tileImages,
-      @required this.tilePositionToDatabaseId,
-      @required this.lastSnapshotVersion});
+      @required this.tilePositionToDatabaseId});
 
   @override
   String toString() {
-    return 'InkStateRehydrationResult(# of lines: ${lines.length}, # of tileImages: ${tileImages.entries.length}, # of tilePositionToDatabaseId: ${tilePositionToDatabaseId.entries.length}, lastSnapshotVersion: $lastSnapshotVersion})';
+    return 'InkStateRehydrationResult(# of lines: ${lines.length}, # of tileImages: ${tileImages.entries.length}, # of tilePositionToDatabaseId: ${tilePositionToDatabaseId.entries.length}})';
   }
 }
 
@@ -36,9 +34,6 @@ class InkStatePersistor {
     batch.delete(Schema.inkLines.toString());
     batch.delete(Schema.colors.toString(),
         where: "${Schema.colors.type} = '${ColorsTableType.ink}'");
-
-    batch.update(Schema.state.toString(),
-        {Schema.state.lastTileSnapshotVersion: ink.lastSnapshotVersion});
 
     for (var i = 0; i < ink.lines.length; i++) {
       var line = ink.lines[i];
@@ -140,15 +135,14 @@ class InkStatePersistor {
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
 
-    var lastSnapshotVersion =
-        state[Schema.state.lastTileSnapshotVersion] as int;
+    var currentSnapshotVersion =
+        state[Schema.state.currentSnapshotVersion] as int;
 
-    var tileVersionResult = await getTilesForVersion(lastSnapshotVersion);
+    var tileVersionResult = await getTilesForVersion(currentSnapshotVersion);
 
     return InkStateRehydrationResult(
         lines: lines,
         tileImages: tileVersionResult.tileImages,
-        tilePositionToDatabaseId: tileVersionResult.tilePositionToDatabaseId,
-        lastSnapshotVersion: lastSnapshotVersion);
+        tilePositionToDatabaseId: tileVersionResult.tilePositionToDatabaseId);
   }
 }

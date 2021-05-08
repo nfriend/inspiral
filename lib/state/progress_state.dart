@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
+import 'package:inspiral/state/state.dart';
 
-class ProgressState extends ChangeNotifier with Persistable {
+class ProgressState extends InspiralStateObject {
   static ProgressState _instance;
 
   factory ProgressState.init() {

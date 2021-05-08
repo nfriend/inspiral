@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/persistors/settings_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/find_closest_compatible_gear.dart';
 import 'package:sqflite/sqlite_api.dart';
 
-class SettingsState extends ChangeNotifier with Persistable {
+class SettingsState extends InspiralStateObject {
   static SettingsState _instance;
 
   factory SettingsState.init() {

@@ -1,9 +1,9 @@
 import 'dart:collection';
 import 'package:inspiral/constants.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:flutter/material.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/state/persistors/snap_point_state_persistor.dart';
+import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqflite.dart';
 
 class _SnapPointAndDistance {
@@ -13,7 +13,7 @@ class _SnapPointAndDistance {
   _SnapPointAndDistance({this.snapPoint, this.distance});
 }
 
-class SnapPointState extends ChangeNotifier with Persistable {
+class SnapPointState extends InspiralStateObject {
   static SnapPointState _instance;
 
   factory SnapPointState.init() {

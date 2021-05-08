@@ -28,7 +28,8 @@ Future<void> seedV1Data(Database db) async {
         ${Schema.state.canvasTransform_15} = 1,
         ${Schema.state.canvasSize}         = 'small',
         ${Schema.state.dragLinePositionX}  = 15.0,
-        ${Schema.state.dragLinePositionY}  = 20.0
+        ${Schema.state.dragLinePositionY}  = 20.0,
+        ${Schema.state.currentSnapshotVersion} = 2
   ''');
 
   batch.execute('''

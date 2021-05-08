@@ -99,7 +99,15 @@ class StateTable extends Table {
   final String dragLinePositionX = 'dragLinePositionX';
   final String dragLinePositionY = 'dragLinePositionY';
   final String dragLineAngle = 'dragLineAngle';
-  final String lastTileSnapshotVersion = 'lastTileSnapshotVersion';
+
+  /// In code, we refer to this column as `currentSnapshotVersion`, since
+  /// it more accurately describes the purpose of this variable.
+  /// In the database, we still refer to it by its old name,
+  /// `lastTileSnapshotVersion`, since changing column names in SQLite
+  /// is challenging.
+  final String currentSnapshotVersion = 'lastTileSnapshotVersion';
+  final String maxSnapshotVersion = 'maxSnapshotVersion';
+
   final String snapPointsAreActive = 'snapPointsAreActive';
 }
 

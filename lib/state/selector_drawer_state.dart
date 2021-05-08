@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 
 enum DrawerTab { tools, pen, gears }
 
-class SelectorDrawerState extends ChangeNotifier with Persistable {
+class SelectorDrawerState extends InspiralStateObject {
   static SelectorDrawerState _instance;
 
   factory SelectorDrawerState.init() {
