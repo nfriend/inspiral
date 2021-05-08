@@ -37,11 +37,6 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
     }
   }
 
-  RotatingGearState rotatingGear;
-  DragLineState dragLine;
-  InkState ink;
-  SnapPointState snapPoints;
-
   /// The list of pointer IDs currently touching this gear
   List<int> pointerIds = [];
 
@@ -81,7 +76,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   void gearPointerMove(PointerMoveEvent event) {
     // Disable any gear interactions if we're currently auto-drawing
     // or if the fixed gear is locked
-    if (rotatingGear.isAutoDrawing || isLocked) {
+    if (allStateObjects.rotatingGear.isAutoDrawing || isLocked) {
       return;
     }
 
@@ -89,28 +84,33 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
       final dragBounds = Rect.fromLTRB(
           -allowedDistanceFromCanvasEdge,
           -allowedDistanceFromCanvasEdge,
-          canvas.canvasSize.width + allowedDistanceFromCanvasEdge,
-          canvas.canvasSize.height + allowedDistanceFromCanvasEdge);
+          allStateObjects.canvas.canvasSize.width +
+              allowedDistanceFromCanvasEdge,
+          allStateObjects.canvas.canvasSize.height +
+              allowedDistanceFromCanvasEdge);
 
       final unSnappedNewPosition =
-          (canvas.pixelToCanvasPosition(event.position) - dragOffset)
+          (allStateObjects.canvas.pixelToCanvasPosition(event.position) -
+                  dragOffset)
               .clamp(dragBounds);
 
-      final newPosition =
-          snapPoints.snapPositionToNearestPoint(unSnappedNewPosition);
+      final newPosition = allStateObjects.snapPoints
+          .snapPositionToNearestPoint(unSnappedNewPosition);
 
-      rotatingGear.fixedGearDrag(position - newPosition);
-      dragLine.fixedGearDrag(position - newPosition);
+      allStateObjects.rotatingGear.fixedGearDrag(position - newPosition);
+      allStateObjects.dragLine.fixedGearDrag(position - newPosition);
       position = newPosition;
     } else if (
         // If more than one finger is touching the screen
-        pointers.count > 1 &&
+        allStateObjects.pointers.count > 1 &&
             // and all of the pointers are touching the fixed gear
-            pointers.count == pointerIds.length &&
+            allStateObjects.pointers.count == pointerIds.length &&
             // and this is the move event for the most recent finger
             event.pointer == pointerIds.last) {
-      var rotationDelta =
-          pointers.getTransformInfo().transformComponents.rotation;
+      var rotationDelta = allStateObjects.pointers
+          .getTransformInfo()
+          .transformComponents
+          .rotation;
 
       // `rotationDelta` is in the range [0, 2pi), Translate this
       // into the range [-pi,pi).
@@ -119,8 +119,8 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
       }
 
       rotation += rotationDelta;
-      rotatingGear.initializePosition();
-      ink.finishLine();
+      allStateObjects.rotatingGear.initializePosition();
+      allStateObjects.ink.finishLine();
     }
   }
 
@@ -128,23 +128,24 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   void selectNewGear(GearDefinition newGear) {
     definition = newGear;
 
-    if (settings.preventIncompatibleGearPairings) {
+    if (allStateObjects.settings.preventIncompatibleGearPairings) {
       // Update the current rotating gear selection if the newly selected
       // fixed gear is incompatible with the existing rotating gear selection.
-      rotatingGear.selectNewGear(findClosestCompatibleGear(
+      allStateObjects.rotatingGear.selectNewGear(findClosestCompatibleGear(
           fixedGear: definition,
-          currentlySelectedRotatingGear: rotatingGear.definition));
+          currentlySelectedRotatingGear:
+              allStateObjects.rotatingGear.definition));
     }
 
-    rotatingGear.initializePosition();
-    ink.finishLine();
+    allStateObjects.rotatingGear.initializePosition();
+    allStateObjects.ink.finishLine();
   }
 
   /// Resets the position of the gears to the center of the canvas
   void resetPosition() {
-    position = canvas.canvasCenter;
-    rotatingGear.initializePosition();
-    dragLine.pivotPosition = position;
+    position = allStateObjects.canvas.canvasCenter;
+    allStateObjects.rotatingGear.initializePosition();
+    allStateObjects.dragLine.pivotPosition = position;
   }
 
   @override

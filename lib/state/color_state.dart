@@ -21,8 +21,6 @@ class ColorState extends InspiralStateObject {
 
   ColorState._internal() : super();
 
-  InkState ink;
-
   /// The current background color of the canvas
   TinyColor _backgroundColor;
   TinyColor get backgroundColor => _backgroundColor;
@@ -38,7 +36,7 @@ class ColorState extends InspiralStateObject {
   set penColor(TinyColor value) {
     _penColor = value;
     _updateDependentColors();
-    ink.finishLine();
+    allStateObjects.ink.finishLine();
     notifyListeners();
   }
 

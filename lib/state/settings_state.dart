@@ -20,9 +20,6 @@ class SettingsState extends InspiralStateObject {
 
   SettingsState._internal() : super();
 
-  RotatingGearState rotatingGear;
-  FixedGearState fixedGear;
-
   /// Whether or not to show various debugging aids
   bool get debug => _debug;
   bool _debug = !kReleaseMode && !kProfileMode;
@@ -57,9 +54,10 @@ class SettingsState extends InspiralStateObject {
     // If an incompatible pairing is selected when this setting is enabled,
     // update the rotating gear selection to ensure compatibility.
     if (_preventIncompatibleGearPairings == true) {
-      rotatingGear.selectNewGear(findClosestCompatibleGear(
-          fixedGear: fixedGear.definition,
-          currentlySelectedRotatingGear: rotatingGear.definition));
+      allStateObjects.rotatingGear.selectNewGear(findClosestCompatibleGear(
+          fixedGear: allStateObjects.fixedGear.definition,
+          currentlySelectedRotatingGear:
+              allStateObjects.rotatingGear.definition));
     }
 
     notifyListeners();

@@ -25,11 +25,6 @@ class InkState extends InspiralStateObject {
 
   InkState._internal() : super();
 
-  ColorState colors;
-  StrokeState stroke;
-  CanvasState canvas;
-  UndoRedoState undoRedo;
-
   final List<InkLine> _lines = [];
 
   final Map<Offset, Image> _tileImages = {};
@@ -77,9 +72,9 @@ class InkState extends InspiralStateObject {
   void addPoints(List<Offset> points) {
     if (_lines.isEmpty) {
       _lines.add(InkLine(
-          color: colors.penColor.color,
-          strokeWidth: stroke.width,
-          strokeStyle: stroke.style));
+          color: allStateObjects.colors.penColor.color,
+          strokeWidth: allStateObjects.stroke.width,
+          strokeStyle: allStateObjects.stroke.style));
     }
 
     _lines.last.addPoints(points);
@@ -100,9 +95,9 @@ class InkState extends InspiralStateObject {
   void finishLine() {
     if (_lines.isNotEmpty) {
       _lines.add(InkLine(
-          color: colors.penColor.color,
-          strokeWidth: stroke.width,
-          strokeStyle: stroke.style));
+          color: allStateObjects.colors.penColor.color,
+          strokeWidth: allStateObjects.stroke.width,
+          strokeStyle: allStateObjects.stroke.style));
       bakeImage();
     }
 
@@ -133,7 +128,7 @@ class InkState extends InspiralStateObject {
   /// for a complete example.
   Future<void> bakeImage() async {
     if (isBaking ||
-        undoRedo.isUndoing ||
+        allStateObjects.undoRedo.isUndoing ||
         lines.isEmpty ||
         currentPointCount == 0) {
       return;
@@ -151,14 +146,14 @@ class InkState extends InspiralStateObject {
           lines: lines,
           tileImages: _tileImages,
           tilePositionToDatabaseId: _tilePositionToDatabaseId,
-          tileSize: canvas.tileSize);
+          tileSize: allStateObjects.canvas.tileSize);
 
       // Add all the updated tiles to the list of "unsaved" tiles.
       // These tiles will be persisted very soon when the "snapshot"
       // method is triggered by the call to "createSnapshot" below.
       _unsavedTiles.addAll(updatedTiles);
 
-      await undoRedo.createSnapshot();
+      await allStateObjects.undoRedo.createSnapshot();
     } catch (err, stackTrace) {
       // Explicitly catching/handling errors here since `bakeImage` is often
       // called in synchronous contexts, and the return value is ignored.
@@ -178,7 +173,7 @@ class InkState extends InspiralStateObject {
 
   /// Erases the canvas, including both baked and unbaked lines.
   void eraseCanvas() {
-    if (isBaking || undoRedo.isUndoing) {
+    if (isBaking || allStateObjects.undoRedo.isUndoing) {
       return;
     }
 
@@ -188,7 +183,7 @@ class InkState extends InspiralStateObject {
     _tileImages.removeAll();
     _tilePositionToDatabaseId.removeAll();
     _lines.removeAll();
-    undoRedo.clearAllSnapshots();
+    allStateObjects.undoRedo.clearAllSnapshots();
 
     notifyListeners();
 

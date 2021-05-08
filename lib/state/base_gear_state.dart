@@ -44,27 +44,25 @@ abstract class BaseGearState extends InspiralStateObject {
     notifyListeners();
   }
 
-  PointersState pointers;
-  CanvasState canvas;
-  SettingsState settings;
-  SelectorDrawerState selectorDrawer;
-
   Offset dragOffset = Offset.zero;
 
   /// The "device ID" of the pointer doing the dragging
   int draggingPointerId = -1;
 
   /// Whether or not the gear is currently being dragged
-  bool get isDragging => draggingPointerId > -1 && pointers.count == 1;
+  bool get isDragging =>
+      draggingPointerId > -1 && allStateObjects.pointers.count == 1;
 
   void gearPointerDown(PointerDownEvent event) {
     if (!isDragging) {
       draggingPointerId = event.device;
 
-      dragOffset = canvas.pixelToCanvasPosition(event.position) - position;
+      dragOffset =
+          allStateObjects.canvas.pixelToCanvasPosition(event.position) -
+              position;
 
-      if (settings.closeDrawingToolsDrawerOnDrag) {
-        selectorDrawer.closeDrawer();
+      if (allStateObjects.settings.closeDrawingToolsDrawerOnDrag) {
+        allStateObjects.selectorDrawer.closeDrawer();
       }
 
       notifyListeners();

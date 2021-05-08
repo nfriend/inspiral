@@ -47,9 +47,9 @@ class FixedGearStatePersistor {
     // position. (For example, when opening the app for the very first time.)
     // In this case, use `canvasCenter` instead.
     var positionX = state[Schema.state.fixedGearPositionX] as double ??
-        fixedGear.canvas.canvasCenter.dx;
+        fixedGear.allStateObjects.canvas.canvasCenter.dx;
     var positionY = state[Schema.state.fixedGearPositionY] as double ??
-        fixedGear.canvas.canvasCenter.dy;
+        fixedGear.allStateObjects.canvas.canvasCenter.dy;
 
     return FixedGearStateRehydrationResult(
         position: Offset(positionX, positionY),

@@ -18,9 +18,6 @@ class SelectorDrawerState extends InspiralStateObject {
 
   SelectorDrawerState._internal() : super();
 
-  CanvasState canvas;
-  ColorState colors;
-
   /// Whether or not the selector drawer is open
   bool get isOpen => _isOpen;
   bool _isOpen = false;
@@ -74,15 +71,15 @@ class SelectorDrawerState extends InspiralStateObject {
   ///
   /// TODO: It feels like there should be a more declarative way to do this.
   void _exitHoleSelectionMode() {
-    canvas.isSelectingHole = false;
+    allStateObjects.canvas.isSelectingHole = false;
   }
 
   /// Hides the pen and canvas color delete buttons (if they are shown)
   ///
   /// Same comment as above about a more declarative way to do this.
   void _hideColorDeleteButtons() {
-    colors.showPenColorDeleteButtons = false;
-    colors.showCanvasColorDeleteButtons = false;
+    allStateObjects.colors.showPenColorDeleteButtons = false;
+    allStateObjects.colors.showCanvasColorDeleteButtons = false;
   }
 
   /// The currently active drawer tab

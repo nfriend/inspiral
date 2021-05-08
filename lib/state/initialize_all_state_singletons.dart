@@ -28,52 +28,6 @@ Future<AllStateObjects> initializeAllStateSingletons(
   final snapPoints = SnapPointState.init();
   final undoRedo = UndoRedoState.init();
 
-  // TODO: Remove all these, and make state objects
-  // reference each other using `allStateObjects` instead.
-  // Link up dependencies between the singletons
-  settings
-    ..fixedGear = fixedGear
-    ..rotatingGear = rotatingGear;
-  pointers.canvas = canvas;
-  canvas
-    ..pointers = pointers
-    ..ink = ink
-    ..fixedGear = fixedGear
-    ..snapPoints = snapPoints;
-  colors.ink = ink;
-  stroke.ink = ink;
-  purchases.settings = settings;
-  selectorDrawer
-    ..canvas = canvas
-    ..colors = colors;
-  ink
-    ..colors = colors
-    ..stroke = stroke
-    ..canvas = canvas
-    ..undoRedo = undoRedo;
-  rotatingGear
-    ..canvas = canvas
-    ..pointers = pointers
-    ..dragLine = dragLine
-    ..fixedGear = fixedGear
-    ..ink = ink
-    ..settings = settings
-    ..selectorDrawer = selectorDrawer
-    ..snapPoints = snapPoints;
-  dragLine
-    ..canvas = canvas
-    ..rotatingGear = rotatingGear
-    ..fixedGear = fixedGear;
-  fixedGear
-    ..canvas = canvas
-    ..pointers = pointers
-    ..rotatingGear = rotatingGear
-    ..ink = ink
-    ..dragLine = dragLine
-    ..settings = settings
-    ..selectorDrawer = selectorDrawer
-    ..snapPoints = snapPoints;
-
   var allStateObjects = AllStateObjects(
       canvas: canvas,
       progress: progress,

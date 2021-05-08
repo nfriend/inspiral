@@ -29,9 +29,9 @@ class DragLineStatePersistor {
     // position. (For example, when opening the app for the very first time.)
     // In this case, use `canvasCenter` instead.
     var positionX = state[Schema.state.dragLinePositionX] as double ??
-        dragLine.canvas.canvasCenter.dx;
+        dragLine.allStateObjects.canvas.canvasCenter.dx;
     var positionY = state[Schema.state.dragLinePositionY] as double ??
-        dragLine.canvas.canvasCenter.dy;
+        dragLine.allStateObjects.canvas.canvasCenter.dy;
 
     return DragLineStateRehydrationResult(
         pivotPosition: Offset(positionX, positionY),

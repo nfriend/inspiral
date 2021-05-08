@@ -19,8 +19,6 @@ class StrokeState extends InspiralStateObject {
 
   StrokeState._internal() : super();
 
-  InkState ink;
-
   /// The current width of the line
   double _width;
   double get width => _width;
@@ -33,7 +31,7 @@ class StrokeState extends InspiralStateObject {
   void setStroke({double width, StrokeStyle style}) {
     _width = width;
     _style = style;
-    ink.finishLine();
+    allStateObjects.ink.finishLine();
     notifyListeners();
   }
 

@@ -22,10 +22,6 @@ class DragLineState extends InspiralStateObject {
 
   DragLineState._internal() : super();
 
-  CanvasState canvas;
-  RotatingGearState rotatingGear;
-  FixedGearState fixedGear;
-
   Offset _pointerPosition = Offset.zero;
 
   /// Gets the position of the pointer, in canvas coordinates
@@ -59,7 +55,7 @@ class DragLineState extends InspiralStateObject {
 
   void gearPointerDown(PointerDownEvent event) {
     // Disable any gear interactions if we're currently auto-drawing
-    if (rotatingGear.isAutoDrawing) {
+    if (allStateObjects.rotatingGear.isAutoDrawing) {
       return;
     }
 
@@ -70,7 +66,7 @@ class DragLineState extends InspiralStateObject {
 
   void gearPointerMove(PointerMoveEvent event) {
     // Disable any gear interactions if we're currently auto-drawing
-    if (rotatingGear.isAutoDrawing) {
+    if (allStateObjects.rotatingGear.isAutoDrawing) {
       return;
     }
 
@@ -82,7 +78,8 @@ class DragLineState extends InspiralStateObject {
   }
 
   void _updatePointerPositionAndAngle(PointerEvent event) {
-    pointerPosition = canvas.pixelToCanvasPosition(event.position);
+    pointerPosition =
+        allStateObjects.canvas.pixelToCanvasPosition(event.position);
 
     // The current angle, translated in the range [0, 2*pi)
     var translatedAngle = _translateToRange(angle);
@@ -116,10 +113,12 @@ class DragLineState extends InspiralStateObject {
 
   /// Gets the angle between the pointer and the pivot position
   double _getPointerAngle(PointerEvent event) {
-    var eventPosition = canvas.pixelToCanvasPosition(event.position);
+    var eventPosition =
+        allStateObjects.canvas.pixelToCanvasPosition(event.position);
     final lineAngle = Line(pivotPosition, eventPosition).angle();
 
-    var conditionalReverse = fixedGear.definition.isRing ? 1 : -1;
+    var conditionalReverse =
+        allStateObjects.fixedGear.definition.isRing ? 1 : -1;
 
     return _translateToRange(lineAngle) * conditionalReverse;
   }

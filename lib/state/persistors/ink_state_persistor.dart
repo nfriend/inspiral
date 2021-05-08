@@ -48,10 +48,11 @@ class InkStatePersistor {
 
       batch.insert(Schema.inkLines.toString(), {
         Schema.inkLines.id: inkLineId,
-        Schema.inkLines.strokeWidth: ink.stroke.width,
-        Schema.inkLines.strokeStyle: ink.stroke.style == StrokeStyle.normal
-            ? StrokeStyleType.normal
-            : StrokeStyleType.airbrush,
+        Schema.inkLines.strokeWidth: ink.allStateObjects.stroke.width,
+        Schema.inkLines.strokeStyle:
+            ink.allStateObjects.stroke.style == StrokeStyle.normal
+                ? StrokeStyleType.normal
+                : StrokeStyleType.airbrush,
         Schema.inkLines.colorId: colorId,
         Schema.inkLines.order: i
       });

@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/line.dart';
-import 'package:inspiral/state/persistors/persistable.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/util/get_center_of_mass.dart' as util;
@@ -82,8 +81,6 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     }
   }
 
-  CanvasState canvas;
-
   LinkedHashSet<int> _activePointerIds;
   UnmodifiableSetView<int> _activePointerIdsView;
   Map<int, Positions> _pointerPositions;
@@ -126,7 +123,8 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   void pointerDown(PointerDownEvent event) {
     var pointerIsNew = _activePointerIds.add(event.pointer);
     if (pointerIsNew) {
-      var canvasPointerPosition = canvas.pixelToCanvasPosition(event.position);
+      var canvasPointerPosition =
+          allStateObjects.canvas.pixelToCanvasPosition(event.position);
       _pointerPositions[event.pointer] =
           Positions(canvas: canvasPointerPosition, global: event.position);
       _pointerDeltas[event.pointer] = Positions.zero();
@@ -154,7 +152,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     if (_pointerPreviousPositions[event.pointer].global != event.position) {
       var originalLocation = _pointerPositions[event.pointer];
       var newLocation = Positions(
-          canvas: canvas.pixelToCanvasPosition(event.position),
+          canvas: allStateObjects.canvas.pixelToCanvasPosition(event.position),
           global: event.position);
 
       _pointerPreviousPositions[event.pointer] =
@@ -267,7 +265,8 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
               scale: 1.0,
               translation: translation.toOffset()));
     } else {
-      currentTransformComponents = canvas.transform.decompose2D();
+      currentTransformComponents =
+          allStateObjects.canvas.transform.decompose2D();
 
       var previousCoM = getPreviousCenterOfMass().global;
       var currentCoM = getCenterOfMass().global;

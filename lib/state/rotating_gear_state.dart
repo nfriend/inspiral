@@ -65,16 +65,11 @@ class RotatingGearState extends BaseGearState {
 
   int toothOffset = 0;
 
-  FixedGearState fixedGear;
-  DragLineState dragLine;
-  InkState ink;
-  SnapPointState snapPoints;
-
   GearHole _activeHole;
   GearHole get activeHole => _activeHole;
   set activeHole(GearHole value) {
     _activeHole = value;
-    ink?.finishLine();
+    allStateObjects.ink.finishLine();
 
     notifyListeners();
   }
@@ -112,7 +107,7 @@ class RotatingGearState extends BaseGearState {
 
   void fixedGearDrag(Offset rotatingGearDelta) {
     position -= rotatingGearDelta;
-    ink.finishLine();
+    allStateObjects.ink.finishLine();
   }
 
   @override
@@ -120,24 +115,24 @@ class RotatingGearState extends BaseGearState {
     super.gearPointerDown(event);
 
     if (event.device == draggingPointerId && isDragging && !isAutoDrawing) {
-      var result = _getRotationForAngle(dragLine.angle);
-      ink.addPoints([result.penPosition]);
+      var result = _getRotationForAngle(allStateObjects.dragLine.angle);
+      allStateObjects.ink.addPoints([result.penPosition]);
     }
   }
 
   void gearPointerMove(PointerMoveEvent event) {
     if (event.device == draggingPointerId && isDragging && !isAutoDrawing) {
-      var result = _getRotationForAngle(dragLine.angle);
+      var result = _getRotationForAngle(allStateObjects.dragLine.angle);
       _updateGearState(result);
-      _drawPoints(result, dragLine.angle);
+      _drawPoints(result, allStateObjects.dragLine.angle);
     }
   }
 
   @override
   void gearPointerUp(PointerUpEvent event) {
     if (event.device == draggingPointerId && !isAutoDrawing) {
-      var result = _getRotationForAngle(dragLine.angle);
-      _drawPoints(result, dragLine.angle, force: true);
+      var result = _getRotationForAngle(allStateObjects.dragLine.angle);
+      _drawPoints(result, allStateObjects.dragLine.angle, force: true);
     }
 
     super.gearPointerUp(event);
@@ -147,7 +142,8 @@ class RotatingGearState extends BaseGearState {
     // (see https://github.com/flutter/flutter/issues/75755)
     // so wait a _little_ longer than `uiAnimationDuration` to allow
     // any UI animations to complete smoothly.
-    Future.delayed(uiAnimationDuration * 1.2).then((value) => ink.bakeImage());
+    Future.delayed(uiAnimationDuration * 1.2)
+        .then((value) => allStateObjects.ink.bakeImage());
 
     notifyListeners();
   }
@@ -160,7 +156,7 @@ class RotatingGearState extends BaseGearState {
         currentHole: activeHole, availableHoles: definition.holes);
 
     initializePosition();
-    ink.finishLine();
+    allStateObjects.ink.finishLine();
   }
 
   /// Rotates the rotating gear in place (without drawing)
@@ -168,7 +164,7 @@ class RotatingGearState extends BaseGearState {
   void rotateInPlace({int teethToRotate}) {
     toothOffset += teethToRotate;
     initializePosition();
-    ink.finishLine();
+    allStateObjects.ink.finishLine();
   }
 
   /// Draws one complete (clockwise) rotation, so that the rotating gears
@@ -181,22 +177,25 @@ class RotatingGearState extends BaseGearState {
     isDrawingOneRotation = true;
 
     var rotationAmount = 2 * pi * -1;
-    var intervalsToDraw = (fixedGear.definition.toothCount / 2.5).round();
+    var intervalsToDraw =
+        (allStateObjects.fixedGear.definition.toothCount / 2.5).round();
     var intervalAmount = rotationAmount / intervalsToDraw;
     for (var i = 0; i <= intervalsToDraw; i++) {
       var amountToAdd = intervalAmount * i;
-      var result = _getRotationForAngle(dragLine.angle + amountToAdd);
+      var result =
+          _getRotationForAngle(allStateObjects.dragLine.angle + amountToAdd);
       _updateGearState(result);
-      _drawPoints(result, dragLine.angle + amountToAdd, force: true);
+      _drawPoints(result, allStateObjects.dragLine.angle + amountToAdd,
+          force: true);
 
       await Future.delayed(Duration(milliseconds: 16));
     }
 
-    dragLine.angle += rotationAmount;
+    allStateObjects.dragLine.angle += rotationAmount;
     isDrawingOneRotation = false;
 
     if (triggerBakeAfter) {
-      unawaited(ink.bakeImage());
+      unawaited(allStateObjects.ink.bakeImage());
     }
   }
 
@@ -210,7 +209,7 @@ class RotatingGearState extends BaseGearState {
     _shouldPauseCompletePatternDrawing = false;
 
     var rotationsToComplete = calculateRotationCount(
-        fixedGearTeeth: fixedGear.definition.toothCount,
+        fixedGearTeeth: allStateObjects.fixedGear.definition.toothCount,
         rotatingGearTeeth: definition.toothCount,
         selectedHoleDistance: activeHole.distance);
 
@@ -224,7 +223,7 @@ class RotatingGearState extends BaseGearState {
 
     isDrawingCompletePattern = false;
 
-    unawaited(ink.bakeImage());
+    unawaited(allStateObjects.ink.bakeImage());
   }
 
   // A flag used to indicate if the complete pattern auto-drawing
@@ -242,12 +241,13 @@ class RotatingGearState extends BaseGearState {
     rotation = result.rotatingGearRotation;
     position = result.rotatingGearPosition;
 
-    fixedGear.contactPoint = result.fixedGearContactPoint;
+    allStateObjects.fixedGear.contactPoint = result.fixedGearContactPoint;
     contactPoint = result.rotatingGearContactPoint;
   }
 
   /// Calculates the effect of a rotation to the provided angle
   RotationResult _getRotationForAngle(double angle) {
+    var fixedGear = allStateObjects.fixedGear;
     var fixedGearTooth = fixedGear.definition.angleToTooth(angle);
 
     var fixedGearContactPoint = fixedGear.definition
@@ -295,17 +295,18 @@ class RotatingGearState extends BaseGearState {
   /// to keep the drawn line from appearing choppy.
   void _drawPoints(RotationResult result, double angle, {bool force = false}) {
     // Add a new snap point at the fixed gear's center
-    snapPoints.addSnapPoint(fixedGear.position);
+    allStateObjects.snapPoints.addSnapPoint(allStateObjects.fixedGear.position);
 
     // If `lastPoint` is `null`, this means there is no last point to compare
     // to, so we should just draw the current point immediately.
-    if (ink.lastPoint == null) {
-      ink.addPoints([result.penPosition]);
+    if (allStateObjects.ink.lastPoint == null) {
+      allStateObjects.ink.addPoints([result.penPosition]);
       _lastAngle = angle;
       return;
     }
 
-    var segmentLength = Line(result.penPosition, ink.lastPoint).length();
+    var segmentLength =
+        Line(result.penPosition, allStateObjects.ink.lastPoint).length();
 
     // If the point is too close to the last drawn point, don't draw a new one.
     // (Unless the `force` parameter is provided,
@@ -316,7 +317,7 @@ class RotatingGearState extends BaseGearState {
 
     // If the point is in the correct range from the last point, draw it
     if (segmentLength <= maxLineSegmentLength) {
-      ink.addPoints([result.penPosition]);
+      allStateObjects.ink.addPoints([result.penPosition]);
       _lastAngle = angle;
       return;
     }
@@ -337,7 +338,7 @@ class RotatingGearState extends BaseGearState {
       pointsToAdd.add(incrementalResult.penPosition);
     }
 
-    ink.addPoints(pointsToAdd);
+    allStateObjects.ink.addPoints(pointsToAdd);
     _lastAngle = angle;
   }
 

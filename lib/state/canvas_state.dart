@@ -23,11 +23,6 @@ class CanvasState extends InspiralStateObject {
 
   CanvasState._internal() : super();
 
-  PointersState pointers;
-  InkState ink;
-  FixedGearState fixedGear;
-  SnapPointState snapPoints;
-
   Matrix4 _transform;
 
   /// The current transformation of the canvas
@@ -76,11 +71,11 @@ class CanvasState extends InspiralStateObject {
       {@required BuildContext context,
       @required CanvasSizeAndName newSize}) async {
     // Wait for any pending canvas manipulations to complete
-    await ink.pendingCanvasManipulation;
-    ink.eraseCanvas();
-    snapPoints.eraseAllSnapPoints();
+    await allStateObjects.ink.pendingCanvasManipulation;
+    allStateObjects.ink.eraseCanvas();
+    allStateObjects.snapPoints.eraseAllSnapPoints();
     _updateCanvasSizeDependents(newSize);
-    fixedGear.resetPosition();
+    allStateObjects.fixedGear.resetPosition();
     recenterView(context);
     notifyListeners();
   }
@@ -143,14 +138,15 @@ class CanvasState extends InspiralStateObject {
   /// Translates the view when either the app background or the
   /// empty canvas is moved.
   void appBackgroundOrCanvasMove(PointerMoveEvent event) {
-    if (pointers.count > 0) {
-      transform = pointers.getTransformInfo().transform * transform as Matrix4;
+    if (allStateObjects.pointers.count > 0) {
+      transform = allStateObjects.pointers.getTransformInfo().transform *
+          transform as Matrix4;
     }
   }
 
   /// Notifies this state object when a pointer is lifted from anywhere
   void globalPointerUp(PointerUpEvent event) {
-    if (pointers.count == 0) {
+    if (allStateObjects.pointers.count == 0) {
       isTransforming = false;
     }
   }

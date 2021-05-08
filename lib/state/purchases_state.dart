@@ -19,8 +19,6 @@ class PurchasesState extends InspiralStateObject {
 
   PurchasesState._internal() : super();
 
-  SettingsState settings;
-
   /// Returns a boolean indicating whether or not
   /// the provided `entitlement` is owned by the user
   Future<bool> isEntitledTo(String entitlement) async {
