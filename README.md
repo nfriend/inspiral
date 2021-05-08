@@ -82,6 +82,11 @@ flutter drive \
 
 `<device id here>` can be found by running `flutter devices`.
 
+The minimum version of SQLite that needs to be supported is 3.7.11 (Android API
+level 16 - Android 4.1, Jelly Bean). It's wise to run these tests on both the
+newest and oldest supported devices, to make sure the SQLite code in this
+project is compatible with all compatible OSs.
+
 ### Building a release
 
 First, bump the version in [`pubspec.yaml`](pubspec.yaml).
