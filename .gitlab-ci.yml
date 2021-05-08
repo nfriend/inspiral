@@ -34,20 +34,20 @@ pages:
   stage: deploy
   before_script: []
   script:
-    - cd landing-page
+    - cd website
     - yarn install --frozen-lockfile
     - yarn build
     - cd $CI_PROJECT_DIR
     - ci/pages-preparation.sh
   cache:
-    key: landing-page-${CI_COMMIT_REF_SLUG}
+    key: website-${CI_COMMIT_REF_SLUG}
     paths:
-      - landing-page/node_modules/
-      - landing-page/.next/cache/
+      - website/node_modules/
+      - website/.next/cache/
   artifacts:
     paths:
       - public
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
-        - landing-page/**/*
+        - website/**/*

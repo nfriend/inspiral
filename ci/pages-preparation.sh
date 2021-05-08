@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo 'Copying the "out" directory to "public"...'
-cp -r "${CI_PROJECT_DIR}/landing-page/out" "${CI_PROJECT_DIR}/public"
+cp -r "${CI_PROJECT_DIR}/website/out" "${CI_PROJECT_DIR}/public"
 
 # Run gzip on the output and create a .gz version of each relevant file
 # Based on https://webmasters.stackexchange.com/a/119671
