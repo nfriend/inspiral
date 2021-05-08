@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/state/persistors/snap_point_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/state/undoers/snap_point_state_undoer.dart';
 import 'package:sqflite/sqflite.dart';
 
 class _SnapPointAndDistance {
@@ -107,6 +108,40 @@ class SnapPointState extends InspiralStateObject {
   }
 
   @override
+  Future<void> undo(int version) async {
+    var result = await SnapPointStateUndoer.undo(version, this);
+
+    _updateState(
+        snapPoints: result.snapPoints,
+        activeSnapPoint: result.activeSnapPoint,
+
+        // `areActive` is not affected by undo
+        areActive: areActive);
+  }
+
+  @override
+  Future<void> redo(int version) async {
+    var result = await SnapPointStateUndoer.redo(version, this);
+
+    _updateState(
+        snapPoints: result.snapPoints,
+        activeSnapPoint: result.activeSnapPoint,
+
+        // `areActive` is not affected by redo
+        areActive: areActive);
+  }
+
+  @override
+  Future<void> snapshot(int version, Batch batch) async {
+    await SnapPointStateUndoer.snapshot(version, batch, this);
+  }
+
+  @override
+  Future<void> cleanUpOldRedoSnapshots(int version, Batch batch) async {
+    await SnapPointStateUndoer.cleanUpOldRedoSnapshots(version, batch);
+  }
+
+  @override
   void persist(Batch batch) {
     SnapPointStatePersistor.persist(batch, this);
   }
@@ -115,9 +150,21 @@ class SnapPointState extends InspiralStateObject {
   Future<void> rehydrate(Database db, BuildContext context) async {
     var result = await SnapPointStatePersistor.rehydrate(db);
 
+    _updateState(
+        snapPoints: result.snapPoints,
+        activeSnapPoint: result.activeSnapPoint,
+        areActive: result.areActive);
+  }
+
+  void _updateState(
+      {@required Set<Offset> snapPoints,
+      @required Offset activeSnapPoint,
+      @required bool areActive}) {
     _snapPoints.removeWhere((element) => true);
-    _snapPoints.addAll(result.snapPoints);
-    _areActive = result.areActive;
-    _activeSnapPoint = result.activeSnapPoint;
+    _snapPoints.addAll(snapPoints);
+    _areActive = areActive;
+    _activeSnapPoint = activeSnapPoint;
+
+    notifyListeners();
   }
 }

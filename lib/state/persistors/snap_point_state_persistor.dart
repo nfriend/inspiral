@@ -1,6 +1,6 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
+import 'package:inspiral/state/helpers/get_snap_points_for_version.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -46,22 +46,7 @@ class SnapPointStatePersistor {
   static Future<SnapPointStateRehydrationResult> rehydrate(
     Database db,
   ) async {
-    var snapPointRows = (await db.query(Schema.snapPoints.toString(),
-        where: '${Schema.snapPoints.version} IS NULL'));
-
-    var snapPoints = HashSet<Offset>();
-    Offset activeSnapPoint;
-    for (var row in snapPointRows) {
-      var point = Offset(row[Schema.snapPoints.x] as double,
-          row[Schema.snapPoints.y] as double);
-      snapPoints.add(point);
-
-      var isActive = (row[Schema.snapPoints.isActive] as int).toBool();
-
-      if (isActive) {
-        activeSnapPoint = point;
-      }
-    }
+    var pointsAndActive = await getSnapPointsForVersion(null);
 
     Map<String, dynamic> state =
         (await db.query(Schema.state.toString())).first;
@@ -69,8 +54,8 @@ class SnapPointStatePersistor {
     var areActive = (state[Schema.state.snapPointsAreActive] as int).toBool();
 
     return SnapPointStateRehydrationResult(
-        snapPoints: snapPoints,
-        activeSnapPoint: activeSnapPoint,
+        snapPoints: pointsAndActive.snapPoints,
+        activeSnapPoint: pointsAndActive.activeSnapPoint,
         areActive: areActive);
   }
 }
