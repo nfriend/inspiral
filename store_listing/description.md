@@ -10,6 +10,8 @@ Inspiral creates breathtaking, geometric line drawings using a clever system of 
 • Select from over 5000 pen holes
 • Zoom, pan, and rotate the canvas using intuitive multi-touch gestures
 • Rotate and move the fixed gear, or lock it into place
+• Snap fixed gear back to previous positions
 • Infinite undo
 • Multiple canvas sizes
 • Crop and rotate your masterpiece before saving or sharing
+• In-app help documentation
