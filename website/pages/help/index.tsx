@@ -17,7 +17,7 @@ export default function Home() {
           </p>
         </div>
 
-        <h1>Table of contents</h1>
+        <h2 id="table-of-contents">Table of contents</h2>
 
         <ul>
           <li>
@@ -36,7 +36,7 @@ export default function Home() {
           </li>
         </ul>
 
-        <h2 id="what-does-this-button-do">What does this button do?</h2>
+        <h3 id="what-does-this-button-do">What does this button do?</h3>
 
         <p>
           If you're unsure what a button does, press and hold on the button to
@@ -48,7 +48,7 @@ export default function Home() {
           alt="A GIF showing how to reveal a tooltip on a button"
         />
 
-        <h2 id="selecting-a-new-pen-hole">Selecting a new pen hole</h2>
+        <h3 id="selecting-a-new-pen-hole">Selecting a new pen hole</h3>
 
         <p>
           You can select a different hole by opening the "Tools" tab and
@@ -62,13 +62,14 @@ export default function Home() {
           alt="A screenshot of the 'Select hole' button"
         />
 
-        <h2 id="restoring-purchases">Restoring purchases</h2>
+        <h3 id="restoring-purchases">Restoring purchases</h3>
 
         <p>
           If you purchase premium features and then uninstall/reinstall the app
-          - or if you try to use the premium features on a second device - you
-          will need to click the <b>Restore purchases</b> button in the{' '}
-          <b>Additional options</b> sidebar.
+          - or if you install the app on a second device - you will need to
+          click the <b>Restore purchases</b> button in the{' '}
+          <b>Additional options</b> sidebar in order to unlock the features you
+          have purchased.
         </p>
 
         <img
@@ -82,9 +83,9 @@ export default function Home() {
           Android devices, and vice-versa.
         </p>
 
-        <h2 id="saving-pictures-to-the-gallery">
+        <h3 id="saving-pictures-to-the-gallery">
           Saving pictures to the gallery
-        </h2>
+        </h3>
 
         <p>
           To save your masterpiece, click the <b>Save</b> icon in the menu bar.
@@ -112,6 +113,10 @@ export default function Home() {
           <b>Photos on device</b> screen.
         </p>
       </div>
+
+      {/* https://github.com/bryanbraun/anchorjs */}
+      <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+      <script>anchors.add();</script>
     </div>
   );
 }
