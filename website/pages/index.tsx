@@ -84,6 +84,9 @@ export default function Home() {
         </div>
         <footer className="flex-initial flex justify-center py-2 text-sm">
           <p className="px-3">
+            <a href="/help">Inspiral documentation</a>
+          </p>
+          <p className="px-3">
             Copyright <a href="https://nathanfriend.io">Nathan Friend</a> © 2020
           </p>
         </footer>

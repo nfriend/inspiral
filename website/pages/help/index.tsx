@@ -8,7 +8,7 @@ export default function Home() {
       <div className="max-w-xl pb-10">
         <div className="alert alert-info">
           <p>
-            <b>Welcome to the Inspiral app's documentation!</b>
+            <b>Welcome to the Inspiral documentation!</b>
           </p>
 
           <p>
