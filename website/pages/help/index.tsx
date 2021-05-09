@@ -2,7 +2,7 @@ import HelpCustomHead from './help-custom-head';
 
 export default function Home() {
   return (
-    <div className="help p-10 flex justify-center font-sans">
+    <div className="help p-5 sm:p-10 flex justify-center font-sans">
       <HelpCustomHead />
 
       <div className="max-w-xl pb-10">
