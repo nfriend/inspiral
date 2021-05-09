@@ -18,8 +18,24 @@
   }
 
   img {
-    @apply my-5;
+    @apply my-3;
+    @apply mx-auto;
     @apply shadow-2xl;
     @apply rounded-lg;
+  }
+
+  p {
+    @apply pb-2;
+  }
+
+  .alert {
+    @apply p-3;
+    @apply rounded-md;
+    @apply shadow-sm;
+
+    &.alert-info {
+      @apply bg-blue-100;
+      @apply text-blue-800;
+    }
   }
 }
