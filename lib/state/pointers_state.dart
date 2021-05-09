@@ -149,6 +149,16 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   /// Notifies this state object about a pointer move event. See comment about
   /// `pointerDown` for additional info.
   void pointerMove(PointerMoveEvent event) {
+    // For reasons I don't fully understand, it is possible (according to
+    // all my Sentry error stacktraces) to have
+    // _pointerPreviousPositions[event.pointer] return `null`. I don't
+    // understand how or why this happens, but let's check for this edge case
+    // here to prevent the errors.
+    // Original issue: https://gitlab.com/nfriend/inspiral/-/issues/98.
+    if (_pointerPreviousPositions[event.pointer] == null) {
+      return;
+    }
+
     if (_pointerPreviousPositions[event.pointer].global != event.position) {
       var originalLocation = _pointerPositions[event.pointer];
       var newLocation = Positions(
