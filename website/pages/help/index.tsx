@@ -2,10 +2,10 @@ import HelpCustomHead from './help-custom-head';
 
 export default function Home() {
   return (
-    <div className="help w-screen h-screen p-10 flex justify-center font-sans">
-      <div className="max-w-xl">
-        <HelpCustomHead />
+    <div className="help p-10 flex justify-center font-sans">
+      <HelpCustomHead />
 
+      <div className="max-w-xl pb-10">
         <div className="alert alert-info">
           <p>
             <b>Welcome to the Inspiral app's documentation!</b>
@@ -54,7 +54,7 @@ export default function Home() {
 
         <img
           src="help/images/select-hole-button.png"
-          alt="A screenshot of the 'select hole' button"
+          alt="A screenshot of the 'Select hole' button"
         />
 
         <h2 id="restoring-purchases">Restoring purchases</h2>
@@ -65,6 +65,11 @@ export default function Home() {
           will need to click the <b>Restore purchases</b> button in the{' '}
           <b>Additional options</b> sidebar.
         </p>
+
+        <img
+          src="help/images/restore-purchases.png"
+          alt="A screenshot of the 'Restore purchases' button"
+        />
 
         <p>
           Please note that purchases cannot be shared across platforms. If you

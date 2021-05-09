@@ -6,7 +6,7 @@
   h5 {
     @apply font-bold;
     @apply pb-2;
-    @apply pt-5;
+    @apply pt-7;
   }
 
   h1 {
@@ -18,7 +18,8 @@
   }
 
   img {
-    @apply my-3;
+    @apply mt-3;
+    @apply mb-6;
     @apply mx-auto;
     @apply shadow-2xl;
     @apply rounded-lg;
