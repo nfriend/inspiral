@@ -19,7 +19,7 @@ export default function Home() {
 
         <h1>Table of contents</h1>
 
-        <ul className="list-disc list-inside">
+        <ul>
           <li>
             <a href="#what-does-this-button-do">What does this button do?</a>
           </li>

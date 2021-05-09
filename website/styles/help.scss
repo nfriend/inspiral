@@ -25,8 +25,33 @@
     @apply rounded-lg;
   }
 
+  a {
+    @apply text-blue-700;
+
+    &:active {
+      @apply text-blue-900;
+    }
+
+    &:visited {
+      @apply text-purple-700;
+
+      &:active {
+        @apply text-purple-900;
+      }
+    }
+  }
+
   p {
     @apply pb-2;
+  }
+
+  ul {
+    @apply list-disc;
+    @apply list-inside;
+
+    li {
+      @apply my-1;
+    }
   }
 
   .alert {
