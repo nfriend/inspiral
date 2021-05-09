@@ -8,6 +8,11 @@ module.exports = {
       display: ['Playfair Display', 'serif'],
       body: ['Lato', 'ui-sans-serif', 'system-ui', 'sans-serif'],
     },
+    extend: {
+      backgroundColor: {
+        beige: '#f7efda',
+      },
+    },
   },
   variants: {
     extend: {},

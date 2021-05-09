@@ -42,7 +42,7 @@ export default function Home() {
   ));
 
   return (
-    <div>
+    <div className="bg-beige">
       <CustomHead />
 
       <main className="sm:h-screen flex flex-col sm:spiral-background">
@@ -54,7 +54,9 @@ export default function Home() {
                   Get Inspiral-ed
                 </h1>
               </header>
-              <p>Relive your childhood in pixel-perfect bliss.</p>
+              <p className="text-2xl">
+                Relive your childhood in pixel-perfect bliss.
+              </p>
               <div className="flex justify-center">
                 <a
                   href="https://play.google.com/store/apps/details?id=io.nathanfriend.inspiral"

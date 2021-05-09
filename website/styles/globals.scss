@@ -7,7 +7,6 @@
 @layer base {
   body {
     @apply font-body;
-    @apply text-2xl;
   }
 
   a {
@@ -17,11 +16,6 @@
 
 .max-h-90-screen {
   max-height: 90vh;
-}
-
-html,
-body {
-  background-color: #f7efda;
 }
 
 .app-store-button {
