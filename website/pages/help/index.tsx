@@ -29,6 +29,11 @@ export default function Home() {
           <li>
             <a href="#restoring-purchases">Restoring purchases</a>
           </li>
+          <li>
+            <a href="#saving-pictures-to-the-gallery">
+              Saving pictures to the gallery
+            </a>
+          </li>
         </ul>
 
         <h2 id="what-does-this-button-do">What does this button do?</h2>
@@ -39,7 +44,7 @@ export default function Home() {
         </p>
 
         <img
-          src="help/images/tooltip.gif"
+          src="/help/images/tooltip.gif"
           alt="A GIF showing how to reveal a tooltip on a button"
         />
 
@@ -53,7 +58,7 @@ export default function Home() {
         </p>
 
         <img
-          src="help/images/select-hole-button.png"
+          src="/help/images/select-hole-button.png"
           alt="A screenshot of the 'Select hole' button"
         />
 
@@ -67,7 +72,7 @@ export default function Home() {
         </p>
 
         <img
-          src="help/images/restore-purchases.png"
+          src="/help/images/restore-purchases.png"
           alt="A screenshot of the 'Restore purchases' button"
         />
 
@@ -75,6 +80,36 @@ export default function Home() {
           Please note that purchases cannot be shared across platforms. If you
           purchase the item on an iOS device, the item will not be available on
           Android devices, and vice-versa.
+        </p>
+
+        <h2 id="saving-pictures-to-the-gallery">
+          Saving pictures to the gallery
+        </h2>
+
+        <p>
+          To save your masterpiece, click the <b>Save</b> icon in the menu bar.
+        </p>
+
+        <img
+          src="/help/images/save-icon.jpg"
+          alt="A screenshot of the 'Save' icon"
+        />
+
+        <p>
+          This will open a screen that will allow you to crop and/or rotate your
+          picture.
+        </p>
+
+        <p>
+          <b>On iOS</b>, press the <b>Done</b> button to save your picture. The
+          picture will be saved to the Photos app.
+        </p>
+
+        <p>
+          <b>On Android</b>, press the checkmark icon to save your picture. The
+          picture will be saved to a "Pictures" folder on your device. If you
+          are using Google Photos, this folder can be accessed on the{' '}
+          <b>Photos on device</b> screen.
         </p>
       </div>
     </div>
