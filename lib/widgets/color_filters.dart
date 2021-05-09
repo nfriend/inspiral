@@ -1,7 +1,5 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 
 final noFilterColorFilter = ColorFilter.matrix([
   1,

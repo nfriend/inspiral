@@ -38,8 +38,6 @@ class _CanvasTransformState extends State<CanvasTransform>
         context.select<CanvasState, bool>((canvas) => canvas.isSelectingHole);
     final canvasTransform =
         context.select<CanvasState, Matrix4>((canvas) => canvas.transform);
-    final canvasCenter =
-        context.select<CanvasState, Offset>((canvas) => canvas.canvasCenter);
     final areGearsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
     final isLandscape =
