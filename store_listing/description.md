@@ -14,4 +14,4 @@ Inspiral creates breathtaking, geometric line drawings using a clever system of 
 • Infinite undo
 • Multiple canvas sizes
 • Crop and rotate your masterpiece before saving or sharing
-• In-app help documentation
+• In-app help documentation (also available online: https://inspiral.nathanfriend.io/help/)
