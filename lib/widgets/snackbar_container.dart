@@ -35,9 +35,12 @@ class _SnackbarContainerState extends State<SnackbarContainer>
     final backgroundColor = isDark ? Colors.white : Color(0xFF353535);
     final textColor = isDark ? Colors.black : Colors.white;
 
-    if (!snackbar.isVisible && _controller.isDismissed) {
+    if (_controller == null ||
+        (!snackbar.isVisible && _controller.isDismissed)) {
       // If the snackbar is not visible, and any previous animations have
       // finished, just return an empty Container().
+      // Or, if the controller is `null`, we know this component has been
+      // disposed, so we shouldn't render anything.
       // Disclaimer: I'm unsure if this is actually an effective optimization.
       return Container();
     }
@@ -75,6 +78,7 @@ class _SnackbarContainerState extends State<SnackbarContainer>
   @override
   void dispose() {
     _controller.dispose();
+    _controller = null;
     super.dispose();
   }
 }
