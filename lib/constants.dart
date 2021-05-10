@@ -95,3 +95,19 @@ const double maxScale = 2.0;
 
 /// The minimum zoom scale
 const double minScale = .05;
+
+/// The number of path points we allow to build up in Path object before
+/// the Paths are baked (rasterized) in the tile images in the canvas.
+/// Large numbers of points cause the frame rate to drop (particularly on
+/// low-end devices). However, the rasterization process itself causes
+/// a noticeable jank. So this number can't be too high or too low. Too high,
+/// and low-end devices will grind to a halt with lots of drawing. Too low, and
+/// the experience begins to feel janky.
+/// If https://github.com/flutter/flutter/issues/75755 is resolved, this
+/// number can be lowered, because this should allow for the baking process
+/// to complete in the background without affect the frame rate.
+/// One other consideration: this number indirectly controls how often undo
+/// snapshots are taken. Every time we bake, we create a new undo snapshot.
+/// So a higher number means less undo snapshots, and a lower number
+/// means more undo snapshots.
+const int pointCountBakeThreshold = 1000;

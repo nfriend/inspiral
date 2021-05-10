@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/helpers/bake_image.dart' as helpers;
 import 'package:inspiral/state/persistors/ink_state_persistor.dart';
@@ -83,7 +84,7 @@ class InkState extends InspiralStateObject {
       _lastPoint = points.last;
     }
 
-    if (currentPointCount > 1000) {
+    if (currentPointCount > pointCountBakeThreshold) {
       bakeImage();
     }
 
@@ -129,7 +130,6 @@ class InkState extends InspiralStateObject {
   Future<void> bakeImage() async {
     if (isBaking ||
         allStateObjects.undoRedo.isUndoing ||
-        lines.isEmpty ||
         currentPointCount == 0) {
       return;
     }
@@ -141,34 +141,46 @@ class InkState extends InspiralStateObject {
 
     notifyListeners();
 
-    try {
-      var updatedTiles = await helpers.bakeImage(
-          lines: lines,
-          tileImages: _tileImages,
-          tilePositionToDatabaseId: _tilePositionToDatabaseId,
-          tileSize: allStateObjects.canvas.tileSize);
+    Map<Offset, Image> updatedTiles;
+    var bakeError = false;
+    while (!bakeError && currentPointCount > 0) {
+      try {
+        updatedTiles = await helpers.bakeImage(
+            lines: lines,
+            tileImages: _tileImages,
+            tilePositionToDatabaseId: _tilePositionToDatabaseId,
+            tileSize: allStateObjects.canvas.tileSize);
 
-      // Add all the updated tiles to the list of "unsaved" tiles.
-      // These tiles will be persisted very soon when the "snapshot"
-      // method is triggered by the call to "createSnapshot" below.
-      _unsavedTiles.addAll(updatedTiles);
-
-      await allStateObjects.undoRedo.createSnapshot();
-    } catch (err, stackTrace) {
-      // Explicitly catching/handling errors here since `bakeImage` is often
-      // called in synchronous contexts, and the return value is ignored.
-      // This causes errors to be silently swallowed.
-      print('an error occured while baking the image: $err');
-      await Sentry.captureException(err, stackTrace: stackTrace);
-    } finally {
-      // Regardless of success or failure, set `isBaking` back to `false`
-      // to prevent blocking future calls to `isBaking`.
-      isBaking = false;
-
-      notifyListeners();
-
-      pendingCanvasManipulationCompleter.complete();
+        // Add all the updated tiles to the list of "unsaved" tiles.
+        // These tiles will be persisted very soon when the "snapshot"
+        // method is triggered by the call to "createSnapshot" below.
+        _unsavedTiles.addAll(updatedTiles);
+      } catch (err, stackTrace) {
+        // Explicitly catching/handling errors here since `bakeImage` is often
+        // called in synchronous contexts, and the return value is ignored.
+        // This causes errors to be silently swallowed.
+        print('an error occured while baking the image: $err');
+        await Sentry.captureException(err, stackTrace: stackTrace);
+        bakeError = true;
+      }
     }
+
+    if (!bakeError) {
+      try {
+        await allStateObjects.undoRedo.createSnapshot();
+      } catch (err, stackTrace) {
+        // See comment above regarding explicit error handling
+        print(
+            'an error occured while creating an undo snapshot of the image: $err');
+        await Sentry.captureException(err, stackTrace: stackTrace);
+      }
+    }
+
+    isBaking = false;
+
+    notifyListeners();
+
+    pendingCanvasManipulationCompleter.complete();
   }
 
   /// Erases the canvas, including both baked and unbaked lines.
