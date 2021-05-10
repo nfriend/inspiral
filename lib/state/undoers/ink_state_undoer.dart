@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:flutter/services.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
 import 'package:inspiral/state/state.dart';
@@ -28,6 +29,9 @@ class InkStateUndoer {
   }
 
   static Future<void> snapshot(int version, Batch batch, InkState ink) async {
+    var allIdsInVersion = <String>[];
+    var allUpdates = <Future>[];
+
     for (var entry in ink.tileImages.entries) {
       var tilePosition = entry.key;
       var tileImage = entry.value;
@@ -37,20 +41,29 @@ class InkStateUndoer {
         // This tile hasn't yet been saved to the database, so do this now.
         tileDatabaseId = _uuid.v4();
 
-        var byteData = await tileImage.toByteData(format: ImageByteFormat.png);
-        var bytes = byteData.buffer.asUint8List();
+        allUpdates.add(tileImage
+            .toByteData(format: ImageByteFormat.png)
+            .then((ByteData byteData) {
+          var bytes = byteData.buffer.asUint8List();
 
-        batch.insert(Schema.tileData.toString(), {
-          Schema.tileData.id: tileDatabaseId,
-          Schema.tileData.x: tilePosition.dx,
-          Schema.tileData.y: tilePosition.dy,
-          Schema.tileData.bytes: bytes
-        });
+          batch.insert(Schema.tileData.toString(), {
+            Schema.tileData.id: tileDatabaseId,
+            Schema.tileData.x: tilePosition.dx,
+            Schema.tileData.y: tilePosition.dy,
+            Schema.tileData.bytes: bytes
+          });
 
-        ink.tilePositionToDatabaseId[tilePosition] = tileDatabaseId;
-        ink.unsavedTiles.remove(tilePosition);
+          ink.tilePositionToDatabaseId[tilePosition] = tileDatabaseId;
+          ink.unsavedTiles.remove(tilePosition);
+        }));
       }
 
+      allIdsInVersion.add(tileDatabaseId);
+    }
+
+    await Future.wait(allUpdates);
+
+    for (var tileDatabaseId in allIdsInVersion) {
       batch.insert(Schema.tileSnapshots.toString(), {
         Schema.tileSnapshots.id: _uuid.v4(),
         Schema.tileSnapshots.tileDataId: tileDatabaseId,

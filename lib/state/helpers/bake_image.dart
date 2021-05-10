@@ -31,6 +31,8 @@ Future<Map<Offset, Image>> bakeImage(
   var renderedSize = tileSize;
   var updatedTileImages = <Offset, Image>{};
 
+  var allUpdates = <Future>[];
+
   for (var tilePosition in tilesToUpdate) {
     var recorder = PictureRecorder();
     var canvas = Canvas(recorder);
@@ -42,11 +44,12 @@ Future<Map<Offset, Image>> bakeImage(
 
     var picture = recorder.endRecording();
 
-    var newImage = await picture.toImage(
-        renderedSize.width.ceil(), renderedSize.height.ceil());
-
-    updatedTileImages[tilePosition] = newImage;
+    allUpdates.add(picture
+        .toImage(renderedSize.width.ceil(), renderedSize.height.ceil())
+        .then((Image newImage) => updatedTileImages[tilePosition] = newImage));
   }
+
+  await Future.wait(allUpdates);
 
   // Update all the tile images with the new ones generated above
   for (var entry in updatedTileImages.entries) {
