@@ -21,7 +21,7 @@ module.exports = {
     plugin(function ({ addUtilities }) {
       const spiralBackgrounds = {
         '.spiral-background': {
-          background: `url("/images/website-background.jpg") bottom left/30% no-repeat, url("/images/website-background-2.jpg") top right/20% no-repeat`,
+          background: `url("/images/landing-page-background.jpg") bottom left/30% no-repeat, url("/images/landing-page-background-2.jpg") top right/20% no-repeat`,
         },
       };
 
