@@ -43,7 +43,8 @@ class UndoRedoState extends InspiralStateObject {
   bool get undoAvailable =>
       !_isInkBaking &&
       !_isUndoing &&
-      (currentSnapshotVersion > 0 || allStateObjects.ink.currentPointCount > 0);
+      !_isCreatingSnapshot &&
+      currentSnapshotVersion > 0;
 
   /// Whether or not the ink state is currently baking
   bool get isInkBaking => _isInkBaking;
@@ -94,11 +95,15 @@ class UndoRedoState extends InspiralStateObject {
 
     _currentSnapshotVersion--;
 
+    notifyListeners();
+
     for (var stateObj in allStateObjects.list) {
       await stateObj.undo(currentSnapshotVersion);
     }
 
     isUndoing = false;
+
+    notifyListeners();
   }
 
   /// Moves forward one step in the undo/redo stack
@@ -112,6 +117,8 @@ class UndoRedoState extends InspiralStateObject {
     }
 
     _isCreatingSnapshot = true;
+
+    notifyListeners();
 
     var newVersion = _currentSnapshotVersion + 1;
 

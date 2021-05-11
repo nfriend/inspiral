@@ -106,8 +106,10 @@ const double minScale = .05;
 /// If https://github.com/flutter/flutter/issues/75755 is resolved, this
 /// number can be lowered, because this should allow for the baking process
 /// to complete in the background without affect the frame rate.
-/// One other consideration: this number indirectly controls how often undo
-/// snapshots are taken. Every time we bake, we create a new undo snapshot.
-/// So a higher number means less undo snapshots, and a lower number
-/// means more undo snapshots.
 const int pointCountBakeThreshold = 1000;
+
+/// It's possible for points to accumulate _during_ the baking process,
+/// because the baking process is asynchronous. So the baking process
+/// repeatedly calls itself until the points have been reduced to less
+/// than this number.
+const int pointCountBakeUntilThreshold = 100;

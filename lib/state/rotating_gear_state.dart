@@ -8,6 +8,7 @@ import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:inspiral/util/calculate_rotation_count.dart';
 import 'package:inspiral/util/select_closest_hole.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:pedantic/pedantic.dart';
 
@@ -143,7 +144,18 @@ class RotatingGearState extends BaseGearState {
     // so wait a _little_ longer than `uiAnimationDuration` to allow
     // any UI animations to complete smoothly.
     Future.delayed(uiAnimationDuration * 1.2)
-        .then((value) => allStateObjects.ink.bakeImage());
+        .then((_) => allStateObjects.ink.bakeImage())
+        .then((_) => allStateObjects.ink.pendingCanvasManipulation)
+        .then((_) async {
+      try {
+        await allStateObjects.undoRedo.createSnapshot();
+      } catch (err, stackTrace) {
+        // See comment in ink_state.dart for a similar example regarding
+        // explicit error handling
+        print('an error occured while creating an undo snapshot: $err');
+        await Sentry.captureException(err, stackTrace: stackTrace);
+      }
+    });
 
     notifyListeners();
   }

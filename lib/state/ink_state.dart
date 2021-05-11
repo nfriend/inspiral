@@ -127,60 +127,64 @@ class InkState extends InspiralStateObject {
   /// have been rendered to the screen. See how this is done in
   /// `save_share_image.dart` using `addPostFrameCallback`
   /// for a complete example.
-  Future<void> bakeImage() async {
-    if (isBaking ||
-        allStateObjects.undoRedo.isUndoing ||
-        currentPointCount == 0) {
-      return;
-    }
+  ///
+  /// If this method bakes any points, it returns `true`. If no points
+  /// were baked, it returns `false`.
+  Future<bool> bakeImage() async {
+    var pointsWereBaked = false;
 
-    isBaking = true;
+    if (!isBaking &&
+        !allStateObjects.undoRedo.isUndoing &&
+        // If there's 0 points or 1 point, no line will be visible (because it
+        // takes at least two points to make a visible line).
+        currentPointCount > 1) {
+      isBaking = true;
 
-    var pendingCanvasManipulationCompleter = Completer();
-    pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
+      var pendingCanvasManipulationCompleter = Completer();
+      pendingCanvasManipulation = pendingCanvasManipulationCompleter.future;
 
-    notifyListeners();
+      notifyListeners();
 
-    Map<Offset, Image> updatedTiles;
-    var bakeError = false;
-    while (!bakeError && currentPointCount > 0) {
-      try {
-        updatedTiles = await helpers.bakeImage(
-            lines: lines,
-            tileImages: _tileImages,
-            tilePositionToDatabaseId: _tilePositionToDatabaseId,
-            tileSize: allStateObjects.canvas.tileSize);
+      Map<Offset, Image> updatedTiles;
+      var bakeError = false;
+      do {
+        try {
+          updatedTiles = await helpers.bakeImage(
+              lines: lines,
+              tileImages: _tileImages,
+              tilePositionToDatabaseId: _tilePositionToDatabaseId,
+              tileSize: allStateObjects.canvas.tileSize);
 
-        // Add all the updated tiles to the list of "unsaved" tiles.
-        // These tiles will be persisted very soon when the "snapshot"
-        // method is triggered by the call to "createSnapshot" below.
-        _unsavedTiles.addAll(updatedTiles);
-      } catch (err, stackTrace) {
-        // Explicitly catching/handling errors here since `bakeImage` is often
-        // called in synchronous contexts, and the return value is ignored.
-        // This causes errors to be silently swallowed.
-        print('an error occured while baking the image: $err');
-        await Sentry.captureException(err, stackTrace: stackTrace);
-        bakeError = true;
+          // Add all the updated tiles to the list of "unsaved" tiles.
+          // These tiles will be persisted when the "snapshot"
+          // method is triggered when the user stop dragging the gear.
+          _unsavedTiles.addAll(updatedTiles);
+          pointsWereBaked = true;
+        } catch (err, stackTrace) {
+          // Explicitly catching/handling errors here since `bakeImage` is often
+          // called in synchronous contexts, and the return value is ignored.
+          // This causes errors to be silently swallowed.
+          print('an error occured while baking the image: $err');
+          await Sentry.captureException(err, stackTrace: stackTrace);
+          bakeError = true;
+        }
       }
+      // Loop until we have less than `pointCountBakeUntilThreshold` on the
+      // screen. In most cases, this loop will run once. This `while` loop
+      // catches cases where the device is really slow, and points accumulate
+      // rapidly while the asynchronous process above is in progress. This
+      // results in lots of points still on the screen even after a bake,
+      // leading to sluggish performance.
+      while (!bakeError && currentPointCount > pointCountBakeUntilThreshold);
+
+      isBaking = false;
+
+      notifyListeners();
+
+      pendingCanvasManipulationCompleter.complete();
     }
 
-    if (!bakeError) {
-      try {
-        await allStateObjects.undoRedo.createSnapshot();
-      } catch (err, stackTrace) {
-        // See comment above regarding explicit error handling
-        print(
-            'an error occured while creating an undo snapshot of the image: $err');
-        await Sentry.captureException(err, stackTrace: stackTrace);
-      }
-    }
-
-    isBaking = false;
-
-    notifyListeners();
-
-    pendingCanvasManipulationCompleter.complete();
+    return pointsWereBaked;
   }
 
   /// Erases the canvas, including both baked and unbaked lines.
