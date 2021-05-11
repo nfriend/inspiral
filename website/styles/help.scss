@@ -7,6 +7,8 @@
     @apply font-bold;
     @apply pb-2;
     @apply pt-7;
+    @apply flex;
+    @apply items-center;
   }
 
   h1 {
@@ -63,5 +65,14 @@
       @apply bg-blue-100;
       @apply text-blue-800;
     }
+  }
+
+  .version-indicator {
+    @apply text-sm;
+    @apply text-gray-400;
+    @apply font-normal;
+    @apply ml-4;
+    @apply flex-grow;
+    @apply text-right;
   }
 }
