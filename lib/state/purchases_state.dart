@@ -36,6 +36,7 @@ class PurchasesState extends InspiralStateObject {
   Future<bool> purchasePackage(Package packageToBuy) async {
     try {
       await Purchases.purchasePackage(packageToBuy);
+      notifyListeners();
       return true;
     } on PlatformException catch (e) {
       var errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -61,5 +62,6 @@ class PurchasesState extends InspiralStateObject {
   /// Restores purchases in the case when the app is reinstalled.
   Future<void> restorePurchases() async {
     await Purchases.restoreTransactions();
+    notifyListeners();
   }
 }
