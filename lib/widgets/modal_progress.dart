@@ -15,10 +15,6 @@ class ModalProgress extends StatelessWidget {
     final primaryColor =
         context.select<ColorState, TinyColor>((colors) => colors.primaryColor);
 
-    if (!progress.isLoading) {
-      return child;
-    }
-
     Animation<Color> indicatorColor =
         AlwaysStoppedAnimation<Color>(primaryColor.color);
 
@@ -37,18 +33,21 @@ class ModalProgress extends StatelessWidget {
     columnChildren.add(
         CircularProgressIndicator(value: null, valueColor: indicatorColor));
 
-    return Stack(children: [
+    Widget loadingIndicator = Positioned.fill(
+        child: Container(
+            color: Color(0xAA000000),
+            child: Align(
+                alignment: Alignment.center,
+                child: Material(
+                    type: MaterialType.transparency,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: columnChildren)))));
+
+    return Stack(
+        children: [
       Positioned.fill(child: child),
-      Positioned.fill(
-          child: Container(
-              color: Color(0xAA000000),
-              child: Align(
-                  alignment: Alignment.center,
-                  child: Material(
-                      type: MaterialType.transparency,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: columnChildren))))),
-    ]);
+      progress.isLoading ? loadingIndicator : null,
+    ].where((element) => element != null).toList());
   }
 }

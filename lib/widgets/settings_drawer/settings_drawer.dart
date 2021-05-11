@@ -148,10 +148,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
       ListTile(
         title: Text('Restore purchases'),
         onTap: () async {
+          Navigator.of(context).pop();
           progress.showModalProgress(message: 'Restoring purchases...');
           await purchases.restorePurchases();
           progress.hideModalPropress();
-          Navigator.of(context).pop();
         },
       ),
       ListTile(
