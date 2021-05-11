@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/persistors/undo_redo_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UndoRedoState extends InspiralStateObject {
@@ -120,22 +121,33 @@ class UndoRedoState extends InspiralStateObject {
 
     notifyListeners();
 
-    var newVersion = _currentSnapshotVersion + 1;
+    try {
+      // Rasterize any un-baked points before creating a new snapshot
+      await allStateObjects.ink.bakeImage();
+      await allStateObjects.ink.pendingCanvasManipulation;
 
-    var batch = (await getDatabase()).batch();
+      var newVersion = _currentSnapshotVersion + 1;
 
-    for (var stateObj in allStateObjects.list) {
-      await stateObj.cleanUpOldRedoSnapshots(newVersion, batch);
+      var batch = (await getDatabase()).batch();
+
+      for (var stateObj in allStateObjects.list) {
+        await stateObj.cleanUpOldRedoSnapshots(newVersion, batch);
+      }
+
+      for (var stateObj in allStateObjects.list) {
+        await stateObj.snapshot(newVersion, batch);
+      }
+
+      await batch.commit(noResult: true);
+
+      _currentSnapshotVersion = newVersion;
+      _maxSnapshotVersion = newVersion;
+    } catch (err, stackTrace) {
+      // See comment in ink_state.dart for a similar example regarding
+      // explicit error handling
+      print('an error occured while creating an undo snapshot: $err');
+      await Sentry.captureException(err, stackTrace: stackTrace);
     }
-
-    for (var stateObj in allStateObjects.list) {
-      await stateObj.snapshot(newVersion, batch);
-    }
-
-    await batch.commit(noResult: true);
-
-    _currentSnapshotVersion = newVersion;
-    _maxSnapshotVersion = newVersion;
 
     _isCreatingSnapshot = false;
 
