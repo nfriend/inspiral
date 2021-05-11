@@ -68,8 +68,6 @@ class SelectorDrawerState extends InspiralStateObject {
   }
 
   /// Exits out of hole selection mode
-  ///
-  /// TODO: It feels like there should be a more declarative way to do this.
   void _exitHoleSelectionMode() {
     allStateObjects.canvas.isSelectingHole = false;
   }
