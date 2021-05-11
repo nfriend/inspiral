@@ -111,7 +111,7 @@ change.
 #### Android
 
 ```sh
-flutter clean && flutter build appbundle
+flutter clean && flutter build appbundle --dart-define=isProduction=true
 ```
 
 Upload the generated file (`build/app/outputs/bundle/release/app-release.aab`)
@@ -120,7 +120,7 @@ through the Google Play Console website.
 #### iOS
 
 ```sh
-flutter clean && flutter build ipa
+flutter clean && flutter build ipa --dart-define=isProduction=true
 ```
 
 Then, open the generated file (`build/ios/archive/Runner.xcarchive`) in Xcode.

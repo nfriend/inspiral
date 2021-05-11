@@ -5,4 +5,7 @@ class EnvironmentConfig {
   // so no need to keep this ID secret.
   static const appStoreId =
       '1558340425'; // String.fromEnvironment('appStoreId');
+
+  /// Whether or not the app is in production mode
+  static const isProduction = String.fromEnvironment('isProduction');
 }
