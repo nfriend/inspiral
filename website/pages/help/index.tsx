@@ -28,6 +28,15 @@ export default function Home() {
             <a href="#selecting-a-new-pen-hole">Selecting a new pen hole</a>
           </li>
           <li>
+            <a href="#rotating-the-gear-in-place">Rotating the gear in place</a>
+          </li>
+          <li>
+            <a href="#using-auto-draw">Using auto-draw</a>
+          </li>
+          <li>
+            <a href="#locking-the-fixed-gear">Locking the fixed gear</a>
+          </li>
+          <li>
             <a href="#using-fixed-gear-snap-points">
               Using fixed gear "snap points"
             </a>
@@ -62,7 +71,7 @@ export default function Home() {
         <h3 id="selecting-a-new-pen-hole">Selecting a new pen hole</h3>
 
         <p>
-          You can select a different hole by opening the "Tools" tab and
+          You can select a different hole by opening the <b>Tools</b> tab and
           pressing the first button in the top row. This will zoom in on the
           rotating gear and allow you to select any of the available holes.
           Press the button again to zoom back out.
@@ -71,6 +80,49 @@ export default function Home() {
         <img
           src="/help/images/select-hole-button.png"
           alt="A screenshot of the 'Select hole' button"
+        />
+
+        <h3 id="rotating-the-gear-in-place">Rotating the gear in place</h3>
+
+        <p>
+          To draw a pattern multiple times with each pattern offset by a single
+          tooth, press the second or third buttons in the <b>Tools</b> tab.
+          These buttons rotate the gear in place by a single tooth, without
+          drawing any lines.
+        </p>
+
+        <img
+          src="/help/images/rotate-in-place.png"
+          alt="A screenshot of the 'Rotate by one tooth' buttons"
+        />
+
+        <h3 id="using-auto-draw">Using auto-draw</h3>
+
+        <p>
+          Instead of dragging the gear yourself, you can let Inspiral do the
+          hard work for you! The fourth button in the <b>Tools</b> tab will spin
+          the rotating gear one full rotation (360°). The fifth button will spin
+          until a complete pattern is drawn and the pen is back in its original
+          position.
+        </p>
+
+        <img
+          src="/help/images/auto-draw.png"
+          alt="A screenshot of the 'Auto draw' buttons"
+        />
+
+        <h3 id="locking-the-fixed-gear">Locking the fixed gear</h3>
+
+        <p>
+          To avoid accidentally moving the fixed gear, press the button with the
+          lock icon in the <b>Tools</b> tab. This will lock the fixed gear in
+          place, and you will no longer be able to move or rotate it. To unlock
+          the gear, press the button again.
+        </p>
+
+        <img
+          src="/help/images/fixed-gear-lock.png"
+          alt="A screenshot of the 'Lock fixed gear' button"
         />
 
         <h3 id="using-fixed-gear-snap-points">
@@ -95,7 +147,8 @@ export default function Home() {
         </p>
 
         <p>
-          To turn snap points on or off, press the final button in the "Tools"
+          To turn snap points on or off, press the final button in the{' '}
+          <b>Tools</b>
           tab.
         </p>
 
