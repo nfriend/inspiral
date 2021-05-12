@@ -148,8 +148,7 @@ export default function Home() {
 
         <p>
           To turn snap points on or off, press the final button in the{' '}
-          <b>Tools</b>
-          tab.
+          <b>Tools</b> tab.
         </p>
 
         <img
