@@ -42,7 +42,7 @@ class CustomHead extends Head {
 class StaticDocument extends Document {
   render() {
     return (
-      <html>
+      <html lang="en">
         <CustomHead />
         <body>
           <Main />

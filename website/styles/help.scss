@@ -49,10 +49,10 @@
 
   ul {
     @apply list-disc;
-    @apply list-inside;
 
     li {
       @apply my-1;
+      @apply ml-4;
     }
   }
 

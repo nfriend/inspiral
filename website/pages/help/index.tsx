@@ -1,4 +1,5 @@
 import HelpCustomHead from './help-custom-head';
+import VersionIndicator from './version-indicator';
 
 export default function Home() {
   return (
@@ -74,7 +75,7 @@ export default function Home() {
 
         <h3 id="using-fixed-gear-snap-points">
           Using fixed gear "snap points"
-          <div className="version-indicator">Introduced in version 1.1.0</div>
+          <VersionIndicator version="1.1.0" />
         </h3>
 
         <p>
