@@ -98,6 +98,7 @@ Future<String> _cropAndSaveToTempFile(BuildContext context) async {
   var croppedImage = await ImageCropper.cropImage(
       sourcePath: fullImageFilePath,
       androidUiSettings: AndroidUiSettings(toolbarTitle: title),
+      compressFormat: ImageCompressFormat.png,
       iosUiSettings: IOSUiSettings(
         title: title,
       ));
