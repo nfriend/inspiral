@@ -55,6 +55,8 @@ pages:
 create release:
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   stage: deploy
+  before_script: []
+  cache: {}
   script:
     - echo "Creating a new release for tag $CI_COMMIT_TAG..."
   release:
