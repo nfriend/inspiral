@@ -108,22 +108,20 @@ Bump the _semantic version_ portion (`1.2.3`) according to the type of change
 Bump the _build number_ portion (`+13`) by one, regardless of the type of
 change.
 
-#### Android
+Then, run:
 
 ```sh
-flutter clean && flutter build appbundle --dart-define=isProduction=true
+scripts/build_release.sh
 ```
+
+#### Android
 
 Upload the generated file (`build/app/outputs/bundle/release/app-release.aab`)
 through the Google Play Console website.
 
 #### iOS
 
-```sh
-flutter clean && flutter build ipa --dart-define=isProduction=true
-```
-
-Then, open the generated file (`build/ios/archive/Runner.xcarchive`) in Xcode.
+Open the generated file (`build/ios/archive/Runner.xcarchive`) in Xcode.
 Validate (optional) and then Distribute the app, uploading directly through App
 Store Connect.
 

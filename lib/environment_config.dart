@@ -8,4 +8,7 @@ class EnvironmentConfig {
 
   /// Whether or not the app is in production mode
   static const isProduction = String.fromEnvironment('isProduction');
+
+  /// The version of this release. Only populated in production builds.
+  static const release = String.fromEnvironment('release');
 }

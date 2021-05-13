@@ -10,6 +10,7 @@ Future<void> main() async {
     (options) {
       options.dsn =
           'https://4533347562a94db1a09a0308e3bed4f0@o403829.ingest.sentry.io/5707774';
+      options.release = EnvironmentConfig.release;
 
       // To define the `isProduction` environment variable, build or run with:
       // --dart-define=isProduction=true
