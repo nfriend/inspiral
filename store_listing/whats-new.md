@@ -1,4 +1,1 @@
-• Added "snap points", which allow the fixed gear to snap back to any of its previous positions
-• Added in-app help documentation
-• Improved undo logic
-• Bug fixes
+Fixed bug with the "Include background color when saving or sharing" option. The image is now correctly saved with a transparent background when this option is disabled.
