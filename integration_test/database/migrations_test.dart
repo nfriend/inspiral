@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
+import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/util/delete_database.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:sqflite/sqflite.dart' hide deleteDatabase;
@@ -88,6 +89,16 @@ void main() {
       expect(stateRows.length, 1);
       expect(stateRows[0][Schema.state.currentSnapshotVersion], 2);
       expect(stateRows[0][Schema.state.maxSnapshotVersion], 2);
+    });
+
+    testWidgets('upgrade from version 4 to version 5',
+        (WidgetTester tester) async {
+      db = await getDatabase(version: 5, databaseName: testDatabaseName);
+
+      final stateRows = await db.query(Schema.state.toString());
+
+      expect(stateRows.length, 1);
+      expect(stateRows[0][Schema.state.autoDrawSpeed], AutoDrawSpeed.slow);
     });
   });
 }

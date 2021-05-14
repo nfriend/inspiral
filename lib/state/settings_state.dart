@@ -87,5 +87,6 @@ class SettingsState extends InspiralStateObject {
     _includeBackgroundWhenSaving = result.includeBackgroundWhenSaving;
     _closeDrawingToolsDrawerOnDrag = result.closeDrawingToolsDrawerOnDrag;
     _preventIncompatibleGearPairings = result.preventIncompatibleGearPairings;
+    _autoDrawSpeed = result.autoDrawSpeed;
   }
 }

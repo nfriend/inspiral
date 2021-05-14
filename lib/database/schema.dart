@@ -109,6 +109,7 @@ class StateTable extends Table {
   final String maxSnapshotVersion = 'maxSnapshotVersion';
 
   final String snapPointsAreActive = 'snapPointsAreActive';
+  final String autoDrawSpeed = 'autoDrawSpeed';
 }
 
 class InkLinesTable extends Table {

@@ -58,9 +58,23 @@ and debug the app.
 ### Database migrations
 
 Changing the structure of the save data must be managed through
-[`sqflite`])(https://pub.dev/packages/sqflite) migrations. See [the
-docs](https://github.com/tekartik/sqflite/blob/master/sqflite/doc/migration_example.md)
-for an example of how to do this.
+[`sqflite`])(https://pub.dev/packages/sqflite) migrations. To create a new
+migration:
+
+1. Add the columns/tables you want to add to
+   [`schema.dart`](lib/database/schema.dart).
+1. Add a new migration file in
+   [`lib/database/migrations/upgrades`](lib/database/migrations/upgrades). The
+   file should be named `upgrade_vX_to_vX.dart` and export a function named
+   `upgradeVXToVX` (replace the `X`'s with the appropriate versions).
+1. Bump the `localDatabaseVersion` in [`lib/constants.dart`](lib/constants.dart)
+1. In
+   [`lib/database/on_database_upgrade.dart`](lib/database/on_database_upgrade.dart),
+   import the migratino function and add it to the mapping of version number ->
+   migration function
+1. Add a new test for the migration in
+   [`integration_test/database/migrations_test.dart`](integration_test/database/migrations_test.dart)
+   (see below)
 
 #### Database migration tests
 
