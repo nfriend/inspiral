@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/state/persistors/settings_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/util/find_closest_compatible_gear.dart';
@@ -60,6 +61,17 @@ class SettingsState extends InspiralStateObject {
               allStateObjects.rotatingGear.definition));
     }
 
+    notifyListeners();
+  }
+
+  /// How fast auto-draw should be
+  /// The higher the number, the faster the speed.
+  String get autoDrawSpeed => _autoDrawSpeed;
+  String _autoDrawSpeed = AutoDrawSpeed.slow;
+  set autoDrawSpeed(String value) {
+    assert(AutoDrawSpeed.all.contains(value),
+        '$value is not a valid auto-draw speed. Valid values are: [${AutoDrawSpeed.all.join(', ')}]');
+    _autoDrawSpeed = value;
     notifyListeners();
   }
 

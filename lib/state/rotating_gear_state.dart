@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/persistors/rotating_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
@@ -177,8 +178,19 @@ class RotatingGearState extends BaseGearState {
     isDrawingOneRotation = true;
 
     var rotationAmount = 2 * pi * -1;
-    var intervalsToDraw =
-        (allStateObjects.fixedGear.definition.toothCount / 2.5).round();
+
+    int intervalsToDraw;
+    if (allStateObjects.settings.autoDrawSpeed == AutoDrawSpeed.slow) {
+      // If slow auto-draw is selected (the default), base the interval of each
+      // iteraction on the number of teeth in the fixed gear. This allows
+      // the drawing to be roughly the same speed for all gear pairings.
+      intervalsToDraw =
+          (allStateObjects.fixedGear.definition.toothCount / 2.5).round();
+    } else {
+      // If fast auto-draw is selected, draw as fast as possible.
+      intervalsToDraw = 3;
+    }
+
     var intervalAmount = rotationAmount / intervalsToDraw;
     for (var i = 0; i <= intervalsToDraw; i++) {
       var amountToAdd = intervalAmount * i;

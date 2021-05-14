@@ -2,6 +2,7 @@ import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/environment_config.dart';
+import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/models/entitlement.dart';
 import 'package:inspiral/routes.dart';
 import 'package:inspiral/state/state.dart';
@@ -9,6 +10,7 @@ import 'package:inspiral/util/delete_database.dart';
 import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
 import 'package:inspiral/widgets/restart_widget.dart';
 import 'package:inspiral/widgets/settings_drawer/canvas_size_list_item.dart';
+import 'package:inspiral/widgets/settings_drawer/dropdown_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/social_button.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
@@ -124,6 +126,11 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   });
             }
           }),
+      DropdownListItem(
+          text: 'Auto-draw speed',
+          selectedItem: settings.autoDrawSpeed,
+          items: AutoDrawSpeed.all,
+          onChanged: (String newValue) => settings.autoDrawSpeed = newValue),
       FutureBuilder(
           future: _entitlementCheckFuture,
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
