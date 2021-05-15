@@ -73,6 +73,14 @@ class InkStateUndoer {
   }
 
   static Future<void> undo(int version, InkState ink) async {
+    await _undoOrRedo(version, ink);
+  }
+
+  static Future<void> redo(int version, InkState ink) async {
+    await _undoOrRedo(version, ink);
+  }
+
+  static Future<void> _undoOrRedo(int version, InkState ink) async {
     try {
       var tileVersionResult = await getTilesForVersion(version);
 
@@ -89,6 +97,4 @@ class InkStateUndoer {
       await Sentry.captureException(err, stackTrace: stackTrace);
     }
   }
-
-  static Future<void> redo(int version, InkState ink) async {}
 }

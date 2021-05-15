@@ -126,7 +126,25 @@ class UndoRedoState extends InspiralStateObject {
   }
 
   /// Moves forward one step in the undo/redo stack
-  Future<void> triggerRedo() async {}
+  Future<void> triggerRedo() async {
+    if (!redoAvailable) {
+      return;
+    }
+
+    isRedoing = true;
+
+    _currentSnapshotVersion++;
+
+    notifyListeners();
+
+    for (var stateObj in allStateObjects.list) {
+      await stateObj.redo(currentSnapshotVersion);
+    }
+
+    isRedoing = false;
+
+    notifyListeners();
+  }
 
   /// Creates a new state snapshot and adds it to the undo/redo stack
   Future<void> createSnapshot() async {
@@ -178,6 +196,19 @@ class UndoRedoState extends InspiralStateObject {
   void clearAllSnapshots() {
     _currentSnapshotVersion = 0;
     _maxSnapshotVersion = 0;
+
+    notifyListeners();
+  }
+
+  /// Throws away any redo items on the stack that are "ahead" of the current
+  /// position. This should be called whenever a change is made that would
+  /// render any existing redo snapshots irrelevant.
+  /// The redo stack is also automatically thrown away whenever a new snapshot
+  /// is called, so it's actually rather rare to need to explicitly call this.
+  /// Similar to `clearAllSnapshots`, this doesn't perform any cleanup - this
+  /// is performed as part of every call to "createSnapshot".
+  void throwAwayRedoStack() {
+    _maxSnapshotVersion = _currentSnapshotVersion;
 
     notifyListeners();
   }
