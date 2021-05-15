@@ -64,8 +64,12 @@ class DrawingTools extends StatelessWidget {
 
     return Container(
       color: uiBackgroundColor.color,
-      height: useLandscapeMode ? null : menuBarHeight,
-      width: useLandscapeMode ? menuBarHeight : null,
+      height: useLandscapeMode
+          ? null
+          : menuBarHeight + MediaQuery.of(context).viewPadding.bottom,
+      width: useLandscapeMode
+          ? menuBarHeight + MediaQuery.of(context).viewPadding.right
+          : null,
       child: Padding(
           padding: useLandscapeMode
               ? EdgeInsets.symmetric(vertical: margin * 2)
@@ -73,6 +77,9 @@ class DrawingTools extends StatelessWidget {
           child: Flex(
               direction: useLandscapeMode ? Axis.vertical : Axis.horizontal,
               verticalDirection: VerticalDirection.up,
+              crossAxisAlignment: useLandscapeMode
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.end,
               children: [
                 for (var button in buttons)
                   Expanded(

@@ -41,12 +41,15 @@ class _SelectorDrawerState extends State<SelectorDrawer>
     final canvasIsTransforming =
         context.select<CanvasState, bool>((canvas) => canvas.isTransforming);
     final useLandscapeMode = shouldRenderLandscapeMode(context);
+    final viewPadding = useLandscapeMode
+        ? MediaQuery.of(context).viewPadding.right
+        : MediaQuery.of(context).viewPadding.bottom;
 
     var transform = Matrix4.identity()
-      ..translate(useLandscapeMode ? -menuBarHeight : 0.0,
-          useLandscapeMode ? 0.0 : -menuBarHeight);
+      ..translate(useLandscapeMode ? -menuBarHeight - viewPadding : 0.0,
+          useLandscapeMode ? 0.0 : -menuBarHeight - viewPadding);
     var opacity = 1.0;
-    var height = menuBarHeight + selectorDrawerHeight;
+    var height = menuBarHeight + selectorDrawerHeight + viewPadding;
 
     if (!selectorDrawer.isOpen ||
         rotatingGearIsDragging ||

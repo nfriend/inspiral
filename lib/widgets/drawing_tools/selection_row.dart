@@ -53,6 +53,7 @@ class SelectionRows extends StatelessWidget {
                                           Text(def.label, style: textStyle)))),
                           Expanded(
                               child: ListView.builder(
+                                  padding: EdgeInsets.zero,
                                   key: PageStorageKey(def.storageKey),
                                   scrollDirection: Axis.horizontal,
                                   reverse: useLandscapeMode,

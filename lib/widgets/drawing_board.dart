@@ -27,8 +27,11 @@ class DrawingBoard extends StatelessWidget {
         .select<ColorState, TinyColor>((colors) => colors.appBackgroundColor);
     final debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
-    final safePaddingTop = MediaQuery.of(context).padding.top;
     final useLandscapeMode = shouldRenderLandscapeMode(context);
+    final safePaddingTop = MediaQuery.of(context).padding.top;
+    final safePaddingLeft = MediaQuery.of(context).padding.left;
+    final safePaddingRight = MediaQuery.of(context).padding.right;
+    final safePaddingBottom = MediaQuery.of(context).padding.bottom;
 
     // Translate the menu bars _almost_ off the screen
     final translationAmount = menuBarHeight - 6.0;
@@ -62,13 +65,15 @@ class DrawingBoard extends StatelessWidget {
           Positioned(
               left: 0.0,
               right: useLandscapeMode ? null : 0.0,
-              top: useLandscapeMode ? 0.0 : safePaddingTop,
+              top: 0.0,
               bottom: useLandscapeMode ? 0.0 : null,
               child: AnimatedToolbarContainer(
                   translateY: useLandscapeMode
                       ? 0.0
                       : -translationAmount - safePaddingTop,
-                  translateX: useLandscapeMode ? -translationAmount : 0.0,
+                  translateX: useLandscapeMode
+                      ? -translationAmount - safePaddingLeft
+                      : 0.0,
                   child: MenuBar())),
           Positioned(
               left: useLandscapeMode ? null : 0.0,
@@ -79,11 +84,15 @@ class DrawingBoard extends StatelessWidget {
           Positioned(
               left: useLandscapeMode ? null : 0.0,
               right: 0.0,
-              top: useLandscapeMode ? safePaddingTop : null,
+              top: useLandscapeMode ? 0.0 : null,
               bottom: 0.0,
               child: AnimatedToolbarContainer(
-                  translateY: useLandscapeMode ? 0.0 : translationAmount,
-                  translateX: useLandscapeMode ? translationAmount : 0.0,
+                  translateY: useLandscapeMode
+                      ? 0.0
+                      : translationAmount + safePaddingBottom,
+                  translateX: useLandscapeMode
+                      ? translationAmount + safePaddingRight
+                      : 0.0,
                   child: DrawingTools())),
           SnackbarContainer()
         ]));

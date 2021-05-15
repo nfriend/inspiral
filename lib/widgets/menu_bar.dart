@@ -96,8 +96,12 @@ class _MenuBarState extends State<MenuBar> {
 
     return Container(
         color: colors.uiBackgroundColor.color,
-        height: useLandscapeMode ? null : menuBarHeight,
-        width: useLandscapeMode ? menuBarHeight : null,
+        height: useLandscapeMode
+            ? null
+            : menuBarHeight + MediaQuery.of(context).viewPadding.top,
+        width: useLandscapeMode
+            ? menuBarHeight + MediaQuery.of(context).viewPadding.left
+            : null,
         child: Padding(
             padding: useLandscapeMode
                 ? EdgeInsets.symmetric(vertical: margin * 2)
@@ -105,6 +109,9 @@ class _MenuBarState extends State<MenuBar> {
             child: Flex(
                 direction: useLandscapeMode ? Axis.vertical : Axis.horizontal,
                 verticalDirection: VerticalDirection.up,
+                crossAxisAlignment: useLandscapeMode
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   for (var button in buttons)
                     Expanded(
