@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/util/should_render_landscape_mode.dart';
+import 'package:inspiral/widgets/helpers/is_screen_big_enough_for_redo_button.dart';
 import 'package:inspiral/widgets/helpers/save_share_image.dart';
 import 'package:inspiral/widgets/helpers/toggle_gear_visibility.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +27,6 @@ class MenuBar extends StatefulWidget {
 }
 
 class _MenuBarState extends State<MenuBar> {
-  bool isUndoProcessing = false;
-
   @override
   Widget build(BuildContext context) {
     final colors = context.watch<ColorState>();
@@ -35,6 +34,12 @@ class _MenuBarState extends State<MenuBar> {
     final undoRedo = Provider.of<UndoRedoState>(context, listen: false);
     final undoAvailable = context
         .select<UndoRedoState, bool>((undoRedo) => undoRedo.undoAvailable);
+    final redoAvailable = context
+        .select<UndoRedoState, bool>((undoRedo) => undoRedo.redoAvailable);
+    final isUndoing =
+        context.select<UndoRedoState, bool>((undoRedo) => undoRedo.isUndoing);
+    final isRedoing =
+        context.select<UndoRedoState, bool>((undoRedo) => undoRedo.isRedoing);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
     final useLandscapeMode = shouldRenderLandscapeMode(context);
@@ -45,6 +50,16 @@ class _MenuBarState extends State<MenuBar> {
     final visibilityIcon = rotatingGearIsVisible
         ? Icon(Icons.visibility)
         : Icon(Icons.visibility_off);
+
+    final redoButton = isScreenBigEnoughForRedoButton(context)
+        ? _ManuBarButtonParams(
+            icon: isRedoing ? Icon(Icons.hourglass_bottom) : Icon(Icons.redo),
+            disabled: !redoAvailable,
+            onPressed: () async {
+              await undoRedo.triggerRedo();
+            },
+            tooltipMessage: 'Redo')
+        : null;
 
     var buttons = <_ManuBarButtonParams>[
       _ManuBarButtonParams(
@@ -60,28 +75,13 @@ class _MenuBarState extends State<MenuBar> {
           onPressed: () => toggleGearVisiblity(context),
           tooltipMessage: 'Toggle gear visibility'),
       _ManuBarButtonParams(
-          icon: isUndoProcessing
-              ? Icon(Icons.hourglass_bottom)
-              : Icon(Icons.undo),
-          disabled: !undoAvailable || isUndoProcessing,
+          icon: isUndoing ? Icon(Icons.hourglass_bottom) : Icon(Icons.undo),
+          disabled: !undoAvailable,
           onPressed: () async {
-            setState(() {
-              isUndoProcessing = true;
-            });
-
-            // Allow the `setState` above to take effect before
-            // we start the undo process below. This ensures the button
-            // has a chance to show its loading state before the CPU-intensive
-            // work of undoing begins.
-            await Future.delayed(const Duration(milliseconds: 0));
-
             await undoRedo.triggerUndo();
-
-            setState(() {
-              isUndoProcessing = false;
-            });
           },
           tooltipMessage: 'Undo'),
+      redoButton,
       _ManuBarButtonParams(
           icon: Icon(Icons.menu),
           onPressed: () {
@@ -92,7 +92,7 @@ class _MenuBarState extends State<MenuBar> {
             useLandscapeMode ? scaffold.openDrawer() : scaffold.openEndDrawer();
           },
           tooltipMessage: 'Show menu')
-    ];
+    ].where((element) => element != null).toList();
 
     return Container(
         color: colors.uiBackgroundColor.color,

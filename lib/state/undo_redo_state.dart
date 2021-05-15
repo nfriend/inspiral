@@ -43,9 +43,16 @@ class UndoRedoState extends InspiralStateObject {
   /// pending operations that would prevent an undo).
   bool get undoAvailable =>
       !_isInkBaking &&
-      !_isUndoing &&
+      !isUndoingOrRedoing &&
       !_isCreatingSnapshot &&
       currentSnapshotVersion > 0;
+
+  /// Same as `undoAvailable`, but for redo
+  bool get redoAvailable =>
+      !_isInkBaking &&
+      !isUndoingOrRedoing &&
+      !_isCreatingSnapshot &&
+      currentSnapshotVersion < maxSnapshotVersion;
 
   /// Whether or not the ink state is currently baking
   bool get isInkBaking => _isInkBaking;
@@ -64,6 +71,17 @@ class UndoRedoState extends InspiralStateObject {
     _isUndoing = value;
     notifyListeners();
   }
+
+  /// Whether or not a redo operation is currently in progress
+  bool get isRedoing => _isRedoing;
+  bool _isRedoing = false;
+  set isRedoing(bool value) {
+    _isRedoing = value;
+    notifyListeners();
+  }
+
+  /// Whether or not an undo or redo operation is currently in progress
+  bool get isUndoingOrRedoing => _isUndoing || _isRedoing;
 
   /// The most recent active snapshot version.
   /// This will usually be equal to `maxSnapshotVersion`, except immediately

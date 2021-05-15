@@ -140,6 +140,9 @@ class ColorState extends InspiralStateObject {
   TinyColor get activeTextColor => _activeTextColor;
   TinyColor _activeTextColor;
 
+  /// The color of disabled text
+  TinyColor get disabledTextColor => TinyColor(Colors.grey);
+
   /// The primary color for the current theme
   TinyColor get primaryColor => _primaryColor;
   TinyColor _primaryColor;
