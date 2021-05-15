@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/util/should_render_landscape_mode.dart';
 import 'package:inspiral/widgets/helpers/save_share_image.dart';
 import 'package:inspiral/widgets/helpers/toggle_gear_visibility.dart';
 import 'package:provider/provider.dart';
@@ -36,8 +37,7 @@ class _MenuBarState extends State<MenuBar> {
         .select<UndoRedoState, bool>((undoRedo) => undoRedo.undoAvailable);
     final rotatingGearIsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final useLandscapeMode = shouldRenderLandscapeMode(context);
 
     var margin = 2.5;
     var iconSize = 26.0;
@@ -89,27 +89,27 @@ class _MenuBarState extends State<MenuBar> {
             canvas.isSelectingHole = false;
 
             var scaffold = Scaffold.of(context);
-            isLandscape ? scaffold.openDrawer() : scaffold.openEndDrawer();
+            useLandscapeMode ? scaffold.openDrawer() : scaffold.openEndDrawer();
           },
           tooltipMessage: 'Show menu')
     ];
 
     return Container(
         color: colors.uiBackgroundColor.color,
-        height: isLandscape ? null : menuBarHeight,
-        width: isLandscape ? menuBarHeight : null,
+        height: useLandscapeMode ? null : menuBarHeight,
+        width: useLandscapeMode ? menuBarHeight : null,
         child: Padding(
-            padding: isLandscape
+            padding: useLandscapeMode
                 ? EdgeInsets.symmetric(vertical: margin * 2)
                 : EdgeInsets.symmetric(horizontal: margin * 2),
             child: Flex(
-                direction: isLandscape ? Axis.vertical : Axis.horizontal,
+                direction: useLandscapeMode ? Axis.vertical : Axis.horizontal,
                 verticalDirection: VerticalDirection.up,
                 children: [
                   for (var button in buttons)
                     Expanded(
                         child: Padding(
-                            padding: isLandscape
+                            padding: useLandscapeMode
                                 ? EdgeInsets.symmetric(vertical: margin)
                                 : EdgeInsets.symmetric(horizontal: margin),
                             child: Material(

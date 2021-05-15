@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:inspiral/util/should_render_landscape_mode.dart';
 import 'package:inspiral/widgets/animated_toolbar_container.dart';
 import 'package:inspiral/widgets/canvas_container.dart';
 import 'package:inspiral/widgets/drawing_tools/drawing_tools.dart';
@@ -27,8 +28,7 @@ class DrawingBoard extends StatelessWidget {
     final debug =
         context.select<SettingsState, bool>((settings) => settings.debug);
     final safePaddingTop = MediaQuery.of(context).padding.top;
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final useLandscapeMode = shouldRenderLandscapeMode(context);
 
     // Translate the menu bars _almost_ off the screen
     final translationAmount = menuBarHeight - 6.0;
@@ -61,28 +61,29 @@ class DrawingBoard extends StatelessWidget {
           ),
           Positioned(
               left: 0.0,
-              right: isLandscape ? null : 0.0,
-              top: isLandscape ? 0.0 : safePaddingTop,
-              bottom: isLandscape ? 0.0 : null,
+              right: useLandscapeMode ? null : 0.0,
+              top: useLandscapeMode ? 0.0 : safePaddingTop,
+              bottom: useLandscapeMode ? 0.0 : null,
               child: AnimatedToolbarContainer(
-                  translateY:
-                      isLandscape ? 0.0 : -translationAmount - safePaddingTop,
-                  translateX: isLandscape ? -translationAmount : 0.0,
+                  translateY: useLandscapeMode
+                      ? 0.0
+                      : -translationAmount - safePaddingTop,
+                  translateX: useLandscapeMode ? -translationAmount : 0.0,
                   child: MenuBar())),
           Positioned(
-              left: isLandscape ? null : 0.0,
+              left: useLandscapeMode ? null : 0.0,
               right: 0.0,
-              top: isLandscape ? 0.0 : null,
+              top: useLandscapeMode ? 0.0 : null,
               bottom: 0.0,
               child: SelectorDrawer()),
           Positioned(
-              left: isLandscape ? null : 0.0,
+              left: useLandscapeMode ? null : 0.0,
               right: 0.0,
-              top: isLandscape ? safePaddingTop : null,
+              top: useLandscapeMode ? safePaddingTop : null,
               bottom: 0.0,
               child: AnimatedToolbarContainer(
-                  translateY: isLandscape ? 0.0 : translationAmount,
-                  translateX: isLandscape ? translationAmount : 0.0,
+                  translateY: useLandscapeMode ? 0.0 : translationAmount,
+                  translateX: useLandscapeMode ? translationAmount : 0.0,
                   child: DrawingTools())),
           SnackbarContainer()
         ]));

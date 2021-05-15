@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/should_render_landscape_mode.dart';
 import 'package:inspiral/widgets/drawing_tools/pen_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/gear_selector.dart';
 import 'package:inspiral/widgets/drawing_tools/tools_selector.dart';
@@ -39,12 +40,11 @@ class _SelectorDrawerState extends State<SelectorDrawer>
         .select<FixedGearState, bool>((fixedGear) => fixedGear.isDragging);
     final canvasIsTransforming =
         context.select<CanvasState, bool>((canvas) => canvas.isTransforming);
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final useLandscapeMode = shouldRenderLandscapeMode(context);
 
     var transform = Matrix4.identity()
-      ..translate(isLandscape ? -menuBarHeight : 0.0,
-          isLandscape ? 0.0 : -menuBarHeight);
+      ..translate(useLandscapeMode ? -menuBarHeight : 0.0,
+          useLandscapeMode ? 0.0 : -menuBarHeight);
     var opacity = 1.0;
     var height = menuBarHeight + selectorDrawerHeight;
 
@@ -53,7 +53,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
         fixedGearIsDragging ||
         canvasIsTransforming) {
       transform.translate(
-          isLandscape ? height : 0.0, isLandscape ? 0.0 : height);
+          useLandscapeMode ? height : 0.0, useLandscapeMode ? 0.0 : height);
       opacity = 0.0;
     }
 
@@ -77,7 +77,7 @@ class _SelectorDrawerState extends State<SelectorDrawer>
             curve: Curves.easeOut,
             opacity: opacity,
             child: RotatedBox(
-                quarterTurns: isLandscape ? 3 : 0,
+                quarterTurns: useLandscapeMode ? 3 : 0,
                 child: Container(
                     color: uiBackgroundColor.color,
                     height: selectorDrawerHeight,

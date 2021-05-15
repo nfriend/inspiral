@@ -1,1 +1,2 @@
-Fixed bug with the "Include background color when saving or sharing" option. The image is now correctly saved with a transparent background when this option is disabled.
+• Added a new "fast" auto-draw speed option
+• Tablets now maintain the same layout when in landscape orientation

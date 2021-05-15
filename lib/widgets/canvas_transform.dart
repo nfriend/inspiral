@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/util/should_render_landscape_mode.dart';
 import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -40,8 +41,7 @@ class _CanvasTransformState extends State<CanvasTransform>
         context.select<CanvasState, Matrix4>((canvas) => canvas.transform);
     final areGearsVisible = context.select<RotatingGearState, bool>(
         (rotatingGear) => rotatingGear.isVisible);
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final useLandscapeMode = shouldRenderLandscapeMode(context);
 
     var zoomToRotatingGear = isSelectingHole && areGearsVisible;
 
@@ -69,7 +69,7 @@ class _CanvasTransformState extends State<CanvasTransform>
     final unavailablePixels = menuBarHeight * 2.0 + selectorDrawerHeight;
 
     // Subtract the unavailable pixels from the relevant dimension
-    if (isLandscape) {
+    if (useLandscapeMode) {
       availableWidth -= unavailablePixels;
     } else {
       availableHeight -= unavailablePixels;
@@ -87,7 +87,7 @@ class _CanvasTransformState extends State<CanvasTransform>
     // the menu bar.
     Offset centerTranslation;
     final menuBarBuffer = menuBarHeight + 2.0;
-    if (isLandscape) {
+    if (useLandscapeMode) {
       centerTranslation =
           Offset(menuBarBuffer + (availableWidth / 2), availableHeight / 2);
     } else {

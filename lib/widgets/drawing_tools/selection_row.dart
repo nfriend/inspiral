@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/util/reverse_if.dart';
+import 'package:inspiral/util/should_render_landscape_mode.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -25,8 +26,7 @@ class SelectionRows extends StatelessWidget {
   Widget build(BuildContext context) {
     final uiTextColor =
         context.select<ColorState, TinyColor>((colors) => colors.uiTextColor);
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final useLandscapeMode = shouldRenderLandscapeMode(context);
     final padding = 2.5;
 
     var textStyle =
@@ -43,25 +43,25 @@ class SelectionRows extends StatelessWidget {
                     child: Row(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: reverseIf(condition: isLandscape, list: [
+                        children: reverseIf(condition: useLandscapeMode, list: [
                           Padding(
                               padding: EdgeInsets.only(right: padding / 2),
                               child: Center(
                                   child: RotatedBox(
-                                      quarterTurns: isLandscape ? 1 : 3,
+                                      quarterTurns: useLandscapeMode ? 1 : 3,
                                       child:
                                           Text(def.label, style: textStyle)))),
                           Expanded(
                               child: ListView.builder(
                                   key: PageStorageKey(def.storageKey),
                                   scrollDirection: Axis.horizontal,
-                                  reverse: isLandscape,
+                                  reverse: useLandscapeMode,
                                   itemExtent: thumbnailSize + 10.0,
                                   itemCount: def.children.length,
                                   itemBuilder: (context, index) {
                                     var child = def.children[index];
 
-                                    return isLandscape
+                                    return useLandscapeMode
                                         ? RotatedBox(
                                             quarterTurns: 1, child: child)
                                         : child;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
+import 'package:inspiral/util/should_render_landscape_mode.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -29,8 +30,7 @@ class DrawingTools extends StatelessWidget {
         (selectorDrawer) => selectorDrawer.isOpen);
     final selectorDrawer =
         Provider.of<SelectorDrawerState>(context, listen: false);
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final useLandscapeMode = shouldRenderLandscapeMode(context);
 
     var margin = 2.5;
     var iconSize = 18.0;
@@ -64,20 +64,20 @@ class DrawingTools extends StatelessWidget {
 
     return Container(
       color: uiBackgroundColor.color,
-      height: isLandscape ? null : menuBarHeight,
-      width: isLandscape ? menuBarHeight : null,
+      height: useLandscapeMode ? null : menuBarHeight,
+      width: useLandscapeMode ? menuBarHeight : null,
       child: Padding(
-          padding: isLandscape
+          padding: useLandscapeMode
               ? EdgeInsets.symmetric(vertical: margin * 2)
               : EdgeInsets.symmetric(horizontal: margin * 2),
           child: Flex(
-              direction: isLandscape ? Axis.vertical : Axis.horizontal,
+              direction: useLandscapeMode ? Axis.vertical : Axis.horizontal,
               verticalDirection: VerticalDirection.up,
               children: [
                 for (var button in buttons)
                   Expanded(
                       child: RotatedBox(
-                          quarterTurns: isLandscape ? 3 : 0,
+                          quarterTurns: useLandscapeMode ? 3 : 0,
                           child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: margin),
                               child: TextButton.icon(
