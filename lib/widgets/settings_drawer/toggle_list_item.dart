@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/widgets/settings_drawer/list_item_padding.dart';
 
 class ToggleListItem extends StatelessWidget {
   final String text;
@@ -10,12 +11,11 @@ class ToggleListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+    return ListItemPadding(
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Expanded(
-              child: Text(text, style: TextStyle(fontWeight: FontWeight.w500))),
-          Switch(value: value, onChanged: onChanged)
-        ]));
+      Expanded(
+          child: Text(text, style: TextStyle(fontWeight: FontWeight.w500))),
+      Switch(value: value, onChanged: onChanged)
+    ]));
   }
 }

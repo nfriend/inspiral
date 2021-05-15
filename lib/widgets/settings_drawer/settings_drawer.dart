@@ -1,6 +1,5 @@
 import 'dart:io' as io;
 import 'package:flutter/material.dart';
-import 'package:inspiral/constants.dart';
 import 'package:inspiral/environment_config.dart';
 import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/models/entitlement.dart';
@@ -11,7 +10,8 @@ import 'package:inspiral/widgets/helpers/show_confirmation_dialog.dart';
 import 'package:inspiral/widgets/restart_widget.dart';
 import 'package:inspiral/widgets/settings_drawer/canvas_size_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/dropdown_list_item.dart';
-import 'package:inspiral/widgets/settings_drawer/social_button.dart';
+import 'package:inspiral/widgets/settings_drawer/settings_drawer_title.dart';
+import 'package:inspiral/widgets/settings_drawer/social_button_row.dart';
 import 'package:inspiral/widgets/settings_drawer/toggle_list_item.dart';
 import 'package:provider/provider.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -195,55 +195,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
         child: ListView(
       padding: EdgeInsets.zero,
       children: [
-        Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Container(
-                height: menuBarHeight,
-                color: colors.uiBackgroundColor.color,
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              child: Text(
-                            'Additional options',
-                            style: TextStyle(fontSize: 20.0),
-                          )),
-                          IconButton(
-                              icon: Icon(Icons.close),
-                              onPressed: () => Navigator.of(context).pop())
-                        ])))),
+        SettingsDrawerTitle(),
         ...regularSettingsItems,
         ...debugSettingsItems,
-        Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: Wrap(alignment: WrapAlignment.center, children: [
-              SocialButton(
-                assetPath: 'images/social_icons/instagram.png',
-                linkHref: 'https://www.instagram.com/inspiral.nathanfriend.io/',
-              ),
-              SocialButton(
-                assetPath: 'images/social_icons/facebook.png',
-                linkHref: 'https://www.facebook.com/inspiral.nathanfriend.io',
-              ),
-              SocialButton(
-                assetPath: 'images/social_icons/twitter.png',
-                linkHref: 'https://twitter.com/inspiral_app',
-              ),
-              SocialButton(
-                assetPath: 'images/social_icons/tumblr.png',
-                linkHref: 'https://inspiral-app.tumblr.com/',
-              ),
-              SocialButton(
-                assetPath: 'images/social_icons/gitlab.png',
-                linkHref: 'https://gitlab.com/nfriend/inspiral',
-              ),
-              SocialButton(
-                assetPath: 'images/social_icons/email.png',
-                linkHref: 'mailto:inspiral@nathanfriend.io',
-              )
-            ]))
+        SocialButtonRow()
       ],
     ));
   }
