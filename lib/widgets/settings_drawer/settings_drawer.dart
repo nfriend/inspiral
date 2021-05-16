@@ -6,6 +6,7 @@ import 'package:inspiral/widgets/settings_drawer/background_transparency_list_it
 import 'package:inspiral/widgets/settings_drawer/canvas_size_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/erase_canvas_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/help_list_item.dart';
+import 'package:inspiral/widgets/settings_drawer/keep_tools_drawer_closed_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/prevent_incompatible_gear_pairings_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/recenter_view_list_item.dart';
 import 'package:inspiral/widgets/settings_drawer/redo_list_item.dart';
@@ -27,6 +28,7 @@ class SettingsDrawer extends StatelessWidget {
               RecenterViewListItem(),
               CanvasSizeListItem(),
               BackgroundTransparencyListItem(),
+              KeepToolsDrawerClosedListItem(),
               PreventIncompatibleGearPairingsListItem(),
               AutoDrawSpeedListItem(),
               ResetColorsListItem(),
