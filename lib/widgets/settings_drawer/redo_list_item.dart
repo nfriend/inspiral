@@ -37,6 +37,7 @@ class RedoListItem extends StatelessWidget {
         ]),
         onTap: redoAvailable
             ? () async {
+                Navigator.of(context).pop();
                 await undoRedo.triggerRedo();
               }
             : null);
