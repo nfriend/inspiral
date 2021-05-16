@@ -150,6 +150,7 @@ final egg42Noholes = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.0666385928389639,
     biggestConvexDiff: 0.3495721004302026,
     smallestConcaveDiff: 6.283185307179586,

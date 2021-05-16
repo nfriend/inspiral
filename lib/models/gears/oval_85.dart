@@ -375,6 +375,7 @@ final oval85 = GearDefinition(
           distance: 78.00017803343106),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.04850104821633128,
     biggestConvexDiff: 0.1614659331241759,
     smallestConcaveDiff: 6.283185307179586,

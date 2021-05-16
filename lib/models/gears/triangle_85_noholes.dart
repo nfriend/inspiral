@@ -249,6 +249,7 @@ final triangle85Noholes = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.04912297345340999,
     biggestConvexDiff: 0.48070536655627016,
     smallestConcaveDiff: 6.283185307179586,

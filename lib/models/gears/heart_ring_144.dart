@@ -456,6 +456,7 @@ final heartRing144 = GearDefinition(
     ],
     holes: [],
     isRing: true,
+    isRound: false,
     smallestConvexDiff: 0.0008599239696822636,
     biggestConvexDiff: 0.14504933598788128,
     smallestConcaveDiff: 0.0014497163534885615,

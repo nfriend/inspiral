@@ -102,6 +102,19 @@ To specify that the gear's teeth should appear on the _inside_ of the gear:
 </inverted>
 ```
 
+##### Circular gears
+
+To declare that a gear is perfectly round:
+
+```xml
+<is-round>
+  true
+</is-round>
+```
+
+Inspiral can make some assumptions for perfectly round gears
+([for example](lib/util/calculate_rotation_count.dart)).
+
 ##### Holes
 
 Holes can be specified by included `<circle>` elements inside a `<mask id="holes">` element. See the existing gear SVGs for examples of this.

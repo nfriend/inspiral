@@ -834,6 +834,7 @@ final letterSInverted = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.02233560955394287,
     biggestConvexDiff: 0.30892057306429965,
     smallestConcaveDiff: 0.0018521127529091963,

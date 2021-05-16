@@ -89,6 +89,10 @@ export const analyzePath = ({
     svg.querySelector('svg desc ring-border-radius')?.textContent ?? '20.0',
   );
 
+  /// A gear can declare that it is perfectly round using <is-round>true</is-round>
+  const isRound =
+    svg.querySelector('svg desc is-round')?.textContent.trim() === 'true';
+
   // The total length of the path
   const totalLength = path.getTotalLength();
 
@@ -359,6 +363,7 @@ export const analyzePath = ({
     package: gearPackage,
     gearOrder,
     isRing: inverted,
+    isRound,
     ringBorderRadius: ringBorderRadius * baseScale,
     smallestConvexDiff,
     biggestConvexDiff,

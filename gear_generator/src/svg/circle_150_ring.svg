@@ -4,6 +4,9 @@
     <gear-order>
       10002
     </gear-order>
+    <is-round>
+      true
+    </is-round>
     <inverted>
       true
     </inverted>

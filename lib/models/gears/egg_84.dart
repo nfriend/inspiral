@@ -372,6 +372,7 @@ final egg84 = GearDefinition(
       GearHole(name: '98', angle: 3.141592653589793, distance: 98),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.03304236948915218,
     biggestConvexDiff: 0.1885304315943217,
     smallestConcaveDiff: 6.283185307179586,

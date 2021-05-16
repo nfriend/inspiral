@@ -474,6 +474,7 @@ final circle150Ring = GearDefinition(
     ],
     holes: [],
     isRing: true,
+    isRound: true,
     smallestConvexDiff: 6.283185307179586,
     biggestConvexDiff: 0,
     smallestConcaveDiff: 0.041188696287789206,

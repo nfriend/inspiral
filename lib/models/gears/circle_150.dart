@@ -791,6 +791,7 @@ final circle150 = GearDefinition(
           distance: 142.00000359254273),
     ],
     isRing: false,
+    isRound: true,
     smallestConvexDiff: 0.041188696287789206,
     biggestConvexDiff: 0.042237866852625316,
     smallestConcaveDiff: 6.283185307179586,

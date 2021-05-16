@@ -564,6 +564,7 @@ final waveCircle = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.01729102336537469,
     biggestConvexDiff: 0.14425967825396047,
     smallestConcaveDiff: 0.004891666046121124,

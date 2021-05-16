@@ -460,6 +460,7 @@ final beam84103Ring = GearDefinition(
     ],
     holes: [],
     isRing: true,
+    isRound: false,
     smallestConvexDiff: 0,
     biggestConvexDiff: 0,
     smallestConcaveDiff: 0,

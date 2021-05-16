@@ -216,6 +216,7 @@ final square51 = GearDefinition(
       GearHole(name: '46', angle: -3.089316242435218e-16, distance: 46),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.08175547721020715,
     biggestConvexDiff: 0.37624623637193455,
     smallestConcaveDiff: 6.283185307179586,

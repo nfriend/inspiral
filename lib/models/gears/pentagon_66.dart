@@ -281,6 +281,7 @@ final pentagon66 = GearDefinition(
           name: '59', angle: -2.356194490192345, distance: 59.00000000000001),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.0638871300088022,
     biggestConvexDiff: 0.29365471535948906,
     smallestConcaveDiff: 6.283185307179586,

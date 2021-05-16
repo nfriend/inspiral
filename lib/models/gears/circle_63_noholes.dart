@@ -213,6 +213,7 @@ final circle63Noholes = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: true,
     smallestConvexDiff: 0.09859121649274849,
     biggestConvexDiff: 0.10045349257950598,
     smallestConcaveDiff: 6.283185307179586,

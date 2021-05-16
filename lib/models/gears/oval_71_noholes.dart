@@ -202,6 +202,7 @@ final oval71Noholes = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.05838076348134624,
     biggestConvexDiff: 0.1929105546903962,
     smallestConcaveDiff: 6.283185307179586,

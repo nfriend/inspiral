@@ -792,6 +792,7 @@ final circle256Ring = GearDefinition(
     ],
     holes: [],
     isRing: true,
+    isRound: true,
     smallestConvexDiff: 6.283185307179586,
     biggestConvexDiff: 0,
     smallestConcaveDiff: 0.024123296719860576,

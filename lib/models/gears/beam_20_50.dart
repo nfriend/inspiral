@@ -189,6 +189,7 @@ final beam2050 = GearDefinition(
       GearHole(name: '66', angle: 3.141592653589793, distance: 66),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0,
     biggestConvexDiff: 0.31355280918044626,
     smallestConcaveDiff: 0,

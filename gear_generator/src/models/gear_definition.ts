@@ -55,6 +55,9 @@ export interface GearDefinition {
    */
   isRing: boolean;
 
+  /** Whether or not this gear is perfectly round */
+  isRound: boolean;
+
   /**
    * If this gear is a ring gear, this indicates how much of a
    * border radius should be rendered on its outside border.

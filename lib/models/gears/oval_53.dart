@@ -234,6 +234,7 @@ final oval53 = GearDefinition(
           distance: 45.798393605044936),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.0780185408609988,
     biggestConvexDiff: 0.25690479980254377,
     smallestConcaveDiff: 6.283185307179586,

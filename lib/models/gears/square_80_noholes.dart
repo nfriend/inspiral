@@ -247,6 +247,7 @@ final square80Noholes = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.05230469027770024,
     biggestConvexDiff: 0.35516830832802704,
     smallestConcaveDiff: 6.283185307179586,

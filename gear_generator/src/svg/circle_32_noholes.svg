@@ -4,6 +4,9 @@
     <gear-order>
       10007
     </gear-order>
+    <is-round>
+      true
+    </is-round>
   </desc>
   <g>
     <style>

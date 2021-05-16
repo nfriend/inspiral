@@ -246,6 +246,7 @@ final circle52 = GearDefinition(
           name: '44', angle: -1.5707963267948968, distance: 43.99999996376775),
     ],
     isRing: false,
+    isRound: true,
     smallestConvexDiff: 0.11987720589922102,
     biggestConvexDiff: 0.12165068913423749,
     smallestConcaveDiff: 6.283185307179586,

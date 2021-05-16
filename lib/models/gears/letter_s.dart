@@ -834,6 +834,7 @@ final letterS = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.022335984282428,
     biggestConvexDiff: 0.3089226595774166,
     smallestConcaveDiff: 0.0018528391372827357,

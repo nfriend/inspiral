@@ -192,6 +192,7 @@ final pentagon58Noholes = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.07187087437336004,
     biggestConvexDiff: 0.30182102215274087,
     smallestConcaveDiff: 6.283185307179586,

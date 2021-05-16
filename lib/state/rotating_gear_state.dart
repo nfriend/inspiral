@@ -224,7 +224,8 @@ class RotatingGearState extends BaseGearState {
     var rotationsToComplete = calculateRotationCount(
         fixedGearTeeth: allStateObjects.fixedGear.definition.toothCount,
         rotatingGearTeeth: definition.toothCount,
-        selectedHoleDistance: activeHole.distance);
+        selectedHoleDistance: activeHole.distance,
+        rotatingGearIsCircular: definition.isRound);
 
     for (var i = 0; i < rotationsToComplete; i++) {
       if (_shouldPauseCompletePatternDrawing) {

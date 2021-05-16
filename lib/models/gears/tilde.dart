@@ -624,6 +624,7 @@ final tilde = GearDefinition(
     ],
     holes: [],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.0017531047000467481,
     biggestConvexDiff: 0.6864742045755725,
     smallestConcaveDiff: 0.0015169999205690843,

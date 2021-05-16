@@ -35,6 +35,9 @@ class GearDefinition {
   /// appear on the inside of the gear.)
   final bool isRing;
 
+  /// Whether or not this gear is perfect round
+  final bool isRound;
+
   /// The smallest angle difference in a convex direction between
   /// any two consecutive teeth on this gear.
   final double smallestConvexDiff;
@@ -67,6 +70,7 @@ class GearDefinition {
       @required this.points,
       @required this.holes,
       @required this.isRing,
+      @required this.isRound,
       @required this.entitlement,
       @required this.package,
       @required this.smallestConvexDiff,

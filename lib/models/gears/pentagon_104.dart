@@ -435,6 +435,7 @@ final pentagon104 = GearDefinition(
       GearHole(name: '94', angle: -3.0235861096174475e-16, distance: 94),
     ],
     isRing: false,
+    isRound: false,
     smallestConvexDiff: 0.04023204531456592,
     biggestConvexDiff: 0.26591705962839995,
     smallestConcaveDiff: 6.283185307179586,
