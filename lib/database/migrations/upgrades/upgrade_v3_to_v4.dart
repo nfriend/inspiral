@@ -1,7 +1,9 @@
 import 'package:inspiral/database/schema.dart';
 import 'package:sqflite/sqflite.dart';
 
-void upgradeV3ToV4(Batch batch) {
+Future<void> upgradeV3ToV4(Database db) async {
+  var batch = db.batch();
+
   batch.execute('''
     ALTER TABLE ${Schema.state}
     ADD ${Schema.state.maxSnapshotVersion} INTEGER NOT NULL DEFAULT 0
@@ -11,4 +13,6 @@ void upgradeV3ToV4(Batch batch) {
     UPDATE ${Schema.state}
     SET ${Schema.state.maxSnapshotVersion} = ${Schema.state.currentSnapshotVersion}
   ''');
+
+  await batch.commit(noResult: true);
 }

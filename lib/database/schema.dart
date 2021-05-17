@@ -29,6 +29,7 @@ class ColorsTable extends Table {
   final String value = 'value';
   final String type = 'type';
   final String order = 'order';
+  final String version = 'version';
 }
 
 class ColorsTableType {
@@ -110,6 +111,7 @@ class StateTable extends Table {
 
   final String snapPointsAreActive = 'snapPointsAreActive';
   final String autoDrawSpeed = 'autoDrawSpeed';
+  final String version = 'version';
 }
 
 class InkLinesTable extends Table {

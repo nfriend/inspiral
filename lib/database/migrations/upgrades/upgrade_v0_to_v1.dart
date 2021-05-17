@@ -4,7 +4,9 @@ import 'package:inspiral/models/canvas_size.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// The very first migration. Called when the database is first created.
-void upgradeV0ToV1(Batch batch) {
+Future<void> upgradeV0ToV1(Database db) async {
+  var batch = db.batch();
+
   _createTableColors(batch);
   _createTableState(batch);
   _createTableInkLines(batch);
@@ -12,6 +14,8 @@ void upgradeV0ToV1(Batch batch) {
   _createTablePoints(batch);
   _createTableTileData(batch);
   _createTableTileSnapshots(batch);
+
+  await batch.commit(noResult: true);
 }
 
 const _startingAngle = -pi / 2;

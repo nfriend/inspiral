@@ -100,5 +100,126 @@ void main() {
       expect(stateRows.length, 1);
       expect(stateRows[0][Schema.state.autoDrawSpeed], AutoDrawSpeed.slow);
     });
+
+    testWidgets('upgrade from version 5 to version 6',
+        (WidgetTester tester) async {
+      db = await getDatabase(version: 5, databaseName: testDatabaseName);
+
+      final colorsQuery = '''
+        SELECT
+          c1.${Schema.colors.value} AS ${Schema.state.selectedPenColor},
+          c2.${Schema.colors.value} AS ${Schema.state.selectedCanvasColor},
+          c3.${Schema.colors.value} AS ${Schema.state.lastSelectedPenColor},
+          c4.${Schema.colors.value} AS ${Schema.state.lastSelectedCanvasColor}
+        FROM
+          ${Schema.state} s
+        LEFT JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.selectedPenColor}
+        LEFT JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
+        LEFT JOIN ${Schema.colors} c3 ON c3.${Schema.colors.id} = s.${Schema.state.lastSelectedPenColor}
+        LEFT JOIN ${Schema.colors} c4 ON c4.${Schema.colors.id} = s.${Schema.state.lastSelectedCanvasColor}
+      ''';
+
+      final colorRowsBefore = await db.query(Schema.colors.toString(),
+          orderBy: '"${Schema.colors.order}"');
+      final stateRowsBefore = await db.query(Schema.state.toString());
+      final colorValuesBefore = (await db.rawQuery(colorsQuery))[0];
+
+      expect(colorRowsBefore.length, 23);
+      expect(stateRowsBefore.length, 1);
+
+      final stateRowBefore = stateRowsBefore[0];
+
+      await db.close();
+
+      db = await getDatabase(version: 6, databaseName: testDatabaseName);
+
+      // All undo snapshots. A `null` version is used to indicate the "current"
+      // (i.e. not yet recorded) snapshot
+      final allVersions = [0, 1, null];
+
+      // There now should be 4 copies of all the color rows. One for the current
+      // version (`null`), and 2 for the historical snapshots (0 and 1)
+      final allColorRowsAfter = await db.query(Schema.colors.toString());
+      expect(allColorRowsAfter.length, colorRowsBefore.length * 3);
+
+      for (var version in allVersions) {
+        final whereClause = version == null ? 'IS NULL' : '= $version';
+        final colorRowsForVersion = await db.query(Schema.colors.toString(),
+            where: '${Schema.colors.version} $whereClause',
+            orderBy: '"${Schema.colors.order}"');
+
+        expect(colorRowsForVersion.length, colorRowsBefore.length);
+
+        for (var i = 0; i < colorRowsBefore.length; i++) {
+          var colorRowBefore = colorRowsBefore[i];
+          var colorRowAfter = colorRowsForVersion[i];
+
+          if (version == null) {
+            expect(colorRowAfter[Schema.colors.id],
+                colorRowBefore[Schema.colors.id]);
+          } else {
+            expect(colorRowAfter[Schema.colors.id],
+                isNot(equals(colorRowBefore[Schema.colors.id])));
+          }
+
+          expect(colorRowAfter[Schema.colors.version], version);
+          expect(colorRowAfter[Schema.colors.value],
+              colorRowBefore[Schema.colors.value]);
+          expect(colorRowAfter[Schema.colors.type],
+              colorRowBefore[Schema.colors.type]);
+          expect(colorRowAfter[Schema.colors.order],
+              colorRowBefore[Schema.colors.order]);
+        }
+      }
+
+      // Similar to above, there should now be 2 additional rows in this table,
+      // one for each version: 0, 1, and `null` (current)
+      final allStateRowsAfter = await db.query(Schema.state.toString());
+      expect(allStateRowsAfter.length, stateRowsBefore.length * 3);
+
+      for (var version in allVersions) {
+        var stateRowsAfterForVersion = allStateRowsAfter
+            .where((row) => row[Schema.state.version] == version)
+            .toList();
+
+        expect(stateRowsAfterForVersion.length, 1,
+            reason: 'No state row found for version $version');
+
+        var stateRowAfter = stateRowsAfterForVersion[0];
+
+        if (version == null) {
+          expect(stateRowAfter[Schema.state.currentSnapshotVersion], 2);
+        } else {
+          expect(stateRowAfter[Schema.state.currentSnapshotVersion], version);
+        }
+
+        for (var entry in stateRowAfter.entries) {
+          if ([
+            Schema.state.currentSnapshotVersion,
+            Schema.state.selectedPenColor,
+            Schema.state.selectedCanvasColor,
+            Schema.state.lastSelectedPenColor,
+            Schema.state.lastSelectedCanvasColor,
+            Schema.state.currentSnapshotVersion,
+            Schema.state.version,
+          ].contains(entry.key)) {
+            continue;
+          }
+
+          expect(entry.value, stateRowBefore[entry.key]);
+        }
+      }
+
+      // Test that all the color references are correct for each version
+      for (var version in allVersions) {
+        final whereClause = version == null ? 'IS NULL' : '= $version';
+        final colorValuesAfter = (await db.rawQuery('''
+          $colorsQuery
+          WHERE s.${Schema.state.version} $whereClause
+        '''))[0];
+
+        expect(colorValuesBefore, equals(colorValuesAfter));
+      }
+    });
   });
 }

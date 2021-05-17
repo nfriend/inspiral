@@ -1,9 +1,13 @@
 import 'package:inspiral/database/schema.dart';
 import 'package:sqflite/sqflite.dart';
 
-void upgradeV2ToV3(Batch batch) {
+Future<void> upgradeV2ToV3(Database db) async {
+  var batch = db.batch();
+
   _createTableSnapPoints(batch);
   _addSnapPointsAreActiveColumn(batch);
+
+  await batch.commit(noResult: true);
 }
 
 void _createTableSnapPoints(Batch batch) {
