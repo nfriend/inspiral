@@ -111,10 +111,10 @@ export default function Home() {
           alt="A screenshot of the 'Auto draw' buttons"
         />
 
-        <p>
+        {/* <p>
           To make auto-draw faster, open the <b>Additional options</b> sidebar
           and set the <b>Auto-draw speed</b> setting to "Fast".
-        </p>
+        </p> */}
 
         <h3 id="locking-the-fixed-gear">Locking the fixed gear</h3>
 
