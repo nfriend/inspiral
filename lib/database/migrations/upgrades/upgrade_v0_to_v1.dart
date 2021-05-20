@@ -1,7 +1,8 @@
-import 'dart:math';
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/canvas_size.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 /// The very first migration. Called when the database is first created.
 Future<void> upgradeV0ToV1(Database db) async {
@@ -17,8 +18,6 @@ Future<void> upgradeV0ToV1(Database db) async {
 
   await batch.commit(noResult: true);
 }
-
-const _startingAngle = -pi / 2;
 
 void _createTableColors(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.colors}');
@@ -170,15 +169,15 @@ void _createTableState(Batch batch) {
         1,
         0,
         1,
-        $_startingAngle,
-        'circle52',
-        '30',
-        1,
-        0,
-        'circle96Ring',
+        $rotatingGearStartingAngle,
+        '${defaultRotatingGear.id}',
+        '${defaultActiveHole.name}',
+        ${defaultGearVisibility.toInt()},
+        $fixedGearStartingRotation,
+        '${defaultFixedGear.id}',
         5.0,
         '${StrokeStyleType.normal}',
-        $_startingAngle,
+        $rotatingGearStartingAngle,
         0
       )
   ''');

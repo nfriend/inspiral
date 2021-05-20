@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -14,15 +15,23 @@ class UndoRedoStateRehydrationResult {
 
 class UndoRedoStatePersistor {
   static void persist(Batch batch, UndoRedoState undoRedo) {
-    batch.update(Schema.state.toString(), {
-      Schema.state.currentSnapshotVersion: undoRedo.currentSnapshotVersion,
-      Schema.state.maxSnapshotVersion: undoRedo.maxSnapshotVersion
-    });
+    batch.update(
+        Schema.state.toString(),
+        {
+          Schema.state.currentSnapshotVersion: undoRedo.currentSnapshotVersion,
+          Schema.state.maxSnapshotVersion: undoRedo.maxSnapshotVersion
+        },
+        where: getWhereClauseForVersion(Schema.state.version, null));
   }
 
   static Future<UndoRedoStateRehydrationResult> rehydrate(Database db) async {
-    Map<String, dynamic> state =
-        (await db.query(Schema.state.toString())).first;
+    Map<String, dynamic> state = (await db.query(Schema.state.toString(),
+            columns: [
+              Schema.state.currentSnapshotVersion,
+              Schema.state.maxSnapshotVersion
+            ],
+            where: getWhereClauseForVersion(Schema.state.version, null)))
+        .first;
 
     return UndoRedoStateRehydrationResult(
         currentSnapshotVersion:

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/helpers/get_rotating_gear_state_for_version.dart';
 import 'package:inspiral/state/persistors/rotating_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -358,19 +359,32 @@ class RotatingGearState extends BaseGearState {
   }
 
   @override
+  Future<void> undo(int version) async {
+    _applyStateSnapshot(await getRotatingGearStateForVersion(version));
+  }
+
+  @override
+  Future<void> redo(int version) async {
+    _applyStateSnapshot(await getRotatingGearStateForVersion(version));
+  }
+
+  @override
   void persist(Batch batch) {
     RotatingGearStatePersistor.persist(batch, this);
   }
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    var result = await RotatingGearStatePersistor.rehydrate(db, this);
+    _applyStateSnapshot(await RotatingGearStatePersistor.rehydrate(db, this));
+  }
 
-    _lastAngle = result.angle;
-    definition = result.definition;
-    isVisible = result.isVisible;
-    activeHole = result.activeHole;
+  void _applyStateSnapshot(RotatingGearStateSnapshot snapshot) {
+    _lastAngle = snapshot.angle;
+    definition = snapshot.definition;
+    isVisible = snapshot.isVisible;
+    activeHole = snapshot.activeHole;
 
     initializePosition();
+    notifyListeners();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/color_state.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/util/color_from_hex_string.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -25,14 +26,17 @@ class ColorStatePersistor {
     var uuid = Uuid();
 
     // Remove references to avoid foreign key constraint errors below
-    batch.update(Schema.state.toString(), {
-      Schema.state.selectedPenColor: null,
-      Schema.state.selectedCanvasColor: null
-    });
+    batch.update(
+        Schema.state.toString(),
+        {
+          Schema.state.selectedPenColor: null,
+          Schema.state.selectedCanvasColor: null
+        },
+        where: getWhereClauseForVersion(Schema.state.version, null));
 
     batch.delete(Schema.colors.toString(),
         where:
-            "${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}'");
+            "(${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}') AND ${getWhereClauseForVersion(Schema.colors.version, null)}");
 
     String activePenColorId, activeCanvasColorId;
 
@@ -44,7 +48,8 @@ class ColorStatePersistor {
         Schema.colors.id: rowId,
         Schema.colors.value: color.toHexString(),
         Schema.colors.type: ColorsTableType.pen,
-        Schema.colors.order: i
+        Schema.colors.order: i,
+        Schema.colors.version: null
       });
 
       if (colors.penColor == color) {
@@ -60,7 +65,8 @@ class ColorStatePersistor {
         Schema.colors.id: rowId,
         Schema.colors.value: color.toHexString(),
         Schema.colors.type: ColorsTableType.canvas,
-        Schema.colors.order: i
+        Schema.colors.order: i,
+        Schema.colors.version: null
       });
 
       if (colors.backgroundColor == color) {
@@ -68,10 +74,13 @@ class ColorStatePersistor {
       }
     }
 
-    batch.update(Schema.state.toString(), {
-      Schema.state.selectedPenColor: activePenColorId,
-      Schema.state.selectedCanvasColor: activeCanvasColorId
-    });
+    batch.update(
+        Schema.state.toString(),
+        {
+          Schema.state.selectedPenColor: activePenColorId,
+          Schema.state.selectedCanvasColor: activeCanvasColorId
+        },
+        where: getWhereClauseForVersion(Schema.state.version, null));
   }
 
   static Future<ColorStateRehydrationResult> rehydrate(
@@ -79,8 +88,10 @@ class ColorStatePersistor {
     var availablePenColors = <TinyColor>[];
     var availableCanvasColors = <TinyColor>[];
 
-    final List<Map<String, dynamic>> rows = await db
-        .query(Schema.colors.toString(), orderBy: '"${Schema.colors.order}"');
+    final List<Map<String, dynamic>> rows = await db.query(
+        Schema.colors.toString(),
+        orderBy: '"${Schema.colors.order}"',
+        where: getWhereClauseForVersion(Schema.colors.version, null));
 
     for (var attrs in rows) {
       var newColor =
@@ -101,6 +112,7 @@ class ColorStatePersistor {
         ${Schema.state} s
       LEFT JOIN ${Schema.colors} c1 ON c1.${Schema.colors.id} = s.${Schema.state.selectedPenColor}
       LEFT JOIN ${Schema.colors} c2 ON c2.${Schema.colors.id} = s.${Schema.state.selectedCanvasColor}
+      WHERE ${getWhereClauseForVersion(Schema.state.version, null, tableAlias: 's')}
     ''')).first;
 
     var penColor = availablePenColors.firstWhere(

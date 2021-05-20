@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/ink_line.dart';
 import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/ink_state.dart';
 import 'package:inspiral/util/color_from_hex_string.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -33,7 +34,8 @@ class InkStatePersistor {
     batch.delete(Schema.lineSegments.toString());
     batch.delete(Schema.inkLines.toString());
     batch.delete(Schema.colors.toString(),
-        where: "${Schema.colors.type} = '${ColorsTableType.ink}'");
+        where:
+            "${Schema.colors.type} = '${ColorsTableType.ink}' AND ${getWhereClauseForVersion(Schema.state.version, null)}");
 
     for (var i = 0; i < ink.lines.length; i++) {
       var line = ink.lines[i];
@@ -43,7 +45,8 @@ class InkStatePersistor {
       batch.insert(Schema.colors.toString(), {
         Schema.colors.id: colorId,
         Schema.colors.value: line.color.toHexString(),
-        Schema.colors.type: ColorsTableType.ink
+        Schema.colors.type: ColorsTableType.ink,
+        Schema.colors.version: null
       });
 
       batch.insert(Schema.inkLines.toString(), {
@@ -94,6 +97,7 @@ class InkStatePersistor {
       FROM
         ${Schema.inkLines} il
       LEFT JOIN ${Schema.colors} c ON c.${Schema.colors.id} = il.${Schema.inkLines.colorId}
+      WHERE ${getWhereClauseForVersion(Schema.colors.version, null, tableAlias: 'c')}
       ORDER BY il."${Schema.inkLines.order}" ASC
     ''');
 
@@ -133,8 +137,9 @@ class InkStatePersistor {
       return newInkLine;
     }).toList();
 
-    Map<String, dynamic> state =
-        (await db.query(Schema.state.toString())).first;
+    Map<String, dynamic> state = (await db.query(Schema.state.toString(),
+            where: getWhereClauseForVersion(Schema.state.version, null)))
+        .first;
 
     var currentSnapshotVersion =
         state[Schema.state.currentSnapshotVersion] as int;

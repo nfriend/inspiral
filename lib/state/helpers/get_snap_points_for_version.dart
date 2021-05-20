@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 
 class SnapPointsAndActivePoint {
   final Set<Offset> snapPoints;
@@ -15,15 +16,8 @@ class SnapPointsAndActivePoint {
 Future<SnapPointsAndActivePoint> getSnapPointsForVersion(int version) async {
   var db = await getDatabase();
 
-  var whereClause;
-  if (version == null) {
-    whereClause = 'IS NULL';
-  } else {
-    whereClause = '= $version';
-  }
-
   var snapPointRows = (await db.query(Schema.snapPoints.toString(),
-      where: '${Schema.snapPoints.version} $whereClause'));
+      where: getWhereClauseForVersion(Schema.snapPoints.version, version)));
 
   var snapPoints = HashSet<Offset>();
   Offset activeSnapPoint;

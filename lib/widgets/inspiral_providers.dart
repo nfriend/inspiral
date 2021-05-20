@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/initialize_all_state_singletons.dart';
 import 'package:inspiral/state/snackbar_state.dart';
 import 'package:inspiral/state/stroke_state.dart';
 import 'package:inspiral/state/undo_redo_state.dart';
+import 'package:inspiral/widgets/helpers/persist_all_state_objects.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 
@@ -76,15 +76,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
     ].contains(state)) {
       var allStateObjects = await _stateFuture;
 
-      var db = await getDatabase();
-
-      await db.transaction((txn) async {
-        var batch = txn.batch();
-
-        allStateObjects.list.forEach((state) => state.persist(batch));
-
-        await batch.commit(noResult: true);
-      });
+      await persistAllStateObjects(allStateObjects);
     }
   }
 

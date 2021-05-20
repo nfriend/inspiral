@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/helpers/get_snap_points_for_version.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -26,7 +27,7 @@ class SnapPointStatePersistor {
     // the "current" snap points (i.e. not associated with
     // an undo state).
     batch.delete(Schema.snapPoints.toString(),
-        where: '${Schema.snapPoints.version} IS NULL');
+        where: getWhereClauseForVersion(Schema.snapPoints.version, null));
 
     for (var point in snapPointState.snapPoints) {
       batch.insert(Schema.snapPoints.toString(), {
@@ -48,8 +49,10 @@ class SnapPointStatePersistor {
   ) async {
     var pointsAndActive = await getSnapPointsForVersion(null);
 
-    Map<String, dynamic> state =
-        (await db.query(Schema.state.toString())).first;
+    Map<String, dynamic> state = (await db.query(Schema.state.toString(),
+            columns: [Schema.state.snapPointsAreActive],
+            where: getWhereClauseForVersion(Schema.state.version, null)))
+        .first;
 
     var areActive = (state[Schema.state.snapPointsAreActive] as int).toBool();
 

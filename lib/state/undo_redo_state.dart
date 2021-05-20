@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/state/persistors/undo_redo_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
+import 'package:inspiral/state/undoers/undo_redo_state_undoer.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -224,5 +225,15 @@ class UndoRedoState extends InspiralStateObject {
 
     _currentSnapshotVersion = result.currentSnapshotVersion;
     _maxSnapshotVersion = result.maxSnapshotVersion;
+  }
+
+  @override
+  Future<void> snapshot(int version, Batch batch) async {
+    await UndoRedoStateUndoer.snapshot(version, batch, allStateObjects);
+  }
+
+  @override
+  Future<void> cleanUpOldRedoSnapshots(int version, Batch batch) async {
+    await UndoRedoStateUndoer.cleanUpOldRedoSnapshots(version, batch);
   }
 }

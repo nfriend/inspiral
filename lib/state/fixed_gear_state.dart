@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/helpers/get_fixed_gear_state_for_version.dart';
 import 'package:inspiral/state/persistors/fixed_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -149,24 +150,40 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   }
 
   @override
+  Future<void> undo(int version) async {
+    _applyStateSnapshot(
+        await getFixedGearStateForVersion(version, allStateObjects));
+  }
+
+  @override
+  Future<void> redo(int version) async {
+    _applyStateSnapshot(
+        await getFixedGearStateForVersion(version, allStateObjects));
+  }
+
+  @override
   void persist(Batch batch) {
     FixedGearStatePersistor.persist(batch, this);
   }
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    var result = await FixedGearStatePersistor.rehydrate(db, this);
-
-    definition = result.definition;
-    isVisible = result.isVisible;
-    position = result.position;
-    rotation = result.rotation;
-    isLocked = result.isLocked;
+    _applyStateSnapshot(await FixedGearStatePersistor.rehydrate(db, this));
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void _applyStateSnapshot(FixedGearStateSnapshot snapshot) {
+    definition = snapshot.definition;
+    isVisible = snapshot.isVisible;
+    position = snapshot.position;
+    rotation = snapshot.rotation;
+    isLocked = snapshot.isLocked;
+
+    notifyListeners();
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inspiral/models/line.dart';
+import 'package:inspiral/state/helpers/get_drag_line_state_for_version.dart';
 import 'package:inspiral/state/persistors/drag_line_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -129,15 +130,31 @@ class DragLineState extends InspiralStateObject {
   }
 
   @override
+  Future<void> undo(int version) async {
+    _applyStateSnapshot(
+        await getDragLineStateForVersion(version, allStateObjects));
+  }
+
+  @override
+  Future<void> redo(int version) async {
+    _applyStateSnapshot(
+        await getDragLineStateForVersion(version, allStateObjects));
+  }
+
+  @override
   void persist(Batch batch) {
     DragLineStatePersistor.persist(batch, this);
   }
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    var result = await DragLineStatePersistor.rehydrate(db, this);
+    _applyStateSnapshot(await DragLineStatePersistor.rehydrate(db, this));
+  }
 
-    _pivotPositionInCanvasCoordinates = result.pivotPosition;
-    _angle = result.angle;
+  void _applyStateSnapshot(DragLineStateSnapshot snapshot) {
+    _pivotPositionInCanvasCoordinates = snapshot.pivotPosition;
+    _angle = snapshot.angle;
+
+    notifyListeners();
   }
 }

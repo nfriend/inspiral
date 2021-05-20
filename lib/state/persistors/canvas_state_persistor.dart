@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/canvas_size.dart';
 import 'package:inspiral/state/helpers/get_center_transform.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/helpers/guess_ideal_canvas_size.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -19,31 +20,35 @@ class CanvasStatePersistor {
   static void persist(Batch batch, CanvasState canvas) {
     var elements = canvas.transform.storage;
 
-    batch.update(Schema.state.toString(), {
-      Schema.state.canvasTransform_0: elements[0],
-      Schema.state.canvasTransform_1: elements[1],
-      Schema.state.canvasTransform_2: elements[2],
-      Schema.state.canvasTransform_3: elements[3],
-      Schema.state.canvasTransform_4: elements[4],
-      Schema.state.canvasTransform_5: elements[5],
-      Schema.state.canvasTransform_6: elements[6],
-      Schema.state.canvasTransform_7: elements[7],
-      Schema.state.canvasTransform_8: elements[8],
-      Schema.state.canvasTransform_9: elements[9],
-      Schema.state.canvasTransform_10: elements[10],
-      Schema.state.canvasTransform_11: elements[11],
-      Schema.state.canvasTransform_12: elements[12],
-      Schema.state.canvasTransform_13: elements[13],
-      Schema.state.canvasTransform_14: elements[14],
-      Schema.state.canvasTransform_15: elements[15],
-      Schema.state.canvasSize: canvas.canvasSizeAndName.id
-    });
+    batch.update(
+        Schema.state.toString(),
+        {
+          Schema.state.canvasTransform_0: elements[0],
+          Schema.state.canvasTransform_1: elements[1],
+          Schema.state.canvasTransform_2: elements[2],
+          Schema.state.canvasTransform_3: elements[3],
+          Schema.state.canvasTransform_4: elements[4],
+          Schema.state.canvasTransform_5: elements[5],
+          Schema.state.canvasTransform_6: elements[6],
+          Schema.state.canvasTransform_7: elements[7],
+          Schema.state.canvasTransform_8: elements[8],
+          Schema.state.canvasTransform_9: elements[9],
+          Schema.state.canvasTransform_10: elements[10],
+          Schema.state.canvasTransform_11: elements[11],
+          Schema.state.canvasTransform_12: elements[12],
+          Schema.state.canvasTransform_13: elements[13],
+          Schema.state.canvasTransform_14: elements[14],
+          Schema.state.canvasTransform_15: elements[15],
+          Schema.state.canvasSize: canvas.canvasSizeAndName.id
+        },
+        where: getWhereClauseForVersion(Schema.state.version, null));
   }
 
   static Future<CanvasStateRehydrationResult> rehydrate(
       Database db, BuildContext context, CanvasState canvas) async {
-    Map<String, dynamic> state =
-        (await db.query(Schema.state.toString())).first;
+    Map<String, dynamic> state = (await db.query(Schema.state.toString(),
+            where: getWhereClauseForVersion(Schema.state.version, null)))
+        .first;
 
     var canvasSizeAndNameId = state[Schema.state.canvasSize] as String;
     CanvasSizeAndName canvasSizeAndName;

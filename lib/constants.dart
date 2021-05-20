@@ -1,5 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:inspiral/models/gear_definition.dart';
+import 'package:inspiral/models/gear_hole.dart';
+import 'package:inspiral/models/gears/circle_52.dart';
+import 'package:inspiral/models/gears/circle_96_ring.dart';
 
 const String appName = 'Inspiral';
 
@@ -113,3 +118,25 @@ const int pointCountBakeThreshold = 1000;
 /// repeatedly calls itself until the points have been reduced to less
 /// than this number.
 const int pointCountBakeUntilThreshold = 100;
+
+/// The default starting angle of the rotating gear
+const double rotatingGearStartingAngle = -pi / 2;
+
+/// The default starting fixed gear rotation angle
+const double fixedGearStartingRotation = 0;
+
+/// The default rotating gear
+final GearDefinition defaultRotatingGear = circle52;
+
+/// The default fixed gear
+final GearDefinition defaultFixedGear = circle96Ring;
+
+/// The default selected hole in `defaultRotatingGear`
+final GearHole defaultActiveHole =
+    defaultRotatingGear.holes.firstWhere((hole) => hole.name == '30');
+
+/// The default gear visibility for both rotating and fixed gears
+final bool defaultGearVisibility = true;
+
+/// The default state of the fixed gear's "locked" setting
+final bool defaultFixedGearLocked = false;
