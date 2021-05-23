@@ -6,8 +6,16 @@ import 'package:uuid/uuid.dart';
 
 const Uuid _uuid = Uuid();
 
-Future<void> snapshotVersionedTables(Batch batch, int version) async {
-  var db = await getDatabase();
+/// Clones the current state of all "versioned" tables (i.e. all tables that
+/// have a "version" column) and saves the clone as a version snapshot.
+/// Note on the optional "database" named parameter: this method is used
+/// in one of the migration scripts. In the context of migration scripts,
+/// we can't call `getDatabase()` (it would be a circular call), so in this
+/// case we need to pass in the database instance instead of allowing this
+/// method to request its own instance.
+Future<void> snapshotVersionedTables(Batch batch, int version,
+    {Database database}) async {
+  var db = database ?? await getDatabase();
 
   final state = (await db.query(Schema.state.toString(),
           where: getWhereClauseForVersion(Schema.state.version, null)))

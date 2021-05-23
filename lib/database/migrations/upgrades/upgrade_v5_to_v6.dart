@@ -27,7 +27,7 @@ Future<void> upgradeV5ToV6(Database db) async {
   batch = db.batch();
   final currentVersion = state[Schema.state.currentSnapshotVersion] as int;
   for (var version = 0; version < currentVersion; version++) {
-    await snapshotVersionedTables(batch, version);
+    await snapshotVersionedTables(batch, version, database: db);
   }
   await batch.commit(noResult: true);
 }
