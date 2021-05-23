@@ -159,22 +159,19 @@ class UndoRedoState extends InspiralStateObject {
     notifyListeners();
 
     try {
-      // Rasterize any un-baked points before creating a new snapshot
-      await allStateObjects.ink.bakeImage();
-      await allStateObjects.ink.pendingCanvasManipulation;
-
       var newVersion = _currentSnapshotVersion + 1;
-
       var batch = (await getDatabase()).batch();
+      var allFutures = <Future>[];
 
       for (var stateObj in allStateObjects.list) {
-        await stateObj.cleanUpOldRedoSnapshots(newVersion, batch);
+        allFutures.add(stateObj.cleanUpOldRedoSnapshots(newVersion, batch));
       }
 
       for (var stateObj in allStateObjects.list) {
-        await stateObj.snapshot(newVersion, batch);
+        allFutures.add(stateObj.snapshot(newVersion, batch));
       }
 
+      await Future.wait(allFutures);
       await batch.commit(noResult: true);
 
       _currentSnapshotVersion = newVersion;

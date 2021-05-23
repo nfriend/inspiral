@@ -29,6 +29,10 @@ class InkStateUndoer {
   }
 
   static Future<void> snapshot(int version, Batch batch, InkState ink) async {
+    // Rasterize any un-baked points before creating a new snapshot
+    await ink.pendingCanvasManipulation;
+    await ink.bakeImage();
+
     var allIdsInVersion = <String>[];
     var allUpdates = <Future>[];
 

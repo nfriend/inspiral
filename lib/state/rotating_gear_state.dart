@@ -139,13 +139,10 @@ class RotatingGearState extends BaseGearState {
 
     super.gearPointerUp(event);
 
-    // Now's a convenient time to bake the lines that have been drawn.
-    // The baking process causes the UI to stutter
-    // (see https://github.com/flutter/flutter/issues/75755)
-    // so wait a _little_ longer than `uiAnimationDuration` to allow
-    // any UI animations to complete smoothly.
-    Future.delayed(uiAnimationDuration * 1.2)
-        .then((_) => allStateObjects.undoRedo.createSnapshot());
+    // Create an undo/redo snapshot now.
+    // As a side effect, this also persists the current app state to disk,
+    // including the rasterizing the lines.
+    allStateObjects.undoRedo.createSnapshot();
 
     notifyListeners();
   }
