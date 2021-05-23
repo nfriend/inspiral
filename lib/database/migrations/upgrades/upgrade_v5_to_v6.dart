@@ -1,9 +1,6 @@
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/helpers/snapshot_versioned_tables.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uuid/uuid.dart';
-
-const Uuid _uuid = Uuid();
 
 Future<void> upgradeV5ToV6(Database db) async {
   var batch = db.batch();

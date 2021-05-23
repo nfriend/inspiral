@@ -187,12 +187,6 @@ void main() {
 
         var stateRowAfter = stateRowsAfterForVersion[0];
 
-        if (version == null) {
-          expect(stateRowAfter[Schema.state.currentSnapshotVersion], 2);
-        } else {
-          expect(stateRowAfter[Schema.state.currentSnapshotVersion], version);
-        }
-
         for (var entry in stateRowAfter.entries) {
           if ([
             Schema.state.currentSnapshotVersion,
@@ -200,7 +194,6 @@ void main() {
             Schema.state.selectedCanvasColor,
             Schema.state.lastSelectedPenColor,
             Schema.state.lastSelectedCanvasColor,
-            Schema.state.currentSnapshotVersion,
             Schema.state.version,
           ].contains(entry.key)) {
             continue;
