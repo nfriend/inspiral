@@ -9,6 +9,8 @@ import 'package:sqflite/sqflite.dart';
 // state object to try and snapshot its _portion_ of the row individually,
 // even though this would be logically more consistent. It's much simpler
 // to clone the current row in one place.
+// In addition, this undoer is in charge of snapshotting the "colors" table,
+// since the "state" table has foreign key references into this table.
 class UndoRedoStateUndoer {
   static Future<void> snapshot(
       int version, Batch batch, AllStateObjects allStateObjects) async {
@@ -25,5 +27,8 @@ class UndoRedoStateUndoer {
     // Delete all snapshot records that are no longer relevant
     batch.delete(Schema.state.toString(),
         where: '${Schema.state.version} >= $version');
+
+    batch.delete(Schema.colors.toString(),
+        where: '${Schema.colors.version} >= $version');
   }
 }

@@ -5,6 +5,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/gear_hole.dart';
 import 'package:inspiral/models/gears/circle_52.dart';
 import 'package:inspiral/models/gears/circle_96_ring.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 const String appName = 'Inspiral';
 
@@ -140,3 +141,45 @@ final bool defaultGearVisibility = true;
 
 /// The default state of the fixed gear's "locked" setting
 final bool defaultFixedGearLocked = false;
+
+/// The default set of pen colors
+final List<TinyColor> defaultPenColors = [
+  TinyColor(const Color(0x66FF0000)),
+  TinyColor(const Color(0xB3FF9500)),
+  TinyColor(const Color(0xB3FFFF00)),
+  TinyColor(const Color(0x80009600)),
+  TinyColor(const Color(0xB392D4DE)),
+  TinyColor(const Color(0x660000FF)),
+  TinyColor(const Color(0x80960096)),
+  TinyColor(const Color(0xB3F0A3BA)),
+  TinyColor(const Color(0x96401B13)),
+  TinyColor(const Color(0xCCFFFFFF)),
+  TinyColor(const Color(0xCCC8C8C8)),
+  TinyColor(const Color(0xCC969696)),
+  TinyColor(const Color(0xCC646464)),
+];
+
+/// The default set of canvas colors
+final List<TinyColor> defaultCanvasColors = [
+  TinyColor(const Color(0xFFFFFFFF)),
+  TinyColor(const Color(0xFFF0F0F0)),
+  TinyColor(const Color(0xFFE3E3E3)),
+  TinyColor(const Color(0xFFF7EFDA)),
+  TinyColor(const Color(0xFF3B2507)),
+  TinyColor(const Color(0xFF0E1247)),
+  TinyColor(const Color(0xFF333333)),
+  TinyColor(const Color(0xFF121212)),
+];
+
+/// The pen color that is selected by default
+final TinyColor defaultSelectedPenColor = defaultPenColors.first;
+
+/// The canvas color that is selected by default
+final TinyColor defaultSelectedCanvasColor = defaultCanvasColors.first;
+
+/// The default "last selected" pen color. This is the color that is selected
+/// when the custom pen color dialog is first opened.
+const Color defaultLastSelectedPenColor = Color(0xB348F1F7);
+
+/// Same as `defaultLastSelectedPenColor`, but for custom canvas colors.
+const Color defaultLastSelectedCanvasColor = Color(0xFF592659);

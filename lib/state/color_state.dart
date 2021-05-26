@@ -1,10 +1,13 @@
 import 'dart:collection';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:inspiral/constants.dart';
+import 'package:inspiral/state/helpers/get_color_state_for_version.dart';
 import 'package:inspiral/state/persistors/color_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:inspiral/extensions/extensions.dart';
 
 class ColorState extends InspiralStateObject {
   static ColorState _instance;
@@ -19,7 +22,13 @@ class ColorState extends InspiralStateObject {
     return _instance;
   }
 
-  ColorState._internal() : super();
+  ColorState._internal() : super() {
+    _availablePenColors = [];
+    _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
+    _availableCanvasColors = [];
+    _unmodifiableAvailableCanvasColors =
+        UnmodifiableListView(_availableCanvasColors);
+  }
 
   /// The current background color of the canvas
   TinyColor _backgroundColor;
@@ -208,41 +217,22 @@ class ColorState extends InspiralStateObject {
   }
 
   // Resets all available colors and selections to their factory defaults.
-  // These colors should be kept in-sync with the colors specified in
-  // `lib/database/on_database_create.dart`
   void reset() {
-    _availablePenColors.removeWhere((c) => true);
-    _availableCanvasColors.removeWhere((c) => true);
+    _applyStateSnapshot(ColorStateSnapshot(
+        availablePenColors: defaultPenColors,
+        availableCanvasColors: defaultCanvasColors,
+        penColor: defaultSelectedPenColor,
+        canvasColor: defaultSelectedCanvasColor));
+  }
 
-    _availablePenColors.addAll([
-      TinyColor(Color(0x66FF0000)), // Red
-      TinyColor(Color(0xB3FF9500)), // Orange
-      TinyColor(Color(0xB3FFFF00)), // Yellow
-      TinyColor(Color(0x80009600)), // Green
-      TinyColor(Color(0xB392D4DE)), // Light blue
-      TinyColor(Color(0x660000FF)), // Blue
-      TinyColor(Color(0x80960096)), // Purple
-      TinyColor(Color(0xB3F0A3BA)), // Pink
-      TinyColor(Color(0x96401B13)), // Brown
-      TinyColor(Color(0xCCFFFFFF)), // White
-      TinyColor(Color(0xCCC8C8C8)), // Light gray
-      TinyColor(Color(0xCC969696)), // Medium gray
-      TinyColor(Color(0xCC646464)), // Dark gray
-    ]);
+  @override
+  Future<void> undo(int version) async {
+    _applyStateSnapshot(await getColorStateForVersion(version));
+  }
 
-    _availableCanvasColors.addAll([
-      TinyColor(Color(0xFFFFFFFF)), // White
-      TinyColor(Color(0xFFF0F0F0)), // Light gray
-      TinyColor(Color(0xFFE3E3E3)), // Medium-light gray
-      TinyColor(Color(0xFFF7EFDA)), // Beige
-      TinyColor(Color(0xFF3B2507)), // Brown
-      TinyColor(Color(0xFF0E1247)), // Navy
-      TinyColor(Color(0xFF333333)), // Medium gray
-      TinyColor(Color(0xFF121212)), // Dark gray
-    ]);
-
-    penColor = _availablePenColors.first;
-    backgroundColor = _availableCanvasColors.first;
+  @override
+  Future<void> redo(int version) async {
+    _applyStateSnapshot(await getColorStateForVersion(version));
   }
 
   @override
@@ -252,16 +242,20 @@ class ColorState extends InspiralStateObject {
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    var result = await ColorStatePersistor.rehydrate(db, this);
+    _applyStateSnapshot(await ColorStatePersistor.rehydrate(db, this));
+  }
 
-    _availablePenColors = result.availablePenColors;
-    _unmodifiableAvailablePenColors = UnmodifiableListView(_availablePenColors);
-    _availableCanvasColors = result.availableCanvasColors;
-    _unmodifiableAvailableCanvasColors =
-        UnmodifiableListView(_availableCanvasColors);
-    _penColor = result.penColor;
-    _backgroundColor = result.canvasColor;
+  void _applyStateSnapshot(ColorStateSnapshot snapshot) {
+    _availablePenColors
+      ..removeAll()
+      ..addAll(snapshot.availablePenColors);
+    _availableCanvasColors
+      ..removeAll()
+      ..addAll(snapshot.availableCanvasColors);
+    _penColor = snapshot.penColor;
+    _backgroundColor = snapshot.canvasColor;
 
     _updateDependentColors();
+    notifyListeners();
   }
 }

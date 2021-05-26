@@ -3,13 +3,24 @@ import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/canvas_size.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:inspiral/extensions/extensions.dart';
+import 'package:uuid/uuid.dart';
+
+var _uuid = Uuid();
+
+/// A utility class to hold all the IDs of the selected color rows
+class _SelectedColorIds {
+  String selectedPenId;
+  String selecteCanvasId;
+  String lastSelectedPenId;
+  String lastSelectedCanvasId;
+}
 
 /// The very first migration. Called when the database is first created.
 Future<void> upgradeV0ToV1(Database db) async {
   var batch = db.batch();
 
-  _createTableColors(batch);
-  _createTableState(batch);
+  var selectedIds = _createTableColors(batch);
+  _createTableState(batch, selectedIds);
   _createTableInkLines(batch);
   _createTableLineSegments(batch);
   _createTablePoints(batch);
@@ -19,7 +30,7 @@ Future<void> upgradeV0ToV1(Database db) async {
   await batch.commit(noResult: true);
 }
 
-void _createTableColors(Batch batch) {
+_SelectedColorIds _createTableColors(Batch batch) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.colors}');
   batch.execute('''
     CREATE TABLE ${Schema.colors}(
@@ -32,67 +43,60 @@ void _createTableColors(Batch batch) {
     )
   ''');
 
-  // These colors should be kept in sync with the colors in the `reset` method
-  // of `lib/state/color_state.dart`
-  batch.execute('''
-    INSERT INTO ${Schema.colors} (
-      ${Schema.colors.id},
-      ${Schema.colors.value},
-      ${Schema.colors.type},
-      "${Schema.colors.order}"
-    )
-    VALUES
-      /* Red */
-      ('ab91b67b-e1f0-4d45-9d99-d67383e23bea', '66FF0000', '${ColorsTableType.pen}', 1),
-      /* Orange */
-      ('45b3ed99-ef1d-465c-a682-4afc5eac5727', 'B3FF9500', '${ColorsTableType.pen}', 2),
-      /* Yellow */
-      ('3a98aacf-47b7-4636-8e9e-f4d0a52b6ae9', 'B3FFFF00', '${ColorsTableType.pen}', 3),
-      /* Green */
-      ('2f3e09e1-727e-455b-a5cc-8559e9e9f8ea', '80009600', '${ColorsTableType.pen}', 4),
-      /* Light blue */
-      ('d59187e5-44de-43b3-a244-54dc0aa8ca1e', 'B392D4DE', '${ColorsTableType.pen}', 5),
-      /* Blue */
-      ('7513e7ed-7c49-4dc5-9ee7-fac49b8ffb17', '660000FF', '${ColorsTableType.pen}', 6),
-      /* Purple */
-      ('dcc145c5-e904-4456-983c-78ec0326ab20', '80960096', '${ColorsTableType.pen}', 7),
-      /* Pink */
-      ('4a8e131d-5ee4-41f5-b302-0ceebdaa4ee3', 'B3F0A3BA', '${ColorsTableType.pen}', 8),
-      /* Brown */
-      ('afe32b1e-59c9-483a-b5d4-f0fff028f17f', '96401B13', '${ColorsTableType.pen}', 9),
-      /* White */
-      ('5555409d-2e9c-4ddb-979d-df4f71196f0d', 'CCFFFFFF', '${ColorsTableType.pen}', 10),
-      /* Light gray */
-      ('bf95f1f6-0ae4-49d9-b992-36b343ddd36c', 'CCC8C8C8', '${ColorsTableType.pen}', 11),
-      /* Medium gray */
-      ('7e69cc83-c916-417c-82fc-5207937ca2cc', 'CC969696', '${ColorsTableType.pen}', 12),
-      /* Dark gray */
-      ('11073ff1-6a7e-456c-8276-07e3a87dd3b5', 'CC646464', '${ColorsTableType.pen}', 13),
+  var selectedIds = _SelectedColorIds();
 
-      /* White */
-      ('e243e24c-17be-40fa-8505-091a0f2e2a03', 'FFFFFFFF', '${ColorsTableType.canvas}', 1),
-      /* Light gray */
-      ('dd8fb49b-1b4c-448c-8f1a-54c3ac2018ec', 'FFF0F0F0', '${ColorsTableType.canvas}', 2),
-      /* Medium-light gray */
-      ('d156c05c-131d-4fec-8514-f11324ba4f4e', 'FFE3E3E3', '${ColorsTableType.canvas}', 3),
-      /* Beige */
-      ('d36b3350-8a2c-4bd9-9860-1f2e756a4f35', 'FFF7EFDA', '${ColorsTableType.canvas}', 4),
-      /* Brown */
-      ('0aa3ca97-6ac6-4178-a4ef-3a97afe2d1fc', 'FF3B2507', '${ColorsTableType.canvas}', 5),
-      /* Navy */
-      ('d1248032-9064-43fd-8f26-f1960b572fe1', 'FF0E1247', '${ColorsTableType.canvas}', 6),
-      /* Medium gray */
-      ('6d06e1ce-4118-4b95-b266-0b125ce6532a', 'FF333333', '${ColorsTableType.canvas}', 7),
-      /* Dark gray */
-      ('487682ec-990e-46cd-a969-b8117d818413', 'FF121212', '${ColorsTableType.canvas}', 8),
+  for (var i = 0; i < defaultPenColors.length; i++) {
+    var color = defaultPenColors[i];
+    var colorId = _uuid.v4();
 
-      ('97a24b56-edc6-4613-beeb-f9a139f7f669', 'B348F1F7', '${ColorsTableType.lastSelectedPen}', 1),
+    batch.insert(Schema.colors.toString(), {
+      Schema.colors.id: colorId,
+      Schema.colors.value: color.toHexString(),
+      Schema.colors.type: ColorsTableType.pen,
+      Schema.colors.order: i + 1
+    });
 
-      ('c0ed2d30-86cf-46a1-b7cf-271fd56b1756', 'FF592659', '${ColorsTableType.lastSelectedCanvas}', 1);
-  ''');
+    if (color == defaultSelectedPenColor) {
+      selectedIds.selectedPenId = colorId;
+    }
+  }
+
+  for (var i = 0; i < defaultCanvasColors.length; i++) {
+    var color = defaultCanvasColors[i];
+    var colorId = _uuid.v4();
+
+    batch.insert(Schema.colors.toString(), {
+      Schema.colors.id: colorId,
+      Schema.colors.value: color.toHexString(),
+      Schema.colors.type: ColorsTableType.canvas,
+      Schema.colors.order: i + 1
+    });
+
+    if (color == defaultSelectedCanvasColor) {
+      selectedIds.selecteCanvasId = colorId;
+    }
+  }
+
+  selectedIds.lastSelectedPenId = _uuid.v4();
+  batch.insert(Schema.colors.toString(), {
+    Schema.colors.id: selectedIds.lastSelectedPenId,
+    Schema.colors.value: defaultLastSelectedPenColor.toHexString(),
+    Schema.colors.type: ColorsTableType.lastSelectedPen,
+    Schema.colors.order: 1
+  });
+
+  selectedIds.lastSelectedCanvasId = _uuid.v4();
+  batch.insert(Schema.colors.toString(), {
+    Schema.colors.id: selectedIds.lastSelectedCanvasId,
+    Schema.colors.value: defaultLastSelectedCanvasColor.toHexString(),
+    Schema.colors.type: ColorsTableType.lastSelectedCanvas,
+    Schema.colors.order: 1
+  });
+
+  return selectedIds;
 }
 
-void _createTableState(Batch batch) {
+void _createTableState(Batch batch, _SelectedColorIds selectedIds) {
   batch.execute('DROP TABLE IF EXISTS ${Schema.state}');
   batch.execute('''
     CREATE TABLE ${Schema.state}(
@@ -162,10 +166,10 @@ void _createTableState(Batch batch) {
     )
     VALUES
       (
-        'ab91b67b-e1f0-4d45-9d99-d67383e23bea',
-        'e243e24c-17be-40fa-8505-091a0f2e2a03',
-        '97a24b56-edc6-4613-beeb-f9a139f7f669',
-        'c0ed2d30-86cf-46a1-b7cf-271fd56b1756',
+        '${selectedIds.selectedPenId}',
+        '${selectedIds.selecteCanvasId}',
+        '${selectedIds.lastSelectedPenId}',
+        '${selectedIds.lastSelectedCanvasId}',
         1,
         0,
         1,

@@ -45,7 +45,12 @@ Future<void> seedV1Data(Database db) async {
       'c8c1be5d-ebf5-465f-9a9b-b141bf92dcb8',
       7.0,
       'airbrush',
-      'afe32b1e-59c9-483a-b5d4-f0fff028f17f',
+      (
+        SELECT ${Schema.colors.id}
+        FROM ${Schema.colors}
+        WHERE ${Schema.colors.type} == '${ColorsTableType.ink}'
+        LIMIT 1 OFFSET 5
+      ),
       1
     )
   ''');
@@ -63,7 +68,12 @@ Future<void> seedV1Data(Database db) async {
       '781c6a1e-ab38-4cb9-b0d1-3ef156626970',
       8.0,
       'normal',
-      'dcc145c5-e904-4456-983c-78ec0326ab20',
+      (
+        SELECT ${Schema.colors.id}
+        FROM ${Schema.colors}
+        WHERE ${Schema.colors.type} == '${ColorsTableType.ink}'
+        LIMIT 1 OFFSET 6
+      ),
       2
     )
   ''');
