@@ -82,6 +82,8 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
     }
 
     if (event.device == draggingPointerId && isDragging) {
+      allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+
       final dragBounds = Rect.fromLTRB(
           -allowedDistanceFromCanvasEdge,
           -allowedDistanceFromCanvasEdge,
@@ -108,6 +110,8 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
             allStateObjects.pointers.count == pointerIds.length &&
             // and this is the move event for the most recent finger
             event.pointer == pointerIds.last) {
+      allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+
       var rotationDelta = allStateObjects.pointers
           .getTransformInfo()
           .transformComponents
@@ -140,6 +144,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
 
     allStateObjects.rotatingGear.initializePosition();
     allStateObjects.ink.finishLine();
+    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
   }
 
   /// Resets the position of the gears to the center of the canvas

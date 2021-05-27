@@ -81,6 +81,15 @@ class UndoRedoState extends InspiralStateObject {
     notifyListeners();
   }
 
+  /// Whether or not an undo snapshot should be created the next time the
+  /// user begins drawing lines. This is used to combine all the various
+  /// non-drawing changes - like changing pen color, rotating gear, fixed
+  /// gear, fixed rotation, etc - into a single undo snapshot when they
+  /// occur between drawings. The alternative is to create a new undo snapshot
+  /// after _every_ change, but this would result in a lot of very small,
+  /// very granular undo snapshots, which can be annoying to undo through.
+  bool createSnapshotBeforeNextDraw = false;
+
   /// Whether or not an undo or redo operation is currently in progress
   bool get isUndoingOrRedoing => _isUndoing || _isRedoing;
 
@@ -155,6 +164,8 @@ class UndoRedoState extends InspiralStateObject {
     }
 
     _isCreatingSnapshot = true;
+
+    createSnapshotBeforeNextDraw = false;
 
     notifyListeners();
 

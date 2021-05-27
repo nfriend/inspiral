@@ -119,6 +119,8 @@ class RotatingGearState extends BaseGearState {
     if (event.device == draggingPointerId && isDragging && !isAutoDrawing) {
       var result = _getRotationForAngle(allStateObjects.dragLine.angle);
       allStateObjects.ink.addPoints([result.penPosition]);
+
+      _snapshotIfRequested();
     }
   }
 
@@ -156,6 +158,7 @@ class RotatingGearState extends BaseGearState {
 
     initializePosition();
     allStateObjects.ink.finishLine();
+    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
   }
 
   /// Rotates the rotating gear in place (without drawing)
@@ -164,6 +167,7 @@ class RotatingGearState extends BaseGearState {
     toothOffset += teethToRotate;
     initializePosition();
     allStateObjects.ink.finishLine();
+    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
   }
 
   /// Draws one complete (clockwise) rotation, so that the rotating gears
@@ -172,6 +176,8 @@ class RotatingGearState extends BaseGearState {
     if (isDrawingOneRotation) {
       return;
     }
+
+    _snapshotIfRequested();
 
     isDrawingOneRotation = true;
 
@@ -353,6 +359,14 @@ class RotatingGearState extends BaseGearState {
 
     allStateObjects.ink.addPoints(pointsToAdd);
     _lastAngle = angle;
+  }
+
+  /// Creates a new undo/redo snapshot if at least one state object
+  /// has requested a snapshot be created at the start of the next draw action.
+  void _snapshotIfRequested() {
+    if (allStateObjects.undoRedo.createSnapshotBeforeNextDraw) {
+      unawaited(allStateObjects.undoRedo.createSnapshot());
+    }
   }
 
   @override
