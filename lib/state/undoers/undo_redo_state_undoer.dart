@@ -28,7 +28,32 @@ class UndoRedoStateUndoer {
     batch.delete(Schema.state.toString(),
         where: '${Schema.state.version} >= $version');
 
-    batch.delete(Schema.colors.toString(),
-        where: '${Schema.colors.version} >= $version');
+    // Delete all color snapshots that are no longer relevant.
+    // Also delete any historical color records that aren't referenced
+    // by a previous snapshot. The full list of colors doesn't need to
+    // be included in the snapshot, so this saves some disk space by removing
+    // unnecessary color rows.
+    batch.rawDelete('''
+      DELETE FROM ${Schema.colors}
+      WHERE
+        ${Schema.colors.version} >= $version OR (
+          ${Schema.colors.version} IS NOT NULL
+          AND NOT EXISTS (
+            SELECT 1
+            FROM ${Schema.state} s
+            WHERE
+              s.${Schema.state.selectedPenColor} == ${Schema.colors.id} OR
+              s.${Schema.state.selectedCanvasColor} == ${Schema.colors.id} OR
+              s.${Schema.state.lastSelectedPenColor} == ${Schema.colors.id} OR
+              s.${Schema.state.lastSelectedCanvasColor} == ${Schema.colors.id}
+          )
+          AND NOT EXISTS (
+            SELECT 1
+            FROM ${Schema.inkLines} il
+            WHERE
+              il.${Schema.inkLines.colorId} == ${Schema.colors.id}
+          )
+        )
+    ''');
   }
 }

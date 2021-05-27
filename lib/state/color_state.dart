@@ -235,12 +235,38 @@ class ColorState extends InspiralStateObject {
 
   @override
   Future<void> undo(int version) async {
-    _applyStateSnapshot(await getColorStateForVersion(version));
+    await _undoRedo(version);
   }
 
   @override
   Future<void> redo(int version) async {
-    _applyStateSnapshot(await getColorStateForVersion(version));
+    await _undoRedo(version);
+  }
+
+  Future<void> _undoRedo(int version) async {
+    var snapshot = await getColorStateForVersion(version);
+
+    // Instead of using the list of available colors from the undo snapshot,
+    // use the current colors instead. We don't want colors to disappear
+    // when undoing. However, this open up the possibility that a selected
+    // color may have been deleted by the user since taking the undo snapshot.
+    // If this is the case, add the color back to the list of colors.
+    var penColors = List<TinyColor>.from(_availablePenColors);
+    if (!penColors.any((tc) => tc.color == snapshot.penColor.color)) {
+      penColors.add(snapshot.penColor);
+    }
+    var canvasColors = List<TinyColor>.from(_availableCanvasColors);
+    if (!canvasColors.any((tc) => tc.color == snapshot.canvasColor.color)) {
+      canvasColors.add(snapshot.canvasColor);
+    }
+
+    snapshot = ColorStateSnapshot(
+        availablePenColors: penColors,
+        availableCanvasColors: canvasColors,
+        penColor: snapshot.penColor,
+        canvasColor: snapshot.canvasColor);
+
+    _applyStateSnapshot(snapshot);
   }
 
   @override
