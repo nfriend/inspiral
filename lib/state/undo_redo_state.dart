@@ -233,6 +233,7 @@ class UndoRedoState extends InspiralStateObject {
 
     _currentSnapshotVersion = result.currentSnapshotVersion;
     _maxSnapshotVersion = result.maxSnapshotVersion;
+    createSnapshotBeforeNextDraw = result.createSnapshotBeforeNextDraw;
   }
 
   @override

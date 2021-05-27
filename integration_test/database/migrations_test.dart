@@ -214,5 +214,18 @@ void main() {
         expect(colorValuesBefore, equals(colorValuesAfter));
       }
     });
+
+    testWidgets('upgrade from version 6 to version 7',
+        (WidgetTester tester) async {
+      db = await getDatabase(version: 7, databaseName: testDatabaseName);
+
+      final stateRows = await db.query(Schema.state.toString());
+
+      expect(stateRows.length, 3);
+
+      for (var row in stateRows) {
+        expect(row[Schema.state.createSnapshotBeforeNextDraw], 0);
+      }
+    });
   });
 }
