@@ -1,9 +1,8 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/stroke_style.dart';
 import 'package:quiver/core.dart';
-
-enum StrokeStyle { normal, airbrush }
 
 /// Represents a line if ink on the canvas
 class InkLine {

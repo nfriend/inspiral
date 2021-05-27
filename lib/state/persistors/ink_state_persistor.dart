@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/ink_line.dart';
+import 'package:inspiral/models/stroke_style.dart';
 import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
 import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/ink_state.dart';
@@ -53,9 +54,7 @@ class InkStatePersistor {
         Schema.inkLines.id: inkLineId,
         Schema.inkLines.strokeWidth: ink.allStateObjects.stroke.width,
         Schema.inkLines.strokeStyle:
-            ink.allStateObjects.stroke.style == StrokeStyle.normal
-                ? StrokeStyleType.normal
-                : StrokeStyleType.airbrush,
+            strokeStyleToString(ink.allStateObjects.stroke.style),
         Schema.inkLines.colorId: colorId,
         Schema.inkLines.order: i
       });

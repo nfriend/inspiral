@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inspiral/models/stroke_style.dart';
+import 'package:inspiral/state/helpers/get_stroke_state_for_version.dart';
 import 'package:inspiral/state/persistors/stroke_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
-import 'package:inspiral/models/ink_line.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class StrokeState extends InspiralStateObject {
@@ -36,14 +37,31 @@ class StrokeState extends InspiralStateObject {
   }
 
   @override
+  Future<void> undo(int version) async {
+    _applyStateSnapshot(await getStrokeStateForVersion(version));
+  }
+
+  @override
+  Future<void> redo(int version) async {
+    _applyStateSnapshot(await getStrokeStateForVersion(version));
+  }
+
+  @override
   void persist(Batch batch) {
     StrokeStatePersistor.persist(batch, this);
   }
 
   @override
   Future<void> rehydrate(Database db, BuildContext context) async {
-    var result = await StrokeStatePersistor.rehydrate(db, this);
+    _applyStateSnapshot(await StrokeStatePersistor.rehydrate(db, this));
+  }
 
-    setStroke(style: result.style, width: result.width);
+  // This method is very similar to `setStroke` above, with one small
+  // difference - it doesn't call `allStateObjects.ink.finishLine()`.
+  void _applyStateSnapshot(StrokeStateSnapshot snapshot) {
+    _width = snapshot.width;
+    _style = snapshot.style;
+
+    notifyListeners();
   }
 }

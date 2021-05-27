@@ -7,7 +7,6 @@ import 'package:inspiral/widgets/drawing_tools/new_color_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/no_color_thumbnail.dart';
 import 'package:inspiral/widgets/drawing_tools/selection_row.dart';
 import 'package:inspiral/widgets/drawing_tools/stroke_selector_thumbnail.dart';
-import 'package:inspiral/models/ink_line.dart';
 import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
 

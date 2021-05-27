@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inspiral/models/ink_line.dart';
 import 'package:inspiral/models/models.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/widgets/drawing_tools/crown_if_not_entitled.dart';

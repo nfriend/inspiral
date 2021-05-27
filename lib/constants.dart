@@ -5,6 +5,7 @@ import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/gear_hole.dart';
 import 'package:inspiral/models/gears/circle_52.dart';
 import 'package:inspiral/models/gears/circle_96_ring.dart';
+import 'package:inspiral/models/stroke_style.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 const String appName = 'Inspiral';
@@ -183,3 +184,9 @@ const Color defaultLastSelectedPenColor = Color(0xB348F1F7);
 
 /// Same as `defaultLastSelectedPenColor`, but for custom canvas colors.
 const Color defaultLastSelectedCanvasColor = Color(0xFF592659);
+
+/// The stroke width that is selected by default
+const double defaultStrokeWidth = 5.0;
+
+/// The stroke style that is selected by default
+const StrokeStyle defaultStrokeStyle = StrokeStyle.normal;

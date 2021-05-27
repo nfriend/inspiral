@@ -1,6 +1,7 @@
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/canvas_size.dart';
+import 'package:inspiral/models/models.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:inspiral/extensions/extensions.dart';
 import 'package:uuid/uuid.dart';
@@ -179,8 +180,8 @@ void _createTableState(Batch batch, _SelectedColorIds selectedIds) {
         ${defaultGearVisibility.toInt()},
         $fixedGearStartingRotation,
         '${defaultFixedGear.id}',
-        5.0,
-        '${StrokeStyleType.normal}',
+        $defaultStrokeWidth,
+        '${strokeStyleToString(defaultStrokeStyle)}',
         $rotatingGearStartingAngle,
         0
       )

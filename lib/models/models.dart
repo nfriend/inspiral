@@ -6,3 +6,4 @@ export 'package:inspiral/models/ink_painter.dart';
 export 'package:inspiral/models/line.dart';
 export 'package:inspiral/models/package.dart';
 export 'package:inspiral/models/entitlement.dart';
+export 'package:inspiral/models/stroke_style.dart';
