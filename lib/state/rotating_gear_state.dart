@@ -371,12 +371,23 @@ class RotatingGearState extends BaseGearState {
 
   @override
   Future<void> undo(int version) async {
-    _applyStateSnapshot(await getRotatingGearStateForVersion(version));
+    var snapshot = await getRotatingGearStateForVersion(version);
+
+    // Don't update the isVisible property - this property should
+    // not be undone/redone
+    snapshot.isVisible = isVisible;
+
+    _applyStateSnapshot(snapshot);
   }
 
   @override
   Future<void> redo(int version) async {
-    _applyStateSnapshot(await getRotatingGearStateForVersion(version));
+    var snapshot = await getRotatingGearStateForVersion(version);
+
+    // Same comment as above
+    snapshot.isVisible = isVisible;
+
+    _applyStateSnapshot(snapshot);
   }
 
   @override

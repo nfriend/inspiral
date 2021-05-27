@@ -9,11 +9,11 @@ import 'package:inspiral/state/inspiral_state_object.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class FixedGearStateSnapshot {
-  final GearDefinition definition;
-  final bool isVisible;
-  final Offset position;
-  final double rotation;
-  final bool isLocked;
+  GearDefinition definition;
+  bool isVisible;
+  Offset position;
+  double rotation;
+  bool isLocked;
 
   FixedGearStateSnapshot(
       {@required this.definition,

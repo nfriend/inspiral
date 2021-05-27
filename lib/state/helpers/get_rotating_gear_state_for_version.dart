@@ -8,10 +8,10 @@ import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class RotatingGearStateSnapshot {
-  final double angle;
-  final GearHole activeHole;
-  final GearDefinition definition;
-  final bool isVisible;
+  double angle;
+  GearHole activeHole;
+  GearDefinition definition;
+  bool isVisible;
 
   RotatingGearStateSnapshot(
       {@required this.angle,
