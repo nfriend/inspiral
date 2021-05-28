@@ -12,6 +12,7 @@ import 'package:inspiral/util/calculate_rotation_count.dart';
 import 'package:inspiral/util/select_closest_hole.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:vector_math/vector_math.dart';
 
 /// A utility class to hold the results of a rotation calculation
 @immutable
@@ -346,11 +347,14 @@ class RotatingGearState extends BaseGearState {
 
     var pointsToAdd = <Offset>[];
 
-    // Approximate the amount of intermediate angles we need to calculate.
-    // This isn't mathematically precise - it assumes a 1:1 correlation
-    // between angle size and segment size (which is not true), but it's
-    // close enough for this purpose.
-    var segmentsToDraw = (segmentLength / maxLineSegmentLength).ceil();
+    // Calculate intermediate rotation results at approximately every 3 degrees.
+    // 3 degrees is an arbitrary angle which seems to produce relatively
+    // smooth lines for all gear combinations. It's a balancing act - smaller
+    // angles create smoother line, but also generate more points, which
+    // triggers more baking processes = more UI jank. Bigger angles provide
+    // a smoother UX, but draw lower-quality lines.
+    var segmentsToDraw =
+        ((angle - _lastAngle).abs() / (3 * degrees2Radians)).ceil();
     var angleDelta = (angle - _lastAngle) / segmentsToDraw;
     for (var i = 1; i <= segmentsToDraw; i++) {
       var incrementalResult = _getRotationForAngle(_lastAngle + angleDelta * i);
