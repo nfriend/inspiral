@@ -41,7 +41,7 @@ class ColorStatePersistor {
     String activePenColorId, activeCanvasColorId;
 
     for (var i = 0; i < colors.availablePenColors.length; i++) {
-      var color = colors.availablePenColors[i];
+      var color = colors.availablePenColors[i].color;
 
       var rowId = uuid.v4();
       batch.insert(Schema.colors.toString(), {
@@ -52,13 +52,13 @@ class ColorStatePersistor {
         Schema.colors.version: null
       });
 
-      if (colors.penColor == color) {
+      if (colors.penColor.color == color) {
         activePenColorId = rowId;
       }
     }
 
     for (var i = 0; i < colors.availableCanvasColors.length; i++) {
-      var color = colors.availableCanvasColors[i];
+      var color = colors.availableCanvasColors[i].color;
 
       var rowId = uuid.v4();
       batch.insert(Schema.colors.toString(), {
@@ -69,7 +69,7 @@ class ColorStatePersistor {
         Schema.colors.version: null
       });
 
-      if (colors.backgroundColor == color) {
+      if (colors.backgroundColor.color == color) {
         activeCanvasColorId = rowId;
       }
     }
