@@ -33,7 +33,8 @@ Future<FixedGearStateSnapshot> getFixedGearStateForVersion(
         Schema.state.fixedGearPositionX,
         Schema.state.fixedGearPositionY,
         Schema.state.fixedGearRotation,
-        Schema.state.fixedGearIsLocked
+        Schema.state.fixedGearIsLocked,
+        Schema.state.gearsAreVisible
       ],
       where: getWhereClauseForVersion(Schema.state.version, version)));
 
