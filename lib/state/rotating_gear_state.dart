@@ -328,15 +328,26 @@ class RotatingGearState extends BaseGearState {
     var segmentLength =
         Line(result.penPosition, allStateObjects.ink.lastPoint).length();
 
+    // `isASmallishChange` is a flag used to indicate that the change in angle
+    // since the last draw is relatively small. If the change is big, we will
+    // want to break the angle into pieces and calculate intermediate results in
+    // order to ensure a smooth line. This flag ensures the next few
+    // optimizations below are skipped for large changes in angles that happen
+    // to place points very close to each other. For an example of what this
+    // is designed to prevent, see the second image here:
+    // https://gitlab.com/nfriend/inspiral/-/issues/109
+    var angleDeltaMagnitude = (angle - _lastAngle).abs();
+    var isASmallishChange = angleDeltaMagnitude < 30 * degrees2Radians;
+
     // If the point is too close to the last drawn point, don't draw a new one.
     // (Unless the `force` parameter is provided,
     // in which case ignore this check.)
-    if (segmentLength < minLineSegmentLength && !force) {
+    if (segmentLength < minLineSegmentLength && isASmallishChange && !force) {
       return;
     }
 
     // If the point is in the correct range from the last point, draw it
-    if (segmentLength <= maxLineSegmentLength) {
+    if (segmentLength <= maxLineSegmentLength && isASmallishChange) {
       allStateObjects.ink.addPoints([result.penPosition]);
       _lastAngle = angle;
       return;
@@ -347,14 +358,13 @@ class RotatingGearState extends BaseGearState {
 
     var pointsToAdd = <Offset>[];
 
-    // Calculate intermediate rotation results at approximately every 3 degrees.
-    // 3 degrees is an arbitrary angle which seems to produce relatively
+    // Calculate intermediate rotation results at approximately every 6 degrees.
+    // 6 degrees is an arbitrary angle which seems to produce relatively
     // smooth lines for all gear combinations. It's a balancing act - smaller
     // angles create smoother line, but also generate more points, which
     // triggers more baking processes = more UI jank. Bigger angles provide
     // a smoother UX, but draw lower-quality lines.
-    var segmentsToDraw =
-        ((angle - _lastAngle).abs() / (3 * degrees2Radians)).ceil();
+    var segmentsToDraw = (angleDeltaMagnitude / (6.0 * degrees2Radians)).ceil();
     var angleDelta = (angle - _lastAngle) / segmentsToDraw;
     for (var i = 1; i <= segmentsToDraw; i++) {
       var incrementalResult = _getRotationForAngle(_lastAngle + angleDelta * i);
