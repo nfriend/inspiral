@@ -13,7 +13,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-beige h-screen items-start">
       <Head>
         <title>Inspiral: Privacy Policy</title>
       </Head>
