@@ -130,10 +130,12 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
     var productHasBeenPurchased = false;
     try {
       productHasBeenPurchased = await purchases.purchasePackage(packageToBuy);
-    } catch (error) {
+    } catch (err, stackTrace) {
       setState(() {
         _showErrorMessage = true;
       });
+
+      await Sentry.captureException(err, stackTrace: stackTrace);
     }
 
     if (productHasBeenPurchased) {
