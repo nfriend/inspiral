@@ -54,6 +54,11 @@ export default function Home() {
               Where do pictures go when they are saved?
             </a>
           </li>
+          {/* <li>
+            <a href="#fixing-mistakes-with-undo-redo">
+              Fixing mistakes with undo/redo
+            </a>
+          </li> */}
         </ul>
 
         <h3 id="what-does-this-button-do">What does this button do?</h3>
@@ -221,6 +226,42 @@ export default function Home() {
           device. If you are using Google Photos, this folder can be accessed on
           the <b>Photos on device</b> screen.
         </p>
+
+        {/* <h3 id="fixing-mistakes-with-undo-redo">
+          Fixing mistakes with undo/redo
+          <VersionIndicator version="1.2.0" />
+        </h3>
+
+        <p>
+          If you make a mistake, don't worry! Press the undo button in the menu
+          bar to step backwards in time:
+        </p>
+
+        <img
+          src="/help/images/undo-icon.jpg"
+          alt="A screenshot of the 'Undo' icon"
+        />
+
+        <p>
+          If you change your mind, use the redo button to step forwards in time.
+          On large screens, this option can be found next to the undo button in
+          the menu bar. On small screens, this option can be found in the{' '}
+          <b>Additional options</b> sidebar.
+        </p>
+
+        <p>Undo and redo only affect certain features:</p>
+
+        <ul>
+          <li>Drawn lines</li>
+          <li>Gear selections and positions</li>
+          <li>
+            <a href="#selecting-a-new-pen-hole">Pen hole</a>, color, and style
+          </li>
+          <li>Canvas color</li>
+          <li>
+            <a href="#using-fixed-gear-snap-points">Snap points</a>
+          </li>
+        </ul> */}
       </div>
 
       {/* https://github.com/bryanbraun/anchorjs */}
