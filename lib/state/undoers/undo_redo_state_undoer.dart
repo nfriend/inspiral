@@ -30,9 +30,11 @@ class UndoRedoStateUndoer {
 
     // Delete all color snapshots that are no longer relevant.
     // Also delete any historical color records that aren't referenced
-    // by a previous snapshot. The full list of colors doesn't need to
+    // by any other table. The full list of colors doesn't need to
     // be included in the snapshot, so this saves some disk space by removing
     // unnecessary color rows.
+    // Note: if future tables are added that reference the color table by ID,
+    // they will need to be taken into account in the subquery below.
     batch.rawDelete('''
       DELETE FROM ${Schema.colors}
       WHERE
