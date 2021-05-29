@@ -623,7 +623,7 @@ packages:
       name: statsfl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0+3"
+    version: "2.0.1-nullsafety"
   stream_channel:
     dependency: transitive
     description:
