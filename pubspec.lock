@@ -464,7 +464,7 @@ packages:
       name: pigment
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   platform:
     dependency: transitive
     description:
@@ -690,9 +690,11 @@ packages:
   tinycolor:
     dependency: "direct main"
     description:
-      name: tinycolor
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: "87f654ce7b79daddfbe7cdf7b7d9bb27574a8b89"
+      resolved-ref: "87f654ce7b79daddfbe7cdf7b7d9bb27574a8b89"
+      url: "git@github.com:lslv1243/tinycolor.git"
+    source: git
     version: "1.0.3"
   tuple:
     dependency: "direct main"

@@ -32,7 +32,10 @@ dependencies:
   provider: ^5.0.0
   vector_math: ^2.0.8
   tuple: ^2.0.0
-  tinycolor: ^1.0.3
+  tinycolor:
+    git:
+      url: git@github.com:lslv1243/tinycolor.git
+      ref: 87f654ce7b79daddfbe7cdf7b7d9bb27574a8b89
   quiver: ^3.0.1
   path_provider: ^2.0.1
   uuid: ^3.0.4
