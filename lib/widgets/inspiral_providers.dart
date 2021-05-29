@@ -18,7 +18,7 @@ class InspiralProviders extends StatefulWidget {
 
 class _InspiralProvidersState extends State<InspiralProviders>
     with WidgetsBindingObserver {
-  Future<AllStateObjects> _stateFuture;
+  late Future<AllStateObjects> _stateFuture;
 
   @override
   void initState() {

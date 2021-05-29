@@ -209,7 +209,8 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
       return sum +
           Line(previousCenterOfMass,
                   _pointerPreviousPositions[pointerId]!.global)
-              .angleTo(Line(centerOfMass, _pointerPositions[pointerId]!.global));
+              .angleTo(
+                  Line(centerOfMass, _pointerPositions[pointerId]!.global));
     });
 
     return totalDelta / count;
@@ -262,12 +263,12 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     // logic if `count == 1` because `_enforcePanBounds` doesn't do anything
     // (yet - see comment in the method body). Once `_enforcePanBounds` is
     // implemented, this variable will need to be initialized here.
-    late Matrix4TransformDecomposition currentTransformComponents;
+    Matrix4TransformDecomposition? currentTransformComponents;
 
     if (count == 1) {
       var translation =
           _pointerDeltas[_activePointerIds.first]!.global.toVector3();
-      translation = _enforcePanBounds(translation, currentTransformComponents);
+      translation = _enforcePanBounds(translation, currentTransformComponents!);
       return TransformInfo(
           transform: Matrix4.identity()..translate(translation),
           transformComponents: Matrix4TransformDecomposition(

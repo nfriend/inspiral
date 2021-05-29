@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 // This file provides some basic type safety for table and column names
 
 class Schema {

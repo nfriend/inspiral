@@ -14,7 +14,7 @@ const Uuid _uuid = Uuid();
 /// case we need to pass in the database instance instead of allowing this
 /// method to request its own instance.
 Future<void> snapshotVersionedTables(Batch batch, int version,
-    {required Database database}) async {
+    {Database? database}) async {
   var db = database ?? await getDatabase();
 
   final state = (await db.query(Schema.state.toString(),
@@ -41,7 +41,8 @@ Future<void> snapshotVersionedTables(Batch batch, int version,
       selectedCanvasColorId = newId;
     } else if (oldId == state[Schema.state.lastSelectedPenColor] as String?) {
       lastSelectedPenId = newId;
-    } else if (oldId == state[Schema.state.lastSelectedCanvasColor] as String?) {
+    } else if (oldId ==
+        state[Schema.state.lastSelectedCanvasColor] as String?) {
       lastSelectedCanvasColorId = newId;
     }
 

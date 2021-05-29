@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';

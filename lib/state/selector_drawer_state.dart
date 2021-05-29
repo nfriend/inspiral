@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inspiral/state/state.dart';
 
 enum DrawerTab { tools, pen, gears }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/color_state.dart';
 import 'package:inspiral/state/helpers/get_color_state_for_version.dart';

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inspiral/models/gear_definition.dart';
 
 class BaseGearStateRehydrationResult {

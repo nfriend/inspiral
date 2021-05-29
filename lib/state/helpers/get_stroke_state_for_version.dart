@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';

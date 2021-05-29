@@ -5,7 +5,7 @@ class DropdownListItem extends StatelessWidget {
   final String text;
   final String selectedItem;
   final List<String> items;
-  final Function(String) onChanged;
+  final void Function(String?) onChanged;
 
   DropdownListItem(
       {required this.text,

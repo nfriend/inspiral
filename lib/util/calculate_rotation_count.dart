@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 /// Calculates the number of rotations necessary to draw a complete design,
 /// given a fixed gear and a rotating gear
 int calculateRotationCount(

@@ -6,11 +6,11 @@ import 'package:inspiral/extensions/extensions.dart';
 
 abstract class BaseInkPainter extends CustomPainter {
   final List<InkLine> _lines;
-  final Offset _position;
-  final Image _inkImage;
+  final Offset? _position;
+  final Image? _inkImage;
 
   BaseInkPainter(
-      {required List<InkLine> lines, required Offset position, required Image inkImage})
+      {required List<InkLine> lines, Offset? position, Image? inkImage})
       : _lines = lines,
         _position = position,
         _inkImage = inkImage;
@@ -30,8 +30,8 @@ abstract class BaseInkPainter extends CustomPainter {
 
       if (_inkImage != null) {
         var m = Matrix4.identity();
-        paint.shader =
-            ImageShader(_inkImage, TileMode.mirror, TileMode.mirror, m.storage);
+        paint.shader = ImageShader(
+            _inkImage!, TileMode.mirror, TileMode.mirror, m.storage);
       }
 
       Iterable<Path> translatedPaths = line.paths;
@@ -39,7 +39,7 @@ abstract class BaseInkPainter extends CustomPainter {
       // If `position` was passed in, translate the points to create the effect
       // that the canvas itself is positioned at `position`
       if (_position != null) {
-        translatedPaths = translatedPaths.map((p) => p.translate(-_position));
+        translatedPaths = translatedPaths.map((p) => p.translate(-_position!));
       }
 
       for (var path in translatedPaths) {
@@ -66,13 +66,13 @@ class FreshInkPainter extends BaseInkPainter {
 /// "dried", i.e. it included a rasterized version of previously-drawn lines
 /// in addition to any newly drawn lines.
 class DryInkTilePainter extends BaseInkPainter {
-  final Image _tileImage;
+  final Image? _tileImage;
   final bool _showGridLines;
 
   DryInkTilePainter(
       {required List<InkLine> lines,
       required Offset position,
-      required Image tileImage,
+      Image? tileImage,
       bool showGridLines = false})
       : _tileImage = tileImage,
         _showGridLines = showGridLines,
@@ -91,9 +91,9 @@ class DryInkTilePainter extends BaseInkPainter {
       //     Paint()..color = tempColor);
 
       canvas.drawImageRect(
-          _tileImage,
+          _tileImage!,
           Offset.zero &
-              Size(_tileImage.width.toDouble(), _tileImage.height.toDouble()),
+              Size(_tileImage!.width.toDouble(), _tileImage!.height.toDouble()),
           Offset.zero & size,
           Paint());
     }

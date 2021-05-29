@@ -67,10 +67,9 @@ class ColorState extends InspiralStateObject {
     notifyListeners();
   }
 
-  List<TinyColor> _availablePenColors;
+  late List<TinyColor> _availablePenColors;
   late UnmodifiableListView<TinyColor> _unmodifiableAvailablePenColors;
-  List<TinyColor> get availablePenColors =>
-      _unmodifiableAvailablePenColors;
+  List<TinyColor> get availablePenColors => _unmodifiableAvailablePenColors;
 
   /// Adds a new color to the end of the list of available
   /// pen colors and selects it
@@ -101,7 +100,7 @@ class ColorState extends InspiralStateObject {
     notifyListeners();
   }
 
-  List<TinyColor> _availableCanvasColors;
+  late List<TinyColor> _availableCanvasColors;
   late UnmodifiableListView<TinyColor> _unmodifiableAvailableCanvasColors;
   List<TinyColor> get availableCanvasColors =>
       _unmodifiableAvailableCanvasColors;
@@ -171,7 +170,7 @@ class ColorState extends InspiralStateObject {
 
   /// The splash color for ink effects
   TinyColor get splashColor => _splashColor;
-  TinyColor _splashColor;
+  late TinyColor _splashColor;
 
   /// The splash color for ink effects on the accent color
   TinyColor get accentSplashColor => _accentSplashColor;

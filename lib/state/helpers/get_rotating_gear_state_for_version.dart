@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
@@ -44,8 +43,9 @@ Future<RotatingGearStateSnapshot> getRotatingGearStateForVersion(
 
     // Defaulting here just in case we didn't find a match in `allGears`.
     // This _should_ never happen.
-    var definition = allGears[state[Schema.state.rotatingGearDefinitionId] as String] ??
-        defaultRotatingGear;
+    var definition =
+        allGears[state[Schema.state.rotatingGearDefinitionId] as String] ??
+            defaultRotatingGear;
 
     return RotatingGearStateSnapshot(
         angle: state[Schema.state.rotatingGearAngle] as double,

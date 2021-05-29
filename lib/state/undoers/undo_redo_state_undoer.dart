@@ -14,8 +14,6 @@ import 'package:sqflite/sqflite.dart';
 class UndoRedoStateUndoer {
   static Future<void> snapshot(
       int version, Batch batch, AllStateObjects allStateObjects) async {
-    assert(version != null, 'version should not be null in a snapshot!');
-
     // First, persist all state objects to the database, so that the `state`
     // table reflects the current stat of the app.
     await persistAllStateObjects(allStateObjects);

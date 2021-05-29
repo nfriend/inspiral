@@ -105,11 +105,11 @@ class UndoRedoState extends InspiralStateObject {
   /// If the user then begins to draw again, `maxSnapshotVersion` will
   /// be updated to 3.
   int get currentSnapshotVersion => _currentSnapshotVersion;
-  int _currentSnapshotVersion;
+  int _currentSnapshotVersion = 0;
 
   /// The last (i.e. farthest in the future) snapshot version.
   int get maxSnapshotVersion => _maxSnapshotVersion;
-  late int _maxSnapshotVersion;
+  int _maxSnapshotVersion = 0;
 
   /// Whether or not the "snapshotting" process is currently in progress
   bool _isCreatingSnapshot = false;

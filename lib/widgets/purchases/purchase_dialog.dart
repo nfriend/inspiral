@@ -48,7 +48,7 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
   /// Whether or not to show the error message in the dialog
   bool _showErrorMessage = false;
 
-  Future<_SuccessContentParams> _successContentFuture;
+  late Future<_SuccessContentParams> _successContentFuture;
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
               allIndividuallyPurchasablePackages,
           everythingPackage: everythingPackage,
           requestedPackage: requestedPackage);
-    }).catchError((error, stackTrace) {
+    }).catchError((Object error, StackTrace stackTrace) {
       Sentry.captureException(error, stackTrace: stackTrace);
       throw error;
     });

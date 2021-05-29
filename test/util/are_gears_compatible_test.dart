@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/gears/gears.dart';

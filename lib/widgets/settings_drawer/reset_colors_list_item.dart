@@ -11,7 +11,7 @@ class ResetColorsListItem extends StatefulWidget {
 }
 
 class _ResetColorsListItemState extends State<ResetColorsListItem> {
-  Future<bool> _entitlementCheckFuture;
+  late Future<bool> _entitlementCheckFuture;
 
   @override
   void initState() {

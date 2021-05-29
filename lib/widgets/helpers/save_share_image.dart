@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
@@ -85,7 +86,8 @@ Future<String?> _cropAndSaveToTempFile(BuildContext context) async {
   var canvasBoundary =
       canvasKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
   var screenshot = await canvasBoundary.toImage();
-  var byteData = await (screenshot.toByteData(format: ImageByteFormat.png) as FutureOr<ByteData>);
+  var byteData = await (screenshot.toByteData(format: ImageByteFormat.png)
+      as FutureOr<ByteData>);
   var pngBytes = byteData.buffer.asUint8List();
 
   var directory = (await getTemporaryDirectory());

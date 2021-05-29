@@ -13,6 +13,9 @@ class AutoDrawSpeedListItem extends StatelessWidget {
         text: 'Auto-draw speed',
         selectedItem: settings.autoDrawSpeed,
         items: AutoDrawSpeed.all,
-        onChanged: (String newValue) => settings.autoDrawSpeed = newValue);
+        onChanged: (String? newValue) {
+          assert(newValue != null, 'auto-draw speed cannot be null');
+          settings.autoDrawSpeed = newValue!;
+        });
   }
 }
