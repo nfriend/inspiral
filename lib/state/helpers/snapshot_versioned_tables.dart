@@ -14,7 +14,7 @@ const Uuid _uuid = Uuid();
 /// case we need to pass in the database instance instead of allowing this
 /// method to request its own instance.
 Future<void> snapshotVersionedTables(Batch batch, int version,
-    {Database database}) async {
+    {Database/*!*/ database}) async {
   var db = database ?? await getDatabase();
 
   final state = (await db.query(Schema.state.toString(),

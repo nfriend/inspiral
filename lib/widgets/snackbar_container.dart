@@ -11,7 +11,7 @@ class SnackbarContainer extends StatefulWidget {
 
 const _snackBarTransitionDuration = Duration(milliseconds: 250);
 
-AnimationController _controller;
+AnimationController/*?*/ _controller;
 Animation<double> _animation;
 
 class _SnackbarContainerState extends State<SnackbarContainer>

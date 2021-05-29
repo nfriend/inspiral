@@ -90,7 +90,6 @@ class PenSelector extends StatelessWidget {
                 style: options.style,
                 isActive: options.width == strokeWidth &&
                     options.style == strokeStyle,
-                package: options.package,
                 entitlement: options.entitlement,
                 onStrokeTap: () {
                   colors.showPenColorDeleteButtons = false;

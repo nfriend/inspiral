@@ -18,20 +18,19 @@ class InspiralProviders extends StatefulWidget {
 
 class _InspiralProvidersState extends State<InspiralProviders>
     with WidgetsBindingObserver {
-  Future<AllStateObjects> _stateFuture;
+  Future<AllStateObjects>/*!*/ _stateFuture;
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addObserver(this);
+
+    _stateFuture = initializeAllStateSingletons(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Initialize all the singletons that will be provided below
-    _stateFuture ??= initializeAllStateSingletons(context);
-
     return FutureBuilder(
         future: _stateFuture,
         builder:

@@ -8,8 +8,8 @@ import 'package:inspiral/state/undoers/snap_point_state_undoer.dart';
 import 'package:sqflite/sqflite.dart';
 
 class _SnapPointAndDistance {
-  final Offset snapPoint;
-  final double distance;
+  final Offset/*!*/ snapPoint;
+  final double/*!*/ distance;
 
   _SnapPointAndDistance({this.snapPoint, this.distance});
 }
@@ -36,7 +36,7 @@ class SnapPointState extends InspiralStateObject {
   Set<Offset> _snapPoints;
 
   /// The set of all fixed gear snap points
-  Set<Offset> get snapPoints => _unmodifiableSnapPoints;
+  Set<Offset>/*!*/ get snapPoints => _unmodifiableSnapPoints;
 
   /// Adds a snap point to the set of snap points, and set the
   /// point as the new active point.
@@ -75,7 +75,7 @@ class SnapPointState extends InspiralStateObject {
   /// Snaps the provided position to the nearest snap point.
   /// If the position is not close enough to snap to any snap points,
   /// the original Offset is returned.
-  Offset snapPositionToNearestPoint(Offset position) {
+  Offset/*!*/ snapPositionToNearestPoint(Offset position) {
     if (!areActive) {
       activeSnapPoint = null;
       return position;

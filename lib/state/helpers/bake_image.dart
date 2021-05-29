@@ -12,8 +12,8 @@ import 'package:inspiral/state/helpers/get_tiles_to_update.dart';
 Future<Map<Offset, Image>> bakeImage(
     {@required List<InkLine> lines,
     @required Map<Offset, Image> tileImages,
-    @required Map<Offset, String> tilePositionToDatabaseId,
-    @required Size tileSize}) async {
+    @required Map<Offset, String/*!*/> tilePositionToDatabaseId,
+    @required Size/*!*/ tileSize}) async {
   // Operate on a shallow clone of the points, because the baking process
   // is asynchronous, and more points may be added to `_points` while
   // this method is running

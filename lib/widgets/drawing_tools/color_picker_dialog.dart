@@ -40,7 +40,7 @@ class ColorPickerDialog extends StatefulWidget {
 }
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
-  Color _selectedColor;
+  Color/*!*/ _selectedColor;
 
   @override
   void initState() {

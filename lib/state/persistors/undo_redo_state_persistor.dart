@@ -6,8 +6,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class UndoRedoStateRehydrationResult {
-  final int currentSnapshotVersion;
-  final int maxSnapshotVersion;
+  final int/*!*/ currentSnapshotVersion;
+  final int/*!*/ maxSnapshotVersion;
   final bool createSnapshotBeforeNextDraw;
 
   UndoRedoStateRehydrationResult(

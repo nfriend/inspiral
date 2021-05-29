@@ -52,7 +52,7 @@ class InkState extends InspiralStateObject {
   Map<Offset, Image> get tileImages => _tileImages;
 
   /// A map of positions to the database ID of the Image data at that position
-  Map<Offset, String> get tilePositionToDatabaseId => _tilePositionToDatabaseId;
+  Map<Offset, String/*!*/> get tilePositionToDatabaseId => _tilePositionToDatabaseId;
 
   /// A map of positions to Image data that has not yet been persisted
   Map<Offset, Image> get unsavedTiles => _unsavedTiles;

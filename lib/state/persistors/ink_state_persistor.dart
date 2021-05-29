@@ -141,7 +141,7 @@ class InkStatePersistor {
         .first;
 
     var currentSnapshotVersion =
-        state[Schema.state.currentSnapshotVersion] as int;
+        state[Schema.state.currentSnapshotVersion] as int/*!*/;
 
     var tileVersionResult = await getTilesForVersion(currentSnapshotVersion);
 

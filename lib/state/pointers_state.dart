@@ -82,27 +82,27 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   }
 
   LinkedHashSet<int> _activePointerIds;
-  UnmodifiableSetView<int> _activePointerIdsView;
+  UnmodifiableSetView<int>/*!*/ _activePointerIdsView;
   Map<int, Positions> _pointerPositions;
-  UnmodifiableMapView<int, Positions> _pointerPositionsView;
-  Map<int, Positions> _pointerPreviousPositions;
-  UnmodifiableMapView<int, Positions> _pointerPreviousPositionsView;
+  UnmodifiableMapView<int, Positions>/*!*/ _pointerPositionsView;
+  Map<int, Positions/*!*/> _pointerPreviousPositions;
+  UnmodifiableMapView<int, Positions/*!*/>/*!*/ _pointerPreviousPositionsView;
   Map<int, Positions> _pointerDeltas;
-  UnmodifiableMapView<int, Positions> _pointerDeltasView;
+  UnmodifiableMapView<int, Positions>/*!*/ _pointerDeltasView;
 
   // The set of all active pointer IDs,
   // orderd by when the the pointer was pressed
-  Set<int> get activePointerIds => _activePointerIdsView;
+  Set<int>/*!*/ get activePointerIds => _activePointerIdsView;
 
   /// A map of pointer ID to its last known position.
   /// Positions are in canvas coordinates.
-  Map<int, Positions> get pointerPositions => _pointerPositionsView;
+  Map<int, Positions>/*!*/ get pointerPositions => _pointerPositionsView;
 
   /// A map of pointer ID to its second-to-last known position.
   /// Positions are in canvas coordinates.
   /// If a pointer has not yet had two positions recorded,
   /// `Offset.zero` will be returned.
-  Map<int, Positions> get pointerPreviousPositions =>
+  Map<int, Positions/*!*/>/*!*/ get pointerPreviousPositions =>
       _pointerPreviousPositionsView;
 
   /// A map of pointer ID to its delta from its previous location.
@@ -110,7 +110,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   /// If the pointer has not yet moved (for example, if it has
   /// only experienced a `pointerDown`, not a `pointerMove`),
   /// its delta will be `Offset.zero`.
-  Map<int, Positions> get pointerDeltas => _pointerDeltasView;
+  Map<int, Positions>/*!*/ get pointerDeltas => _pointerDeltasView;
 
   int get count => _activePointerIds.length;
 
@@ -247,7 +247,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
 
   /// Returns a new Vector3 that prevents the user from panning too far
   Vector3 _enforcePanBounds(Vector3 translation,
-      Matrix4TransformDecomposition currentTransformComponents) {
+      Matrix4TransformDecomposition/*!*/ currentTransformComponents) {
     // TODO: https://gitlab.com/nfriend/inspiral/-/issues/50
     // For now, there is no limit on how far the canvas can be panned.
     // This is mitigated by the "reset view" option in the side panel,

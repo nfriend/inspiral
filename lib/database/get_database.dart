@@ -9,7 +9,7 @@ Future<Database> _databaseFuture;
 /// Returns a `Database` instance that is ready to read/write local data
 /// A database name and version can optionally be supplied. These parameters
 /// should only be used in tests.
-Future<Database> getDatabase(
+Future<Database>/*!*/ getDatabase(
     {int version = localDatabaseVersion,
     String databaseName = localDatabaseName}) async {
   // If this is the first time calling this function (if the Future is null)

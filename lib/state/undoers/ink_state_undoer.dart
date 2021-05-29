@@ -33,7 +33,7 @@ class InkStateUndoer {
     await ink.pendingCanvasManipulation;
     await ink.bakeImage();
 
-    var allIdsInVersion = <String>[];
+    var allIdsInVersion = <String/*!*/>[];
     var allUpdates = <Future>[];
 
     for (var entry in ink.tileImages.entries) {
@@ -76,15 +76,15 @@ class InkStateUndoer {
     }
   }
 
-  static Future<void> undo(int version, InkState ink) async {
+  static Future<void> undo(int/*!*/ version, InkState ink) async {
     await _undoOrRedo(version, ink);
   }
 
-  static Future<void> redo(int version, InkState ink) async {
+  static Future<void> redo(int/*!*/ version, InkState ink) async {
     await _undoOrRedo(version, ink);
   }
 
-  static Future<void> _undoOrRedo(int version, InkState ink) async {
+  static Future<void> _undoOrRedo(int/*!*/ version, InkState ink) async {
     try {
       var tileVersionResult = await getTilesForVersion(version);
 

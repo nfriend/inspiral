@@ -20,7 +20,7 @@ class ColorStateSnapshot {
       @required this.canvasColor});
 }
 
-Future<ColorStateSnapshot> getColorStateForVersion(int version) async {
+Future<ColorStateSnapshot> getColorStateForVersion(int/*?*/ version) async {
   var db = await getDatabase();
 
   var availablePenColors = <TinyColor>[];

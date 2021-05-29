@@ -20,17 +20,17 @@ class ColorPickerState extends InspiralStateObject {
   ColorPickerState._internal() : super();
 
   /// The last custom pen color selected in the color picker dialog
-  TinyColor get lastSelectedCustomPenColor => _lastSelectedCustomPenColor;
-  TinyColor _lastSelectedCustomPenColor;
-  set lastSelectedCustomPenColor(TinyColor value) {
+  TinyColor/*!*/ get lastSelectedCustomPenColor => _lastSelectedCustomPenColor;
+  TinyColor/*!*/ _lastSelectedCustomPenColor;
+  set lastSelectedCustomPenColor(TinyColor/*!*/ value) {
     _lastSelectedCustomPenColor = value;
     notifyListeners();
   }
 
   /// The last custom canvas color selected in the color picker dialog
-  TinyColor get lastSelectedCustomCanvasColor => _lastSelectedCustomCanvasColor;
-  TinyColor _lastSelectedCustomCanvasColor;
-  set lastSelectedCustomCanvasColor(TinyColor value) {
+  TinyColor/*!*/ get lastSelectedCustomCanvasColor => _lastSelectedCustomCanvasColor;
+  TinyColor/*!*/ _lastSelectedCustomCanvasColor;
+  set lastSelectedCustomCanvasColor(TinyColor/*!*/ value) {
     _lastSelectedCustomCanvasColor = value;
     notifyListeners();
   }

@@ -9,14 +9,17 @@ import 'package:provider/provider.dart';
 /// for the provide package and the callback is not executed.
 Future<void> Function() ifPurchased(
     {BuildContext context,
-    String entitlement,
-    String package,
-    void Function() callbackIfPurchased}) {
+    String /*!*/ entitlement,
+    String /*?*/ package,
+    void Function() /*!*/ callbackIfPurchased}) {
   final purchases = Provider.of<PurchasesState>(context, listen: false);
   final colors = Provider.of<ColorState>(context, listen: false);
 
   return () async {
     if (!await purchases.isEntitledTo(entitlement)) {
+      assert(package != null,
+          'Package must not be null if entitlement is not Entitlement.free. The provided entitlement was: $entitlement');
+
       await showDialog(
           context: context,
           builder: (context) {

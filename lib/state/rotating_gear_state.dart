@@ -62,16 +62,16 @@ class RotatingGearState extends BaseGearState {
     _updateGearState(result);
   }
 
-  double _lastAngle;
+  double/*!*/ _lastAngle;
 
   // Only exposed publicly for use in the persistor
-  double get lastAngle => _lastAngle;
+  double/*!*/ get lastAngle => _lastAngle;
 
   int toothOffset = 0;
 
-  GearHole _activeHole;
-  GearHole get activeHole => _activeHole;
-  set activeHole(GearHole value) {
+  GearHole/*!*/ _activeHole;
+  GearHole/*!*/ get activeHole => _activeHole;
+  set activeHole(GearHole/*!*/ value) {
     _activeHole = value;
     allStateObjects.ink.finishLine();
 

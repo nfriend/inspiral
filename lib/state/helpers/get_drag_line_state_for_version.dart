@@ -7,13 +7,13 @@ import 'package:inspiral/state/inspiral_state_object.dart';
 
 class DragLineStateSnapshot {
   final Offset pivotPosition;
-  final double angle;
+  final double/*!*/ angle;
 
   DragLineStateSnapshot({@required this.pivotPosition, @required this.angle});
 }
 
 Future<DragLineStateSnapshot> getDragLineStateForVersion(
-    int version, AllStateObjects allStateObjects) async {
+    int/*?*/ version, AllStateObjects allStateObjects) async {
   var db = await getDatabase();
 
   var allRows = (await db.query(Schema.state.toString(),

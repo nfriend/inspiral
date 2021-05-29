@@ -8,7 +8,7 @@ import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class RotatingGearStateSnapshot {
-  double angle;
+  double/*!*/ angle;
   GearHole activeHole;
   GearDefinition definition;
   bool isVisible;
@@ -21,7 +21,7 @@ class RotatingGearStateSnapshot {
 }
 
 Future<RotatingGearStateSnapshot> getRotatingGearStateForVersion(
-    int version) async {
+    int/*?*/ version) async {
   var db = await getDatabase();
 
   var allRows = (await db.query(Schema.state.toString(),

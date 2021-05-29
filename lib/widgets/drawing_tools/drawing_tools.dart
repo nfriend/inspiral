@@ -7,10 +7,10 @@ import 'package:tinycolor/tinycolor.dart';
 
 @immutable
 class _DrawingToolsButton {
-  final Icon icon;
-  final String text;
-  final void Function() onPressed;
-  final DrawerTab tab;
+  final Icon/*!*/ icon;
+  final String/*!*/ text;
+  final void Function()/*!*/ onPressed;
+  final DrawerTab/*!*/ tab;
 
   _DrawingToolsButton({this.icon, this.text, this.onPressed, this.tab});
 }

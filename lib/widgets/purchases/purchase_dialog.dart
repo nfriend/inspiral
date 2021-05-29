@@ -18,7 +18,7 @@ class PurchaseDialog extends StatefulWidget {
   final ColorState colors;
 
   /// The package being purchased
-  final String package;
+  final String/*!*/ package;
 
   /// The function to call if the package is purchased
   final Function onPurchased;
@@ -34,9 +34,9 @@ class PurchaseDialog extends StatefulWidget {
 }
 
 class _SuccessContentParams {
-  final Iterable<Package> allIndividuallyPurchasablePackages;
-  final Package everythingPackage;
-  final Package requestedPackage;
+  final Iterable<Package>/*!*/ allIndividuallyPurchasablePackages;
+  final Package/*!*/ everythingPackage;
+  final Package/*!*/ requestedPackage;
 
   _SuccessContentParams(
       {this.allIndividuallyPurchasablePackages,
@@ -48,7 +48,7 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
   /// Whether or not to show the error message in the dialog
   bool _showErrorMessage = false;
 
-  Future<_SuccessContentParams> _successContentFuture;
+  Future<_SuccessContentParams>/*!*/ _successContentFuture;
 
   @override
   void initState() {

@@ -21,7 +21,7 @@ class PurchasesState extends InspiralStateObject {
 
   /// Returns a boolean indicating whether or not
   /// the provided `entitlement` is owned by the user
-  Future<bool> isEntitledTo(String entitlement) async {
+  Future<bool> isEntitledTo(String/*!*/ entitlement) async {
     if (entitlement == Entitlement.free) {
       return true;
     }
@@ -49,7 +49,7 @@ class PurchasesState extends InspiralStateObject {
   }
 
   /// Gets the current offering
-  Future<Offering> getCurrentOffering() async {
+  Future<Offering/*!*/> getCurrentOffering() async {
     var offerings = await Purchases.getOfferings();
     if (offerings.current == null ||
         offerings.current.availablePackages.isEmpty) {

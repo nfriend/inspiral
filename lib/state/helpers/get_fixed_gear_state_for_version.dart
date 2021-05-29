@@ -12,7 +12,7 @@ class FixedGearStateSnapshot {
   GearDefinition definition;
   bool isVisible;
   Offset position;
-  double rotation;
+  double/*!*/ rotation;
   bool isLocked;
 
   FixedGearStateSnapshot(
@@ -24,7 +24,7 @@ class FixedGearStateSnapshot {
 }
 
 Future<FixedGearStateSnapshot> getFixedGearStateForVersion(
-    int version, AllStateObjects allStateObjects) async {
+    int/*?*/ version, AllStateObjects allStateObjects) async {
   var db = await getDatabase();
 
   var allRows = (await db.query(Schema.state.toString(),
@@ -71,6 +71,6 @@ Future<FixedGearStateSnapshot> getFixedGearStateForVersion(
         definition: definition,
         isVisible: (state[Schema.state.gearsAreVisible] as int).toBool(),
         isLocked: (state[Schema.state.fixedGearIsLocked] as int).toBool(),
-        rotation: state[Schema.state.fixedGearRotation] as double);
+        rotation: state[Schema.state.fixedGearRotation] as double/*!*/);
   }
 }

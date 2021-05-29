@@ -10,7 +10,7 @@ class SettingsStateRehydrationResult {
   final bool includeBackgroundWhenSaving;
   final bool closeDrawingToolsDrawerOnDrag;
   final bool preventIncompatibleGearPairings;
-  final String autoDrawSpeed;
+  final String/*!*/ autoDrawSpeed;
 
   SettingsStateRehydrationResult(
       {@required this.includeBackgroundWhenSaving,
