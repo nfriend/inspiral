@@ -10,7 +10,7 @@ import 'package:inspiral/state/state.dart';
 class InspiralProviders extends StatefulWidget {
   final Widget child;
 
-  InspiralProviders({@required this.child});
+  InspiralProviders({required this.child});
 
   @override
   _InspiralProvidersState createState() => _InspiralProvidersState();
@@ -18,13 +18,13 @@ class InspiralProviders extends StatefulWidget {
 
 class _InspiralProvidersState extends State<InspiralProviders>
     with WidgetsBindingObserver {
-  Future<AllStateObjects>/*!*/ _stateFuture;
+  Future<AllStateObjects> _stateFuture;
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
 
     _stateFuture = initializeAllStateSingletons(context);
   }
@@ -81,7 +81,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 }

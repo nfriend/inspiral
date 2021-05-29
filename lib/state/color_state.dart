@@ -10,7 +10,7 @@ import 'package:tinycolor/tinycolor.dart';
 import 'package:inspiral/extensions/extensions.dart';
 
 class ColorState extends InspiralStateObject {
-  static ColorState _instance;
+  static ColorState? _instance;
 
   factory ColorState.init() {
     return _instance = ColorState._internal();
@@ -19,7 +19,7 @@ class ColorState extends InspiralStateObject {
   factory ColorState() {
     assert(_instance != null,
         'The ColorState.init() factory constructor must be called before using the ColorState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   ColorState._internal() : super() {
@@ -31,9 +31,9 @@ class ColorState extends InspiralStateObject {
   }
 
   /// The current background color of the canvas
-  TinyColor /*!*/ _backgroundColor;
-  TinyColor /*!*/ get backgroundColor => _backgroundColor;
-  set backgroundColor(TinyColor /*!*/ value) {
+  late TinyColor _backgroundColor;
+  TinyColor get backgroundColor => _backgroundColor;
+  set backgroundColor(TinyColor value) {
     _backgroundColor = value;
     _updateDependentColors();
     allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
@@ -41,9 +41,9 @@ class ColorState extends InspiralStateObject {
   }
 
   /// The current color of the pen
-  TinyColor /*!*/ _penColor;
-  TinyColor /*!*/ get penColor => _penColor;
-  set penColor(TinyColor /*!*/ value) {
+  late TinyColor _penColor;
+  TinyColor get penColor => _penColor;
+  set penColor(TinyColor value) {
     _penColor = value;
     _updateDependentColors();
     allStateObjects.ink.finishLine();
@@ -67,9 +67,9 @@ class ColorState extends InspiralStateObject {
     notifyListeners();
   }
 
-  List<TinyColor> /*!*/ _availablePenColors;
-  UnmodifiableListView<TinyColor> /*!*/ _unmodifiableAvailablePenColors;
-  List<TinyColor> /*!*/ get availablePenColors =>
+  List<TinyColor> _availablePenColors;
+  late UnmodifiableListView<TinyColor> _unmodifiableAvailablePenColors;
+  List<TinyColor> get availablePenColors =>
       _unmodifiableAvailablePenColors;
 
   /// Adds a new color to the end of the list of available
@@ -101,9 +101,9 @@ class ColorState extends InspiralStateObject {
     notifyListeners();
   }
 
-  List<TinyColor> /*!*/ _availableCanvasColors;
-  UnmodifiableListView<TinyColor> /*!*/ _unmodifiableAvailableCanvasColors;
-  List<TinyColor> /*!*/ get availableCanvasColors =>
+  List<TinyColor> _availableCanvasColors;
+  late UnmodifiableListView<TinyColor> _unmodifiableAvailableCanvasColors;
+  List<TinyColor> get availableCanvasColors =>
       _unmodifiableAvailableCanvasColors;
 
   /// Adds a new color to the end of the list of available
@@ -139,55 +139,55 @@ class ColorState extends InspiralStateObject {
   bool get isDark => _backgroundColor.isDark();
 
   /// The background color of UI elements (buttons, tabs, modals, etc)
-  TinyColor /*!*/ get uiBackgroundColor => _uiBackgroundColor;
-  TinyColor /*!*/ _uiBackgroundColor;
+  TinyColor get uiBackgroundColor => _uiBackgroundColor;
+  late TinyColor _uiBackgroundColor;
 
   /// The color of the text in the UI
-  TinyColor /*!*/ get uiTextColor => _uiTextColor;
-  TinyColor /*!*/ _uiTextColor;
+  TinyColor get uiTextColor => _uiTextColor;
+  late TinyColor _uiTextColor;
 
   /// The color of the buttons in the UI
-  TinyColor /*!*/ get buttonColor => _buttonColor;
-  TinyColor /*!*/ _buttonColor;
+  TinyColor get buttonColor => _buttonColor;
+  late TinyColor _buttonColor;
 
   /// The color of "active" (selected) UI elements
-  TinyColor /*!*/ get activeColor => _activeColor;
-  TinyColor /*!*/ _activeColor;
+  TinyColor get activeColor => _activeColor;
+  late TinyColor _activeColor;
 
   /// The color of text on "active" (selected) UI elements
-  TinyColor /*!*/ get activeTextColor => _activeTextColor;
-  TinyColor /*!*/ _activeTextColor;
+  TinyColor get activeTextColor => _activeTextColor;
+  late TinyColor _activeTextColor;
 
   /// The color of disabled text
   TinyColor get disabledTextColor => TinyColor(Colors.grey);
 
   /// The primary color for the current theme
-  TinyColor /*!*/ get primaryColor => _primaryColor;
-  TinyColor /*!*/ _primaryColor;
+  TinyColor get primaryColor => _primaryColor;
+  late TinyColor _primaryColor;
 
   /// The accent color for the current theme
-  TinyColor /*!*/ get accentColor => _accentColor;
-  TinyColor /*!*/ _accentColor;
+  TinyColor get accentColor => _accentColor;
+  late TinyColor _accentColor;
 
   /// The splash color for ink effects
-  TinyColor /*!*/ get splashColor => _splashColor;
-  TinyColor /*!*/ _splashColor;
+  TinyColor get splashColor => _splashColor;
+  TinyColor _splashColor;
 
   /// The splash color for ink effects on the accent color
-  TinyColor /*!*/ get accentSplashColor => _accentSplashColor;
-  TinyColor /*!*/ _accentSplashColor;
+  TinyColor get accentSplashColor => _accentSplashColor;
+  late TinyColor _accentSplashColor;
 
   /// The highlight color for the current theme
-  TinyColor /*!*/ get highlightColor => _highlightColor;
-  TinyColor /*!*/ _highlightColor;
+  TinyColor get highlightColor => _highlightColor;
+  late TinyColor _highlightColor;
 
   /// The background color of the entire app
-  TinyColor /*!*/ get appBackgroundColor => _appBackgroundColor;
-  TinyColor /*!*/ _appBackgroundColor;
+  TinyColor get appBackgroundColor => _appBackgroundColor;
+  late TinyColor _appBackgroundColor;
 
   /// The color of the canvas's shadow against the app's background
-  TinyColor /*!*/ get canvasShadowColor => _canvasShadowColor;
-  TinyColor /*!*/ _canvasShadowColor;
+  TinyColor get canvasShadowColor => _canvasShadowColor;
+  late TinyColor _canvasShadowColor;
 
   /// Updates all dependt colors based on the background and pen colors
   void _updateDependentColors() {

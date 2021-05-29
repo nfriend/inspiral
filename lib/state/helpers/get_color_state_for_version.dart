@@ -14,13 +14,13 @@ class ColorStateSnapshot {
   final TinyColor canvasColor;
 
   ColorStateSnapshot(
-      {@required this.availablePenColors,
-      @required this.availableCanvasColors,
-      @required this.penColor,
-      @required this.canvasColor});
+      {required this.availablePenColors,
+      required this.availableCanvasColors,
+      required this.penColor,
+      required this.canvasColor});
 }
 
-Future<ColorStateSnapshot> getColorStateForVersion(int/*?*/ version) async {
+Future<ColorStateSnapshot> getColorStateForVersion(int? version) async {
   var db = await getDatabase();
 
   var availablePenColors = <TinyColor>[];

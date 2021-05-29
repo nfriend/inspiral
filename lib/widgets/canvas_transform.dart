@@ -10,7 +10,7 @@ import 'package:inspiral/extensions/extensions.dart';
 class CanvasTransform extends StatefulWidget {
   final Widget child;
 
-  CanvasTransform({@required this.child});
+  CanvasTransform({required this.child});
 
   @override
   _CanvasTransformState createState() => _CanvasTransformState();
@@ -18,8 +18,8 @@ class CanvasTransform extends StatefulWidget {
 
 class _CanvasTransformState extends State<CanvasTransform>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _animation;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {

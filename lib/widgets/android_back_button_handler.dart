@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class AndroidBackButtonHandler extends StatelessWidget {
   final Widget child;
 
-  AndroidBackButtonHandler({@required this.child});
+  AndroidBackButtonHandler({required this.child});
 
   @override
   Widget build(BuildContext context) {

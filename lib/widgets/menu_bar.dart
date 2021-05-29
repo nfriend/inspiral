@@ -15,9 +15,9 @@ class _ManuBarButtonParams {
   final bool disabled;
 
   _ManuBarButtonParams(
-      {@required this.icon,
-      @required this.onPressed,
-      @required this.tooltipMessage,
+      {required this.icon,
+      required this.onPressed,
+      required this.tooltipMessage,
       this.disabled = false});
 }
 
@@ -61,7 +61,7 @@ class _MenuBarState extends State<MenuBar> {
             tooltipMessage: 'Redo')
         : null;
 
-    var buttons = <_ManuBarButtonParams>[
+    var buttons = <_ManuBarButtonParams?>[
       _ManuBarButtonParams(
           icon: Icon(Icons.save),
           onPressed: () => saveImage(context),
@@ -124,7 +124,7 @@ class _MenuBarState extends State<MenuBar> {
                                 child: IconButton(
                                   color: colors.uiTextColor.color,
                                   onPressed:
-                                      button.disabled ? null : button.onPressed,
+                                      button!.disabled ? null : button.onPressed,
                                   icon: button.icon,
                                   iconSize: iconSize,
                                   tooltip: button.tooltipMessage,

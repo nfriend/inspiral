@@ -11,7 +11,7 @@ class ResetColorsListItem extends StatefulWidget {
 }
 
 class _ResetColorsListItemState extends State<ResetColorsListItem> {
-  Future<bool>/*!*/ _entitlementCheckFuture;
+  Future<bool> _entitlementCheckFuture;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _ResetColorsListItemState extends State<ResetColorsListItem> {
     return FutureBuilder(
         future: _entitlementCheckFuture,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data) {
+          if (snapshot.hasData && snapshot.data!) {
             return ListTile(
                 title: Text('Reset pen and canvas colors'),
                 onTap: () {

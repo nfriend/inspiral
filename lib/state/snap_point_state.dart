@@ -8,14 +8,14 @@ import 'package:inspiral/state/undoers/snap_point_state_undoer.dart';
 import 'package:sqflite/sqflite.dart';
 
 class _SnapPointAndDistance {
-  final Offset/*!*/ snapPoint;
-  final double/*!*/ distance;
+  final Offset snapPoint;
+  final double distance;
 
-  _SnapPointAndDistance({this.snapPoint, this.distance});
+  _SnapPointAndDistance({required this.snapPoint, required this.distance});
 }
 
 class SnapPointState extends InspiralStateObject {
-  static SnapPointState _instance;
+  static SnapPointState? _instance;
 
   factory SnapPointState.init() {
     return _instance = SnapPointState._internal();
@@ -24,7 +24,7 @@ class SnapPointState extends InspiralStateObject {
   factory SnapPointState() {
     assert(_instance != null,
         'The SnapPointState.init() factory constructor must be called before using the SnapPointState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   SnapPointState._internal() : super() {
@@ -32,11 +32,11 @@ class SnapPointState extends InspiralStateObject {
     _unmodifiableSnapPoints = UnmodifiableSetView(_snapPoints);
   }
 
-  UnmodifiableSetView<Offset> _unmodifiableSnapPoints;
-  Set<Offset> _snapPoints;
+  late UnmodifiableSetView<Offset> _unmodifiableSnapPoints;
+  late Set<Offset> _snapPoints;
 
   /// The set of all fixed gear snap points
-  Set<Offset>/*!*/ get snapPoints => _unmodifiableSnapPoints;
+  Set<Offset> get snapPoints => _unmodifiableSnapPoints;
 
   /// Adds a snap point to the set of snap points, and set the
   /// point as the new active point.
@@ -63,9 +63,9 @@ class SnapPointState extends InspiralStateObject {
 
   /// The snap point that the fixed gear is currently snapped to.
   /// If no snap point is active, this is `null`.
-  Offset get activeSnapPoint => _activeSnapPoint;
-  Offset _activeSnapPoint;
-  set activeSnapPoint(Offset value) {
+  Offset? get activeSnapPoint => _activeSnapPoint;
+  Offset? _activeSnapPoint;
+  set activeSnapPoint(Offset? value) {
     if (_activeSnapPoint != value) {
       _activeSnapPoint = value;
       notifyListeners();
@@ -75,13 +75,13 @@ class SnapPointState extends InspiralStateObject {
   /// Snaps the provided position to the nearest snap point.
   /// If the position is not close enough to snap to any snap points,
   /// the original Offset is returned.
-  Offset/*!*/ snapPositionToNearestPoint(Offset position) {
+  Offset snapPositionToNearestPoint(Offset position) {
     if (!areActive) {
       activeSnapPoint = null;
       return position;
     }
 
-    _SnapPointAndDistance closestSnapPoint;
+    _SnapPointAndDistance? closestSnapPoint;
     for (var point in _snapPoints) {
       var distance = point.distanceTo(position);
 
@@ -157,9 +157,9 @@ class SnapPointState extends InspiralStateObject {
   }
 
   void _updateState(
-      {@required Set<Offset> snapPoints,
-      @required Offset activeSnapPoint,
-      @required bool areActive}) {
+      {required Set<Offset> snapPoints,
+      required Offset? activeSnapPoint,
+      required bool areActive}) {
     _snapPoints.removeWhere((element) => true);
     _snapPoints.addAll(snapPoints);
     _areActive = areActive;

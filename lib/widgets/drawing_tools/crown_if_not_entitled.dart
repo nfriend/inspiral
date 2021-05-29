@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class CrownIfNotEntitled extends StatelessWidget {
   final String entitlement;
 
-  CrownIfNotEntitled({@required this.entitlement});
+  CrownIfNotEntitled({required this.entitlement});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CrownIfNotEntitled extends StatelessWidget {
     return FutureBuilder(
         future: purchases.isEntitledTo(entitlement),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data) {
+          if (snapshot.hasData && snapshot.data!) {
             // The `isEntitledTo` check has finished and the user
             // is entitled to the provided entitlement
             return Container();

@@ -12,7 +12,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class InkState extends InspiralStateObject {
-  static InkState _instance;
+  static InkState? _instance;
 
   factory InkState.init() {
     return _instance = InkState._internal();
@@ -21,7 +21,7 @@ class InkState extends InspiralStateObject {
   factory InkState() {
     assert(_instance != null,
         'The InkState.init() factory constructor must be called before using the InkState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   InkState._internal() : super();
@@ -32,7 +32,7 @@ class InkState extends InspiralStateObject {
   final Map<Offset, String> _tilePositionToDatabaseId = {};
   final Map<Offset, Image> _unsavedTiles = {};
 
-  Offset _lastPoint;
+  Offset? _lastPoint;
 
   /// Whether or not this state object is currently in the "ink baking" state
   bool get isBaking => _isBaking;
@@ -52,7 +52,7 @@ class InkState extends InspiralStateObject {
   Map<Offset, Image> get tileImages => _tileImages;
 
   /// A map of positions to the database ID of the Image data at that position
-  Map<Offset, String/*!*/> get tilePositionToDatabaseId => _tilePositionToDatabaseId;
+  Map<Offset, String> get tilePositionToDatabaseId => _tilePositionToDatabaseId;
 
   /// A map of positions to Image data that has not yet been persisted
   Map<Offset, Image> get unsavedTiles => _unsavedTiles;
@@ -62,7 +62,7 @@ class InkState extends InspiralStateObject {
 
   /// Returns the last point of the current line, or `null`
   /// if there is no current line
-  Offset get lastPoint => _lastPoint;
+  Offset? get lastPoint => _lastPoint;
 
   /// A `Future` that allows other processes to wait until any async canvas
   /// manipulation (undo or baking) is complete and run code after.

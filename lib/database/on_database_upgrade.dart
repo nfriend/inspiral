@@ -22,6 +22,6 @@ Future<void> onDatabaseUpgrade(
     Database db, int oldVersion, int newVersion) async {
   for (var version in range(oldVersion, newVersion)) {
     print('Upgrading database from version $oldVersion to $newVersion');
-    await upgradeFunctions[version](db);
+    await upgradeFunctions[version as int]!(db);
   }
 }

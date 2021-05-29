@@ -4,9 +4,9 @@ import 'package:inspiral/state/inspiral_state_object.dart';
 import 'package:inspiral/state/state.dart';
 
 abstract class BaseGearState extends InspiralStateObject {
-  Offset/*!*/ _position;
-  Offset/*!*/ get position => _position;
-  set position(Offset/*!*/ value) {
+  late Offset _position;
+  Offset get position => _position;
+  set position(Offset value) {
     _position = value;
     notifyListeners();
   }
@@ -18,9 +18,9 @@ abstract class BaseGearState extends InspiralStateObject {
     notifyListeners();
   }
 
-  GearDefinition/*!*/ _definition;
-  GearDefinition/*!*/ get definition => _definition;
-  set definition(GearDefinition/*!*/ value) {
+  late GearDefinition _definition;
+  GearDefinition get definition => _definition;
+  set definition(GearDefinition value) {
     _definition = value;
     notifyListeners();
   }
@@ -29,9 +29,9 @@ abstract class BaseGearState extends InspiralStateObject {
   // computed and used internally in RotatingGearProvider, but we expose it
   // publicly here to allow it to be rendered on the debug canvas for debugging
   // purposes.
-  ContactPoint/*!*/ _contactPoint;
-  ContactPoint/*!*/ get contactPoint => _contactPoint;
-  set contactPoint(ContactPoint/*!*/ value) {
+  late ContactPoint _contactPoint;
+  ContactPoint get contactPoint => _contactPoint;
+  set contactPoint(ContactPoint value) {
     _contactPoint = value;
     notifyListeners();
   }

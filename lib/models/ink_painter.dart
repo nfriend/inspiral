@@ -6,17 +6,17 @@ import 'package:inspiral/extensions/extensions.dart';
 
 abstract class BaseInkPainter extends CustomPainter {
   final List<InkLine> _lines;
-  final Offset/*!*/ _position;
-  final Image/*!*/ _inkImage;
+  final Offset _position;
+  final Image _inkImage;
 
   BaseInkPainter(
-      {@required List<InkLine> lines, Offset/*!*/ position, Image/*!*/ inkImage})
+      {required List<InkLine> lines, required Offset position, required Image inkImage})
       : _lines = lines,
         _position = position,
         _inkImage = inkImage;
 
   @override
-  void paint(Canvas canvas, Size/*!*/ size) {
+  void paint(Canvas canvas, Size size) {
     for (var line in _lines) {
       final paint = Paint()
         ..color = line.color
@@ -55,7 +55,7 @@ abstract class BaseInkPainter extends CustomPainter {
 
 /// The "fresh ink" painter. This painter paints the current line being drawn.
 class FreshInkPainter extends BaseInkPainter {
-  FreshInkPainter({@required List<InkLine> lines}) : super(lines: lines);
+  FreshInkPainter({required List<InkLine> lines}) : super(lines: lines);
 
   @override
   bool shouldRepaint(FreshInkPainter oldDelegate) =>
@@ -66,20 +66,20 @@ class FreshInkPainter extends BaseInkPainter {
 /// "dried", i.e. it included a rasterized version of previously-drawn lines
 /// in addition to any newly drawn lines.
 class DryInkTilePainter extends BaseInkPainter {
-  final Image/*!*/ _tileImage;
+  final Image _tileImage;
   final bool _showGridLines;
 
   DryInkTilePainter(
-      {@required List<InkLine> lines,
-      @required Offset position,
-      @required Image/*!*/ tileImage,
+      {required List<InkLine> lines,
+      required Offset position,
+      required Image tileImage,
       bool showGridLines = false})
       : _tileImage = tileImage,
         _showGridLines = showGridLines,
         super(lines: lines, position: position);
 
   @override
-  void paint(Canvas canvas, Size/*!*/ size) {
+  void paint(Canvas canvas, Size size) {
     if (_tileImage != null) {
       // TEMP: draws a random color as the background of this tile
       // so that we can visualize how often the tile gets repainted

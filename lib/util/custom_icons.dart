@@ -19,7 +19,7 @@ class InspiralCustomIcons {
   InspiralCustomIcons._();
 
   static const _kFontFam = 'InspiralCustomIcons';
-  static const String _kFontPkg = null;
+  static const String? _kFontPkg = null;
 
   static const IconData backwards_1 =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);

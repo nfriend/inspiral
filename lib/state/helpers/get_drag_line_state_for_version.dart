@@ -7,13 +7,13 @@ import 'package:inspiral/state/inspiral_state_object.dart';
 
 class DragLineStateSnapshot {
   final Offset pivotPosition;
-  final double/*!*/ angle;
+  final double angle;
 
-  DragLineStateSnapshot({@required this.pivotPosition, @required this.angle});
+  DragLineStateSnapshot({required this.pivotPosition, required this.angle});
 }
 
 Future<DragLineStateSnapshot> getDragLineStateForVersion(
-    int/*?*/ version, AllStateObjects allStateObjects) async {
+    int? version, AllStateObjects allStateObjects) async {
   var db = await getDatabase();
 
   var allRows = (await db.query(Schema.state.toString(),
@@ -35,9 +35,9 @@ Future<DragLineStateSnapshot> getDragLineStateForVersion(
   } else {
     var state = allRows.first;
 
-    var positionX = state[Schema.state.dragLinePositionX] as double ??
+    var positionX = state[Schema.state.dragLinePositionX] as double? ??
         defaultPivotPosition.dx;
-    var positionY = state[Schema.state.dragLinePositionY] as double ??
+    var positionY = state[Schema.state.dragLinePositionY] as double? ??
         defaultPivotPosition.dy;
 
     return DragLineStateSnapshot(

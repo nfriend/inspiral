@@ -13,7 +13,7 @@ import 'package:sqflite/sqlite_api.dart';
 const double allowedDistanceFromCanvasEdge = 2200.0;
 
 class FixedGearState extends BaseGearState with WidgetsBindingObserver {
-  static FixedGearState _instance;
+  static FixedGearState? _instance;
 
   factory FixedGearState.init() {
     return _instance = FixedGearState._internal();
@@ -22,11 +22,11 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   factory FixedGearState() {
     assert(_instance != null,
         'The FixedGearState.init() factory constructor must be called before using the FixedGearState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   FixedGearState._internal() : super() {
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   /// When the app is paused and then resumed, reset the state of all our
@@ -187,7 +187,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 

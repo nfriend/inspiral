@@ -4,7 +4,7 @@ import 'package:inspiral/state/state.dart';
 enum DrawerTab { tools, pen, gears }
 
 class SelectorDrawerState extends InspiralStateObject {
-  static SelectorDrawerState _instance;
+  static SelectorDrawerState? _instance;
 
   factory SelectorDrawerState.init() {
     return _instance = SelectorDrawerState._internal();
@@ -13,7 +13,7 @@ class SelectorDrawerState extends InspiralStateObject {
   factory SelectorDrawerState() {
     assert(_instance != null,
         'The SelectorDrawerState.init() factory constructor must be called before using the SelectorDrawerState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   SelectorDrawerState._internal() : super();
@@ -23,7 +23,7 @@ class SelectorDrawerState extends InspiralStateObject {
   bool _isOpen = false;
 
   /// Opens the drawer with a specific active selection
-  void openDrawer({@required DrawerTab activeTab}) {
+  void openDrawer({required DrawerTab activeTab}) {
     _isOpen = true;
     _activeTab = activeTab;
     _exitHoleSelectionMode();
@@ -39,7 +39,7 @@ class SelectorDrawerState extends InspiralStateObject {
   }
 
   /// Handles the state of the drawer when the buttons are pressed
-  void toggleOrSelectDrawer({@required DrawerTab tabToSelect}) {
+  void toggleOrSelectDrawer({required DrawerTab tabToSelect}) {
     if (!isOpen) {
       openDrawer(activeTab: tabToSelect);
     } else {
@@ -59,7 +59,7 @@ class SelectorDrawerState extends InspiralStateObject {
   /// This is used to keep the TabController and this state object in sync
   /// when the tab change is triggered by the tab itself (e.g. due
   /// to the user changing tab with a swipe gesture).
-  void syncActiveTab({@required DrawerTab newActiveTab}) {
+  void syncActiveTab({required DrawerTab newActiveTab}) {
     _activeTab = newActiveTab;
     _exitHoleSelectionMode();
     _hideColorDeleteButtons();

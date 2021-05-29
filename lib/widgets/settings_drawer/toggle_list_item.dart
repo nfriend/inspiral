@@ -7,7 +7,7 @@ class ToggleListItem extends StatelessWidget {
   final Function(bool) onChanged;
 
   ToggleListItem(
-      {@required this.text, @required this.value, @required this.onChanged});
+      {required this.text, required this.value, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

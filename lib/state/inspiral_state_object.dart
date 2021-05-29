@@ -24,25 +24,25 @@ class AllStateObjects {
   final SnapPointState snapPoints;
   final UndoRedoState undoRedo;
 
-  UnmodifiableListView<InspiralStateObject> list;
+  late UnmodifiableListView<InspiralStateObject> list;
 
   AllStateObjects(
-      {@required this.canvas,
-      @required this.progress,
-      @required this.settings,
-      @required this.selectorDrawer,
-      @required this.purchases,
-      @required this.colors,
-      @required this.stroke,
-      @required this.ink,
-      @required this.pointers,
-      @required this.fixedGear,
-      @required this.rotatingGear,
-      @required this.dragLine,
-      @required this.colorPicker,
-      @required this.snackbarState,
-      @required this.snapPoints,
-      @required this.undoRedo}) {
+      {required this.canvas,
+      required this.progress,
+      required this.settings,
+      required this.selectorDrawer,
+      required this.purchases,
+      required this.colors,
+      required this.stroke,
+      required this.ink,
+      required this.pointers,
+      required this.fixedGear,
+      required this.rotatingGear,
+      required this.dragLine,
+      required this.colorPicker,
+      required this.snackbarState,
+      required this.snapPoints,
+      required this.undoRedo}) {
     // Order matters. The order in which these state object are specified
     // here is the order in which they will be hydrated (which matters
     // for some state objects).
@@ -69,5 +69,5 @@ class AllStateObjects {
 
 abstract class InspiralStateObject extends ChangeNotifier
     with Persistable, Undoable, InitializableForListening {
-  AllStateObjects allStateObjects;
+  late AllStateObjects allStateObjects;
 }

@@ -14,7 +14,7 @@ class GearHole {
   final double distance;
 
   const GearHole(
-      {@required this.name, @required this.angle, @required this.distance});
+      {required this.name, required this.angle, required this.distance});
 
   // The relative offset from the gear
   Offset get relativeOffset {

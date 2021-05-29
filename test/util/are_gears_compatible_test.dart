@@ -10,9 +10,9 @@ class TestCase {
   final bool areCompatible;
 
   TestCase(
-      {@required this.fixedGear,
-      @required this.rotatingGear,
-      @required this.areCompatible});
+      {required this.fixedGear,
+      required this.rotatingGear,
+      required this.areCompatible});
 }
 
 void main() {

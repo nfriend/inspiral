@@ -5,7 +5,7 @@ import 'package:sqflite/sqlite_api.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class ColorPickerState extends InspiralStateObject {
-  static ColorPickerState _instance;
+  static ColorPickerState? _instance;
 
   factory ColorPickerState.init() {
     return _instance = ColorPickerState._internal();
@@ -14,23 +14,23 @@ class ColorPickerState extends InspiralStateObject {
   factory ColorPickerState() {
     assert(_instance != null,
         'The ColorPickerState.init() factory constructor must be called before using the ColorPickerState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   ColorPickerState._internal() : super();
 
   /// The last custom pen color selected in the color picker dialog
-  TinyColor/*!*/ get lastSelectedCustomPenColor => _lastSelectedCustomPenColor;
-  TinyColor/*!*/ _lastSelectedCustomPenColor;
-  set lastSelectedCustomPenColor(TinyColor/*!*/ value) {
+  TinyColor get lastSelectedCustomPenColor => _lastSelectedCustomPenColor;
+  late TinyColor _lastSelectedCustomPenColor;
+  set lastSelectedCustomPenColor(TinyColor value) {
     _lastSelectedCustomPenColor = value;
     notifyListeners();
   }
 
   /// The last custom canvas color selected in the color picker dialog
-  TinyColor/*!*/ get lastSelectedCustomCanvasColor => _lastSelectedCustomCanvasColor;
-  TinyColor/*!*/ _lastSelectedCustomCanvasColor;
-  set lastSelectedCustomCanvasColor(TinyColor/*!*/ value) {
+  TinyColor get lastSelectedCustomCanvasColor => _lastSelectedCustomCanvasColor;
+  late TinyColor _lastSelectedCustomCanvasColor;
+  set lastSelectedCustomCanvasColor(TinyColor value) {
     _lastSelectedCustomCanvasColor = value;
     notifyListeners();
   }

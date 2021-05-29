@@ -8,31 +8,31 @@ import 'package:quiver/core.dart';
 
 class _DebugCanvasPainterParams {
   /// The position of the rotating gear
-  Offset rotatingGearPosition;
+  Offset? rotatingGearPosition;
 
   /// The position of the fixed gear
-  Offset fixedGearPosition;
+  Offset? fixedGearPosition;
 
   /// The position of the pivot point (usually the center of the fixed gear)
-  Offset pivotPosition;
+  Offset? pivotPosition;
 
   /// The position of the pointer
-  Offset pointerPosition;
+  Offset? pointerPosition;
 
   /// The contact point of the rotating gear
-  ContactPoint rotatingGearContactPoint;
+  ContactPoint? rotatingGearContactPoint;
 
   /// The contact point of the fixed gear
-  ContactPoint fixedGearContactPoint;
+  ContactPoint? fixedGearContactPoint;
 
   /// The size of the canvas
-  Size canvasSize;
+  Size? canvasSize;
 
   /// The center point of the canvas
-  Offset canvasCenter;
+  Offset? canvasCenter;
 
   /// Log message
-  String logMessage;
+  String? logMessage;
 
   @override
   int get hashCode => hashObjects([
@@ -73,7 +73,7 @@ class _DebugCanvasPainter extends CustomPainter {
       ..color = Color(0xCC3446EB)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
-        params.fixedGearPosition, debugDotSize.width / 2, circlePaint);
+        params.fixedGearPosition!, debugDotSize.width / 2, circlePaint);
   }
 
   void paintRotatingGearCenter(Canvas canvas) {
@@ -81,7 +81,7 @@ class _DebugCanvasPainter extends CustomPainter {
       ..color = Color(0xCCEB4034)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
-        params.rotatingGearPosition, debugDotSize.width / 2, circlePaint);
+        params.rotatingGearPosition!, debugDotSize.width / 2, circlePaint);
   }
 
   void paintDragLine(Canvas canvas) {
@@ -89,13 +89,13 @@ class _DebugCanvasPainter extends CustomPainter {
       ..color = Color(0xCCE9EB75)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
-        params.pointerPosition, debugDotSize.width / 2, circlePaint);
+        params.pointerPosition!, debugDotSize.width / 2, circlePaint);
 
     final linePaint = Paint()
       ..color = Color(0x88262626)
       ..strokeWidth = 2 * scaleFactor
       ..strokeCap = StrokeCap.round;
-    canvas.drawLine(params.pivotPosition, params.pointerPosition, linePaint);
+    canvas.drawLine(params.pivotPosition!, params.pointerPosition!, linePaint);
   }
 
   void paintLogMessage(Canvas canvas) {
@@ -113,19 +113,19 @@ class _DebugCanvasPainter extends CustomPainter {
     );
     textPainter.layout(
       minWidth: 0,
-      maxWidth: params.canvasSize.width,
+      maxWidth: params.canvasSize!.width,
     );
-    final offset = params.canvasCenter + Offset(-100, 200);
+    final offset = params.canvasCenter! + Offset(-100, 200);
     textPainter.paint(canvas, offset);
   }
 
   void paintFixedGearContactPoint(Canvas canvas) {
-    _paintContactPoint(canvas, params.fixedGearContactPoint, Color(0xCCEBAB34));
+    _paintContactPoint(canvas, params.fixedGearContactPoint!, Color(0xCCEBAB34));
   }
 
   void paintRotatingGearContactPoint(Canvas canvas) {
     _paintContactPoint(
-        canvas, params.rotatingGearContactPoint, Color(0xCC34EB74));
+        canvas, params.rotatingGearContactPoint!, Color(0xCC34EB74));
   }
 
   void _paintContactPoint(

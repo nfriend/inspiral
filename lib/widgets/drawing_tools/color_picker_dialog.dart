@@ -28,19 +28,19 @@ class ColorPickerDialog extends StatefulWidget {
   final Function(Color color) onSelect;
 
   ColorPickerDialog(
-      {@required this.title,
-      @required this.colors,
-      @required this.showOpacity,
-      @required this.initialColor,
-      @required this.onColorMove,
-      @required this.onSelect});
+      {required this.title,
+      required this.colors,
+      required this.showOpacity,
+      required this.initialColor,
+      required this.onColorMove,
+      required this.onSelect});
 
   @override
   _ColorPickerDialogState createState() => _ColorPickerDialogState();
 }
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
-  Color/*!*/ _selectedColor;
+  Color _selectedColor;
 
   @override
   void initState() {

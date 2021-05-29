@@ -36,7 +36,7 @@ class _HelpPageState extends State<HelpPage> {
       ]
               // Remove null entries
               .where((w) => w != null)
-              .toList()),
+              .toList() as List<Widget>),
     );
   }
 }

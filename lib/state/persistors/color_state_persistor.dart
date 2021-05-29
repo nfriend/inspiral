@@ -15,10 +15,10 @@ class ColorStateRehydrationResult {
   final TinyColor canvasColor;
 
   ColorStateRehydrationResult(
-      {@required this.availablePenColors,
-      @required this.availableCanvasColors,
-      @required this.penColor,
-      @required this.canvasColor});
+      {required this.availablePenColors,
+      required this.availableCanvasColors,
+      required this.penColor,
+      required this.canvasColor});
 }
 
 class ColorStatePersistor {
@@ -38,7 +38,7 @@ class ColorStatePersistor {
         where:
             "(${Schema.colors.type} = '${ColorsTableType.canvas}' OR ${Schema.colors.type} = '${ColorsTableType.pen}') AND ${getWhereClauseForVersion(Schema.colors.version, null)}");
 
-    String activePenColorId, activeCanvasColorId;
+    String? activePenColorId, activeCanvasColorId;
 
     for (var i = 0; i < colors.availablePenColors.length; i++) {
       var color = colors.availablePenColors[i].color;

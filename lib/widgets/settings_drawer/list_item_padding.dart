@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ListItemPadding extends StatelessWidget {
   final Widget child;
 
-  ListItemPadding({@required this.child});
+  ListItemPadding({required this.child});
 
   @override
   Widget build(BuildContext context) {

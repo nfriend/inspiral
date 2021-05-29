@@ -62,7 +62,7 @@ Future<void> saveImage(BuildContext context) async {
 /// Saves the canvas as an image in a temporary location,
 /// and returns the file path, or returns `null` if the
 /// user cancels the crop operation.
-Future<String> _cropAndSaveToTempFile(BuildContext context) async {
+Future<String?> _cropAndSaveToTempFile(BuildContext context) async {
   var ink = Provider.of<InkState>(context, listen: false);
   var settings = Provider.of<SettingsState>(context, listen: false);
 
@@ -73,7 +73,7 @@ Future<String> _cropAndSaveToTempFile(BuildContext context) async {
   // Even though the tiles have now been baked, they may not have been rendered
   // to the screen yet. Now wait until the current frame is complete.
   var renderCompleter = Completer();
-  SchedulerBinding.instance.addPostFrameCallback((_) {
+  SchedulerBinding.instance!.addPostFrameCallback((_) {
     renderCompleter.complete();
   });
   await renderCompleter.future;
@@ -83,9 +83,9 @@ Future<String> _cropAndSaveToTempFile(BuildContext context) async {
       : canvasWithoutBackgroundGlobalKey;
 
   var canvasBoundary =
-      canvasKey.currentContext.findRenderObject() as RenderRepaintBoundary;
+      canvasKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
   var screenshot = await canvasBoundary.toImage();
-  var byteData = await screenshot.toByteData(format: ImageByteFormat.png);
+  var byteData = await (screenshot.toByteData(format: ImageByteFormat.png) as FutureOr<ByteData>);
   var pngBytes = byteData.buffer.asUint8List();
 
   var directory = (await getTemporaryDirectory());

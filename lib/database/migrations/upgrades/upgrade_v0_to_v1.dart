@@ -10,10 +10,10 @@ var _uuid = Uuid();
 
 /// A utility class to hold all the IDs of the selected color rows
 class _SelectedColorIds {
-  String selectedPenId;
-  String selecteCanvasId;
-  String lastSelectedPenId;
-  String lastSelectedCanvasId;
+  String? selectedPenId;
+  String? selecteCanvasId;
+  String? lastSelectedPenId;
+  String? lastSelectedCanvasId;
 }
 
 /// The very first migration. Called when the database is first created.

@@ -7,7 +7,7 @@ import 'package:tinycolor/tinycolor.dart';
 class ModalProgress extends StatelessWidget {
   final Widget child;
 
-  ModalProgress({@required this.child});
+  ModalProgress({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ModalProgress extends StatelessWidget {
     if (!isBlank(progress.loadingMessage)) {
       columnChildren.add(Padding(
           padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 15.0),
-          child: Text(progress.loadingMessage,
+          child: Text(progress.loadingMessage!,
               style: TextStyle(
                   color: Colors.white70,
                   fontSize: 16,
@@ -48,6 +48,6 @@ class ModalProgress extends StatelessWidget {
         children: [
       Positioned.fill(child: child),
       progress.isLoading ? loadingIndicator : null,
-    ].where((element) => element != null).toList());
+    ].where((element) => element != null).toList() as List<Widget>);
   }
 }

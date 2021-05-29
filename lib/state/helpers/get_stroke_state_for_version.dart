@@ -6,13 +6,13 @@ import 'package:inspiral/models/stroke_style.dart';
 import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 
 class StrokeStateSnapshot {
-  final double/*!*/ width;
+  final double width;
   final StrokeStyle style;
 
-  StrokeStateSnapshot({@required this.width, @required this.style});
+  StrokeStateSnapshot({required this.width, required this.style});
 }
 
-Future<StrokeStateSnapshot> getStrokeStateForVersion(int/*?*/ version) async {
+Future<StrokeStateSnapshot> getStrokeStateForVersion(int? version) async {
   final db = await getDatabase();
 
   final allRows = (await db.query(Schema.state.toString(),

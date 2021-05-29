@@ -5,9 +5,9 @@ import 'package:inspiral/extensions/extensions.dart';
 /// Returns a transform matrix that centers the canvas in the view
 /// with no rotation
 Matrix4 getCenterTransform(
-    {@required Size canvasSize,
-    @required Size screenSize,
-    @required double initialScale}) {
+    {required Size canvasSize,
+    required Size screenSize,
+    required double initialScale}) {
   // Compute an initial canvas translation that will place the
   // center point of the canvas directly in the center of the screen
   // By default, the canvas's top-left corner is lined up with

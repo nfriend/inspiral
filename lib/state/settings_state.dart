@@ -7,7 +7,7 @@ import 'package:inspiral/util/find_closest_compatible_gear.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class SettingsState extends InspiralStateObject {
-  static SettingsState _instance;
+  static SettingsState? _instance;
 
   factory SettingsState.init() {
     return _instance = SettingsState._internal();
@@ -16,7 +16,7 @@ class SettingsState extends InspiralStateObject {
   factory SettingsState() {
     assert(_instance != null,
         'The SettingsState.init() factory constructor must be called before using the SettingsState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   SettingsState._internal() : super();

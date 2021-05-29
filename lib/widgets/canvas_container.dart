@@ -88,7 +88,7 @@ class CanvasContainer extends StatelessWidget {
   /// because children don't respond to events if the event happens outside
   /// of the parent.
   Widget _wrapInPositioned(
-      {@required Widget child, @required Size canvasSize}) {
+      {required Widget child, required Size canvasSize}) {
     return Positioned(top: canvasPadding, left: canvasPadding, child: child);
   }
 }

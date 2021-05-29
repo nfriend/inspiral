@@ -9,7 +9,7 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:inspiral/state/state.dart';
 
 class CanvasState extends InspiralStateObject {
-  static CanvasState _instance;
+  static CanvasState? _instance;
 
   factory CanvasState.init() {
     return _instance = CanvasState._internal();
@@ -18,16 +18,16 @@ class CanvasState extends InspiralStateObject {
   factory CanvasState() {
     assert(_instance != null,
         'The CanvasState.init() factory constructor must be called before using the CanvasState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   CanvasState._internal() : super();
 
-  Matrix4/*!*/ _transform;
+  late Matrix4 _transform;
 
   /// The current transformation of the canvas
-  Matrix4/*!*/ get transform => _transform;
-  set transform(Matrix4/*!*/ value) {
+  Matrix4 get transform => _transform;
+  set transform(Matrix4 value) {
     _transform = value;
     notifyListeners();
   }
@@ -51,25 +51,25 @@ class CanvasState extends InspiralStateObject {
   }
 
   /// The currently selected canvas size option
-  CanvasSizeAndName/*!*/ get canvasSizeAndName => _canvasSizeAndName;
-  CanvasSizeAndName/*!*/ _canvasSizeAndName;
+  CanvasSizeAndName get canvasSizeAndName => _canvasSizeAndName;
+  late CanvasSizeAndName _canvasSizeAndName;
 
   /// The size of drawing canvas, in logical pixels
-  Size/*!*/ get canvasSize => _canvasSize;
-  Size/*!*/ _canvasSize;
+  Size get canvasSize => _canvasSize;
+  late Size _canvasSize;
 
   /// The canvas's center point
-  Offset/*!*/ get canvasCenter => _canvasCenter;
-  Offset/*!*/ _canvasCenter;
+  Offset get canvasCenter => _canvasCenter;
+  late Offset _canvasCenter;
 
   /// The size of each tile that makes up the canvas background
-  Size/*!*/ get tileSize => _tileSize;
-  Size/*!*/ _tileSize;
+  Size get tileSize => _tileSize;
+  late Size _tileSize;
 
   /// Updates the size of the canvas
   Future<void> setCanvasSize(
-      {@required BuildContext context,
-      @required CanvasSizeAndName newSize}) async {
+      {required BuildContext context,
+      required CanvasSizeAndName newSize}) async {
     // Wait for any pending canvas manipulations to complete
     await allStateObjects.ink.pendingCanvasManipulation;
     allStateObjects.ink.eraseCanvas();

@@ -7,7 +7,7 @@ import 'package:inspiral/models/ink_line.dart';
 /// Determines which tiles need to update by matching each point up
 /// with the appropriate tile
 Set<Offset> getTilesToUpdate(
-    {@required List<InkLine> linesToBake, @required Size tileSize}) {
+    {required List<InkLine> linesToBake, required Size tileSize}) {
   var tilesToUpdate = HashSet<Offset>();
 
   for (var line in linesToBake) {

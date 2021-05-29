@@ -13,11 +13,11 @@ class StrokeSelectorThumbnail extends StatelessWidget {
   final void Function() onStrokeTap;
 
   StrokeSelectorThumbnail(
-      {@required this.width,
-      @required this.style,
-      @required this.isActive,
-      @required this.onStrokeTap,
-      @required this.entitlement});
+      {required this.width,
+      required this.style,
+      required this.isActive,
+      required this.onStrokeTap,
+      required this.entitlement});
 
   @override
   Widget build(BuildContext context) {

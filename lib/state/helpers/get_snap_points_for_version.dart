@@ -7,20 +7,20 @@ import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 
 class SnapPointsAndActivePoint {
   final Set<Offset> snapPoints;
-  final Offset/*?*/ activeSnapPoint;
+  final Offset? activeSnapPoint;
 
   SnapPointsAndActivePoint(
-      {@required this.snapPoints, @required this.activeSnapPoint});
+      {required this.snapPoints, required this.activeSnapPoint});
 }
 
-Future<SnapPointsAndActivePoint> getSnapPointsForVersion(int/*?*/ version) async {
+Future<SnapPointsAndActivePoint> getSnapPointsForVersion(int? version) async {
   var db = await getDatabase();
 
   var snapPointRows = (await db.query(Schema.snapPoints.toString(),
       where: getWhereClauseForVersion(Schema.snapPoints.version, version)));
 
   var snapPoints = HashSet<Offset>();
-  Offset activeSnapPoint;
+  Offset? activeSnapPoint;
   for (var row in snapPointRows) {
     var point = Offset(
         row[Schema.snapPoints.x] as double, row[Schema.snapPoints.y] as double);

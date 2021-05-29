@@ -23,9 +23,9 @@ class Matrix4TransformDecomposition {
   }
 
   Matrix4TransformDecomposition(
-      {@required this.translation,
-      @required this.scale,
-      @required this.quaternion});
+      {required this.translation,
+      required this.scale,
+      required this.quaternion});
 
   /// Interpolates between this set of transforms and the provided set
   Matrix4TransformDecomposition interpolateTo(

@@ -6,7 +6,7 @@ import 'package:inspiral/state/state.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class StrokeState extends InspiralStateObject {
-  static StrokeState _instance;
+  static StrokeState? _instance;
 
   factory StrokeState.init() {
     return _instance = StrokeState._internal();
@@ -15,21 +15,21 @@ class StrokeState extends InspiralStateObject {
   factory StrokeState() {
     assert(_instance != null,
         'The StrokeState.init() factory constructor must be called before using the StrokeState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   StrokeState._internal() : super();
 
   /// The current width of the line
-  double/*!*/ _width;
-  double/*!*/ get width => _width;
+  late double _width;
+  double get width => _width;
 
   /// The current style of the line
-  StrokeStyle/*!*/ _style;
-  StrokeStyle/*!*/ get style => _style;
+  late StrokeStyle _style;
+  StrokeStyle get style => _style;
 
   /// Updates the width and style of the current stroke
-  void setStroke({double/*!*/ width, StrokeStyle/*!*/ style}) {
+  void setStroke({required double width, required StrokeStyle style}) {
     _width = width;
     _style = style;
     allStateObjects.ink.finishLine();

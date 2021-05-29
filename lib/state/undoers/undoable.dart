@@ -6,10 +6,10 @@ abstract class Undoable {
   /// in the undo/redo stack.
   /// The `version` parameter is the target version (i.e.
   /// the version we should undo to).
-  Future<void> undo(int/*!*/ version) async {}
+  Future<void> undo(int version) async {}
 
   /// The opposite of undo
-  Future<void> redo(int/*!*/ version) async {}
+  Future<void> redo(int version) async {}
 
   /// Capture the current state as a snapshot for the provided version
   Future<void> snapshot(int version, Batch batch) async {}

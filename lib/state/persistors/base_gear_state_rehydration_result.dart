@@ -6,5 +6,5 @@ class BaseGearStateRehydrationResult {
   final bool isVisible;
 
   BaseGearStateRehydrationResult(
-      {@required this.definition, @required this.isVisible});
+      {required this.definition, required this.isVisible});
 }

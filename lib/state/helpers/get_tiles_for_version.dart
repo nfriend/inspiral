@@ -6,10 +6,10 @@ import 'package:inspiral/database/schema.dart';
 
 class TileVersionResult {
   final Map<Offset, Image> tileImages;
-  final Map<Offset, String /*!*/ > tilePositionToDatabaseId;
+  final Map<Offset, String > tilePositionToDatabaseId;
 
   TileVersionResult(
-      {@required this.tileImages, @required this.tilePositionToDatabaseId});
+      {required this.tileImages, required this.tilePositionToDatabaseId});
 
   @override
   String toString() {
@@ -20,7 +20,7 @@ class TileVersionResult {
 /// Gets the set of image tiles at a specific version
 ///
 /// @param version The version to retrieve
-Future<TileVersionResult> getTilesForVersion(int /*?*/ version) async {
+Future<TileVersionResult> getTilesForVersion(int? version) async {
   var db = await getDatabase();
 
   var allTileData = await db.rawQuery('''
@@ -36,14 +36,14 @@ Future<TileVersionResult> getTilesForVersion(int /*?*/ version) async {
     ''');
 
   var tileImages = <Offset, Image>{};
-  var tilePositionToDatabaseId = <Offset, String /*!*/ >{};
+  Map<Offset, String?> tilePositionToDatabaseId = <Offset, String >{};
   for (var tileData in allTileData) {
     var tilePosition = Offset(tileData[Schema.tileData.x] as double,
         tileData[Schema.tileData.y] as double);
     tileImages[tilePosition] =
         await decodeImageFromList(tileData[Schema.tileData.bytes] as Uint8List);
     tilePositionToDatabaseId[tilePosition] =
-        tileData[Schema.tileData.id] as String;
+        tileData[Schema.tileData.id] as String?;
   }
 
   return TileVersionResult(

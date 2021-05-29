@@ -5,13 +5,13 @@ class DropdownListItem extends StatelessWidget {
   final String text;
   final String selectedItem;
   final List<String> items;
-  final Function(String/*!*/) onChanged;
+  final Function(String) onChanged;
 
   DropdownListItem(
-      {@required this.text,
-      @required this.selectedItem,
-      @required this.items,
-      @required this.onChanged});
+      {required this.text,
+      required this.selectedItem,
+      required this.items,
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

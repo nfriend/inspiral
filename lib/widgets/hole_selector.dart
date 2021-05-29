@@ -88,7 +88,7 @@ class HoleSelector extends StatelessWidget {
     ]);
   }
 
-  Offset _getHoleOffset({GearHole hole, Offset gearCenter, Size dotSize}) {
+  Offset _getHoleOffset({required GearHole hole, required Offset gearCenter, required Size dotSize}) {
     return hole.relativeOffset + gearCenter - (dotSize / 2).toOffset();
   }
 }

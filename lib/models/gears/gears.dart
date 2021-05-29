@@ -476,7 +476,7 @@ export 'package:inspiral/models/gears/egg_42_noholes.dart';
 export 'package:inspiral/models/gears/egg_84.dart';
 export 'package:inspiral/models/gears/egg_84_noholes.dart';
 
-Map<String, GearDefinition/*!*/> allGears = {
+Map<String, GearDefinition> allGears = {
   'circle96Ring': circle96Ring,
   'circle105Ring': circle105Ring,
   'circle150Ring': circle150Ring,

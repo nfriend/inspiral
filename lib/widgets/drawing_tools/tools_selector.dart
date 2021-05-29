@@ -113,7 +113,7 @@ class ToolsSelector extends StatelessWidget {
                   builder:
                       (BuildContext context, AsyncSnapshot<bool> snapshot) {
                     var showDeleteButton = snapshot.hasData &&
-                        snapshot.data &&
+                        snapshot.data! &&
                         colors.showCanvasColorDeleteButtons &&
                         colors.availableCanvasColors.length > 1;
 

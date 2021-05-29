@@ -14,8 +14,8 @@ class RedoListItem extends StatelessWidget {
     final disabledTextColor = context
         .select<ColorState, TinyColor>((colors) => colors.disabledTextColor);
 
-    TextStyle textStyle;
-    Color iconColor;
+    TextStyle? textStyle;
+    Color? iconColor;
     if (!redoAvailable) {
       var disabledColor = disabledTextColor.color;
       textStyle = TextStyle(fontStyle: FontStyle.italic, color: disabledColor);

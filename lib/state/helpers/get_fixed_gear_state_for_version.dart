@@ -12,19 +12,19 @@ class FixedGearStateSnapshot {
   GearDefinition definition;
   bool isVisible;
   Offset position;
-  double/*!*/ rotation;
+  double rotation;
   bool isLocked;
 
   FixedGearStateSnapshot(
-      {@required this.definition,
-      @required this.isVisible,
-      @required this.position,
-      @required this.rotation,
-      @required this.isLocked});
+      {required this.definition,
+      required this.isVisible,
+      required this.position,
+      required this.rotation,
+      required this.isLocked});
 }
 
 Future<FixedGearStateSnapshot> getFixedGearStateForVersion(
-    int/*?*/ version, AllStateObjects allStateObjects) async {
+    int? version, AllStateObjects allStateObjects) async {
   var db = await getDatabase();
 
   var allRows = (await db.query(Schema.state.toString(),
@@ -56,21 +56,21 @@ Future<FixedGearStateSnapshot> getFixedGearStateForVersion(
     // Defaulting to circle96Ring just in case we didn't find a match in `allGears`.
     // This _should_ never happen.
     var definition =
-        allGears[state[Schema.state.fixedGearDefinitionId]] ?? defaultFixedGear;
+        allGears[state[Schema.state.fixedGearDefinitionId] as String] ?? defaultFixedGear;
 
     // If these are null, it means we don't have a previously-saved gear
     // position. (For example, when opening the app for the very first time.)
     // In this case, use `canvasCenter` instead.
     var positionX =
-        state[Schema.state.fixedGearPositionX] as double ?? defaultPosition.dx;
+        state[Schema.state.fixedGearPositionX] as double? ?? defaultPosition.dx;
     var positionY =
-        state[Schema.state.fixedGearPositionY] as double ?? defaultPosition.dy;
+        state[Schema.state.fixedGearPositionY] as double? ?? defaultPosition.dy;
 
     return FixedGearStateSnapshot(
         position: Offset(positionX, positionY),
         definition: definition,
         isVisible: (state[Schema.state.gearsAreVisible] as int).toBool(),
         isLocked: (state[Schema.state.fixedGearIsLocked] as int).toBool(),
-        rotation: state[Schema.state.fixedGearRotation] as double/*!*/);
+        rotation: state[Schema.state.fixedGearRotation] as double);
   }
 }

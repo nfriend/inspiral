@@ -7,16 +7,16 @@ import 'package:quiver/core.dart';
 /// Represents a line if ink on the canvas
 class InkLine {
   final List<List<Offset>> _points;
-  UnmodifiableListView<List<Offset>>/*!*/ _unmodifiablePoints;
+  late UnmodifiableListView<List<Offset>> _unmodifiablePoints;
   final List<Path> _paths;
-  UnmodifiableListView<Path>/*!*/ _unmodifiablePaths;
-  int/*!*/ _pointCount;
+  late UnmodifiableListView<Path> _unmodifiablePaths;
+  late int _pointCount;
   int _mark = 0;
 
   InkLine(
-      {@required Color color,
-      @required double/*!*/ strokeWidth,
-      @required StrokeStyle/*!*/ strokeStyle})
+      {required Color color,
+      required double strokeWidth,
+      required StrokeStyle strokeStyle})
       : this._internal(
             color: color,
             strokeWidth: strokeWidth,
@@ -28,12 +28,12 @@ class InkLine {
   /// An internal constructor, used to create an instance with points and path
   /// already set.
   InkLine._internal(
-      {@required this.color,
-      @required this.strokeWidth,
-      @required this.strokeStyle,
-      @required List<List<Offset>> initialPoints,
-      @required List<Path> initialPaths,
-      @required int/*!*/ initialPointCount})
+      {required this.color,
+      required this.strokeWidth,
+      required this.strokeStyle,
+      required List<List<Offset>> initialPoints,
+      required List<Path> initialPaths,
+      required int initialPointCount})
       : _points = initialPoints,
         _paths = initialPaths {
     _unmodifiablePoints = UnmodifiableListView(_points);
@@ -57,21 +57,21 @@ class InkLine {
   final Color color;
 
   /// The stroke width of this line
-  final double/*!*/ strokeWidth;
+  final double strokeWidth;
 
   /// The stroke style of this line
-  final StrokeStyle/*!*/ strokeStyle;
+  final StrokeStyle strokeStyle;
 
   /// The list of points that define this line. This list is kept in sync
   /// with the `paths` property below.
   /// Each sublist represents the points included in its associated `Path`
-  List<List<Offset>>/*!*/ get points => _unmodifiablePoints;
+  List<List<Offset>> get points => _unmodifiablePoints;
 
   /// The total number of points incuded in this line
-  int/*!*/ get pointCount => _pointCount;
+  int get pointCount => _pointCount;
 
   /// This line, represented as a series of `Path`s
-  List<Path>/*!*/ get paths => _unmodifiablePaths;
+  List<Path> get paths => _unmodifiablePaths;
 
   /// Add points to this line's list of points and its path
   void addPoints(List<Offset> pointsToAdd) {

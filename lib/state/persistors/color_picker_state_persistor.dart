@@ -13,8 +13,8 @@ class ColorPickerStateRehydrationResult {
   final TinyColor lastSelectedCanvasColor;
 
   ColorPickerStateRehydrationResult(
-      {@required this.lastSelectedPenColor,
-      @required this.lastSelectedCanvasColor});
+      {required this.lastSelectedPenColor,
+      required this.lastSelectedCanvasColor});
 }
 
 class ColorPickerStatePersistor {

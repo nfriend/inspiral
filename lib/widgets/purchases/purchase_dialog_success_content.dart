@@ -23,10 +23,10 @@ class PurchaseDialogSuccessContent extends StatefulWidget {
   final Function onPurchaseButtonPressed;
 
   PurchaseDialogSuccessContent(
-      {@required this.requestedPackage,
-      @required this.everythingPackage,
-      @required this.allIndividuallyPurchasablePackages,
-      @required this.onPurchaseButtonPressed});
+      {required this.requestedPackage,
+      required this.everythingPackage,
+      required this.allIndividuallyPurchasablePackages,
+      required this.onPurchaseButtonPressed});
 
   @override
   _PurchaseDialogSuccessContentState createState() =>
@@ -244,6 +244,6 @@ class _PurchaseDialogSuccessContentState
                                               value: null)))))
                           : null
                       // Remove null entries
-                    ].where((w) => w != null).toList()))));
+                    ].where((w) => w != null).toList() as List<Widget>))));
   }
 }

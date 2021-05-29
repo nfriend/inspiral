@@ -36,6 +36,6 @@ class SettingsDrawer extends StatelessWidget {
               HelpListItem(),
               AppStoreReviewListItem(),
               SocialButtonRow()
-            ].where((element) => element != null).toList()));
+            ].where((element) => element != null).toList() as List<Widget>));
   }
 }

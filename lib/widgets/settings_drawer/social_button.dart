@@ -5,7 +5,7 @@ class SocialButton extends StatelessWidget {
   final String assetPath;
   final String linkHref;
 
-  SocialButton({@required this.assetPath, @required this.linkHref});
+  SocialButton({required this.assetPath, required this.linkHref});
 
   @override
   Widget build(BuildContext context) {

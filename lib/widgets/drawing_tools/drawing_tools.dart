@@ -7,12 +7,12 @@ import 'package:tinycolor/tinycolor.dart';
 
 @immutable
 class _DrawingToolsButton {
-  final Icon/*!*/ icon;
-  final String/*!*/ text;
-  final void Function()/*!*/ onPressed;
-  final DrawerTab/*!*/ tab;
+  final Icon icon;
+  final String text;
+  final void Function() onPressed;
+  final DrawerTab tab;
 
-  _DrawingToolsButton({this.icon, this.text, this.onPressed, this.tab});
+  _DrawingToolsButton({required this.icon, required this.text, required this.onPressed, required this.tab});
 }
 
 class DrawingTools extends StatelessWidget {

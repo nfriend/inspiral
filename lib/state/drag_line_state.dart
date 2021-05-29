@@ -9,7 +9,7 @@ import 'package:sqflite/sqlite_api.dart';
 final double _pi2 = 2 * pi;
 
 class DragLineState extends InspiralStateObject {
-  static DragLineState _instance;
+  static DragLineState? _instance;
 
   factory DragLineState.init() {
     return _instance = DragLineState._internal();
@@ -18,7 +18,7 @@ class DragLineState extends InspiralStateObject {
   factory DragLineState() {
     assert(_instance != null,
         'The DragLineState.init() factory constructor must be called before using the DragLineState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   DragLineState._internal() : super();

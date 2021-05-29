@@ -6,9 +6,9 @@ import 'package:inspiral/util/delete_database.dart';
 /// at its very top-level component.
 /// Based on https://stackoverflow.com/a/50116077/1063392
 class RestartWidget extends StatefulWidget {
-  RestartWidget({this.child});
+  RestartWidget({required this.child});
 
-  final Widget/*!*/ child;
+  final Widget child;
 
   /// "Restarts" the app by triggering a rebuild at the root.
   /// Pass `resetDb = true` to delete the database before restarting,
@@ -22,7 +22,7 @@ class RestartWidget extends StatefulWidget {
       await deleteDatabase();
     }
 
-    context.findAncestorStateOfType<_RestartWidgetState>().restartApp();
+    context.findAncestorStateOfType<_RestartWidgetState>()!.restartApp();
   }
 
   @override

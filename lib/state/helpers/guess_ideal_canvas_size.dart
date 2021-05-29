@@ -34,7 +34,7 @@ Future<CanvasSizeAndName> guessIdealCanvasSize() async {
 
     if (iphoneVersionMatches.isNotEmpty) {
       var iphoneVersion =
-          int.parse(iphoneVersionMatches.elementAt(0).group(1), radix: 10);
+          int.parse(iphoneVersionMatches.elementAt(0).group(1)!, radix: 10);
 
       if (iphoneVersion < 5 /** == iPhone 4s or below */) {
         return CanvasSize.small;
@@ -50,7 +50,7 @@ Future<CanvasSizeAndName> guessIdealCanvasSize() async {
 
     if (ipadVersionMatches.isNotEmpty) {
       var ipadVersion =
-          int.parse(ipadVersionMatches.elementAt(0).group(1), radix: 10);
+          int.parse(ipadVersionMatches.elementAt(0).group(1)!, radix: 10);
 
       if (ipadVersion < 5 /** == iPad mini 3rd Gen or below */) {
         return CanvasSize.medium;

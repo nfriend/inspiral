@@ -28,12 +28,12 @@ class SnapPointStateUndoer {
   }
 
   static Future<SnapPointsAndActivePoint> undo(
-      int/*!*/ version, SnapPointState snapPointState) async {
+      int version, SnapPointState snapPointState) async {
     return await getSnapPointsForVersion(version);
   }
 
   static Future<SnapPointsAndActivePoint> redo(
-      int/*!*/ version, SnapPointState snapPointState) async {
+      int version, SnapPointState snapPointState) async {
     return await getSnapPointsForVersion(version);
   }
 }

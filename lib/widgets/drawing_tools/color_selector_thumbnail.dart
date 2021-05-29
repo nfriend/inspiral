@@ -12,12 +12,12 @@ class ColorSelectorThumbnail extends StatelessWidget {
   final bool showDeleteButton;
 
   ColorSelectorThumbnail(
-      {@required this.color,
-      @required this.isActive,
-      @required this.onColorTap,
-      @required this.onColorLongPress,
-      @required this.onColorDelete,
-      @required this.showDeleteButton});
+      {required this.color,
+      required this.isActive,
+      required this.onColorTap,
+      required this.onColorLongPress,
+      required this.onColorDelete,
+      required this.showDeleteButton});
 
   @override
   Widget build(BuildContext context) {

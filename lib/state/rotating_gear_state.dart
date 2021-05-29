@@ -34,15 +34,15 @@ class RotationResult {
   final Offset penPosition;
 
   const RotationResult(
-      {@required this.fixedGearContactPoint,
-      @required this.rotatingGearContactPoint,
-      @required this.rotatingGearPosition,
-      @required this.rotatingGearRotation,
-      @required this.penPosition});
+      {required this.fixedGearContactPoint,
+      required this.rotatingGearContactPoint,
+      required this.rotatingGearPosition,
+      required this.rotatingGearRotation,
+      required this.penPosition});
 }
 
 class RotatingGearState extends BaseGearState {
-  static RotatingGearState _instance;
+  static RotatingGearState? _instance;
 
   factory RotatingGearState.init() {
     return _instance = RotatingGearState._internal();
@@ -51,7 +51,7 @@ class RotatingGearState extends BaseGearState {
   factory RotatingGearState() {
     assert(_instance != null,
         'The RotatingGearState.init() factory constructor must be called before using the RotatingGearState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   RotatingGearState._internal() : super();
@@ -62,16 +62,16 @@ class RotatingGearState extends BaseGearState {
     _updateGearState(result);
   }
 
-  double/*!*/ _lastAngle;
+  late double _lastAngle;
 
   // Only exposed publicly for use in the persistor
-  double/*!*/ get lastAngle => _lastAngle;
+  double get lastAngle => _lastAngle;
 
   int toothOffset = 0;
 
-  GearHole/*!*/ _activeHole;
-  GearHole/*!*/ get activeHole => _activeHole;
-  set activeHole(GearHole/*!*/ value) {
+  late GearHole _activeHole;
+  GearHole get activeHole => _activeHole;
+  set activeHole(GearHole value) {
     _activeHole = value;
     allStateObjects.ink.finishLine();
 
@@ -165,7 +165,7 @@ class RotatingGearState extends BaseGearState {
 
   /// Rotates the rotating gear in place (without drawing)
   /// by the provided number of teeth in the positive direction
-  void rotateInPlace({int teethToRotate}) {
+  void rotateInPlace({required int teethToRotate}) {
     toothOffset += teethToRotate;
     initializePosition();
     allStateObjects.ink.finishLine();
@@ -327,7 +327,7 @@ class RotatingGearState extends BaseGearState {
     }
 
     var segmentLength =
-        Line(result.penPosition, allStateObjects.ink.lastPoint).length();
+        Line(result.penPosition, allStateObjects.ink.lastPoint!).length();
 
     // `isASmallishChange` is a flag used to indicate that the change in angle
     // since the last draw is relatively small. If the change is big, we will

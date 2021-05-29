@@ -17,9 +17,9 @@ class InkStateRehydrationResult {
   final Map<Offset, String> tilePositionToDatabaseId;
 
   InkStateRehydrationResult(
-      {@required this.lines,
-      @required this.tileImages,
-      @required this.tilePositionToDatabaseId});
+      {required this.lines,
+      required this.tileImages,
+      required this.tilePositionToDatabaseId});
 
   @override
   String toString() {
@@ -141,7 +141,7 @@ class InkStatePersistor {
         .first;
 
     var currentSnapshotVersion =
-        state[Schema.state.currentSnapshotVersion] as int/*!*/;
+        state[Schema.state.currentSnapshotVersion] as int;
 
     var tileVersionResult = await getTilesForVersion(currentSnapshotVersion);
 

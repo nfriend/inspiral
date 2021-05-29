@@ -10,13 +10,13 @@ class SettingsStateRehydrationResult {
   final bool includeBackgroundWhenSaving;
   final bool closeDrawingToolsDrawerOnDrag;
   final bool preventIncompatibleGearPairings;
-  final String/*!*/ autoDrawSpeed;
+  final String autoDrawSpeed;
 
   SettingsStateRehydrationResult(
-      {@required this.includeBackgroundWhenSaving,
-      @required this.closeDrawingToolsDrawerOnDrag,
-      @required this.preventIncompatibleGearPairings,
-      @required this.autoDrawSpeed});
+      {required this.includeBackgroundWhenSaving,
+      required this.closeDrawingToolsDrawerOnDrag,
+      required this.preventIncompatibleGearPairings,
+      required this.autoDrawSpeed});
 }
 
 class SettingsStatePersistor {
@@ -41,7 +41,7 @@ class SettingsStatePersistor {
             where: getWhereClauseForVersion(Schema.state.version, null)))
         .first;
 
-    var autoDrawSpeed = state[Schema.state.autoDrawSpeed] as String;
+    var autoDrawSpeed = state[Schema.state.autoDrawSpeed] as String?;
     if (!AutoDrawSpeed.all.contains(autoDrawSpeed)) {
       // This should never happen, just handling this here to be extra safe
       autoDrawSpeed = AutoDrawSpeed.slow;
@@ -55,6 +55,6 @@ class SettingsStatePersistor {
         preventIncompatibleGearPairings:
             (state[Schema.state.preventIncompatibleGearPairings] as int)
                 .toBool(),
-        autoDrawSpeed: autoDrawSpeed);
+        autoDrawSpeed: autoDrawSpeed!);
   }
 }

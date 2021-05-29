@@ -12,15 +12,15 @@ class SelectionrRowDefinition {
   final String storageKey;
 
   SelectionrRowDefinition(
-      {@required this.label,
-      @required this.children,
-      @required this.storageKey});
+      {required this.label,
+      required this.children,
+      required this.storageKey});
 }
 
 class SelectionRows extends StatelessWidget {
   final Iterable<SelectionrRowDefinition> rowDefs;
 
-  SelectionRows({@required this.rowDefs});
+  SelectionRows({required this.rowDefs});
 
   @override
   Widget build(BuildContext context) {

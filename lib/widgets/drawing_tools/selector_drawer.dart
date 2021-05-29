@@ -15,7 +15,7 @@ class SelectorDrawer extends StatefulWidget {
 
 class _SelectorDrawerState extends State<SelectorDrawer>
     with SingleTickerProviderStateMixin {
-  TabController/*!*/ _tabController;
+  TabController _tabController;
 
   @override
   void initState() {

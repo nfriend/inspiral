@@ -10,10 +10,10 @@ import 'package:inspiral/state/helpers/get_tiles_to_update.dart';
 /// Heads up: All parameters of this function are mutated
 /// when this function is called.
 Future<Map<Offset, Image>> bakeImage(
-    {@required List<InkLine> lines,
-    @required Map<Offset, Image> tileImages,
-    @required Map<Offset, String/*!*/> tilePositionToDatabaseId,
-    @required Size/*!*/ tileSize}) async {
+    {required List<InkLine> lines,
+    required Map<Offset, Image> tileImages,
+    required Map<Offset, String> tilePositionToDatabaseId,
+    required Size tileSize}) async {
   // Operate on a shallow clone of the points, because the baking process
   // is asynchronous, and more points may be added to `_points` while
   // this method is running
@@ -38,7 +38,7 @@ Future<Map<Offset, Image>> bakeImage(
     var canvas = Canvas(recorder);
     DryInkTilePainter(
             position: tilePosition,
-            tileImage: tileImages[tilePosition],
+            tileImage: tileImages[tilePosition]!,
             lines: linesToBake)
         .paint(canvas, renderedSize);
 

@@ -4,7 +4,7 @@ import 'package:inspiral/state/state.dart';
 const _snackBarDisplayDuration = Duration(milliseconds: 4000);
 
 class SnackbarState extends InspiralStateObject {
-  static SnackbarState _instance;
+  static SnackbarState? _instance;
 
   factory SnackbarState.init() {
     return _instance = SnackbarState._internal();
@@ -13,12 +13,12 @@ class SnackbarState extends InspiralStateObject {
   factory SnackbarState() {
     assert(_instance != null,
         'The SnackbarState.init() factory constructor must be called before using the SnackbarState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   SnackbarState._internal() : super();
 
-  Timer _timer;
+  Timer? _timer;
 
   /// Whether or not something is loading
   String get message => _message;

@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class ActionButton extends StatelessWidget {
-  final IconData icon;
-  final Widget buttonContent;
+  final IconData? icon;
+  final Widget? buttonContent;
   final String tooltipMessage;
   final Function onButtonTap;
   final bool isActive;
@@ -14,8 +14,8 @@ class ActionButton extends StatelessWidget {
   ActionButton(
       {this.icon,
       this.buttonContent,
-      @required this.tooltipMessage,
-      @required this.onButtonTap,
+      required this.tooltipMessage,
+      required this.onButtonTap,
       this.isActive = false,
       this.isDisabled = false}) {
     assert((icon == null) ^ (buttonContent == null),

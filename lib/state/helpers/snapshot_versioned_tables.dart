@@ -14,7 +14,7 @@ const Uuid _uuid = Uuid();
 /// case we need to pass in the database instance instead of allowing this
 /// method to request its own instance.
 Future<void> snapshotVersionedTables(Batch batch, int version,
-    {Database/*!*/ database}) async {
+    {required Database database}) async {
   var db = database ?? await getDatabase();
 
   final state = (await db.query(Schema.state.toString(),
@@ -23,32 +23,32 @@ Future<void> snapshotVersionedTables(Batch batch, int version,
   final colorRows = (await db.query(Schema.colors.toString(),
       where: getWhereClauseForVersion(Schema.colors.version, null)));
 
-  String selectedPenId;
-  String lastSelectedPenId;
-  String selectedCanvasColorId;
-  String lastSelectedCanvasColorId;
+  String? selectedPenId;
+  String? lastSelectedPenId;
+  String? selectedCanvasColorId;
+  String? lastSelectedCanvasColorId;
   for (var colorRow in colorRows) {
-    var oldId = colorRow[Schema.colors.id] as String;
+    var oldId = colorRow[Schema.colors.id] as String?;
 
     var colorRowClone = Map<String, Object>.from(colorRow);
     var newId = _uuid.v4();
     colorRowClone[Schema.colors.id] = newId;
     colorRowClone[Schema.colors.version] = version;
 
-    if (oldId == state[Schema.state.selectedPenColor] as String) {
+    if (oldId == state[Schema.state.selectedPenColor] as String?) {
       selectedPenId = newId;
-    } else if (oldId == state[Schema.state.selectedCanvasColor] as String) {
+    } else if (oldId == state[Schema.state.selectedCanvasColor] as String?) {
       selectedCanvasColorId = newId;
-    } else if (oldId == state[Schema.state.lastSelectedPenColor] as String) {
+    } else if (oldId == state[Schema.state.lastSelectedPenColor] as String?) {
       lastSelectedPenId = newId;
-    } else if (oldId == state[Schema.state.lastSelectedCanvasColor] as String) {
+    } else if (oldId == state[Schema.state.lastSelectedCanvasColor] as String?) {
       lastSelectedCanvasColorId = newId;
     }
 
     batch.insert(Schema.colors.toString(), colorRowClone);
   }
 
-  var stateClone = Map<String, Object>.from(state);
+  var stateClone = Map<String, Object?>.from(state);
   stateClone[Schema.state.selectedPenColor] = selectedPenId;
   stateClone[Schema.state.selectedCanvasColor] = selectedCanvasColorId;
   stateClone[Schema.state.lastSelectedPenColor] = lastSelectedPenId;

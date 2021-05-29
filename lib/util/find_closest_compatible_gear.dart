@@ -12,7 +12,7 @@ GearDefinition _defaultGear = circle24;
 /// If the current selection is already compatible, this function
 /// returns `currentlySelectedRotatingGear`.
 GearDefinition findClosestCompatibleGear(
-    {GearDefinition/*!*/ fixedGear, GearDefinition/*!*/ currentlySelectedRotatingGear}) {
+    {required GearDefinition fixedGear, required GearDefinition currentlySelectedRotatingGear}) {
   var currentlySelectedIndex =
       onlyGearsWithHoles.indexOf(currentlySelectedRotatingGear);
   if (currentlySelectedIndex == -1) {

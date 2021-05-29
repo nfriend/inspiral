@@ -18,37 +18,37 @@ class PurchaseDialog extends StatefulWidget {
   final ColorState colors;
 
   /// The package being purchased
-  final String/*!*/ package;
+  final String package;
 
   /// The function to call if the package is purchased
   final Function onPurchased;
 
   PurchaseDialog(
-      {@required this.purchases,
-      @required this.colors,
-      @required this.package,
-      @required this.onPurchased});
+      {required this.purchases,
+      required this.colors,
+      required this.package,
+      required this.onPurchased});
 
   @override
   _PurchaseDialogState createState() => _PurchaseDialogState();
 }
 
 class _SuccessContentParams {
-  final Iterable<Package>/*!*/ allIndividuallyPurchasablePackages;
-  final Package/*!*/ everythingPackage;
-  final Package/*!*/ requestedPackage;
+  final Iterable<Package> allIndividuallyPurchasablePackages;
+  final Package everythingPackage;
+  final Package requestedPackage;
 
   _SuccessContentParams(
-      {this.allIndividuallyPurchasablePackages,
-      this.everythingPackage,
-      this.requestedPackage});
+      {required this.allIndividuallyPurchasablePackages,
+      required this.everythingPackage,
+      required this.requestedPackage});
 }
 
 class _PurchaseDialogState extends State<PurchaseDialog> {
   /// Whether or not to show the error message in the dialog
   bool _showErrorMessage = false;
 
-  Future<_SuccessContentParams>/*!*/ _successContentFuture;
+  Future<_SuccessContentParams> _successContentFuture;
 
   @override
   void initState() {
@@ -106,10 +106,10 @@ class _PurchaseDialogState extends State<PurchaseDialog> {
               AsyncSnapshot<_SuccessContentParams> snapshot) {
             if (snapshot.hasData) {
               return PurchaseDialogSuccessContent(
-                requestedPackage: snapshot.data.requestedPackage,
-                everythingPackage: snapshot.data.everythingPackage,
+                requestedPackage: snapshot.data!.requestedPackage,
+                everythingPackage: snapshot.data!.everythingPackage,
                 allIndividuallyPurchasablePackages:
-                    snapshot.data.allIndividuallyPurchasablePackages,
+                    snapshot.data!.allIndividuallyPurchasablePackages,
                 onPurchaseButtonPressed: _purchaseButtonPressed,
               );
             } else if (snapshot.hasError) {

@@ -15,7 +15,7 @@ void main() {
   final testDatabaseName = 'inspiral-integration-tests.db';
 
   group('database migration tests', () {
-    Database db;
+    late Database db;
 
     setUpAll(() async {
       await deleteDatabase(databaseName: testDatabaseName);

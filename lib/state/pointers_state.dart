@@ -16,7 +16,7 @@ class Positions {
   /// This position in canvas coordinates
   final Offset canvas;
 
-  Positions({@required this.global, @required this.canvas});
+  Positions({required this.global, required this.canvas});
 
   /// Creates a `Positions` with both `canvas` and `global` set to `Offset.zero`
   factory Positions.zero() {
@@ -35,11 +35,11 @@ class TransformInfo {
   final Matrix4 transform;
   final Matrix4TransformDecomposition transformComponents;
 
-  TransformInfo({@required this.transform, @required this.transformComponents});
+  TransformInfo({required this.transform, required this.transformComponents});
 }
 
 class PointersState extends InspiralStateObject with WidgetsBindingObserver {
-  static PointersState _instance;
+  static PointersState? _instance;
 
   factory PointersState.init() {
     return _instance = PointersState._internal();
@@ -48,7 +48,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   factory PointersState() {
     assert(_instance != null,
         'The PointersState.init() factory constructor must be called before using the PointersState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   PointersState._internal() : super() {
@@ -64,7 +64,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     _pointerDeltas = {};
     _pointerDeltasView = UnmodifiableMapView(_pointerDeltas);
 
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   /// When the app is paused and then resumed, reset the state of all our
@@ -81,28 +81,28 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     }
   }
 
-  LinkedHashSet<int> _activePointerIds;
-  UnmodifiableSetView<int>/*!*/ _activePointerIdsView;
-  Map<int, Positions> _pointerPositions;
-  UnmodifiableMapView<int, Positions>/*!*/ _pointerPositionsView;
-  Map<int, Positions/*!*/> _pointerPreviousPositions;
-  UnmodifiableMapView<int, Positions/*!*/>/*!*/ _pointerPreviousPositionsView;
-  Map<int, Positions> _pointerDeltas;
-  UnmodifiableMapView<int, Positions>/*!*/ _pointerDeltasView;
+  late LinkedHashSet<int> _activePointerIds;
+  late UnmodifiableSetView<int> _activePointerIdsView;
+  late Map<int, Positions> _pointerPositions;
+  late UnmodifiableMapView<int, Positions> _pointerPositionsView;
+  late Map<int, Positions> _pointerPreviousPositions;
+  late UnmodifiableMapView<int, Positions> _pointerPreviousPositionsView;
+  late Map<int, Positions> _pointerDeltas;
+  late UnmodifiableMapView<int, Positions> _pointerDeltasView;
 
   // The set of all active pointer IDs,
   // orderd by when the the pointer was pressed
-  Set<int>/*!*/ get activePointerIds => _activePointerIdsView;
+  Set<int> get activePointerIds => _activePointerIdsView;
 
   /// A map of pointer ID to its last known position.
   /// Positions are in canvas coordinates.
-  Map<int, Positions>/*!*/ get pointerPositions => _pointerPositionsView;
+  Map<int, Positions> get pointerPositions => _pointerPositionsView;
 
   /// A map of pointer ID to its second-to-last known position.
   /// Positions are in canvas coordinates.
   /// If a pointer has not yet had two positions recorded,
   /// `Offset.zero` will be returned.
-  Map<int, Positions/*!*/>/*!*/ get pointerPreviousPositions =>
+  Map<int, Positions> get pointerPreviousPositions =>
       _pointerPreviousPositionsView;
 
   /// A map of pointer ID to its delta from its previous location.
@@ -110,7 +110,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   /// If the pointer has not yet moved (for example, if it has
   /// only experienced a `pointerDown`, not a `pointerMove`),
   /// its delta will be `Offset.zero`.
-  Map<int, Positions>/*!*/ get pointerDeltas => _pointerDeltasView;
+  Map<int, Positions> get pointerDeltas => _pointerDeltasView;
 
   int get count => _activePointerIds.length;
 
@@ -129,7 +129,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
           Positions(canvas: canvasPointerPosition, global: event.position);
       _pointerDeltas[event.pointer] = Positions.zero();
       _pointerPreviousPositions[event.pointer] =
-          _pointerPositions[event.pointer];
+          _pointerPositions[event.pointer]!;
       notifyListeners();
     }
   }
@@ -159,14 +159,14 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
       return;
     }
 
-    if (_pointerPreviousPositions[event.pointer].global != event.position) {
-      var originalLocation = _pointerPositions[event.pointer];
+    if (_pointerPreviousPositions[event.pointer]!.global != event.position) {
+      var originalLocation = _pointerPositions[event.pointer]!;
       var newLocation = Positions(
           canvas: allStateObjects.canvas.pixelToCanvasPosition(event.position),
           global: event.position);
 
       _pointerPreviousPositions[event.pointer] =
-          _pointerPositions[event.pointer];
+          _pointerPositions[event.pointer]!;
       _pointerPositions[event.pointer] = newLocation;
       _pointerDeltas[event.pointer] = newLocation - originalLocation;
 
@@ -196,7 +196,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   /// Returns a `Vector3` that represents the translation from the previous
   /// positions of the active pointers to the current positions
   Vector3 _getTranslation(
-      {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
+      {required Offset centerOfMass, required Offset previousCenterOfMass}) {
     return (centerOfMass - previousCenterOfMass).toVector3();
   }
 
@@ -204,12 +204,12 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   /// rotation from the positions of the active pointers
   /// to the current positions
   double _getRotation(
-      {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
+      {required Offset centerOfMass, required Offset previousCenterOfMass}) {
     var totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
       return sum +
           Line(previousCenterOfMass,
-                  _pointerPreviousPositions[pointerId].global)
-              .angleTo(Line(centerOfMass, _pointerPositions[pointerId].global));
+                  _pointerPreviousPositions[pointerId]!.global)
+              .angleTo(Line(centerOfMass, _pointerPositions[pointerId]!.global));
     });
 
     return totalDelta / count;
@@ -219,12 +219,12 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   /// scale of the previous positions of the active pointers
   /// to the current positions
   double _getScale(
-      {@required Offset centerOfMass, @required Offset previousCenterOfMass}) {
+      {required Offset centerOfMass, required Offset previousCenterOfMass}) {
     var totalDelta = _activePointerIds.fold<double>(0.0, (sum, pointerId) {
       return sum +
-          Line(centerOfMass, _pointerPositions[pointerId].global).length() /
+          Line(centerOfMass, _pointerPositions[pointerId]!.global).length() /
               Line(previousCenterOfMass,
-                      _pointerPreviousPositions[pointerId].global)
+                      _pointerPreviousPositions[pointerId]!.global)
                   .length();
     });
 
@@ -247,7 +247,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
 
   /// Returns a new Vector3 that prevents the user from panning too far
   Vector3 _enforcePanBounds(Vector3 translation,
-      Matrix4TransformDecomposition/*!*/ currentTransformComponents) {
+      Matrix4TransformDecomposition currentTransformComponents) {
     // TODO: https://gitlab.com/nfriend/inspiral/-/issues/50
     // For now, there is no limit on how far the canvas can be panned.
     // This is mitigated by the "reset view" option in the side panel,
@@ -262,11 +262,11 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     // logic if `count == 1` because `_enforcePanBounds` doesn't do anything
     // (yet - see comment in the method body). Once `_enforcePanBounds` is
     // implemented, this variable will need to be initialized here.
-    Matrix4TransformDecomposition currentTransformComponents;
+    late Matrix4TransformDecomposition currentTransformComponents;
 
     if (count == 1) {
       var translation =
-          _pointerDeltas[_activePointerIds.first].global.toVector3();
+          _pointerDeltas[_activePointerIds.first]!.global.toVector3();
       translation = _enforcePanBounds(translation, currentTransformComponents);
       return TransformInfo(
           transform: Matrix4.identity()..translate(translation),
@@ -320,7 +320,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 }

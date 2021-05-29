@@ -15,11 +15,11 @@ class _StrokeAndStyle {
   final double width;
   final StrokeStyle style;
   final String entitlement;
-  final String package;
+  final String? package;
 
   const _StrokeAndStyle(
-      {@required this.width,
-      @required this.style,
+      {required this.width,
+      required this.style,
       this.entitlement = Entitlement.free,
       this.package});
 }
@@ -112,7 +112,7 @@ class PenSelector extends StatelessWidget {
                   builder:
                       (BuildContext context, AsyncSnapshot<bool> snapshot) {
                     var showDeleteButton = snapshot.hasData &&
-                        snapshot.data &&
+                        snapshot.data! &&
                         colors.showPenColorDeleteButtons;
 
                     return ColorSelectorThumbnail(

@@ -9,13 +9,13 @@ import 'package:uuid/uuid.dart';
 
 class SnapPointStateRehydrationResult {
   final Set<Offset> snapPoints;
-  final Offset activeSnapPoint;
+  final Offset? activeSnapPoint;
   final bool areActive;
 
   SnapPointStateRehydrationResult(
-      {@required this.snapPoints,
-      @required this.activeSnapPoint,
-      @required this.areActive});
+      {required this.snapPoints,
+      required this.activeSnapPoint,
+      required this.areActive});
 }
 
 class SnapPointStatePersistor {

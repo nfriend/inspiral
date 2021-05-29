@@ -11,8 +11,8 @@ class SnackbarContainer extends StatefulWidget {
 
 const _snackBarTransitionDuration = Duration(milliseconds: 250);
 
-AnimationController/*?*/ _controller;
-Animation<double> _animation;
+AnimationController? _controller;
+late Animation<double> _animation;
 
 class _SnackbarContainerState extends State<SnackbarContainer>
     with TickerProviderStateMixin {
@@ -25,7 +25,7 @@ class _SnackbarContainerState extends State<SnackbarContainer>
       vsync: this,
     );
     _animation =
-        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
+        CurvedAnimation(parent: _controller!, curve: Curves.fastOutSlowIn);
   }
 
   @override
@@ -36,7 +36,7 @@ class _SnackbarContainerState extends State<SnackbarContainer>
     final textColor = isDark ? Colors.black : Colors.white;
 
     if (_controller == null ||
-        (!snackbar.isVisible && _controller.isDismissed)) {
+        (!snackbar.isVisible && _controller!.isDismissed)) {
       // If the snackbar is not visible, and any previous animations have
       // finished, just return an empty Container().
       // Or, if the controller is `null`, we know this component has been
@@ -46,9 +46,9 @@ class _SnackbarContainerState extends State<SnackbarContainer>
     }
 
     if (snackbar.isVisible) {
-      _controller.forward();
+      _controller!.forward();
     } else {
-      _controller.reverse();
+      _controller!.reverse();
     }
 
     return FadeTransition(
@@ -77,7 +77,7 @@ class _SnackbarContainerState extends State<SnackbarContainer>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     _controller = null;
     super.dispose();
   }

@@ -8,10 +8,10 @@ import 'package:provider/provider.dart';
 /// owned. If the entitlement is not purchased, the purchase dialog is shown
 /// for the provide package and the callback is not executed.
 Future<void> Function() ifPurchased(
-    {BuildContext context,
-    String /*!*/ entitlement,
-    String /*?*/ package,
-    void Function() /*!*/ callbackIfPurchased}) {
+    {required BuildContext context,
+    required String entitlement,
+    String? package,
+    required void Function() callbackIfPurchased}) {
   final purchases = Provider.of<PurchasesState>(context, listen: false);
   final colors = Provider.of<ColorState>(context, listen: false);
 
@@ -26,7 +26,7 @@ Future<void> Function() ifPurchased(
             return PurchaseDialog(
                 purchases: purchases,
                 colors: colors,
-                package: package,
+                package: package!,
                 onPurchased: callbackIfPurchased);
           });
     } else {

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 /// A widget that provides a theme based on the currently selected
 /// pen and background colors
 class DynamicTheme extends StatelessWidget {
-  DynamicTheme({@required this.child});
+  DynamicTheme({required this.child});
 
   final Widget child;
 

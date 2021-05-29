@@ -1,7 +1,7 @@
 import 'package:inspiral/state/state.dart';
 
 class ProgressState extends InspiralStateObject {
-  static ProgressState _instance;
+  static ProgressState? _instance;
 
   factory ProgressState.init() {
     return _instance = ProgressState._internal();
@@ -10,7 +10,7 @@ class ProgressState extends InspiralStateObject {
   factory ProgressState() {
     assert(_instance != null,
         'The ProgressState.init() factory constructor must be called before using the ProgressState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   ProgressState._internal() : super();
@@ -20,11 +20,11 @@ class ProgressState extends InspiralStateObject {
   bool _isLoading = false;
 
   /// An optional message to show with the progress bar
-  String get loadingMessage => _loadingMessage;
-  String _loadingMessage;
+  String? get loadingMessage => _loadingMessage;
+  String? _loadingMessage;
 
   /// Shows the modal progress overlay, with an optional message
-  void showModalProgress({String message}) {
+  void showModalProgress({String? message}) {
     _isLoading = true;
     _loadingMessage = message;
     notifyListeners();

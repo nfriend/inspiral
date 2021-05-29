@@ -13,7 +13,7 @@ class CanvasStateRehydrationResult {
   final CanvasSizeAndName canvasSizeAndName;
 
   CanvasStateRehydrationResult(
-      {@required this.transform, @required this.canvasSizeAndName});
+      {required this.transform, required this.canvasSizeAndName});
 }
 
 class CanvasStatePersistor {
@@ -50,7 +50,7 @@ class CanvasStatePersistor {
             where: getWhereClauseForVersion(Schema.state.version, null)))
         .first;
 
-    var canvasSizeAndNameId = state[Schema.state.canvasSize] as String;
+    var canvasSizeAndNameId = state[Schema.state.canvasSize] as String?;
     CanvasSizeAndName canvasSizeAndName;
 
     if (canvasSizeAndNameId == null) {
@@ -66,23 +66,23 @@ class CanvasStatePersistor {
           CanvasSize.all.firstWhere((csan) => csan.id == canvasSizeAndNameId);
     }
 
-    var elements = <double>[
-      state[Schema.state.canvasTransform_0] as double,
-      state[Schema.state.canvasTransform_1] as double,
-      state[Schema.state.canvasTransform_2] as double,
-      state[Schema.state.canvasTransform_3] as double,
-      state[Schema.state.canvasTransform_4] as double,
-      state[Schema.state.canvasTransform_5] as double,
-      state[Schema.state.canvasTransform_6] as double,
-      state[Schema.state.canvasTransform_7] as double,
-      state[Schema.state.canvasTransform_8] as double,
-      state[Schema.state.canvasTransform_9] as double,
-      state[Schema.state.canvasTransform_10] as double,
-      state[Schema.state.canvasTransform_11] as double,
-      state[Schema.state.canvasTransform_12] as double,
-      state[Schema.state.canvasTransform_13] as double,
-      state[Schema.state.canvasTransform_14] as double,
-      state[Schema.state.canvasTransform_15] as double,
+    var elements = <double?>[
+      state[Schema.state.canvasTransform_0] as double?,
+      state[Schema.state.canvasTransform_1] as double?,
+      state[Schema.state.canvasTransform_2] as double?,
+      state[Schema.state.canvasTransform_3] as double?,
+      state[Schema.state.canvasTransform_4] as double?,
+      state[Schema.state.canvasTransform_5] as double?,
+      state[Schema.state.canvasTransform_6] as double?,
+      state[Schema.state.canvasTransform_7] as double?,
+      state[Schema.state.canvasTransform_8] as double?,
+      state[Schema.state.canvasTransform_9] as double?,
+      state[Schema.state.canvasTransform_10] as double?,
+      state[Schema.state.canvasTransform_11] as double?,
+      state[Schema.state.canvasTransform_12] as double?,
+      state[Schema.state.canvasTransform_13] as double?,
+      state[Schema.state.canvasTransform_14] as double?,
+      state[Schema.state.canvasTransform_15] as double?,
     ];
 
     Matrix4 transform;
@@ -99,7 +99,7 @@ class CanvasStatePersistor {
           screenSize: MediaQuery.of(context).size,
           initialScale: 0.3);
     } else {
-      transform = Matrix4.fromList(elements);
+      transform = Matrix4.fromList(elements as List<double>);
     }
 
     return CanvasStateRehydrationResult(

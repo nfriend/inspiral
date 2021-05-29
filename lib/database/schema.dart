@@ -16,7 +16,7 @@ class Schema {
 class Table {
   final String name;
 
-  const Table({/*required*/ @required this.name});
+  const Table({/*required*/ required this.name});
 
   @override
   String toString() => name;

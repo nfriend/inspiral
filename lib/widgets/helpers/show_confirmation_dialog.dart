@@ -7,10 +7,10 @@ var _buttonStyle = ButtonStyle(
 
 /// Shows a confirm/cancel modal dialog with a custom message
 void showConfirmationDialog(
-    {@required BuildContext context,
-    String message,
-    Widget messageWidget,
-    @required void Function() onConfirm,
+    {required BuildContext context,
+    String? message,
+    Widget? messageWidget,
+    required void Function() onConfirm,
     String confirmButtonText = 'yes'}) {
   assert((message == null) ^ (messageWidget == null),
       'Exactly one of the `message` and `messageWidget` parameters must be non-null');
@@ -19,7 +19,7 @@ void showConfirmationDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: SingleChildScrollView(child: messageWidget ?? Text(message)),
+          content: SingleChildScrollView(child: messageWidget ?? Text(message!)),
           actions: <Widget>[
             TextButton(
               onPressed: () {

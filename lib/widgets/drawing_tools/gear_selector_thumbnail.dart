@@ -19,9 +19,9 @@ class GearSelectorThumbnail extends StatelessWidget {
   final bool isCompatibleWithFixedGear;
 
   GearSelectorThumbnail(
-      {@required this.gear,
-      @required this.isActive,
-      @required this.onGearTap,
+      {required this.gear,
+      required this.isActive,
+      required this.onGearTap,
       this.isCompatibleWithFixedGear = true});
 
   @override

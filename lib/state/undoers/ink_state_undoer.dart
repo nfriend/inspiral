@@ -33,7 +33,7 @@ class InkStateUndoer {
     await ink.pendingCanvasManipulation;
     await ink.bakeImage();
 
-    var allIdsInVersion = <String/*!*/>[];
+    List<String?> allIdsInVersion = <String>[];
     var allUpdates = <Future>[];
 
     for (var entry in ink.tileImages.entries) {
@@ -47,8 +47,8 @@ class InkStateUndoer {
 
         allUpdates.add(tileImage
             .toByteData(format: ImageByteFormat.png)
-            .then((ByteData byteData) {
-          var bytes = byteData.buffer.asUint8List();
+            .then((ByteData? byteData) {
+          var bytes = byteData!.buffer.asUint8List();
 
           batch.insert(Schema.tileData.toString(), {
             Schema.tileData.id: tileDatabaseId,
@@ -57,7 +57,7 @@ class InkStateUndoer {
             Schema.tileData.bytes: bytes
           });
 
-          ink.tilePositionToDatabaseId[tilePosition] = tileDatabaseId;
+          ink.tilePositionToDatabaseId[tilePosition] = tileDatabaseId!;
           ink.unsavedTiles.remove(tilePosition);
         }));
       }
@@ -76,15 +76,15 @@ class InkStateUndoer {
     }
   }
 
-  static Future<void> undo(int/*!*/ version, InkState ink) async {
+  static Future<void> undo(int version, InkState ink) async {
     await _undoOrRedo(version, ink);
   }
 
-  static Future<void> redo(int/*!*/ version, InkState ink) async {
+  static Future<void> redo(int version, InkState ink) async {
     await _undoOrRedo(version, ink);
   }
 
-  static Future<void> _undoOrRedo(int/*!*/ version, InkState ink) async {
+  static Future<void> _undoOrRedo(int version, InkState ink) async {
     try {
       var tileVersionResult = await getTilesForVersion(version);
 

@@ -7,7 +7,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UndoRedoState extends InspiralStateObject {
-  static UndoRedoState _instance;
+  static UndoRedoState? _instance;
 
   factory UndoRedoState.init() {
     return _instance = UndoRedoState._internal();
@@ -16,7 +16,7 @@ class UndoRedoState extends InspiralStateObject {
   factory UndoRedoState() {
     assert(_instance != null,
         'The UndoState.init() factory constructor must be called before using the UndoState() constructor.');
-    return _instance;
+    return _instance!;
   }
 
   UndoRedoState._internal() : super();
@@ -37,7 +37,7 @@ class UndoRedoState extends InspiralStateObject {
     super.dispose();
   }
 
-  VoidCallback _onInkChange;
+  late VoidCallback _onInkChange;
 
   /// Whether or not there is content that can be undone, and
   /// if it's okay to call undo right now (i.e., there are no
@@ -104,12 +104,12 @@ class UndoRedoState extends InspiralStateObject {
   ///
   /// If the user then begins to draw again, `maxSnapshotVersion` will
   /// be updated to 3.
-  int/*!*/ get currentSnapshotVersion => _currentSnapshotVersion;
-  int/*!*/ _currentSnapshotVersion;
+  int get currentSnapshotVersion => _currentSnapshotVersion;
+  int _currentSnapshotVersion;
 
   /// The last (i.e. farthest in the future) snapshot version.
-  int/*!*/ get maxSnapshotVersion => _maxSnapshotVersion;
-  int/*!*/ _maxSnapshotVersion;
+  int get maxSnapshotVersion => _maxSnapshotVersion;
+  late int _maxSnapshotVersion;
 
   /// Whether or not the "snapshotting" process is currently in progress
   bool _isCreatingSnapshot = false;

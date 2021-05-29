@@ -15,7 +15,7 @@ class CanvasSizeAndName {
   final String name;
 
   const CanvasSizeAndName(
-      {@required this.id, @required this.size, @required this.name});
+      {required this.id, required this.size, required this.name});
 
   @override
   bool operator ==(Object other) =>

@@ -7,7 +7,7 @@ class NoColorThumbnail extends StatelessWidget {
   final bool isActive;
   final void Function() onColorTap;
 
-  NoColorThumbnail({@required this.isActive, @required this.onColorTap});
+  NoColorThumbnail({required this.isActive, required this.onColorTap});
 
   @override
   Widget build(BuildContext context) {

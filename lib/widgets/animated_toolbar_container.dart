@@ -9,7 +9,7 @@ class AnimatedToolbarContainer extends StatelessWidget {
   final double translateX;
 
   AnimatedToolbarContainer(
-      {@required this.child, this.translateY = 0.0, this.translateX = 0.0});
+      {required this.child, this.translateY = 0.0, this.translateX = 0.0});
 
   @override
   Widget build(BuildContext context) {

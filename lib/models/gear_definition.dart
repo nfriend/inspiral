@@ -61,22 +61,22 @@ class GearDefinition {
   final String package;
 
   GearDefinition(
-      {@required this.id,
-      @required this.image,
-      @required this.thumbnailImage,
-      @required this.size,
-      @required this.center,
-      @required this.toothCount,
-      @required this.points,
-      @required this.holes,
-      @required this.isRing,
-      @required this.isRound,
-      @required this.entitlement,
-      @required this.package,
-      @required this.smallestConvexDiff,
-      @required this.biggestConvexDiff,
-      @required this.smallestConcaveDiff,
-      @required this.biggestConcaveDiff});
+      {required this.id,
+      required this.image,
+      required this.thumbnailImage,
+      required this.size,
+      required this.center,
+      required this.toothCount,
+      required this.points,
+      required this.holes,
+      required this.isRing,
+      required this.isRound,
+      required this.entitlement,
+      required this.package,
+      required this.smallestConvexDiff,
+      required this.biggestConvexDiff,
+      required this.smallestConcaveDiff,
+      required this.biggestConcaveDiff});
 
   /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {

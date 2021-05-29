@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 /// Calculates the number of rotations necessary to draw a complete design,
 /// given a fixed gear and a rotating gear
 int calculateRotationCount(
-    {@required int fixedGearTeeth,
-    @required int rotatingGearTeeth,
-    @required double selectedHoleDistance,
+    {required int fixedGearTeeth,
+    required int rotatingGearTeeth,
+    required double selectedHoleDistance,
     bool rotatingGearIsCircular = false}) {
   // If the rotating gear is round, and the hole is in position 0 (the very
   // center of the gear), we only need a single rotation to draw the complete
