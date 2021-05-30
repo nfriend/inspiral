@@ -19,23 +19,21 @@ class SettingsDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              SettingsDrawerTitle(),
-              isScreenBigEnoughForRedoButton(context) ? null : RedoListItem(),
-              EraseCanvasListItem(),
-              RecenterViewListItem(),
-              CanvasSizeListItem(),
-              BackgroundTransparencyListItem(),
-              KeepToolsDrawerClosedListItem(),
-              PreventIncompatibleGearPairingsListItem(),
-              AutoDrawSpeedListItem(),
-              ResetColorsListItem(),
-              RestorePurchasesListItem(),
-              HelpListItem(),
-              AppStoreReviewListItem(),
-              SocialButtonRow()
-            ].where((element) => element != null).toList() as List<Widget>));
+        child: ListView(padding: EdgeInsets.zero, children: [
+      SettingsDrawerTitle(),
+      if (!isScreenBigEnoughForRedoButton(context)) RedoListItem(),
+      EraseCanvasListItem(),
+      RecenterViewListItem(),
+      CanvasSizeListItem(),
+      BackgroundTransparencyListItem(),
+      KeepToolsDrawerClosedListItem(),
+      PreventIncompatibleGearPairingsListItem(),
+      AutoDrawSpeedListItem(),
+      ResetColorsListItem(),
+      RestorePurchasesListItem(),
+      HelpListItem(),
+      AppStoreReviewListItem(),
+      SocialButtonRow()
+    ]));
   }
 }

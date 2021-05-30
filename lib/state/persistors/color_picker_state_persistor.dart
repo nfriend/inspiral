@@ -1,3 +1,4 @@
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/state.dart';
@@ -72,10 +73,19 @@ class ColorPickerStatePersistor {
       WHERE ${getWhereClauseForVersion(Schema.state.version, null, tableAlias: 's')}
     ''')).first;
 
+    var lastSelectedPenColor = state[Schema.state.lastSelectedPenColor] != null
+        ? tinyColorFromHexString(
+            state[Schema.state.lastSelectedPenColor] as String)
+        : TinyColor(defaultLastSelectedPenColor);
+
+    var lastSelectedCanvasColor =
+        state[Schema.state.lastSelectedCanvasColor] != null
+            ? tinyColorFromHexString(
+                state[Schema.state.lastSelectedCanvasColor] as String)
+            : TinyColor(defaultLastSelectedCanvasColor);
+
     return ColorPickerStateRehydrationResult(
-        lastSelectedPenColor: tinyColorFromHexString(
-            state[Schema.state.lastSelectedPenColor] as String),
-        lastSelectedCanvasColor: tinyColorFromHexString(
-            state[Schema.state.lastSelectedCanvasColor] as String));
+        lastSelectedPenColor: lastSelectedPenColor,
+        lastSelectedCanvasColor: lastSelectedCanvasColor);
   }
 }

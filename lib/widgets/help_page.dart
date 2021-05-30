@@ -23,8 +23,7 @@ class _HelpPageState extends State<HelpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Help')),
-      body: Stack(
-          children: [
+      body: Stack(children: [
         WebView(
             initialUrl: 'https://inspiral.nathanfriend.io/help',
             onPageFinished: (finish) {
@@ -32,11 +31,8 @@ class _HelpPageState extends State<HelpPage> {
                 _isLoading = false;
               });
             }),
-        _isLoading ? loadingIndicator : null
-      ]
-              // Remove null entries
-              .where((w) => w != null)
-              .toList() as List<Widget>),
+        if (_isLoading) loadingIndicator
+      ]),
     );
   }
 }

@@ -40,7 +40,7 @@ class SettingsStatePersistor {
             where: getWhereClauseForVersion(Schema.state.version, null)))
         .first;
 
-    var autoDrawSpeed = state[Schema.state.autoDrawSpeed] as String?;
+    var autoDrawSpeed = state[Schema.state.autoDrawSpeed] as String;
     if (!AutoDrawSpeed.all.contains(autoDrawSpeed)) {
       // This should never happen, just handling this here to be extra safe
       autoDrawSpeed = AutoDrawSpeed.slow;
@@ -54,6 +54,6 @@ class SettingsStatePersistor {
         preventIncompatibleGearPairings:
             (state[Schema.state.preventIncompatibleGearPairings] as int)
                 .toBool(),
-        autoDrawSpeed: autoDrawSpeed!);
+        autoDrawSpeed: autoDrawSpeed);
   }
 }

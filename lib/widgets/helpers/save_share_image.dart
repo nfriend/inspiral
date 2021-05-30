@@ -86,8 +86,12 @@ Future<String?> _cropAndSaveToTempFile(BuildContext context) async {
   var canvasBoundary =
       canvasKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
   var screenshot = await canvasBoundary.toImage();
-  var byteData = await (screenshot.toByteData(format: ImageByteFormat.png)
-      as FutureOr<ByteData>);
+  var byteData = await screenshot.toByteData(format: ImageByteFormat.png);
+
+  if (byteData == null) {
+    throw ('converting the screenshot `Image` to a PNG returned `null`');
+  }
+
   var pngBytes = byteData.buffer.asUint8List();
 
   var directory = (await getTemporaryDirectory());

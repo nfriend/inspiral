@@ -36,7 +36,7 @@ class _InspiralProvidersState extends State<InspiralProviders>
         builder:
             (BuildContext context, AsyncSnapshot<AllStateObjects> snapshot) {
           if (snapshot.hasError) {
-            throw ('Something went wrong while initializing state! ${snapshot.error}');
+            throw ('Something went wrong while initializing state! ${snapshot.error}\n${snapshot.stackTrace}');
           } else if (snapshot.connectionState == ConnectionState.done) {
             return MultiProvider(providers: [
               ChangeNotifierProvider(create: (context) => SettingsState()),

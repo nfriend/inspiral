@@ -28,9 +28,9 @@ Future<void> snapshotVersionedTables(Batch batch, int version,
   String? selectedCanvasColorId;
   String? lastSelectedCanvasColorId;
   for (var colorRow in colorRows) {
-    var oldId = colorRow[Schema.colors.id] as String?;
+    var oldId = colorRow[Schema.colors.id] as String;
 
-    var colorRowClone = Map<String, Object>.from(colorRow);
+    var colorRowClone = Map<String, Object?>.from(colorRow);
     var newId = _uuid.v4();
     colorRowClone[Schema.colors.id] = newId;
     colorRowClone[Schema.colors.version] = version;

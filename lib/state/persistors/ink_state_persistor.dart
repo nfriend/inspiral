@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart' hide Image;
+import 'package:inspiral/constants.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/models/ink_line.dart';
 import 'package:inspiral/models/stroke_style.dart';
@@ -108,8 +109,15 @@ class InkStatePersistor {
         orderBy: '"${Schema.points.order}" ASC');
 
     var lines = inkLines.map((inkLine) {
+      // Null checking here because the database schema lists the
+      // `inkLines.colorId` field as nullable. However, this _should_ never
+      // happen. Perhaps this column shouldn't be nullable ¯\_(ツ)_/¯
+      var color = inkLine[Schema.inkLines.colorId] != null
+          ? colorFromHexString(inkLine[Schema.inkLines.colorId] as String)
+          : defaultSelectedPenColor.color;
+
       var newInkLine = InkLine(
-          color: colorFromHexString(inkLine[Schema.inkLines.colorId] as String),
+          color: color,
           strokeWidth: inkLine[Schema.inkLines.strokeWidth] as double,
           strokeStyle:
               inkLine[Schema.inkLines.strokeStyle] == StrokeStyleType.normal

@@ -44,10 +44,9 @@ class ModalProgress extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: columnChildren)))));
 
-    return Stack(
-        children: [
+    return Stack(children: [
       Positioned.fill(child: child),
-      progress.isLoading ? loadingIndicator : null,
-    ].where((element) => element != null).toList() as List<Widget>);
+      if (progress.isLoading) loadingIndicator
+    ]);
   }
 }

@@ -247,8 +247,10 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
   }
 
   /// Returns a new Vector3 that prevents the user from panning too far
+  /// The `currentTransformComponents` parameter should be made non-nullable
+  /// if/when this method is actually implemented.
   Vector3 _enforcePanBounds(Vector3 translation,
-      Matrix4TransformDecomposition currentTransformComponents) {
+      Matrix4TransformDecomposition? currentTransformComponents) {
     // TODO: https://gitlab.com/nfriend/inspiral/-/issues/50
     // For now, there is no limit on how far the canvas can be panned.
     // This is mitigated by the "reset view" option in the side panel,
@@ -268,7 +270,7 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     if (count == 1) {
       var translation =
           _pointerDeltas[_activePointerIds.first]!.global.toVector3();
-      translation = _enforcePanBounds(translation, currentTransformComponents!);
+      translation = _enforcePanBounds(translation, currentTransformComponents);
       return TransformInfo(
           transform: Matrix4.identity()..translate(translation),
           transformComponents: Matrix4TransformDecomposition(

@@ -99,7 +99,7 @@ class CanvasStatePersistor {
           screenSize: MediaQuery.of(context).size,
           initialScale: 0.3);
     } else {
-      transform = Matrix4.fromList(elements as List<double>);
+      transform = Matrix4.fromList(elements.cast<double>());
     }
 
     return CanvasStateRehydrationResult(
