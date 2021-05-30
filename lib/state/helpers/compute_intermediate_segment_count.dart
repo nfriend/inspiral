@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
 import 'package:inspiral/constants.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -14,9 +13,8 @@ import 'package:vector_math/vector_math.dart';
 /// @param distanceFromLastPoint The distance between the last & current points
 /// @param angleDeltaMagnitude The change in angle between the two points
 int computeIntermediateSegmentCount(
-    {@required double distanceFromLastPoint,
-    @required double angleDeltaMagnitude}) {
-
+    {required double distanceFromLastPoint,
+    required double angleDeltaMagnitude}) {
   return max(_computeByFixedAngle(angleDeltaMagnitude),
       _computeBySegmentLength(distanceFromLastPoint));
 }
