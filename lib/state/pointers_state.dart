@@ -125,11 +125,13 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     if (pointerIsNew) {
       var canvasPointerPosition =
           allStateObjects.canvas.pixelToCanvasPosition(event.position);
-      _pointerPositions[event.pointer] =
+      var newPointerPositions =
           Positions(canvas: canvasPointerPosition, global: event.position);
+
+      _pointerPositions[event.pointer] = newPointerPositions;
       _pointerDeltas[event.pointer] = Positions.zero();
-      _pointerPreviousPositions[event.pointer] =
-          _pointerPositions[event.pointer]!;
+      _pointerPreviousPositions[event.pointer] = newPointerPositions;
+
       notifyListeners();
     }
   }
@@ -155,7 +157,11 @@ class PointersState extends InspiralStateObject with WidgetsBindingObserver {
     // understand how or why this happens, but let's check for this edge case
     // here to prevent the errors.
     // Original issue: https://gitlab.com/nfriend/inspiral/-/issues/98.
-    if (_pointerPreviousPositions[event.pointer] == null) {
+    // Also testing _pointerPositions[event.pointer] since we're asserting
+    // that it's non-null below with !. (Although I haven't seen this one
+    // happen in real life).
+    if (_pointerPreviousPositions[event.pointer] == null ||
+        _pointerPositions[event.pointer] == null) {
       return;
     }
 

@@ -83,13 +83,17 @@ Future<String?> _cropAndSaveToTempFile(BuildContext context) async {
       ? canvasWithBackgroundGlobalKey
       : canvasWithoutBackgroundGlobalKey;
 
+  if (canvasKey.currentContext == null) {
+    throw 'No canvas was found for the global `canvasKey` in the current context';
+  }
+
   var canvasBoundary =
       canvasKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
   var screenshot = await canvasBoundary.toImage();
   var byteData = await screenshot.toByteData(format: ImageByteFormat.png);
 
   if (byteData == null) {
-    throw ('converting the screenshot `Image` to a PNG returned `null`');
+    throw 'converting the screenshot `Image` to a PNG returned `null`';
   }
 
   var pngBytes = byteData.buffer.asUint8List();

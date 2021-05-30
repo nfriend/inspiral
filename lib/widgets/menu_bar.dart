@@ -51,17 +51,7 @@ class _MenuBarState extends State<MenuBar> {
         ? Icon(Icons.visibility)
         : Icon(Icons.visibility_off);
 
-    final redoButton = isScreenBigEnoughForRedoButton(context)
-        ? _ManuBarButtonParams(
-            icon: isRedoing ? Icon(Icons.hourglass_bottom) : Icon(Icons.redo),
-            disabled: !redoAvailable,
-            onPressed: () async {
-              await undoRedo.triggerRedo();
-            },
-            tooltipMessage: 'Redo')
-        : null;
-
-    var buttons = <_ManuBarButtonParams?>[
+    var buttons = <_ManuBarButtonParams>[
       _ManuBarButtonParams(
           icon: Icon(Icons.save),
           onPressed: () => saveImage(context),
@@ -81,7 +71,14 @@ class _MenuBarState extends State<MenuBar> {
             await undoRedo.triggerUndo();
           },
           tooltipMessage: 'Undo'),
-      redoButton,
+      if (isScreenBigEnoughForRedoButton(context))
+        _ManuBarButtonParams(
+            icon: isRedoing ? Icon(Icons.hourglass_bottom) : Icon(Icons.redo),
+            disabled: !redoAvailable,
+            onPressed: () async {
+              await undoRedo.triggerRedo();
+            },
+            tooltipMessage: 'Redo'),
       _ManuBarButtonParams(
           icon: Icon(Icons.menu),
           onPressed: () {
@@ -92,7 +89,7 @@ class _MenuBarState extends State<MenuBar> {
             useLandscapeMode ? scaffold.openDrawer() : scaffold.openEndDrawer();
           },
           tooltipMessage: 'Show menu')
-    ].where((element) => element != null).toList();
+    ];
 
     return Container(
         color: colors.uiBackgroundColor.color,
@@ -124,7 +121,7 @@ class _MenuBarState extends State<MenuBar> {
                                 child: IconButton(
                                   color: colors.uiTextColor.color,
                                   onPressed:
-                                      button!.disabled ? null : button.onPressed,
+                                      button.disabled ? null : button.onPressed,
                                   icon: button.icon,
                                   iconSize: iconSize,
                                   tooltip: button.tooltipMessage,

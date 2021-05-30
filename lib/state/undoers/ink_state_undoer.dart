@@ -41,6 +41,10 @@ class InkStateUndoer {
       var tileImage = entry.value;
       var tileDatabaseId = ink.tilePositionToDatabaseId[tilePosition];
 
+      if (tileDatabaseId == null) {
+        throw 'no database ID recorded for tile at position $tilePosition';
+      }
+
       if (ink.unsavedTiles.containsKey(tilePosition)) {
         // This tile hasn't yet been saved to the database, so do this now.
         tileDatabaseId = _uuid.v4();
@@ -48,7 +52,11 @@ class InkStateUndoer {
         allUpdates.add(tileImage
             .toByteData(format: ImageByteFormat.png)
             .then((ByteData? byteData) {
-          var bytes = byteData!.buffer.asUint8List();
+          if (byteData == null) {
+            throw 'snapshotting a tile `Image` as a PNG returned `null`';
+          }
+
+          var bytes = byteData.buffer.asUint8List();
 
           batch.insert(Schema.tileData.toString(), {
             Schema.tileData.id: tileDatabaseId,

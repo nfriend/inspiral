@@ -38,7 +38,7 @@ Future<Map<Offset, Image>> bakeImage(
     var canvas = Canvas(recorder);
     DryInkTilePainter(
             position: tilePosition,
-            tileImage: tileImages[tilePosition]!,
+            tileImage: tileImages[tilePosition],
             lines: linesToBake)
         .paint(canvas, renderedSize);
 
