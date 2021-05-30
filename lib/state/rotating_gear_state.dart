@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:inspiral/constants.dart';
 import 'package:inspiral/models/auto_draw_speed.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:inspiral/state/helpers/compute_intermediate_segment_count.dart';
 import 'package:inspiral/state/helpers/get_rotating_gear_state_for_version.dart';
 import 'package:inspiral/state/persistors/rotating_gear_state_persistor.dart';
 import 'package:inspiral/state/state.dart';
@@ -355,16 +356,10 @@ class RotatingGearState extends BaseGearState {
 
     // Otherwise, the point is too far away from the last point.
     // Calculate some intermediate points to avoid choppy lines.
-
     var pointsToAdd = <Offset>[];
-
-    // Calculate intermediate rotation results at approximately every 6 degrees.
-    // 6 degrees is an arbitrary angle which seems to produce relatively
-    // smooth lines for all gear combinations. It's a balancing act - smaller
-    // angles create smoother line, but also generate more points, which
-    // triggers more baking processes = more UI jank. Bigger angles provide
-    // a smoother UX, but draw lower-quality lines.
-    var segmentsToDraw = (angleDeltaMagnitude / (6.0 * degrees2Radians)).ceil();
+    var segmentsToDraw = computeIntermediateSegmentCount(
+        distanceFromLastPoint: segmentLength,
+        angleDeltaMagnitude: angleDeltaMagnitude);
     var angleDelta = (angle - _lastAngle) / segmentsToDraw;
     for (var i = 1; i <= segmentsToDraw; i++) {
       var incrementalResult = _getRotationForAngle(_lastAngle + angleDelta * i);
