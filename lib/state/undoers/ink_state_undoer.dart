@@ -33,17 +33,13 @@ class InkStateUndoer {
     await ink.pendingCanvasManipulation;
     await ink.bakeImage();
 
-    List<String?> allIdsInVersion = <String>[];
+    var allIdsInVersion = <String>[];
     var allUpdates = <Future>[];
 
     for (var entry in ink.tileImages.entries) {
       var tilePosition = entry.key;
       var tileImage = entry.value;
       var tileDatabaseId = ink.tilePositionToDatabaseId[tilePosition];
-
-      if (tileDatabaseId == null) {
-        throw 'no database ID recorded for tile at position $tilePosition';
-      }
 
       if (ink.unsavedTiles.containsKey(tilePosition)) {
         // This tile hasn't yet been saved to the database, so do this now.
@@ -68,6 +64,10 @@ class InkStateUndoer {
           ink.tilePositionToDatabaseId[tilePosition] = tileDatabaseId!;
           ink.unsavedTiles.remove(tilePosition);
         }));
+      }
+
+      if (tileDatabaseId == null) {
+        throw '`tileDatabaseId` cannot be null';
       }
 
       allIdsInVersion.add(tileDatabaseId);
