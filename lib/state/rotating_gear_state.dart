@@ -179,7 +179,7 @@ class RotatingGearState extends BaseGearState {
       return;
     }
 
-    _quickSnapshotIfRequested();
+    await _quickSnapshotIfRequested();
 
     isDrawingOneRotation = true;
 
@@ -372,9 +372,16 @@ class RotatingGearState extends BaseGearState {
 
   /// Creates a new quick undo/redo snapshot if at least one state object
   /// has requested one to be created at the start of the next draw action.
-  void _quickSnapshotIfRequested() {
+  Future<void> _quickSnapshotIfRequested() async {
     if (allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw) {
       unawaited(allStateObjects.undoRedo.createQuickSnapshot());
+
+      // Give the snapshot process above a chance to grab the latest state
+      // before it's quickly animated by auto-draw. Without this, the snapshot
+      // process sometimes grabs the state of the gears mid-auto draw,
+      // causing an undo to place the rotating gear at a different location
+      // than where it was right before auto-draw was triggered.
+      await Future.delayed(Duration(milliseconds: 16));
     }
   }
 
