@@ -79,11 +79,26 @@ export const gearOrder = {
  */
 export const circleGearSizes: CircularGearSize[] = [
   // Fixed
+  { radius: 40, holes: [], isRing: true },
+  { radius: 42, holes: [], isRing: true },
+  { radius: 45, holes: [], isRing: true },
+  { radius: 48, holes: [], isRing: true },
+  { radius: 52, holes: [], isRing: true },
+  { radius: 56, holes: [], isRing: true },
+  { radius: 60, holes: [], isRing: true },
+  { radius: 63, holes: [], isRing: true },
+  { radius: 64, holes: [], isRing: true },
+  { radius: 72, holes: [], isRing: true },
+  { radius: 75, holes: [], isRing: true },
+  { radius: 80, holes: [], isRing: true },
+  { radius: 84, holes: [], isRing: true },
   { radius: 96, holes: [], isRing: true },
   { radius: 105, holes: [], isRing: true },
   { radius: 150, holes: [], isRing: true },
   { radius: 200, holes: [], isRing: true },
   { radius: 256, holes: [], isRing: true },
+  { radius: 16, holes: [], suffix: 'noholes' },
+  { radius: 20, holes: [], suffix: 'noholes' },
   { radius: 24, holes: [], suffix: 'noholes' },
   { radius: 30, holes: [], suffix: 'noholes' },
   { radius: 32, holes: [], suffix: 'noholes' },
@@ -105,6 +120,8 @@ export const circleGearSizes: CircularGearSize[] = [
   { radius: 150, holes: [], suffix: 'noholes' },
 
   // Rotating
+  { radius: 16, holes: [0, ...range(8, 9)] },
+  { radius: 20, holes: [0, ...range(8, 13)] },
   { radius: 24, holes: [0, ...range(8, 17)] },
   { radius: 30, holes: [0, ...range(8, 23)] },
   { radius: 32, holes: [0, ...range(8, 25)] },

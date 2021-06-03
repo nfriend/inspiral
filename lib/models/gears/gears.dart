@@ -8,11 +8,26 @@
 
 import 'package:inspiral/models/gear_definition.dart';
 
+import 'package:inspiral/models/gears/circle_40_ring.dart';
+import 'package:inspiral/models/gears/circle_42_ring.dart';
+import 'package:inspiral/models/gears/circle_45_ring.dart';
+import 'package:inspiral/models/gears/circle_48_ring.dart';
+import 'package:inspiral/models/gears/circle_52_ring.dart';
+import 'package:inspiral/models/gears/circle_56_ring.dart';
+import 'package:inspiral/models/gears/circle_60_ring.dart';
+import 'package:inspiral/models/gears/circle_63_ring.dart';
+import 'package:inspiral/models/gears/circle_64_ring.dart';
+import 'package:inspiral/models/gears/circle_72_ring.dart';
+import 'package:inspiral/models/gears/circle_75_ring.dart';
+import 'package:inspiral/models/gears/circle_80_ring.dart';
+import 'package:inspiral/models/gears/circle_84_ring.dart';
 import 'package:inspiral/models/gears/circle_96_ring.dart';
 import 'package:inspiral/models/gears/circle_105_ring.dart';
 import 'package:inspiral/models/gears/circle_150_ring.dart';
 import 'package:inspiral/models/gears/circle_200_ring.dart';
 import 'package:inspiral/models/gears/circle_256_ring.dart';
+import 'package:inspiral/models/gears/circle_16_noholes.dart';
+import 'package:inspiral/models/gears/circle_20_noholes.dart';
 import 'package:inspiral/models/gears/circle_24_noholes.dart';
 import 'package:inspiral/models/gears/circle_30_noholes.dart';
 import 'package:inspiral/models/gears/circle_32_noholes.dart';
@@ -32,6 +47,8 @@ import 'package:inspiral/models/gears/circle_84_noholes.dart';
 import 'package:inspiral/models/gears/circle_100_noholes.dart';
 import 'package:inspiral/models/gears/circle_144_noholes.dart';
 import 'package:inspiral/models/gears/circle_150_noholes.dart';
+import 'package:inspiral/models/gears/circle_16.dart';
+import 'package:inspiral/models/gears/circle_20.dart';
 import 'package:inspiral/models/gears/circle_24.dart';
 import 'package:inspiral/models/gears/circle_30.dart';
 import 'package:inspiral/models/gears/circle_32.dart';
@@ -242,11 +259,26 @@ import 'package:inspiral/models/gears/egg_42_noholes.dart';
 import 'package:inspiral/models/gears/egg_84.dart';
 import 'package:inspiral/models/gears/egg_84_noholes.dart';
 
+export 'package:inspiral/models/gears/circle_40_ring.dart';
+export 'package:inspiral/models/gears/circle_42_ring.dart';
+export 'package:inspiral/models/gears/circle_45_ring.dart';
+export 'package:inspiral/models/gears/circle_48_ring.dart';
+export 'package:inspiral/models/gears/circle_52_ring.dart';
+export 'package:inspiral/models/gears/circle_56_ring.dart';
+export 'package:inspiral/models/gears/circle_60_ring.dart';
+export 'package:inspiral/models/gears/circle_63_ring.dart';
+export 'package:inspiral/models/gears/circle_64_ring.dart';
+export 'package:inspiral/models/gears/circle_72_ring.dart';
+export 'package:inspiral/models/gears/circle_75_ring.dart';
+export 'package:inspiral/models/gears/circle_80_ring.dart';
+export 'package:inspiral/models/gears/circle_84_ring.dart';
 export 'package:inspiral/models/gears/circle_96_ring.dart';
 export 'package:inspiral/models/gears/circle_105_ring.dart';
 export 'package:inspiral/models/gears/circle_150_ring.dart';
 export 'package:inspiral/models/gears/circle_200_ring.dart';
 export 'package:inspiral/models/gears/circle_256_ring.dart';
+export 'package:inspiral/models/gears/circle_16_noholes.dart';
+export 'package:inspiral/models/gears/circle_20_noholes.dart';
 export 'package:inspiral/models/gears/circle_24_noholes.dart';
 export 'package:inspiral/models/gears/circle_30_noholes.dart';
 export 'package:inspiral/models/gears/circle_32_noholes.dart';
@@ -266,6 +298,8 @@ export 'package:inspiral/models/gears/circle_84_noholes.dart';
 export 'package:inspiral/models/gears/circle_100_noholes.dart';
 export 'package:inspiral/models/gears/circle_144_noholes.dart';
 export 'package:inspiral/models/gears/circle_150_noholes.dart';
+export 'package:inspiral/models/gears/circle_16.dart';
+export 'package:inspiral/models/gears/circle_20.dart';
 export 'package:inspiral/models/gears/circle_24.dart';
 export 'package:inspiral/models/gears/circle_30.dart';
 export 'package:inspiral/models/gears/circle_32.dart';
@@ -477,11 +511,26 @@ export 'package:inspiral/models/gears/egg_84.dart';
 export 'package:inspiral/models/gears/egg_84_noholes.dart';
 
 Map<String, GearDefinition> allGears = {
+  'circle40Ring': circle40Ring,
+  'circle42Ring': circle42Ring,
+  'circle45Ring': circle45Ring,
+  'circle48Ring': circle48Ring,
+  'circle52Ring': circle52Ring,
+  'circle56Ring': circle56Ring,
+  'circle60Ring': circle60Ring,
+  'circle63Ring': circle63Ring,
+  'circle64Ring': circle64Ring,
+  'circle72Ring': circle72Ring,
+  'circle75Ring': circle75Ring,
+  'circle80Ring': circle80Ring,
+  'circle84Ring': circle84Ring,
   'circle96Ring': circle96Ring,
   'circle105Ring': circle105Ring,
   'circle150Ring': circle150Ring,
   'circle200Ring': circle200Ring,
   'circle256Ring': circle256Ring,
+  'circle16Noholes': circle16Noholes,
+  'circle20Noholes': circle20Noholes,
   'circle24Noholes': circle24Noholes,
   'circle30Noholes': circle30Noholes,
   'circle32Noholes': circle32Noholes,
@@ -501,6 +550,8 @@ Map<String, GearDefinition> allGears = {
   'circle100Noholes': circle100Noholes,
   'circle144Noholes': circle144Noholes,
   'circle150Noholes': circle150Noholes,
+  'circle16': circle16,
+  'circle20': circle20,
   'circle24': circle24,
   'circle30': circle30,
   'circle32': circle32,

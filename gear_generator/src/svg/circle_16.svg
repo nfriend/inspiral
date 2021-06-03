@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inspiral="http://nathanfriend.io/inspiral">
+  <desc xmlns:inspiral="http://nathanfriend.io/inspiral">
+    <gear-order>
+      10039
+    </gear-order>
+    <is-round>
+      true
+    </is-round>
+  </desc>
+  <g>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 4px;
+      }
+    </style>
+    <mask id="holes">
+      <rect width="100%" height="100%" fill="white" />
+      <circle cx="16"
+              cy="16"
+              r="2.5"
+              inspiral:hole-name="0"
+              inspiral:hole-text-position-angle="0"
+              inspiral:hole-text-rotation-angle="0" />
+      <text x="13" y="17" text-anchor="end">0</text>
+      <circle cx="16"
+              cy="8"
+              r="2.5"
+              inspiral:hole-name="8"
+              inspiral:hole-text-position-angle="2.3415926535897933"
+              inspiral:hole-text-rotation-angle="-0.7" />
+      <text x="13" y="9" text-anchor="end">8</text>
+    </mask>
+
+    <path mask="url(#holes)"
+          d="M 32 16
+             A 16 16 0 1 0 0 16
+             A 16 16 0 0 0 32 16
+             Z" />
+  </g>
+</svg>
