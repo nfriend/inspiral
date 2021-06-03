@@ -6,7 +6,7 @@ Future<void> upgradeV6ToV7(Database db) async {
 
   batch.execute('''
     ALTER TABLE ${Schema.state}
-    ADD ${Schema.state.createSnapshotBeforeNextDraw} INTEGER CHECK(${Schema.state.createSnapshotBeforeNextDraw} IN (0, 1)) NOT NULL DEFAULT 0
+    ADD ${Schema.state.createQuickSnapshotBeforeNextDraw} INTEGER CHECK(${Schema.state.createQuickSnapshotBeforeNextDraw} IN (0, 1)) NOT NULL DEFAULT 0
   ''');
 
   await batch.commit(noResult: true);

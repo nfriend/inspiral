@@ -33,7 +33,7 @@ class StrokeState extends InspiralStateObject {
     _width = width;
     _style = style;
     allStateObjects.ink.finishLine();
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
     notifyListeners();
   }
 

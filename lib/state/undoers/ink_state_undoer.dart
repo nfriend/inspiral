@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/services.dart';
+import 'package:inspiral/database/get_database.dart';
 import 'package:inspiral/database/schema.dart';
 import 'package:inspiral/state/helpers/get_tiles_for_version.dart';
+import 'package:inspiral/state/helpers/get_where_clause_for_version.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqflite.dart';
@@ -28,7 +30,10 @@ class InkStateUndoer {
     ''');
   }
 
-  static Future<void> snapshot(int version, Batch batch, InkState ink) async {
+  /// Takes a full snapshot of the ink by first baking the image and then
+  /// persisting the baked tiles as a snapshot
+  static Future<void> fullSnapshot(
+      int version, Batch batch, InkState ink) async {
     // Rasterize any un-baked points before creating a new snapshot
     await ink.pendingCanvasManipulation;
     await ink.bakeImage();
@@ -79,6 +84,31 @@ class InkStateUndoer {
       batch.insert(Schema.tileSnapshots.toString(), {
         Schema.tileSnapshots.id: _uuid.v4(),
         Schema.tileSnapshots.tileDataId: tileDatabaseId,
+        Schema.tileSnapshots.version: version
+      });
+    }
+  }
+
+  /// Performs a "quick" snapshot. Unlike `fullSnapshot`, this method
+  /// does _not_ bake the lines before creating a snapshot. In fact, this method
+  /// simply clones the previous snapshot. This is because the "quick" snapshot
+  /// is only used for snapshoting changes to non-ink changes. This allows
+  /// quick snapshots to complete very quickly since there is no need to
+  /// bake the image as part of taking the snapshot.
+  static Future<void> quickSnapshot(
+      int version, Batch batch, InkState ink) async {
+    final db = await getDatabase();
+
+    // Get a list of all _current_ tile snapshots
+    final currentSnapshotRows = await db.query(Schema.tileSnapshots.toString(),
+        where: getWhereClauseForVersion(
+            Schema.tileSnapshots.version, version - 1));
+
+    // For each row, insert a clone with a new ID and the current version
+    for (var row in currentSnapshotRows) {
+      batch.insert(Schema.tileSnapshots.toString(), {
+        Schema.tileSnapshots.id: _uuid.v4(),
+        Schema.tileSnapshots.tileDataId: row[Schema.tileSnapshots.tileDataId],
         Schema.tileSnapshots.version: version
       });
     }

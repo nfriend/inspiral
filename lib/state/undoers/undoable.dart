@@ -12,7 +12,14 @@ abstract class Undoable {
   Future<void> redo(int version) async {}
 
   /// Capture the current state as a snapshot for the provided version
-  Future<void> snapshot(int version, Batch batch) async {}
+  Future<void> fullSnapshot(int version, Batch batch) async {}
+
+  /// Capture a "lite" version of a snapshot, without any ink.
+  /// This allows this process to complete very quickly without waiting
+  /// for the baking process. This is used to capture non-ink changes in an undo
+  /// snapshot (for example, a change in gear selection, pen hole, colors, etc).
+  /// This method should only be called when there is no new ink to snapshot.
+  Future<void> quickSnapshot(int version, Batch batch) async {}
 
   /// Throw away any data for versions equal to or greater than `version`.
   /// This is called whenever the end of the redo stack is rendered

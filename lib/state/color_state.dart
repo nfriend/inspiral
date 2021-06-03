@@ -36,7 +36,7 @@ class ColorState extends InspiralStateObject {
   set backgroundColor(TinyColor value) {
     _backgroundColor = value;
     _updateDependentColors();
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
     notifyListeners();
   }
 
@@ -47,7 +47,7 @@ class ColorState extends InspiralStateObject {
     _penColor = value;
     _updateDependentColors();
     allStateObjects.ink.finishLine();
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
     notifyListeners();
   }
 
@@ -76,7 +76,7 @@ class ColorState extends InspiralStateObject {
   void addAndSelectPenColor(TinyColor color) {
     _availablePenColors.add(color);
     penColor = color;
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
     notifyListeners();
   }
 
@@ -86,7 +86,7 @@ class ColorState extends InspiralStateObject {
     var colorWasRemoved = _availablePenColors.remove(color);
 
     if (penColor == color && colorWasRemoved) {
-      allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+      allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
 
       if (_availablePenColors.isNotEmpty) {
         // If there are still colors left, select the next closest color
@@ -110,7 +110,7 @@ class ColorState extends InspiralStateObject {
   void addAndSelectCanvasColor(TinyColor color) {
     _availableCanvasColors.add(color);
     backgroundColor = color;
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
     notifyListeners();
   }
 
@@ -120,7 +120,7 @@ class ColorState extends InspiralStateObject {
     var colorWasRemoved = _availableCanvasColors.remove(color);
 
     if (backgroundColor == color && colorWasRemoved) {
-      allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+      allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
 
       if (_availableCanvasColors.isNotEmpty) {
         var newColorIndex = min(colorIndex, _availableCanvasColors.length - 1);

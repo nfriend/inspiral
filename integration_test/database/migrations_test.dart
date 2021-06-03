@@ -224,7 +224,7 @@ void main() {
       expect(stateRows.length, 3);
 
       for (var row in stateRows) {
-        expect(row[Schema.state.createSnapshotBeforeNextDraw], 0);
+        expect(row[Schema.state.createQuickSnapshotBeforeNextDraw], 0);
       }
     });
   });

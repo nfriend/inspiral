@@ -22,8 +22,8 @@ class UndoRedoStatePersistor {
         {
           Schema.state.currentSnapshotVersion: undoRedo.currentSnapshotVersion,
           Schema.state.maxSnapshotVersion: undoRedo.maxSnapshotVersion,
-          Schema.state.createSnapshotBeforeNextDraw:
-              undoRedo.createSnapshotBeforeNextDraw.toInt()
+          Schema.state.createQuickSnapshotBeforeNextDraw:
+              undoRedo.createQuickSnapshotBeforeNextDraw.toInt()
         },
         where: getWhereClauseForVersion(Schema.state.version, null));
   }
@@ -33,7 +33,7 @@ class UndoRedoStatePersistor {
             columns: [
               Schema.state.currentSnapshotVersion,
               Schema.state.maxSnapshotVersion,
-              Schema.state.createSnapshotBeforeNextDraw
+              Schema.state.createQuickSnapshotBeforeNextDraw
             ],
             where: getWhereClauseForVersion(Schema.state.version, null)))
         .first;
@@ -43,6 +43,7 @@ class UndoRedoStatePersistor {
             state[Schema.state.currentSnapshotVersion] as int,
         maxSnapshotVersion: state[Schema.state.maxSnapshotVersion] as int,
         createSnapshotBeforeNextDraw:
-            (state[Schema.state.createSnapshotBeforeNextDraw] as int).toBool());
+            (state[Schema.state.createQuickSnapshotBeforeNextDraw] as int)
+                .toBool());
   }
 }

@@ -132,8 +132,13 @@ class SnapPointState extends InspiralStateObject {
   }
 
   @override
-  Future<void> snapshot(int version, Batch batch) async {
-    await SnapPointStateUndoer.snapshot(version, batch, this);
+  Future<void> fullSnapshot(int version, Batch batch) async {
+    await SnapPointStateUndoer.fullSnapshot(version, batch, this);
+  }
+
+  @override
+  Future<void> quickSnapshot(int version, Batch batch) async {
+    await SnapPointStateUndoer.quickSnapshot(version, batch, this);
   }
 
   @override

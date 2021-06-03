@@ -13,7 +13,17 @@ class SnapPointStateUndoer {
         where: '${Schema.snapPoints.version} >= $version');
   }
 
-  static Future<void> snapshot(
+  static Future<void> fullSnapshot(
+      int version, Batch batch, SnapPointState snapPointState) async {
+    await _snapshot(version, batch, snapPointState);
+  }
+
+  static Future<void> quickSnapshot(
+      int version, Batch batch, SnapPointState snapPointState) async {
+    await _snapshot(version, batch, snapPointState);
+  }
+
+  static Future<void> _snapshot(
       int version, Batch batch, SnapPointState snapPointState) async {
     for (var point in snapPointState.snapPoints) {
       batch.insert(Schema.snapPoints.toString(), {

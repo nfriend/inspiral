@@ -12,7 +12,17 @@ import 'package:sqflite/sqflite.dart';
 // In addition, this undoer is in charge of snapshotting the "colors" table,
 // since the "state" table has foreign key references into this table.
 class UndoRedoStateUndoer {
-  static Future<void> snapshot(
+  static Future<void> fullSnapshot(
+      int version, Batch batch, AllStateObjects allStateObjects) async {
+    await _snapshot(version, batch, allStateObjects);
+  }
+
+  static Future<void> quickSnapshot(
+      int version, Batch batch, AllStateObjects allStateObjects) async {
+    await _snapshot(version, batch, allStateObjects);
+  }
+
+  static Future<void> _snapshot(
       int version, Batch batch, AllStateObjects allStateObjects) async {
     // First, persist all state objects to the database, so that the `state`
     // table reflects the current stat of the app.

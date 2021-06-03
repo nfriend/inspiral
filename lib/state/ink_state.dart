@@ -235,8 +235,13 @@ class InkState extends InspiralStateObject {
   }
 
   @override
-  Future<void> snapshot(int version, Batch batch) async {
-    await InkStateUndoer.snapshot(version, batch, this);
+  Future<void> fullSnapshot(int version, Batch batch) async {
+    await InkStateUndoer.fullSnapshot(version, batch, this);
+  }
+
+  @override
+  Future<void> quickSnapshot(int version, Batch batch) async {
+    await InkStateUndoer.quickSnapshot(version, batch, this);
   }
 
   @override

@@ -6,6 +6,8 @@ import 'package:inspiral/state/undoers/undo_redo_state_undoer.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sqflite/sqflite.dart';
 
+enum _SnapshotType { Full, Quick }
+
 class UndoRedoState extends InspiralStateObject {
   static UndoRedoState? _instance;
 
@@ -88,7 +90,7 @@ class UndoRedoState extends InspiralStateObject {
   /// occur between drawings. The alternative is to create a new undo snapshot
   /// after _every_ change, but this would result in a lot of very small,
   /// very granular undo snapshots, which can be annoying to undo through.
-  bool createSnapshotBeforeNextDraw = false;
+  bool createQuickSnapshotBeforeNextDraw = false;
 
   /// Whether or not an undo or redo operation is currently in progress
   bool get isUndoingOrRedoing => _isUndoing || _isRedoing;
@@ -157,7 +159,17 @@ class UndoRedoState extends InspiralStateObject {
   }
 
   /// Creates a new state snapshot and adds it to the undo/redo stack
-  Future<void> createSnapshot() async {
+  Future<void> createFullSnapshot() async {
+    await _createSnapshot(_SnapshotType.Full);
+  }
+
+  /// Creates a "quick" snapshot. See the comment in
+  /// `lib/state/undoers/undoable.dart` for more info on full vs. quick.
+  Future<void> createQuickSnapshot() async {
+    await _createSnapshot(_SnapshotType.Quick);
+  }
+
+  Future<void> _createSnapshot(_SnapshotType snapshotType) async {
     // Don't try to create a new snapshot if it's already in progress
     if (_isCreatingSnapshot) {
       return;
@@ -165,7 +177,7 @@ class UndoRedoState extends InspiralStateObject {
 
     _isCreatingSnapshot = true;
 
-    createSnapshotBeforeNextDraw = false;
+    createQuickSnapshotBeforeNextDraw = false;
 
     notifyListeners();
 
@@ -179,7 +191,9 @@ class UndoRedoState extends InspiralStateObject {
       }
 
       for (var stateObj in allStateObjects.list) {
-        allFutures.add(stateObj.snapshot(newVersion, batch));
+        allFutures.add(snapshotType == _SnapshotType.Full
+            ? stateObj.fullSnapshot(newVersion, batch)
+            : stateObj.quickSnapshot(newVersion, batch));
       }
 
       await Future.wait(allFutures);
@@ -190,7 +204,8 @@ class UndoRedoState extends InspiralStateObject {
     } catch (err, stackTrace) {
       // See comment in ink_state.dart for a similar example regarding
       // explicit error handling
-      print('an error occured while creating an undo snapshot: $err');
+      print(
+          "an error occured while creating a ${snapshotType == _SnapshotType.Full ? 'full' : 'quick'} undo snapshot: $err");
       await Sentry.captureException(err, stackTrace: stackTrace);
     }
 
@@ -233,12 +248,17 @@ class UndoRedoState extends InspiralStateObject {
 
     _currentSnapshotVersion = result.currentSnapshotVersion;
     _maxSnapshotVersion = result.maxSnapshotVersion;
-    createSnapshotBeforeNextDraw = result.createSnapshotBeforeNextDraw;
+    createQuickSnapshotBeforeNextDraw = result.createSnapshotBeforeNextDraw;
   }
 
   @override
-  Future<void> snapshot(int version, Batch batch) async {
-    await UndoRedoStateUndoer.snapshot(version, batch, allStateObjects);
+  Future<void> fullSnapshot(int version, Batch batch) async {
+    await UndoRedoStateUndoer.fullSnapshot(version, batch, allStateObjects);
+  }
+
+  @override
+  Future<void> quickSnapshot(int version, Batch batch) async {
+    await UndoRedoStateUndoer.quickSnapshot(version, batch, allStateObjects);
   }
 
   @override

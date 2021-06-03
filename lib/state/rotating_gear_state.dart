@@ -122,7 +122,7 @@ class RotatingGearState extends BaseGearState {
       var result = _getRotationForAngle(allStateObjects.dragLine.angle);
       allStateObjects.ink.addPoints([result.penPosition]);
 
-      _snapshotIfRequested();
+      _quickSnapshotIfRequested();
     }
   }
 
@@ -146,7 +146,7 @@ class RotatingGearState extends BaseGearState {
     // Create an undo/redo snapshot now.
     // As a side effect, this also persists the current app state to disk,
     // including the rasterizing the lines.
-    allStateObjects.undoRedo.createSnapshot();
+    allStateObjects.undoRedo.createFullSnapshot();
 
     notifyListeners();
   }
@@ -160,7 +160,7 @@ class RotatingGearState extends BaseGearState {
 
     initializePosition();
     allStateObjects.ink.finishLine();
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
   }
 
   /// Rotates the rotating gear in place (without drawing)
@@ -169,7 +169,7 @@ class RotatingGearState extends BaseGearState {
     toothOffset += teethToRotate;
     initializePosition();
     allStateObjects.ink.finishLine();
-    allStateObjects.undoRedo.createSnapshotBeforeNextDraw = true;
+    allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw = true;
   }
 
   /// Draws one complete (clockwise) rotation, so that the rotating gears
@@ -179,7 +179,7 @@ class RotatingGearState extends BaseGearState {
       return;
     }
 
-    _snapshotIfRequested();
+    _quickSnapshotIfRequested();
 
     isDrawingOneRotation = true;
 
@@ -214,7 +214,7 @@ class RotatingGearState extends BaseGearState {
 
     if (triggerBakeAfter) {
       unawaited(allStateObjects.ink.bakeImage());
-      unawaited(allStateObjects.undoRedo.createSnapshot());
+      unawaited(allStateObjects.undoRedo.createFullSnapshot());
     }
   }
 
@@ -244,7 +244,7 @@ class RotatingGearState extends BaseGearState {
     isDrawingCompletePattern = false;
 
     unawaited(allStateObjects.ink.bakeImage());
-    unawaited(allStateObjects.undoRedo.createSnapshot());
+    unawaited(allStateObjects.undoRedo.createFullSnapshot());
   }
 
   // A flag used to indicate if the complete pattern auto-drawing
@@ -370,11 +370,11 @@ class RotatingGearState extends BaseGearState {
     _lastAngle = angle;
   }
 
-  /// Creates a new undo/redo snapshot if at least one state object
-  /// has requested a snapshot be created at the start of the next draw action.
-  void _snapshotIfRequested() {
-    if (allStateObjects.undoRedo.createSnapshotBeforeNextDraw) {
-      unawaited(allStateObjects.undoRedo.createSnapshot());
+  /// Creates a new quick undo/redo snapshot if at least one state object
+  /// has requested one to be created at the start of the next draw action.
+  void _quickSnapshotIfRequested() {
+    if (allStateObjects.undoRedo.createQuickSnapshotBeforeNextDraw) {
+      unawaited(allStateObjects.undoRedo.createQuickSnapshot());
     }
   }
 
