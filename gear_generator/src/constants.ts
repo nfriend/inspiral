@@ -150,6 +150,9 @@ const xToYRatio = 2 / 3;
  */
 export const ovalGearSizes: OvalGearSize[] = [
   // Fixed
+  { xRadius: 100, yRadius: 100 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 114, yRadius: 114 * xToYRatio, holes: [], isRing: true },
+  { xRadius: 125, yRadius: 125 * xToYRatio, holes: [], isRing: true },
   { xRadius: 178, yRadius: 178 * xToYRatio, holes: [], isRing: true },
   { xRadius: 238, yRadius: 238 * xToYRatio, holes: [], isRing: true },
   { xRadius: 304, yRadius: 304 * xToYRatio, holes: [], isRing: true },
@@ -559,6 +562,9 @@ export const polygonRingVariations: {
     entitlement: allEntitlements.triangleGears.id,
     startingOrder: gearOrder.triangles,
     sizes: [
+      { radius: 46, holes: [] },
+      { radius: 52.5, holes: [] },
+      { radius: 57.5, holes: [] },
       { radius: 82, holes: [] },
       { radius: 109, holes: [] },
       { radius: 140, holes: [] },
@@ -570,6 +576,9 @@ export const polygonRingVariations: {
     entitlement: allEntitlements.squareGears.id,
     startingOrder: gearOrder.squares,
     sizes: [
+      { radius: 44, holes: [] },
+      { radius: 50.5, holes: [] },
+      { radius: 55, holes: [] },
       { radius: 79, holes: [] },
       { radius: 105, holes: [] },
       { radius: 134.5, holes: [] },
@@ -581,6 +590,9 @@ export const polygonRingVariations: {
     entitlement: allEntitlements.pentagonGears.id,
     startingOrder: gearOrder.pentagons,
     sizes: [
+      { radius: 43.5, holes: [] },
+      { radius: 49.5, holes: [] },
+      { radius: 54, holes: [] },
       { radius: 77.5, holes: [] },
       { radius: 103, holes: [] },
       { radius: 132, holes: [] },

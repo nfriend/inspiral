@@ -1,1 +1,2 @@
-• Added 15 new circular gear options: 13 ring and 2 regular
+• Added 27 new gear options
+• Small usability improvements to undo/redo

@@ -8,7 +8,7 @@
       io.nathanfriend.inspiral.trianglegears
     </package-id>
     <gear-order>
-      40000
+      40003
     </gear-order>
     <inverted>
       true

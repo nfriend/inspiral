@@ -78,6 +78,9 @@ import 'package:inspiral/models/gears/beam_20_50.dart';
 import 'package:inspiral/models/gears/beam_20_100.dart';
 import 'package:inspiral/models/gears/beam_20_194.dart';
 import 'package:inspiral/models/gears/beam_20_204.dart';
+import 'package:inspiral/models/gears/oval_100_ring.dart';
+import 'package:inspiral/models/gears/oval_114_ring.dart';
+import 'package:inspiral/models/gears/oval_125_ring.dart';
 import 'package:inspiral/models/gears/oval_178_ring.dart';
 import 'package:inspiral/models/gears/oval_238_ring.dart';
 import 'package:inspiral/models/gears/oval_304_ring.dart';
@@ -119,6 +122,9 @@ import 'package:inspiral/models/gears/oval_100.dart';
 import 'package:inspiral/models/gears/oval_119.dart';
 import 'package:inspiral/models/gears/oval_171.dart';
 import 'package:inspiral/models/gears/oval_178.dart';
+import 'package:inspiral/models/gears/triangle_ring_46.dart';
+import 'package:inspiral/models/gears/triangle_ring_52.5.dart';
+import 'package:inspiral/models/gears/triangle_ring_57.5.dart';
 import 'package:inspiral/models/gears/triangle_ring_82.dart';
 import 'package:inspiral/models/gears/triangle_ring_109.dart';
 import 'package:inspiral/models/gears/triangle_ring_140.dart';
@@ -160,6 +166,9 @@ import 'package:inspiral/models/gears/triangle_95.dart';
 import 'package:inspiral/models/gears/triangle_113.dart';
 import 'package:inspiral/models/gears/triangle_163.dart';
 import 'package:inspiral/models/gears/triangle_170.dart';
+import 'package:inspiral/models/gears/square_ring_44.dart';
+import 'package:inspiral/models/gears/square_ring_50.5.dart';
+import 'package:inspiral/models/gears/square_ring_55.dart';
 import 'package:inspiral/models/gears/square_ring_79.dart';
 import 'package:inspiral/models/gears/square_ring_105.dart';
 import 'package:inspiral/models/gears/square_ring_134.5.dart';
@@ -201,6 +210,9 @@ import 'package:inspiral/models/gears/square_90.dart';
 import 'package:inspiral/models/gears/square_107.dart';
 import 'package:inspiral/models/gears/square_154.dart';
 import 'package:inspiral/models/gears/square_160.dart';
+import 'package:inspiral/models/gears/pentagon_ring_43.5.dart';
+import 'package:inspiral/models/gears/pentagon_ring_49.5.dart';
+import 'package:inspiral/models/gears/pentagon_ring_54.dart';
 import 'package:inspiral/models/gears/pentagon_ring_77.5.dart';
 import 'package:inspiral/models/gears/pentagon_ring_103.dart';
 import 'package:inspiral/models/gears/pentagon_ring_132.dart';
@@ -329,6 +341,9 @@ export 'package:inspiral/models/gears/beam_20_50.dart';
 export 'package:inspiral/models/gears/beam_20_100.dart';
 export 'package:inspiral/models/gears/beam_20_194.dart';
 export 'package:inspiral/models/gears/beam_20_204.dart';
+export 'package:inspiral/models/gears/oval_100_ring.dart';
+export 'package:inspiral/models/gears/oval_114_ring.dart';
+export 'package:inspiral/models/gears/oval_125_ring.dart';
 export 'package:inspiral/models/gears/oval_178_ring.dart';
 export 'package:inspiral/models/gears/oval_238_ring.dart';
 export 'package:inspiral/models/gears/oval_304_ring.dart';
@@ -370,6 +385,9 @@ export 'package:inspiral/models/gears/oval_100.dart';
 export 'package:inspiral/models/gears/oval_119.dart';
 export 'package:inspiral/models/gears/oval_171.dart';
 export 'package:inspiral/models/gears/oval_178.dart';
+export 'package:inspiral/models/gears/triangle_ring_46.dart';
+export 'package:inspiral/models/gears/triangle_ring_52.5.dart';
+export 'package:inspiral/models/gears/triangle_ring_57.5.dart';
 export 'package:inspiral/models/gears/triangle_ring_82.dart';
 export 'package:inspiral/models/gears/triangle_ring_109.dart';
 export 'package:inspiral/models/gears/triangle_ring_140.dart';
@@ -411,6 +429,9 @@ export 'package:inspiral/models/gears/triangle_95.dart';
 export 'package:inspiral/models/gears/triangle_113.dart';
 export 'package:inspiral/models/gears/triangle_163.dart';
 export 'package:inspiral/models/gears/triangle_170.dart';
+export 'package:inspiral/models/gears/square_ring_44.dart';
+export 'package:inspiral/models/gears/square_ring_50.5.dart';
+export 'package:inspiral/models/gears/square_ring_55.dart';
 export 'package:inspiral/models/gears/square_ring_79.dart';
 export 'package:inspiral/models/gears/square_ring_105.dart';
 export 'package:inspiral/models/gears/square_ring_134.5.dart';
@@ -452,6 +473,9 @@ export 'package:inspiral/models/gears/square_90.dart';
 export 'package:inspiral/models/gears/square_107.dart';
 export 'package:inspiral/models/gears/square_154.dart';
 export 'package:inspiral/models/gears/square_160.dart';
+export 'package:inspiral/models/gears/pentagon_ring_43.5.dart';
+export 'package:inspiral/models/gears/pentagon_ring_49.5.dart';
+export 'package:inspiral/models/gears/pentagon_ring_54.dart';
 export 'package:inspiral/models/gears/pentagon_ring_77.5.dart';
 export 'package:inspiral/models/gears/pentagon_ring_103.dart';
 export 'package:inspiral/models/gears/pentagon_ring_132.dart';
@@ -581,6 +605,9 @@ Map<String, GearDefinition> allGears = {
   'beam20100': beam20100,
   'beam20194': beam20194,
   'beam20204': beam20204,
+  'oval100Ring': oval100Ring,
+  'oval114Ring': oval114Ring,
+  'oval125Ring': oval125Ring,
   'oval178Ring': oval178Ring,
   'oval238Ring': oval238Ring,
   'oval304Ring': oval304Ring,
@@ -622,6 +649,9 @@ Map<String, GearDefinition> allGears = {
   'oval119': oval119,
   'oval171': oval171,
   'oval178': oval178,
+  'triangleRing46': triangleRing46,
+  'triangleRing525': triangleRing525,
+  'triangleRing575': triangleRing575,
   'triangleRing82': triangleRing82,
   'triangleRing109': triangleRing109,
   'triangleRing140': triangleRing140,
@@ -663,6 +693,9 @@ Map<String, GearDefinition> allGears = {
   'triangle113': triangle113,
   'triangle163': triangle163,
   'triangle170': triangle170,
+  'squareRing44': squareRing44,
+  'squareRing505': squareRing505,
+  'squareRing55': squareRing55,
   'squareRing79': squareRing79,
   'squareRing105': squareRing105,
   'squareRing1345': squareRing1345,
@@ -704,6 +737,9 @@ Map<String, GearDefinition> allGears = {
   'square107': square107,
   'square154': square154,
   'square160': square160,
+  'pentagonRing435': pentagonRing435,
+  'pentagonRing495': pentagonRing495,
+  'pentagonRing54': pentagonRing54,
   'pentagonRing775': pentagonRing775,
   'pentagonRing103': pentagonRing103,
   'pentagonRing132': pentagonRing132,
