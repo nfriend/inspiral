@@ -25,7 +25,27 @@ final _incompatibleMapping = <GearDefinition, HashSet<GearDefinition>>{
   circle80Ring: HashSet.from([circle75]),
   circle84Ring: HashSet.from([circle80]),
   circle105Ring: HashSet.from([circle100]),
-  circle150Ring: HashSet.from([circle144])
+  circle150Ring: HashSet.from([circle144]),
+  oval125Ring: HashSet.from([circle52]),
+  squareRing105: HashSet.from([circle100]),
+  squareRing79: HashSet.from([circle75]),
+  squareRing55: HashSet.from([circle52]),
+  squareRing505: HashSet.from([circle48, circle45]),
+  squareRing44: HashSet.from([circle42, circle40]),
+  pentagonRing495: HashSet.from([
+    circle100,
+  ]),
+  pentagonRing54: HashSet.from([
+    circle75,
+    circle72,
+  ]),
+  pentagonRing775: HashSet.from([circle52]),
+  pentagonRing103: HashSet.from([circle48, circle45]),
+  pentagonRing132: HashSet.from([
+    circle42,
+    circle40,
+  ]),
+  waveCircleRing: HashSet.from([circle42]),
 };
 
 /// The algorithm above works _most_ of the time, but it breaks down in a few
