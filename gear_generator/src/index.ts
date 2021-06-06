@@ -5,6 +5,8 @@ import globSync from 'glob';
 import util from 'util';
 import puppeteer from 'puppeteer';
 import camelcase from 'camelcase';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
 import {
   baseScale,
   toothHeight,
@@ -20,9 +22,12 @@ import { writeGearDefinitionAsDartFile } from './util/write_gear_definition_as_d
 import { writeDartProxyExportFile } from './util/write_dart_proxy_export_file';
 import { allEntitlements } from './models/entitlement';
 import { allPackages } from './models/package';
+import { addThirdPartyLibs } from './util/add_third_party_libs';
 
 const glob = util.promisify(globSync);
 const readFile = util.promisify(fs.readFile);
+
+const argv = yargs(hideBin(process.argv)).argv as any;
 
 (async () => {
   // Read all SVG files found in gear_generator/src/svg
@@ -55,6 +60,8 @@ const readFile = util.promisify(fs.readFile);
     const svgString = await readFile(svgFile, 'utf8');
 
     await page.setContent(getHtmlPageWithInlineSvg({ svgString }));
+
+    await addThirdPartyLibs(page);
 
     // The gear name is the name of the SVG file (with the extension)
     const gearName = path.basename(svgFile, path.extname(svgFile));
@@ -119,7 +126,10 @@ const readFile = util.promisify(fs.readFile);
     chalk.greenBright(`Successfully analyzed ${files.length} SVG files 👍`),
   );
 
-  await renderHtmlToPng(allImageInfos);
+  // Pass a `--no-pngs` flag to skip rendering PNGs
+  if (argv.pngs !== false) {
+    await renderHtmlToPng(allImageInfos);
+  }
 })().catch((e) => {
   console.error(chalk.redBright('⚠️  Something went wrong!'));
   console.error(e);

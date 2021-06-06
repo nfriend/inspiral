@@ -60,6 +60,16 @@ class GearDefinition {
   /// The package that will unlock the gear's entitlement
   final String package;
 
+  /// An oval-shapped clip used to limit the gear's hit test area. Will be null
+  /// if no clip is defined for this gear or if this gear uses a path clip
+  /// instead.
+  final CustomClipper<Rect>? ovalClipper;
+
+  /// A clip used to limit the gear's hit test area. The clip's shape is defined
+  /// by a Path. Will be null if no clip is defined for this gear or if this
+  /// gear uses an oval clip instead.
+  final CustomClipper<Path>? pathClipper;
+
   GearDefinition(
       {required this.id,
       required this.image,
@@ -76,7 +86,9 @@ class GearDefinition {
       required this.smallestConvexDiff,
       required this.biggestConvexDiff,
       required this.smallestConcaveDiff,
-      required this.biggestConcaveDiff});
+      required this.biggestConcaveDiff,
+      required this.ovalClipper,
+      required this.pathClipper});
 
   /// Returns the gear's tooth at the provided angle
   double angleToTooth(double angle) {

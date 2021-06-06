@@ -10,20 +10,23 @@
     <gear-order>
       <%= gearOrder %>
     </gear-order>
-    <%_ if (isRing) { _%>
-    <inverted>
-      true
-    </inverted>
-    <%_ } _%>
   </desc>
   <g>
     <%- include('gear_holes') %>
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M <%= arcs[0].startPoint.x %> <%= arcs[0].startPoint.y %>
              <%_ for (const arc of arcs) { _%>
              A <%= arc.radius %> <%= arc.radius %> 0 0 0 <%= arc.endPoint.x %> <%= arc.endPoint.y %>
              <%_ } _%>
              Z" />
     <circle id="center-point" cx="<%= centerPoint.x %>" cy="<%= centerPoint.y %>" r="1" fill="#42d7f5" />
+
+    <%- include('clip_style') %>
+    <ellipse id="clip"
+             cx="<%= centerPoint.x %>"
+             cy="<%= centerPoint.y %>"
+             rx="<%= centerPoint.x %>"
+             ry="<%= centerPoint.y %>" />
   </g>
 </svg>

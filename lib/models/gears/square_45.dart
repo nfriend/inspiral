@@ -10,189 +10,207 @@ import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:flutter/material.dart';
+
+class _Square45Clipper extends CustomClipper<Rect> {
+  const _Square45Clipper();
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromCenter(
+        center: Offset(203.99997109174728, 200.05566120147705),
+        width: 408,
+        height: 408);
+  }
+
+  @override
+  bool shouldReclip(oldClipper) => false;
+}
 
 final square45 = GearDefinition(
-    id: 'square45',
-    image: 'images/gears/square_45.png',
-    thumbnailImage: 'images/gears/square_45_thumb.png',
-    size: Size(408, 400),
-    center: Offset(203.99997109174728, 200.05566120147705),
-    toothCount: 42,
-    entitlement: Entitlement.squaregears,
-    package: Package.squaregears,
-    points: [
-      ContactPoint(
-          position: Offset(191.99999999999753, 0.000007699377799593596),
-          direction: 6.28318466556477),
-      ContactPoint(
-          position: Offset(182.66418929828433, -28.321192570016883),
-          direction: 0.38794051206148694),
-      ContactPoint(
-          position: Offset(171.56351349411065, -52.22836939662618),
-          direction: 0.4814979388654521),
-      ContactPoint(
-          position: Offset(158.27704436188603, -74.99365813585416),
-          direction: 0.575073183325757),
-      ContactPoint(
-          position: Offset(142.92238141146473, -96.41758175566383),
-          direction: 0.6685884232853363),
-      ContactPoint(
-          position: Offset(125.63552708429725, -116.31427911537536),
-          direction: 0.7620434881638181),
-      ContactPoint(
-          position: Offset(106.5679373831686, -134.51109526295943),
-          direction: 0.8554698769025961),
-      ContactPoint(
-          position: Offset(85.88551901583303, -150.85030998461133),
-          direction: 0.9489535194325498),
-      ContactPoint(
-          position: Offset(63.76649855090624, -165.18655716749242),
-          direction: 1.0425114282663683),
-      ContactPoint(
-          position: Offset(40.4046995711326, -177.39359336936997),
-          direction: 1.1360882813640814),
-      ContactPoint(
-          position: Offset(14.361613777453401, -187.81879253733206),
-          direction: 1.3718188519292376),
-      ContactPoint(
-          position: Offset(-14.361351097348582, -187.81890776506515),
-          direction: 1.7697670369727705),
-      ContactPoint(
-          position: Offset(-40.40443846514629, -177.39387168526582),
-          direction: 2.0054944017481615),
-      ContactPoint(
-          position: Offset(-63.76661613801146, -165.18706967751726),
-          direction: 2.099082265028944),
-      ContactPoint(
-          position: Offset(-85.88545177045722, -150.85042722311124),
-          direction: 2.192639279658801),
-      ContactPoint(
-          position: Offset(-106.56811771990341, -134.51155624465594),
-          direction: 2.2861199443480604),
-      ContactPoint(
-          position: Offset(-125.63559092731937, -116.31446544810208),
-          direction: 2.379553187907667),
-      ContactPoint(
-          position: Offset(-142.92248329771184, -96.41784101714998),
-          direction: 2.4730010040409702),
-      ContactPoint(
-          position: Offset(-158.2772853764385, -74.99387778084223),
-          direction: 2.5665181145964917),
-      ContactPoint(
-          position: Offset(-171.56381864913533, -52.22843675160449),
-          direction: 2.660099859250664),
-      ContactPoint(
-          position: Offset(-182.6642863637157, -28.321113734961003),
-          direction: 2.753659238480651),
-      ContactPoint(
-          position: Offset(-191.99997109173106, 0.0000960236072365598),
-          direction: 3.141594297728287),
-      ContactPoint(
-          position: Offset(-182.66417561095182, 28.32128494470767),
-          direction: 3.529533239646205),
-      ContactPoint(
-          position: Offset(-171.56348526698656, 52.22843334890258),
-          direction: 3.623090866733432),
-      ContactPoint(
-          position: Offset(-158.27701633629263, 74.9937452988212),
-          direction: 3.716666916280894),
-      ContactPoint(
-          position: Offset(-142.92228566315174, 96.41764810195058),
-          direction: 3.810181640906916),
-      ContactPoint(
-          position: Offset(-125.63547406736305, 116.31435100471711),
-          direction: 3.9036356343764163),
-      ContactPoint(
-          position: Offset(-106.56782123756145, 134.51121881436174),
-          direction: 3.9970627186780283),
-      ContactPoint(
-          position: Offset(-85.88540458646145, 150.85042225580165),
-          direction: 4.0905469540454105),
-      ContactPoint(
-          position: Offset(-63.766396781975125, 165.18662035027472),
-          direction: 4.184105067587613),
-      ContactPoint(
-          position: Offset(-40.40458168899142, 177.39364959880157),
-          direction: 4.27768055015014),
-      ContactPoint(
-          position: Offset(-14.36151043730462, 187.81886951662443),
-          direction: 4.513413804734128),
-      ContactPoint(
-          position: Offset(14.361525010884753, 187.8188360603718),
-          direction: 4.91136539494451),
-      ContactPoint(
-          position: Offset(40.40458350249807, 177.3936182391538),
-          direction: 5.147097577241894),
-      ContactPoint(
-          position: Offset(63.766442327262794, 165.1865594499797),
-          direction: 5.240672870885575),
-      ContactPoint(
-          position: Offset(85.88550709897955, 150.8503337841351),
-          direction: 5.334230565966842),
-      ContactPoint(
-          position: Offset(106.5679146008206, 134.51114957748726),
-          direction: 5.4277162841921225),
-      ContactPoint(
-          position: Offset(125.63550695327943, 116.31425297316889),
-          direction: 5.521143072703134),
-      ContactPoint(
-          position: Offset(142.92234531183894, 96.41755830432865),
-          direction: 5.614596133472861),
-      ContactPoint(
-          position: Offset(158.2770084724677, 74.99371220017964),
-          direction: 5.708111300805128),
-      ContactPoint(
-          position: Offset(171.56347986091345, 52.22842113571102),
-          direction: 5.801686807677814),
-      ContactPoint(
-          position: Offset(182.66415779630805, 28.321301790445514),
-          direction: 5.895244578261389),
-    ],
-    holes: [
-      GearHole(name: '0', angle: 0, distance: 0),
-      GearHole(name: '8', angle: 1.5707963267948966, distance: 8),
-      GearHole(
-          name: '9', angle: 2.356194490192345, distance: 9.000000000000002),
-      GearHole(name: '10', angle: -3.141592653589793, distance: 10),
-      GearHole(
-          name: '11', angle: -2.356194490192345, distance: 10.999999999999998),
-      GearHole(name: '12', angle: -1.5707963267948966, distance: 12),
-      GearHole(name: '13', angle: -0.7853981633974486, distance: 13),
-      GearHole(name: '14', angle: 0, distance: 14),
-      GearHole(
-          name: '15', angle: 0.7853981633974483, distance: 15.000000000000002),
-      GearHole(name: '16', angle: 1.5707963267948966, distance: 16),
-      GearHole(
-          name: '17', angle: 2.356194490192345, distance: 16.999999999999996),
-      GearHole(name: '18', angle: -3.141592653589793, distance: 18),
-      GearHole(
-          name: '19', angle: -2.3561944901923453, distance: 18.999999999999996),
-      GearHole(name: '20', angle: -1.570796326794897, distance: 20),
-      GearHole(name: '21', angle: -0.7853981633974487, distance: 21),
-      GearHole(name: '22', angle: -3.2297397080004555e-16, distance: 22),
-      GearHole(name: '23', angle: 0.7853981633974481, distance: 23),
-      GearHole(name: '24', angle: 1.5707963267948966, distance: 24),
-      GearHole(
-          name: '25', angle: 2.356194490192345, distance: 24.999999999999996),
-      GearHole(name: '26', angle: -3.141592653589793, distance: 26),
-      GearHole(
-          name: '27', angle: -2.356194490192345, distance: 27.000000000000004),
-      GearHole(name: '28', angle: -1.570796326794897, distance: 28),
-      GearHole(
-          name: '29', angle: -0.7853981633974486, distance: 29.000000000000004),
-      GearHole(name: '30', angle: -2.3684757858670006e-16, distance: 30),
-      GearHole(
-          name: '31', angle: 0.7853981633974481, distance: 31.000000000000004),
-      GearHole(name: '32', angle: 1.5707963267948966, distance: 32),
-      GearHole(name: '33', angle: 2.356194490192345, distance: 33),
-      GearHole(name: '34', angle: 3.141592653589793, distance: 34),
-      GearHole(name: '35', angle: -2.356194490192345, distance: 35),
-      GearHole(name: '36', angle: -1.570796326794897, distance: 36),
-      GearHole(name: '40', angle: 1.5707963267948966, distance: 40),
-    ],
-    isRing: false,
-    isRound: false,
-    smallestConvexDiff: 0.09342638873877807,
-    biggestConvexDiff: 0.39795159021038184,
-    smallestConcaveDiff: 6.283185307179586,
-    biggestConcaveDiff: 0);
+  id: 'square45',
+  image: 'images/gears/square_45.png',
+  thumbnailImage: 'images/gears/square_45_thumb.png',
+  size: Size(408, 400),
+  center: Offset(203.99997109174728, 200.05566120147705),
+  toothCount: 42,
+  entitlement: Entitlement.squaregears,
+  package: Package.squaregears,
+  points: [
+    ContactPoint(
+        position: Offset(191.99999999999753, 0.000007699377799593596),
+        direction: 6.28318466556477),
+    ContactPoint(
+        position: Offset(182.66418929828433, -28.321192570016883),
+        direction: 0.38794051206148694),
+    ContactPoint(
+        position: Offset(171.56351349411065, -52.22836939662618),
+        direction: 0.4814979388654521),
+    ContactPoint(
+        position: Offset(158.27704436188603, -74.99365813585416),
+        direction: 0.575073183325757),
+    ContactPoint(
+        position: Offset(142.92238141146473, -96.41758175566383),
+        direction: 0.6685884232853363),
+    ContactPoint(
+        position: Offset(125.63552708429725, -116.31427911537536),
+        direction: 0.7620434881638181),
+    ContactPoint(
+        position: Offset(106.5679373831686, -134.51109526295943),
+        direction: 0.8554698769025961),
+    ContactPoint(
+        position: Offset(85.88551901583303, -150.85030998461133),
+        direction: 0.9489535194325498),
+    ContactPoint(
+        position: Offset(63.76649855090624, -165.18655716749242),
+        direction: 1.0425114282663683),
+    ContactPoint(
+        position: Offset(40.4046995711326, -177.39359336936997),
+        direction: 1.1360882813640814),
+    ContactPoint(
+        position: Offset(14.361613777453401, -187.81879253733206),
+        direction: 1.3718188519292376),
+    ContactPoint(
+        position: Offset(-14.361351097348582, -187.81890776506515),
+        direction: 1.7697670369727705),
+    ContactPoint(
+        position: Offset(-40.40443846514629, -177.39387168526582),
+        direction: 2.0054944017481615),
+    ContactPoint(
+        position: Offset(-63.76661613801146, -165.18706967751726),
+        direction: 2.099082265028944),
+    ContactPoint(
+        position: Offset(-85.88545177045722, -150.85042722311124),
+        direction: 2.192639279658801),
+    ContactPoint(
+        position: Offset(-106.56811771990341, -134.51155624465594),
+        direction: 2.2861199443480604),
+    ContactPoint(
+        position: Offset(-125.63559092731937, -116.31446544810208),
+        direction: 2.379553187907667),
+    ContactPoint(
+        position: Offset(-142.92248329771184, -96.41784101714998),
+        direction: 2.4730010040409702),
+    ContactPoint(
+        position: Offset(-158.2772853764385, -74.99387778084223),
+        direction: 2.5665181145964917),
+    ContactPoint(
+        position: Offset(-171.56381864913533, -52.22843675160449),
+        direction: 2.660099859250664),
+    ContactPoint(
+        position: Offset(-182.6642863637157, -28.321113734961003),
+        direction: 2.753659238480651),
+    ContactPoint(
+        position: Offset(-191.99997109173106, 0.0000960236072365598),
+        direction: 3.141594297728287),
+    ContactPoint(
+        position: Offset(-182.66417561095182, 28.32128494470767),
+        direction: 3.529533239646205),
+    ContactPoint(
+        position: Offset(-171.56348526698656, 52.22843334890258),
+        direction: 3.623090866733432),
+    ContactPoint(
+        position: Offset(-158.27701633629263, 74.9937452988212),
+        direction: 3.716666916280894),
+    ContactPoint(
+        position: Offset(-142.92228566315174, 96.41764810195058),
+        direction: 3.810181640906916),
+    ContactPoint(
+        position: Offset(-125.63547406736305, 116.31435100471711),
+        direction: 3.9036356343764163),
+    ContactPoint(
+        position: Offset(-106.56782123756145, 134.51121881436174),
+        direction: 3.9970627186780283),
+    ContactPoint(
+        position: Offset(-85.88540458646145, 150.85042225580165),
+        direction: 4.0905469540454105),
+    ContactPoint(
+        position: Offset(-63.766396781975125, 165.18662035027472),
+        direction: 4.184105067587613),
+    ContactPoint(
+        position: Offset(-40.40458168899142, 177.39364959880157),
+        direction: 4.27768055015014),
+    ContactPoint(
+        position: Offset(-14.36151043730462, 187.81886951662443),
+        direction: 4.513413804734128),
+    ContactPoint(
+        position: Offset(14.361525010884753, 187.8188360603718),
+        direction: 4.91136539494451),
+    ContactPoint(
+        position: Offset(40.40458350249807, 177.3936182391538),
+        direction: 5.147097577241894),
+    ContactPoint(
+        position: Offset(63.766442327262794, 165.1865594499797),
+        direction: 5.240672870885575),
+    ContactPoint(
+        position: Offset(85.88550709897955, 150.8503337841351),
+        direction: 5.334230565966842),
+    ContactPoint(
+        position: Offset(106.5679146008206, 134.51114957748726),
+        direction: 5.4277162841921225),
+    ContactPoint(
+        position: Offset(125.63550695327943, 116.31425297316889),
+        direction: 5.521143072703134),
+    ContactPoint(
+        position: Offset(142.92234531183894, 96.41755830432865),
+        direction: 5.614596133472861),
+    ContactPoint(
+        position: Offset(158.2770084724677, 74.99371220017964),
+        direction: 5.708111300805128),
+    ContactPoint(
+        position: Offset(171.56347986091345, 52.22842113571102),
+        direction: 5.801686807677814),
+    ContactPoint(
+        position: Offset(182.66415779630805, 28.321301790445514),
+        direction: 5.895244578261389),
+  ],
+  holes: [
+    GearHole(name: '0', angle: 0, distance: 0),
+    GearHole(name: '8', angle: 1.5707963267948966, distance: 8),
+    GearHole(name: '9', angle: 2.356194490192345, distance: 9.000000000000002),
+    GearHole(name: '10', angle: -3.141592653589793, distance: 10),
+    GearHole(
+        name: '11', angle: -2.356194490192345, distance: 10.999999999999998),
+    GearHole(name: '12', angle: -1.5707963267948966, distance: 12),
+    GearHole(name: '13', angle: -0.7853981633974486, distance: 13),
+    GearHole(name: '14', angle: 0, distance: 14),
+    GearHole(
+        name: '15', angle: 0.7853981633974483, distance: 15.000000000000002),
+    GearHole(name: '16', angle: 1.5707963267948966, distance: 16),
+    GearHole(
+        name: '17', angle: 2.356194490192345, distance: 16.999999999999996),
+    GearHole(name: '18', angle: -3.141592653589793, distance: 18),
+    GearHole(
+        name: '19', angle: -2.3561944901923453, distance: 18.999999999999996),
+    GearHole(name: '20', angle: -1.570796326794897, distance: 20),
+    GearHole(name: '21', angle: -0.7853981633974487, distance: 21),
+    GearHole(name: '22', angle: -3.2297397080004555e-16, distance: 22),
+    GearHole(name: '23', angle: 0.7853981633974481, distance: 23),
+    GearHole(name: '24', angle: 1.5707963267948966, distance: 24),
+    GearHole(
+        name: '25', angle: 2.356194490192345, distance: 24.999999999999996),
+    GearHole(name: '26', angle: -3.141592653589793, distance: 26),
+    GearHole(
+        name: '27', angle: -2.356194490192345, distance: 27.000000000000004),
+    GearHole(name: '28', angle: -1.570796326794897, distance: 28),
+    GearHole(
+        name: '29', angle: -0.7853981633974486, distance: 29.000000000000004),
+    GearHole(name: '30', angle: -2.3684757858670006e-16, distance: 30),
+    GearHole(
+        name: '31', angle: 0.7853981633974481, distance: 31.000000000000004),
+    GearHole(name: '32', angle: 1.5707963267948966, distance: 32),
+    GearHole(name: '33', angle: 2.356194490192345, distance: 33),
+    GearHole(name: '34', angle: 3.141592653589793, distance: 34),
+    GearHole(name: '35', angle: -2.356194490192345, distance: 35),
+    GearHole(name: '36', angle: -1.570796326794897, distance: 36),
+    GearHole(name: '40', angle: 1.5707963267948966, distance: 40),
+  ],
+  isRing: false,
+  isRound: false,
+  smallestConvexDiff: 0.09342638873877807,
+  biggestConvexDiff: 0.39795159021038184,
+  smallestConcaveDiff: 6.283185307179586,
+  biggestConcaveDiff: 0,
+  ovalClipper: const _Square45Clipper(),
+  pathClipper: null,
+);

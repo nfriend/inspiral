@@ -18,7 +18,8 @@
   </desc>
   <g>
     <%- include('gear_holes') %>
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M <%= length * 2 + endCapRadius * 2 %> <%= endCapRadius %>
              A <%= endCapRadius %> <%= endCapRadius %> 0 0 0 <%= length * 2 + endCapRadius %> 0
              L <%= endCapRadius %> 0
@@ -28,5 +29,15 @@
              A <%= endCapRadius %> <%= endCapRadius %> 0 0 0 <%= length * 2 + endCapRadius * 2 %> <%= endCapRadius %>
              Z" />
     <circle id="center-point" cx="<%= centerPoint.x %>" cy="<%= centerPoint.y %>" r="1" fill="#42d7f5" />
+
+    <%_ if (isRing) { _%>
+    <%- include('clip_style') %>
+
+    <ellipse id="clip"
+             cx="<%= centerPoint.x %>"
+             cy="<%= centerPoint.y %>"
+             rx="<%= length + endCapRadius - toothHeight * 2.5 %>"
+             ry="<%= endCapRadius - toothHeight * 2.5 %>" />
+    <%_ } _%>
   </g>
 </svg>

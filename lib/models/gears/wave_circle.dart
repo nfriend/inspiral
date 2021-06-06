@@ -10,562 +10,581 @@ import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
+import 'package:flutter/material.dart';
+
+class _WavecircleClipper extends CustomClipper<Rect> {
+  const _WavecircleClipper();
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromCenter(
+        center: Offset(732.0854034423828, 738.8895721435547),
+        width: 1496,
+        height: 1496);
+  }
+
+  @override
+  bool shouldReclip(oldClipper) => false;
+}
 
 final waveCircle = GearDefinition(
-    id: 'waveCircle',
-    image: 'images/gears/wave_circle.png',
-    thumbnailImage: 'images/gears/wave_circle_thumb.png',
-    size: Size(1472, 1472),
-    center: Offset(736, 736),
-    toothCount: 180,
-    entitlement: Entitlement.specialgears,
-    package: Package.specialgears,
-    points: [
-      ContactPoint(
-          position: Offset(4.530530506814907, -698.6022427192445),
-          direction: 1.1408476546196606),
-      ContactPoint(
-          position: Offset(-19.64901282808129, -708.5153832825334),
-          direction: 1.2256847086566038),
-      ContactPoint(
-          position: Offset(-44.705565787847, -716.2925946769532),
-          direction: 1.319283337571334),
-      ContactPoint(
-          position: Offset(-70.53819493658474, -721.5778194112306),
-          direction: 1.4240890689284083),
-      ContactPoint(
-          position: Offset(-96.92599418944282, -723.9943110690165),
-          direction: 1.5400029818983896),
-      ContactPoint(
-          position: Offset(-123.53284951056, -723.195303663735),
-          direction: 1.666203945439225),
-      ContactPoint(
-          position: Offset(-149.9118711755127, -718.909412768493),
-          direction: 1.80147099741464),
-      ContactPoint(
-          position: Offset(-175.52034884650467, -710.9733095272973),
-          direction: 1.9440397740560265),
-      ContactPoint(
-          position: Offset(-199.72117613381175, -699.4016912746704),
-          direction: 2.0879320099641623),
-      ContactPoint(
-          position: Offset(-221.94038905683067, -684.5911695126997),
-          direction: 2.221373680088502),
-      ContactPoint(
-          position: Offset(-241.94125799773948, -667.3096438841037),
-          direction: 2.3317342574937894),
-      ContactPoint(
-          position: Offset(-259.92896684520446, -648.467609503946),
-          direction: 2.4095847432930473),
-      ContactPoint(
-          position: Offset(-276.455168004742, -628.9396250161122),
-          direction: 2.4480789917438783),
-      ContactPoint(
-          position: Offset(-292.3093794883164, -609.527898653155),
-          direction: 2.443179364266916),
-      ContactPoint(
-          position: Offset(-308.3306958092931, -590.9513435672942),
-          direction: 2.394127413906365),
-      ContactPoint(
-          position: Offset(-325.3072420248224, -573.8816468848896),
-          direction: 2.3074915179500834),
-      ContactPoint(
-          position: Offset(-343.7607588857142, -558.7850132767686),
-          direction: 2.2018381815150914),
-      ContactPoint(
-          position: Offset(-363.7577021507602, -545.7863630164429),
-          direction: 2.0967705981773914),
-      ContactPoint(
-          position: Offset(-385.12724177771304, -534.791104513228),
-          direction: 2.0066774660203084),
-      ContactPoint(
-          position: Offset(-407.583155187088, -525.4001917020311),
-          direction: 1.9418790664902277),
-      ContactPoint(
-          position: Offset(-430.7695092878645, -517.0481686276809),
-          direction: 1.9022136829528034),
-      ContactPoint(
-          position: Offset(-454.386789941498, -509.30148225112936),
-          direction: 1.8800165504063573),
-      ContactPoint(
-          position: Offset(-478.57939138753335, -501.7755423855211),
-          direction: 1.8978604162050434),
-      ContactPoint(
-          position: Offset(-502.71523599021475, -492.8778152133104),
-          direction: 1.9671033594646659),
-      ContactPoint(
-          position: Offset(-526.4193413655761, -481.735732325953),
-          direction: 2.056980381645152),
-      ContactPoint(
-          position: Offset(-549.0705550404388, -468.36722784566985),
-          direction: 2.1561946518331476),
-      ContactPoint(
-          position: Offset(-570.3039251309652, -452.6276427607753),
-          direction: 2.26637332440413),
-      ContactPoint(
-          position: Offset(-589.6699058252976, -434.45758063757614),
-          direction: 2.387165073172904),
-      ContactPoint(
-          position: Offset(-606.6736237335398, -413.9109142979178),
-          direction: 2.517737252589276),
-      ContactPoint(
-          position: Offset(-620.8057665990153, -391.1742205304293),
-          direction: 2.656931050099998),
-      ContactPoint(
-          position: Offset(-631.5750422111228, -366.60086657750634),
-          direction: 2.8011907283539585),
-      ContactPoint(
-          position: Offset(-638.6651496488487, -340.76948529407593),
-          direction: 2.9418137704767204),
-      ContactPoint(
-          position: Offset(-642.1696321305601, -314.40980892959806),
-          direction: 3.0657457755994804),
-      ContactPoint(
-          position: Offset(-642.7008650760476, -288.1625111081802),
-          direction: 3.1608029619255973),
-      ContactPoint(
-          position: Offset(-641.2040337526086, -262.3890622190112),
-          direction: 3.2190083912143344),
-      ContactPoint(
-          position: Offset(-638.7644970883157, -237.17745935916233),
-          direction: 3.2363082106171457),
-      ContactPoint(
-          position: Offset(-636.4605906948697, -212.48445109031636),
-          direction: 3.2095401961353334),
-      ContactPoint(
-          position: Offset(-635.4084004966737, -188.2255445334078),
-          direction: 3.139946882403358),
-      ContactPoint(
-          position: Offset(-636.5105888426584, -164.32302635528703),
-          direction: 3.041323434792779),
-      ContactPoint(
-          position: Offset(-640.1703601874215, -140.78439806318838),
-          direction: 2.9338858135217123),
-      ContactPoint(
-          position: Offset(-646.3492793104344, -117.68362726039926),
-          direction: 2.834022697777571),
-      ContactPoint(
-          position: Offset(-654.7356262768753, -95.00750497447136),
-          direction: 2.755797969888045),
-      ContactPoint(
-          position: Offset(-664.6800540985037, -72.6065794293714),
-          direction: 2.7049162023343465),
-      ContactPoint(
-          position: Offset(-675.5808205912689, -50.36921245661371),
-          direction: 2.6752497241207926),
-      ContactPoint(
-          position: Offset(-687.0722313881294, -28.133333115381287),
-          direction: 2.6675625311658164),
-      ContactPoint(
-          position: Offset(-698.6026998613715, -5.471519311652721),
-          direction: 2.7116682626340793),
-      ContactPoint(
-          position: Offset(-708.5156405280736, 18.707765101894175),
-          direction: 2.7964842635792824),
-      ContactPoint(
-          position: Offset(-716.292757395433, 43.76432103410096),
-          direction: 2.8900830565894626),
-      ContactPoint(
-          position: Offset(-721.5779016101841, 69.59698123603563),
-          direction: 2.9948887620139395),
-      ContactPoint(
-          position: Offset(-723.9943122139858, 95.98486925255024),
-          direction: 3.110802407869257),
-      ContactPoint(
-          position: Offset(-723.1952229454066, 122.59173363292653),
-          direction: 3.2370041424812888),
-      ContactPoint(
-          position: Offset(-718.9092191823893, 148.97063162139887),
-          direction: 3.3722711441912985),
-      ContactPoint(
-          position: Offset(-710.973031798947, 174.5791504365036),
-          direction: 3.514843776830049),
-      ContactPoint(
-          position: Offset(-699.4011624410109, 198.77968859444744),
-          direction: 3.65873517211332),
-      ContactPoint(
-          position: Offset(-684.5907163587367, 220.9987888556424),
-          direction: 3.7921672730895155),
-      ContactPoint(
-          position: Offset(-667.3091808818053, 240.99986260490698),
-          direction: 3.9025441246493733),
-      ContactPoint(
-          position: Offset(-648.4665141002585, 258.9870386698482),
-          direction: 3.980397802950572),
-      ContactPoint(
-          position: Offset(-628.9387000974739, 275.51305277506674),
-          direction: 4.018856493823176),
-      ContactPoint(
-          position: Offset(-609.5275649425034, 291.3680369311839),
-          direction: 4.013962192819012),
-      ContactPoint(
-          position: Offset(-590.9506687165956, 307.38925890463963),
-          direction: 3.96492933556295),
-      ContactPoint(
-          position: Offset(-573.88114284112, 324.36565694468123),
-          direction: 3.878283175586448),
-      ContactPoint(
-          position: Offset(-558.7847251427328, 342.8192361489346),
-          direction: 3.7726256354350967),
-      ContactPoint(
-          position: Offset(-545.7861203659318, 362.8165137495167),
-          direction: 3.667571743052648),
-      ContactPoint(
-          position: Offset(-534.7905076622792, 384.18575930505966),
-          direction: 3.577479410266765),
-      ContactPoint(
-          position: Offset(-525.3998615787649, 406.64147094806737),
-          direction: 3.5126600866973114),
-      ContactPoint(
-          position: Offset(-517.0483114150256, 429.8282612183661),
-          direction: 3.4730125197365784),
-      ContactPoint(
-          position: Offset(-509.3009714317643, 453.4452199743612),
-          direction: 3.450811736727184),
-      ContactPoint(
-          position: Offset(-501.7756771893451, 477.6383409176632),
-          direction: 3.468682134630896),
-      ContactPoint(
-          position: Offset(-492.8760722592163, 501.7732860583105),
-          direction: 3.537923283598483),
-      ContactPoint(
-          position: Offset(-481.7349757116321, 525.4773333153776),
-          direction: 3.627769244680432),
-      ContactPoint(
-          position: Offset(-468.365987443471, 548.1283903673461),
-          direction: 3.7269952441549083),
-      ContactPoint(
-          position: Offset(-452.626566320675, 569.3620068776555),
-          direction: 3.837178670727095),
-      ContactPoint(
-          position: Offset(-434.45602087402415, 588.727382886519),
-          direction: 3.9579731279011665),
-      ContactPoint(
-          position: Offset(-413.9096339038906, 605.7310763831625),
-          direction: 4.088531874686376),
-      ContactPoint(
-          position: Offset(-391.17307166528053, 619.8630311633979),
-          direction: 4.227727078022404),
-      ContactPoint(
-          position: Offset(-366.5997926347796, 630.6324092152713),
-          direction: 4.371985546880605),
-      ContactPoint(
-          position: Offset(-340.76855187550996, 637.7224239519551),
-          direction: 4.512607077667287),
-      ContactPoint(
-          position: Offset(-314.408874606947, 641.2271369772841),
-          direction: 4.636536021792352),
-      ContactPoint(
-          position: Offset(-288.16156032423135, 641.7584519480775),
-          direction: 4.731598411911875),
-      ContactPoint(
-          position: Offset(-262.3880970876601, 640.2615860570281),
-          direction: 4.789808864095118),
-      ContactPoint(
-          position: Offset(-237.17649256962375, 637.821875412236),
-          direction: 4.807099887460493),
-      ContactPoint(
-          position: Offset(-212.48346240571405, 635.5183749041062),
-          direction: 4.780337535441874),
-      ContactPoint(
-          position: Offset(-188.2244963720712, 634.4657279348074),
-          direction: 4.710751718910949),
-      ContactPoint(
-          position: Offset(-164.32220815545676, 635.5679460497621),
-          direction: 4.612119277926765),
-      ContactPoint(
-          position: Offset(-140.78338803607156, 639.2277185965845),
-          direction: 4.504682391297653),
-      ContactPoint(
-          position: Offset(-117.68276756193771, 645.4066290583488),
-          direction: 4.404816811438579),
-      ContactPoint(
-          position: Offset(-95.00660041159419, 653.7930616337466),
-          direction: 4.326587820721288),
-      ContactPoint(
-          position: Offset(-72.6056529132896, 663.7377822107474),
-          direction: 4.275716346168002),
-      ContactPoint(
-          position: Offset(-50.36852726820393, 674.6379246846),
-          direction: 4.246013172422609),
-      ContactPoint(
-          position: Offset(-28.13328682401716, 686.1313676864456),
-          direction: 4.238363193640026),
-      ContactPoint(
-          position: Offset(-5.469794599261098, 697.6600509831256),
-          direction: 4.282530378175609),
-      ContactPoint(
-          position: Offset(18.709409702366795, 707.5718727506284),
-          direction: 4.367296508617066),
-      ContactPoint(
-          position: Offset(43.76574040925261, 715.3490741683211),
-          direction: 4.460883348477475),
-      ContactPoint(
-          position: Offset(69.59842616118189, 720.6338509157185),
-          direction: 4.565691123136174),
-      ContactPoint(
-          position: Offset(95.98585482357211, 723.0502636508336),
-          direction: 4.681591852717129),
-      ContactPoint(
-          position: Offset(122.59269448656651, 722.2515076241395),
-          direction: 4.807791489973947),
-      ContactPoint(
-          position: Offset(148.9717173481032, 717.9656124543931),
-          direction: 4.943074203203292),
-      ContactPoint(
-          position: Offset(174.5798816667922, 710.0290439723206),
-          direction: 5.0856372658027995),
-      ContactPoint(
-          position: Offset(198.78053639717427, 698.4578173632367),
-          direction: 5.229516229104383),
-      ContactPoint(
-          position: Offset(220.99993913651193, 683.6473714186275),
-          direction: 5.362965812772746),
-      ContactPoint(
-          position: Offset(241.00072185200665, 666.3657116239976),
-          direction: 5.473344510351011),
-      ContactPoint(
-          position: Offset(258.9879836648686, 647.523079599805),
-          direction: 5.551193998838743),
-      ContactPoint(
-          position: Offset(275.5137151434657, 627.9954521890465),
-          direction: 5.58965562325635),
-      ContactPoint(
-          position: Offset(291.3688017330645, 608.5841270553326),
-          direction: 5.584758760980973),
-      ContactPoint(
-          position: Offset(307.38998072372124, 590.0073336316782),
-          direction: 5.535728103696101),
-      ContactPoint(
-          position: Offset(324.3663821383652, 572.9375716068164),
-          direction: 5.449082122598588),
-      ContactPoint(
-          position: Offset(342.8198586128014, 557.8413029224582),
-          direction: 5.343420062630531),
-      ContactPoint(
-          position: Offset(362.817028557855, 544.8428243426797),
-          direction: 5.238367685333007),
-      ContactPoint(
-          position: Offset(384.18594939871804, 533.8473322662808),
-          direction: 5.148256741395584),
-      ContactPoint(
-          position: Offset(406.6424036337327, 524.4574258835763),
-          direction: 5.083460676633039),
-      ContactPoint(
-          position: Offset(429.8288706781904, 516.1047395743664),
-          direction: 5.043832973454213),
-      ContactPoint(
-          position: Offset(453.44586819198287, 508.35735412445007),
-          direction: 5.021608706385615),
-      ContactPoint(
-          position: Offset(477.6387987260175, 500.8321254298553),
-          direction: 5.0394838363896834),
-      ContactPoint(
-          position: Offset(501.77367461302055, 491.9322549337721),
-          direction: 5.108724385672238),
-      ContactPoint(
-          position: Offset(525.4778661686676, 480.7911275419095),
-          direction: 5.1985668961799885),
-      ContactPoint(
-          position: Offset(548.128675119698, 467.42214263236815),
-          direction: 5.297792580175636),
-      ContactPoint(
-          position: Offset(569.3624756728856, 451.68269610415075),
-          direction: 5.407976195024876),
-      ContactPoint(
-          position: Offset(588.7276783350995, 433.51208243289307),
-          direction: 5.528771984447929),
-      ContactPoint(
-          position: Offset(605.7314693693569, 412.96565793272134),
-          direction: 5.659327667629877),
-      ContactPoint(
-          position: Offset(619.8633149050092, 390.2291838700385),
-          direction: 5.798525029493964),
-      ContactPoint(
-          position: Offset(630.6326896159468, 365.6558524716154),
-          direction: 5.942783306999992),
-      ContactPoint(
-          position: Offset(637.7225708515887, 339.82483912312927),
-          direction: 6.083401015924501),
-      ContactPoint(
-          position: Offset(641.2275381627875, 313.46489200932564),
-          direction: 6.207337249965541),
-      ContactPoint(
-          position: Offset(641.7583592675095, 287.2177302641271),
-          direction: 0.019214323913335996),
-      ContactPoint(
-          position: Offset(640.2617429895809, 261.4443054391135),
-          direction: 0.07741520238010047),
-      ContactPoint(
-          position: Offset(637.8220251574868, 236.23279809517808),
-          direction: 0.09471341194092009),
-      ContactPoint(
-          position: Offset(635.5184132233978, 211.53977517512138),
-          direction: 0.06793897885459721),
-      ContactPoint(
-          position: Offset(634.4663688040362, 187.28092332025275),
-          direction: 6.2815480501868155),
-      ContactPoint(
-          position: Offset(635.567994022089, 163.37809543960506),
-          direction: 6.182930136607405),
-      ContactPoint(
-          position: Offset(639.2276382108201, 139.83976204962013),
-          direction: 6.07548323078471),
-      ContactPoint(
-          position: Offset(645.4064349595665, 116.73882792333822),
-          direction: 5.975618512500235),
-      ContactPoint(
-          position: Offset(653.792721809191, 94.06291551469737),
-          direction: 5.897383232648888),
-      ContactPoint(
-          position: Offset(663.7375607635754, 71.66191357373313),
-          direction: 5.846511131302405),
-      ContactPoint(
-          position: Offset(674.6376079903796, 49.424977564631085),
-          direction: 5.8168130203110655),
-      ContactPoint(
-          position: Offset(686.1309160249219, 27.189610379141246),
-          direction: 5.809160634442018),
-      ContactPoint(
-          position: Offset(697.6596943523961, 4.526206235725824),
-          direction: 5.8533225182752835),
-      ContactPoint(
-          position: Offset(707.571660797894, -19.653109417237047),
-          direction: 5.938093246879587),
-      ContactPoint(
-          position: Offset(715.348743705115, -44.709455832727365),
-          direction: 6.03168142663142),
-      ContactPoint(
-          position: Offset(720.6335122463391, -70.5419790183499),
-          direction: 6.136485753301044),
-      ContactPoint(
-          position: Offset(723.0500491490233, -96.92976550873773),
-          direction: 6.252385801399356),
-      ContactPoint(
-          position: Offset(722.2512934041436, -123.53636527550042),
-          direction: 0.09540303181005427),
-      ContactPoint(
-          position: Offset(717.9653976845116, -149.91538678180603),
-          direction: 0.2306856408011324),
-      ContactPoint(
-          position: Offset(710.0288342394575, -175.5234447308735),
-          direction: 0.3732473963752323),
-      ContactPoint(
-          position: Offset(698.4576055276401, -199.72431987551678),
-          direction: 0.5171269474277507),
-      ContactPoint(
-          position: Offset(683.6471437085685, -221.94356116048854),
-          direction: 0.6505787706773081),
-      ContactPoint(
-          position: Offset(666.3653689874743, -241.9445157642519),
-          direction: 0.7609563689820158),
-      ContactPoint(
-          position: Offset(647.5228720296785, -259.9315207067238),
-          direction: 0.8388043403420697),
-      ContactPoint(
-          position: Offset(627.9951365405826, -276.4575308778188),
-          direction: 0.8772644706719968),
-      ContactPoint(
-          position: Offset(608.5841297812614, -292.3123065122353),
-          direction: 0.8723728046258756),
-      ContactPoint(
-          position: Offset(590.0069716188539, -308.3336391512593),
-          direction: 0.8233421138030685),
-      ContactPoint(
-          position: Offset(572.937444099369, -325.3098116702077),
-          direction: 0.7366976019198077),
-      ContactPoint(
-          position: Offset(557.8407862864101, -343.7633748514122),
-          direction: 0.631039397821791),
-      ContactPoint(
-          position: Offset(544.8422904061262, -363.76032245583906),
-          direction: 0.5259812175468817),
-      ContactPoint(
-          position: Offset(533.8465635793325, -385.12967206635534),
-          direction: 0.435868895450815),
-      ContactPoint(
-          position: Offset(524.4568384990877, -407.5856870464692),
-          direction: 0.3710734314449944),
-      ContactPoint(
-          position: Offset(516.1039663113019, -430.7723706776524),
-          direction: 0.3314466368140172),
-      ContactPoint(
-          position: Offset(508.3567108435539, -454.3889089596595),
-          direction: 0.3092203864321128),
-      ContactPoint(
-          position: Offset(500.83133565057824, -478.582249954444),
-          direction: 0.3270859866993039),
-      ContactPoint(
-          position: Offset(491.93176957517386, -502.71764835336734),
-          direction: 0.3963281865878505),
-      ContactPoint(
-          position: Offset(480.7906625522165, -526.4214909866582),
-          direction: 0.486179204543399),
-      ContactPoint(
-          position: Offset(467.42156224107026, -549.0727067221129),
-          direction: 0.5854036838448469),
-      ContactPoint(
-          position: Offset(451.6822101535616, -570.3061129543582),
-          direction: 0.6955908800137998),
-      ContactPoint(
-          position: Offset(433.51147361258285, -589.6714653517962),
-          direction: 0.8163793388543263),
-      ContactPoint(
-          position: Offset(412.9653511353919, -606.6751894161335),
-          direction: 0.9469357203733955),
-      ContactPoint(
-          position: Offset(390.2285470800633, -620.8073130012697),
-          direction: 1.0861356649346572),
-      ContactPoint(
-          position: Offset(365.65576633591434, -631.5763217304934),
-          direction: 1.2303938477168819),
-      ContactPoint(
-          position: Offset(339.8244696448309, -638.666504542767),
-          direction: 1.3710097186025916),
-      ContactPoint(
-          position: Offset(313.46460241480594, -642.171336539353),
-          direction: 1.4949444169336275),
-      ContactPoint(
-          position: Offset(287.2172834406101, -642.7024970509802),
-          direction: 1.5900097388603474),
-      ContactPoint(
-          position: Offset(261.44391676862983, -641.2055865362653),
-          direction: 1.6482159571983086),
-      ContactPoint(
-          position: Offset(236.23246326871924, -638.7659491900356),
-          direction: 1.6655096661688624),
-      ContactPoint(
-          position: Offset(211.5393932831903, -636.4622646876112),
-          direction: 1.6387493604872336),
-      ContactPoint(
-          position: Offset(187.28016677403616, -635.409560421695),
-          direction: 1.5691636233015203),
-      ContactPoint(
-          position: Offset(163.37823660270325, -636.5116169246738),
-          direction: 1.4705318892256516),
-      ContactPoint(
-          position: Offset(139.8392794104372, -640.1712774862933),
-          direction: 1.363096368890778),
-      ContactPoint(
-          position: Offset(116.73809197160847, -646.3501255841361),
-          direction: 1.2632325091012238),
-      ContactPoint(
-          position: Offset(94.0622605365676, -654.7362738223759),
-          direction: 1.1850065008176571),
-      ContactPoint(
-          position: Offset(71.66141849689807, -664.6804950485606),
-          direction: 1.1341255823388785),
-      ContactPoint(
-          position: Offset(49.42430801354824, -675.5809982000796),
-          direction: 1.104458034738803),
-      ContactPoint(
-          position: Offset(27.18806515245306, -687.0724651470209),
-          direction: 1.0967420247491972),
-    ],
-    holes: [],
-    isRing: false,
-    isRound: false,
-    smallestConvexDiff: 0.01729102336537469,
-    biggestConvexDiff: 0.14425967825396047,
-    smallestConcaveDiff: 0.004891666046121124,
-    biggestConcaveDiff: 0.10744690582269545);
+  id: 'waveCircle',
+  image: 'images/gears/wave_circle.png',
+  thumbnailImage: 'images/gears/wave_circle_thumb.png',
+  size: Size(1472, 1472),
+  center: Offset(736, 736),
+  toothCount: 180,
+  entitlement: Entitlement.specialgears,
+  package: Package.specialgears,
+  points: [
+    ContactPoint(
+        position: Offset(4.530530506814907, -698.6022427192445),
+        direction: 1.1408476546196606),
+    ContactPoint(
+        position: Offset(-19.64901282808129, -708.5153832825334),
+        direction: 1.2256847086566038),
+    ContactPoint(
+        position: Offset(-44.705565787847, -716.2925946769532),
+        direction: 1.319283337571334),
+    ContactPoint(
+        position: Offset(-70.53819493658474, -721.5778194112306),
+        direction: 1.4240890689284083),
+    ContactPoint(
+        position: Offset(-96.92599418944282, -723.9943110690165),
+        direction: 1.5400029818983896),
+    ContactPoint(
+        position: Offset(-123.53284951056, -723.195303663735),
+        direction: 1.666203945439225),
+    ContactPoint(
+        position: Offset(-149.9118711755127, -718.909412768493),
+        direction: 1.80147099741464),
+    ContactPoint(
+        position: Offset(-175.52034884650467, -710.9733095272973),
+        direction: 1.9440397740560265),
+    ContactPoint(
+        position: Offset(-199.72117613381175, -699.4016912746704),
+        direction: 2.0879320099641623),
+    ContactPoint(
+        position: Offset(-221.94038905683067, -684.5911695126997),
+        direction: 2.221373680088502),
+    ContactPoint(
+        position: Offset(-241.94125799773948, -667.3096438841037),
+        direction: 2.3317342574937894),
+    ContactPoint(
+        position: Offset(-259.92896684520446, -648.467609503946),
+        direction: 2.4095847432930473),
+    ContactPoint(
+        position: Offset(-276.455168004742, -628.9396250161122),
+        direction: 2.4480789917438783),
+    ContactPoint(
+        position: Offset(-292.3093794883164, -609.527898653155),
+        direction: 2.443179364266916),
+    ContactPoint(
+        position: Offset(-308.3306958092931, -590.9513435672942),
+        direction: 2.394127413906365),
+    ContactPoint(
+        position: Offset(-325.3072420248224, -573.8816468848896),
+        direction: 2.3074915179500834),
+    ContactPoint(
+        position: Offset(-343.7607588857142, -558.7850132767686),
+        direction: 2.2018381815150914),
+    ContactPoint(
+        position: Offset(-363.7577021507602, -545.7863630164429),
+        direction: 2.0967705981773914),
+    ContactPoint(
+        position: Offset(-385.12724177771304, -534.791104513228),
+        direction: 2.0066774660203084),
+    ContactPoint(
+        position: Offset(-407.583155187088, -525.4001917020311),
+        direction: 1.9418790664902277),
+    ContactPoint(
+        position: Offset(-430.7695092878645, -517.0481686276809),
+        direction: 1.9022136829528034),
+    ContactPoint(
+        position: Offset(-454.386789941498, -509.30148225112936),
+        direction: 1.8800165504063573),
+    ContactPoint(
+        position: Offset(-478.57939138753335, -501.7755423855211),
+        direction: 1.8978604162050434),
+    ContactPoint(
+        position: Offset(-502.71523599021475, -492.8778152133104),
+        direction: 1.9671033594646659),
+    ContactPoint(
+        position: Offset(-526.4193413655761, -481.735732325953),
+        direction: 2.056980381645152),
+    ContactPoint(
+        position: Offset(-549.0705550404388, -468.36722784566985),
+        direction: 2.1561946518331476),
+    ContactPoint(
+        position: Offset(-570.3039251309652, -452.6276427607753),
+        direction: 2.26637332440413),
+    ContactPoint(
+        position: Offset(-589.6699058252976, -434.45758063757614),
+        direction: 2.387165073172904),
+    ContactPoint(
+        position: Offset(-606.6736237335398, -413.9109142979178),
+        direction: 2.517737252589276),
+    ContactPoint(
+        position: Offset(-620.8057665990153, -391.1742205304293),
+        direction: 2.656931050099998),
+    ContactPoint(
+        position: Offset(-631.5750422111228, -366.60086657750634),
+        direction: 2.8011907283539585),
+    ContactPoint(
+        position: Offset(-638.6651496488487, -340.76948529407593),
+        direction: 2.9418137704767204),
+    ContactPoint(
+        position: Offset(-642.1696321305601, -314.40980892959806),
+        direction: 3.0657457755994804),
+    ContactPoint(
+        position: Offset(-642.7008650760476, -288.1625111081802),
+        direction: 3.1608029619255973),
+    ContactPoint(
+        position: Offset(-641.2040337526086, -262.3890622190112),
+        direction: 3.2190083912143344),
+    ContactPoint(
+        position: Offset(-638.7644970883157, -237.17745935916233),
+        direction: 3.2363082106171457),
+    ContactPoint(
+        position: Offset(-636.4605906948697, -212.48445109031636),
+        direction: 3.2095401961353334),
+    ContactPoint(
+        position: Offset(-635.4084004966737, -188.2255445334078),
+        direction: 3.139946882403358),
+    ContactPoint(
+        position: Offset(-636.5105888426584, -164.32302635528703),
+        direction: 3.041323434792779),
+    ContactPoint(
+        position: Offset(-640.1703601874215, -140.78439806318838),
+        direction: 2.9338858135217123),
+    ContactPoint(
+        position: Offset(-646.3492793104344, -117.68362726039926),
+        direction: 2.834022697777571),
+    ContactPoint(
+        position: Offset(-654.7356262768753, -95.00750497447136),
+        direction: 2.755797969888045),
+    ContactPoint(
+        position: Offset(-664.6800540985037, -72.6065794293714),
+        direction: 2.7049162023343465),
+    ContactPoint(
+        position: Offset(-675.5808205912689, -50.36921245661371),
+        direction: 2.6752497241207926),
+    ContactPoint(
+        position: Offset(-687.0722313881294, -28.133333115381287),
+        direction: 2.6675625311658164),
+    ContactPoint(
+        position: Offset(-698.6026998613715, -5.471519311652721),
+        direction: 2.7116682626340793),
+    ContactPoint(
+        position: Offset(-708.5156405280736, 18.707765101894175),
+        direction: 2.7964842635792824),
+    ContactPoint(
+        position: Offset(-716.292757395433, 43.76432103410096),
+        direction: 2.8900830565894626),
+    ContactPoint(
+        position: Offset(-721.5779016101841, 69.59698123603563),
+        direction: 2.9948887620139395),
+    ContactPoint(
+        position: Offset(-723.9943122139858, 95.98486925255024),
+        direction: 3.110802407869257),
+    ContactPoint(
+        position: Offset(-723.1952229454066, 122.59173363292653),
+        direction: 3.2370041424812888),
+    ContactPoint(
+        position: Offset(-718.9092191823893, 148.97063162139887),
+        direction: 3.3722711441912985),
+    ContactPoint(
+        position: Offset(-710.973031798947, 174.5791504365036),
+        direction: 3.514843776830049),
+    ContactPoint(
+        position: Offset(-699.4011624410109, 198.77968859444744),
+        direction: 3.65873517211332),
+    ContactPoint(
+        position: Offset(-684.5907163587367, 220.9987888556424),
+        direction: 3.7921672730895155),
+    ContactPoint(
+        position: Offset(-667.3091808818053, 240.99986260490698),
+        direction: 3.9025441246493733),
+    ContactPoint(
+        position: Offset(-648.4665141002585, 258.9870386698482),
+        direction: 3.980397802950572),
+    ContactPoint(
+        position: Offset(-628.9387000974739, 275.51305277506674),
+        direction: 4.018856493823176),
+    ContactPoint(
+        position: Offset(-609.5275649425034, 291.3680369311839),
+        direction: 4.013962192819012),
+    ContactPoint(
+        position: Offset(-590.9506687165956, 307.38925890463963),
+        direction: 3.96492933556295),
+    ContactPoint(
+        position: Offset(-573.88114284112, 324.36565694468123),
+        direction: 3.878283175586448),
+    ContactPoint(
+        position: Offset(-558.7847251427328, 342.8192361489346),
+        direction: 3.7726256354350967),
+    ContactPoint(
+        position: Offset(-545.7861203659318, 362.8165137495167),
+        direction: 3.667571743052648),
+    ContactPoint(
+        position: Offset(-534.7905076622792, 384.18575930505966),
+        direction: 3.577479410266765),
+    ContactPoint(
+        position: Offset(-525.3998615787649, 406.64147094806737),
+        direction: 3.5126600866973114),
+    ContactPoint(
+        position: Offset(-517.0483114150256, 429.8282612183661),
+        direction: 3.4730125197365784),
+    ContactPoint(
+        position: Offset(-509.3009714317643, 453.4452199743612),
+        direction: 3.450811736727184),
+    ContactPoint(
+        position: Offset(-501.7756771893451, 477.6383409176632),
+        direction: 3.468682134630896),
+    ContactPoint(
+        position: Offset(-492.8760722592163, 501.7732860583105),
+        direction: 3.537923283598483),
+    ContactPoint(
+        position: Offset(-481.7349757116321, 525.4773333153776),
+        direction: 3.627769244680432),
+    ContactPoint(
+        position: Offset(-468.365987443471, 548.1283903673461),
+        direction: 3.7269952441549083),
+    ContactPoint(
+        position: Offset(-452.626566320675, 569.3620068776555),
+        direction: 3.837178670727095),
+    ContactPoint(
+        position: Offset(-434.45602087402415, 588.727382886519),
+        direction: 3.9579731279011665),
+    ContactPoint(
+        position: Offset(-413.9096339038906, 605.7310763831625),
+        direction: 4.088531874686376),
+    ContactPoint(
+        position: Offset(-391.17307166528053, 619.8630311633979),
+        direction: 4.227727078022404),
+    ContactPoint(
+        position: Offset(-366.5997926347796, 630.6324092152713),
+        direction: 4.371985546880605),
+    ContactPoint(
+        position: Offset(-340.76855187550996, 637.7224239519551),
+        direction: 4.512607077667287),
+    ContactPoint(
+        position: Offset(-314.408874606947, 641.2271369772841),
+        direction: 4.636536021792352),
+    ContactPoint(
+        position: Offset(-288.16156032423135, 641.7584519480775),
+        direction: 4.731598411911875),
+    ContactPoint(
+        position: Offset(-262.3880970876601, 640.2615860570281),
+        direction: 4.789808864095118),
+    ContactPoint(
+        position: Offset(-237.17649256962375, 637.821875412236),
+        direction: 4.807099887460493),
+    ContactPoint(
+        position: Offset(-212.48346240571405, 635.5183749041062),
+        direction: 4.780337535441874),
+    ContactPoint(
+        position: Offset(-188.2244963720712, 634.4657279348074),
+        direction: 4.710751718910949),
+    ContactPoint(
+        position: Offset(-164.32220815545676, 635.5679460497621),
+        direction: 4.612119277926765),
+    ContactPoint(
+        position: Offset(-140.78338803607156, 639.2277185965845),
+        direction: 4.504682391297653),
+    ContactPoint(
+        position: Offset(-117.68276756193771, 645.4066290583488),
+        direction: 4.404816811438579),
+    ContactPoint(
+        position: Offset(-95.00660041159419, 653.7930616337466),
+        direction: 4.326587820721288),
+    ContactPoint(
+        position: Offset(-72.6056529132896, 663.7377822107474),
+        direction: 4.275716346168002),
+    ContactPoint(
+        position: Offset(-50.36852726820393, 674.6379246846),
+        direction: 4.246013172422609),
+    ContactPoint(
+        position: Offset(-28.13328682401716, 686.1313676864456),
+        direction: 4.238363193640026),
+    ContactPoint(
+        position: Offset(-5.469794599261098, 697.6600509831256),
+        direction: 4.282530378175609),
+    ContactPoint(
+        position: Offset(18.709409702366795, 707.5718727506284),
+        direction: 4.367296508617066),
+    ContactPoint(
+        position: Offset(43.76574040925261, 715.3490741683211),
+        direction: 4.460883348477475),
+    ContactPoint(
+        position: Offset(69.59842616118189, 720.6338509157185),
+        direction: 4.565691123136174),
+    ContactPoint(
+        position: Offset(95.98585482357211, 723.0502636508336),
+        direction: 4.681591852717129),
+    ContactPoint(
+        position: Offset(122.59269448656651, 722.2515076241395),
+        direction: 4.807791489973947),
+    ContactPoint(
+        position: Offset(148.9717173481032, 717.9656124543931),
+        direction: 4.943074203203292),
+    ContactPoint(
+        position: Offset(174.5798816667922, 710.0290439723206),
+        direction: 5.0856372658027995),
+    ContactPoint(
+        position: Offset(198.78053639717427, 698.4578173632367),
+        direction: 5.229516229104383),
+    ContactPoint(
+        position: Offset(220.99993913651193, 683.6473714186275),
+        direction: 5.362965812772746),
+    ContactPoint(
+        position: Offset(241.00072185200665, 666.3657116239976),
+        direction: 5.473344510351011),
+    ContactPoint(
+        position: Offset(258.9879836648686, 647.523079599805),
+        direction: 5.551193998838743),
+    ContactPoint(
+        position: Offset(275.5137151434657, 627.9954521890465),
+        direction: 5.58965562325635),
+    ContactPoint(
+        position: Offset(291.3688017330645, 608.5841270553326),
+        direction: 5.584758760980973),
+    ContactPoint(
+        position: Offset(307.38998072372124, 590.0073336316782),
+        direction: 5.535728103696101),
+    ContactPoint(
+        position: Offset(324.3663821383652, 572.9375716068164),
+        direction: 5.449082122598588),
+    ContactPoint(
+        position: Offset(342.8198586128014, 557.8413029224582),
+        direction: 5.343420062630531),
+    ContactPoint(
+        position: Offset(362.817028557855, 544.8428243426797),
+        direction: 5.238367685333007),
+    ContactPoint(
+        position: Offset(384.18594939871804, 533.8473322662808),
+        direction: 5.148256741395584),
+    ContactPoint(
+        position: Offset(406.6424036337327, 524.4574258835763),
+        direction: 5.083460676633039),
+    ContactPoint(
+        position: Offset(429.8288706781904, 516.1047395743664),
+        direction: 5.043832973454213),
+    ContactPoint(
+        position: Offset(453.44586819198287, 508.35735412445007),
+        direction: 5.021608706385615),
+    ContactPoint(
+        position: Offset(477.6387987260175, 500.8321254298553),
+        direction: 5.0394838363896834),
+    ContactPoint(
+        position: Offset(501.77367461302055, 491.9322549337721),
+        direction: 5.108724385672238),
+    ContactPoint(
+        position: Offset(525.4778661686676, 480.7911275419095),
+        direction: 5.1985668961799885),
+    ContactPoint(
+        position: Offset(548.128675119698, 467.42214263236815),
+        direction: 5.297792580175636),
+    ContactPoint(
+        position: Offset(569.3624756728856, 451.68269610415075),
+        direction: 5.407976195024876),
+    ContactPoint(
+        position: Offset(588.7276783350995, 433.51208243289307),
+        direction: 5.528771984447929),
+    ContactPoint(
+        position: Offset(605.7314693693569, 412.96565793272134),
+        direction: 5.659327667629877),
+    ContactPoint(
+        position: Offset(619.8633149050092, 390.2291838700385),
+        direction: 5.798525029493964),
+    ContactPoint(
+        position: Offset(630.6326896159468, 365.6558524716154),
+        direction: 5.942783306999992),
+    ContactPoint(
+        position: Offset(637.7225708515887, 339.82483912312927),
+        direction: 6.083401015924501),
+    ContactPoint(
+        position: Offset(641.2275381627875, 313.46489200932564),
+        direction: 6.207337249965541),
+    ContactPoint(
+        position: Offset(641.7583592675095, 287.2177302641271),
+        direction: 0.019214323913335996),
+    ContactPoint(
+        position: Offset(640.2617429895809, 261.4443054391135),
+        direction: 0.07741520238010047),
+    ContactPoint(
+        position: Offset(637.8220251574868, 236.23279809517808),
+        direction: 0.09471341194092009),
+    ContactPoint(
+        position: Offset(635.5184132233978, 211.53977517512138),
+        direction: 0.06793897885459721),
+    ContactPoint(
+        position: Offset(634.4663688040362, 187.28092332025275),
+        direction: 6.2815480501868155),
+    ContactPoint(
+        position: Offset(635.567994022089, 163.37809543960506),
+        direction: 6.182930136607405),
+    ContactPoint(
+        position: Offset(639.2276382108201, 139.83976204962013),
+        direction: 6.07548323078471),
+    ContactPoint(
+        position: Offset(645.4064349595665, 116.73882792333822),
+        direction: 5.975618512500235),
+    ContactPoint(
+        position: Offset(653.792721809191, 94.06291551469737),
+        direction: 5.897383232648888),
+    ContactPoint(
+        position: Offset(663.7375607635754, 71.66191357373313),
+        direction: 5.846511131302405),
+    ContactPoint(
+        position: Offset(674.6376079903796, 49.424977564631085),
+        direction: 5.8168130203110655),
+    ContactPoint(
+        position: Offset(686.1309160249219, 27.189610379141246),
+        direction: 5.809160634442018),
+    ContactPoint(
+        position: Offset(697.6596943523961, 4.526206235725824),
+        direction: 5.8533225182752835),
+    ContactPoint(
+        position: Offset(707.571660797894, -19.653109417237047),
+        direction: 5.938093246879587),
+    ContactPoint(
+        position: Offset(715.348743705115, -44.709455832727365),
+        direction: 6.03168142663142),
+    ContactPoint(
+        position: Offset(720.6335122463391, -70.5419790183499),
+        direction: 6.136485753301044),
+    ContactPoint(
+        position: Offset(723.0500491490233, -96.92976550873773),
+        direction: 6.252385801399356),
+    ContactPoint(
+        position: Offset(722.2512934041436, -123.53636527550042),
+        direction: 0.09540303181005427),
+    ContactPoint(
+        position: Offset(717.9653976845116, -149.91538678180603),
+        direction: 0.2306856408011324),
+    ContactPoint(
+        position: Offset(710.0288342394575, -175.5234447308735),
+        direction: 0.3732473963752323),
+    ContactPoint(
+        position: Offset(698.4576055276401, -199.72431987551678),
+        direction: 0.5171269474277507),
+    ContactPoint(
+        position: Offset(683.6471437085685, -221.94356116048854),
+        direction: 0.6505787706773081),
+    ContactPoint(
+        position: Offset(666.3653689874743, -241.9445157642519),
+        direction: 0.7609563689820158),
+    ContactPoint(
+        position: Offset(647.5228720296785, -259.9315207067238),
+        direction: 0.8388043403420697),
+    ContactPoint(
+        position: Offset(627.9951365405826, -276.4575308778188),
+        direction: 0.8772644706719968),
+    ContactPoint(
+        position: Offset(608.5841297812614, -292.3123065122353),
+        direction: 0.8723728046258756),
+    ContactPoint(
+        position: Offset(590.0069716188539, -308.3336391512593),
+        direction: 0.8233421138030685),
+    ContactPoint(
+        position: Offset(572.937444099369, -325.3098116702077),
+        direction: 0.7366976019198077),
+    ContactPoint(
+        position: Offset(557.8407862864101, -343.7633748514122),
+        direction: 0.631039397821791),
+    ContactPoint(
+        position: Offset(544.8422904061262, -363.76032245583906),
+        direction: 0.5259812175468817),
+    ContactPoint(
+        position: Offset(533.8465635793325, -385.12967206635534),
+        direction: 0.435868895450815),
+    ContactPoint(
+        position: Offset(524.4568384990877, -407.5856870464692),
+        direction: 0.3710734314449944),
+    ContactPoint(
+        position: Offset(516.1039663113019, -430.7723706776524),
+        direction: 0.3314466368140172),
+    ContactPoint(
+        position: Offset(508.3567108435539, -454.3889089596595),
+        direction: 0.3092203864321128),
+    ContactPoint(
+        position: Offset(500.83133565057824, -478.582249954444),
+        direction: 0.3270859866993039),
+    ContactPoint(
+        position: Offset(491.93176957517386, -502.71764835336734),
+        direction: 0.3963281865878505),
+    ContactPoint(
+        position: Offset(480.7906625522165, -526.4214909866582),
+        direction: 0.486179204543399),
+    ContactPoint(
+        position: Offset(467.42156224107026, -549.0727067221129),
+        direction: 0.5854036838448469),
+    ContactPoint(
+        position: Offset(451.6822101535616, -570.3061129543582),
+        direction: 0.6955908800137998),
+    ContactPoint(
+        position: Offset(433.51147361258285, -589.6714653517962),
+        direction: 0.8163793388543263),
+    ContactPoint(
+        position: Offset(412.9653511353919, -606.6751894161335),
+        direction: 0.9469357203733955),
+    ContactPoint(
+        position: Offset(390.2285470800633, -620.8073130012697),
+        direction: 1.0861356649346572),
+    ContactPoint(
+        position: Offset(365.65576633591434, -631.5763217304934),
+        direction: 1.2303938477168819),
+    ContactPoint(
+        position: Offset(339.8244696448309, -638.666504542767),
+        direction: 1.3710097186025916),
+    ContactPoint(
+        position: Offset(313.46460241480594, -642.171336539353),
+        direction: 1.4949444169336275),
+    ContactPoint(
+        position: Offset(287.2172834406101, -642.7024970509802),
+        direction: 1.5900097388603474),
+    ContactPoint(
+        position: Offset(261.44391676862983, -641.2055865362653),
+        direction: 1.6482159571983086),
+    ContactPoint(
+        position: Offset(236.23246326871924, -638.7659491900356),
+        direction: 1.6655096661688624),
+    ContactPoint(
+        position: Offset(211.5393932831903, -636.4622646876112),
+        direction: 1.6387493604872336),
+    ContactPoint(
+        position: Offset(187.28016677403616, -635.409560421695),
+        direction: 1.5691636233015203),
+    ContactPoint(
+        position: Offset(163.37823660270325, -636.5116169246738),
+        direction: 1.4705318892256516),
+    ContactPoint(
+        position: Offset(139.8392794104372, -640.1712774862933),
+        direction: 1.363096368890778),
+    ContactPoint(
+        position: Offset(116.73809197160847, -646.3501255841361),
+        direction: 1.2632325091012238),
+    ContactPoint(
+        position: Offset(94.0622605365676, -654.7362738223759),
+        direction: 1.1850065008176571),
+    ContactPoint(
+        position: Offset(71.66141849689807, -664.6804950485606),
+        direction: 1.1341255823388785),
+    ContactPoint(
+        position: Offset(49.42430801354824, -675.5809982000796),
+        direction: 1.104458034738803),
+    ContactPoint(
+        position: Offset(27.18806515245306, -687.0724651470209),
+        direction: 1.0967420247491972),
+  ],
+  holes: [],
+  isRing: false,
+  isRound: false,
+  smallestConvexDiff: 0.01729102336537469,
+  biggestConvexDiff: 0.14425967825396047,
+  smallestConcaveDiff: 0.004891666046121124,
+  biggestConcaveDiff: 0.10744690582269545,
+  ovalClipper: const _WavecircleClipper(),
+  pathClipper: null,
+);

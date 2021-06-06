@@ -400,7 +400,8 @@
       <text x="435" y="21.000000000000053" text-anchor="end">214</text>
     </mask>
 
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M 448 20
              A 20 20 0 0 0 428 0
              L 20 0
@@ -410,5 +411,6 @@
              A 20 20 0 0 0 448 20
              Z" />
     <circle id="center-point" cx="224" cy="20" r="1" fill="#42d7f5" />
+
   </g>
 </svg>

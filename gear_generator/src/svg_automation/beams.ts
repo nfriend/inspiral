@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { beamSizes, gearOrder, holeSize } from '../constants';
+import { beamSizes, gearOrder, holeSize, toothHeight } from '../constants';
 import { getHoles } from './get_holes';
 
 const writeFile = util.promisify(fs.writeFile);
@@ -50,6 +50,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       holes: getHoles(centerPoint, beamOptions.holes),
       holeSize,
       isRing: Boolean(beamOptions.isRing),
+      toothHeight,
     };
 
     const rendered = await renderFile(templateFilePath, templateParams);

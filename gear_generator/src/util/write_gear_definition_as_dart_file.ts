@@ -3,6 +3,7 @@ import util from 'util';
 import path from 'path';
 import ejs from 'ejs';
 import { GearDefinition } from '../models/gear_definition';
+import capitalize from 'capitalize';
 
 const writeFile = util.promisify(fs.writeFile);
 const renderFile: any = util.promisify(ejs.renderFile);
@@ -25,7 +26,14 @@ export const writeGearDefinitionAsDartFile = async (
     '../templates/dart/dart_gear_definition.dart.ejs',
   );
 
-  const rendered = await renderFile(templateFilePath, { gearDefinition });
+  const rendered = await renderFile(templateFilePath, {
+    gearDefinition,
+    clipperClassName: `_${capitalize(
+      gearDefinition.camelCasedGearName,
+    )}Clipper`,
+    ovalClip:
+      gearDefinition.clipType === 'oval' ? gearDefinition.clips[0] : null,
+  });
 
   await writeFile(filePath, rendered);
 };

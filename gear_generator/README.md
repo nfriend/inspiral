@@ -14,7 +14,8 @@
 
 At a high level:
 
-1. The program accepts an SVG with a single `path` element as input.
+1. The program accepts an SVG with a single `path` element as input. The element
+   must have an `id` of `shape`.
    - SVG input files are located in
      [`gear_generator/src/svg`](gear_generator/src/svg)
 1. The SVG is loaded into a headless Chrome instance (using
@@ -125,6 +126,54 @@ The center point of the gear is specified using a `<circle id="center-point">`
 element. If this element is omitted, the center of the (final) image is assumed
 to be center of the gear.
 
+##### Clip
+
+By default, no clip is applied to image when rendered in the app, meaning the
+_entire_ image responds to touch events, including the transparent areas. For
+most gears, this isn't ideal, since it means the gears can accidentally be
+dragged if the user touches a transparent part of the image.
+
+To mitigate this, a gear can optionally specify a custom "clip" using either an
+`<ellipse>` or `path` with an `id` of `clip`:
+
+```xml
+<ellipse id="clip"
+         cx="16"
+         cy="16"
+         rx="16"
+         ry="16" />
+```
+
+This will apply a clip to the image when rendering the image, which prevents the
+image from responding to touch events outside the boundaries of the clip area.
+
+When the clip is defined using an `<ellipse>`, the app creates the clip using a
+[`ClipOval`](https://api.flutter.dev/flutter/widgets/ClipOval-class.html)
+widget. When the clip is instead defined using a `<path>`, a
+[`ClipPath`](https://api.flutter.dev/flutter/widgets/ClipPath-class.html) is
+used instead.
+
+When defining a clip using a `<path>`, note that the `d` attribute may _only_
+contain the following commands:
+
+- `M`
+- `L`
+- `Z`
+
+Using unsupported commands will cause an error while running the generation
+process.
+
+It's important to test the clip in the app, since the clip shouldn't visually
+alter the image in any way (it should only clip transparent portions of the
+image). To visualize the clip, temporarily update `noFilterColorFilter` and
+`fixedGearColorFilter` in `lib/widgets/color_filters.dart` like this:
+
+```dart
+// TEMP
+final noFilterColorFilter = ColorFilter.mode(Colors.red, BlendMode.color);
+final fixedGearColorFilter = ColorFilter.mode(Colors.blue, BlendMode.color);
+```
+
 ## Troubleshooting/FAQ
 
 **The rotating gear is rendered on the wrong side of the fixed gear!**
@@ -157,3 +206,9 @@ image size in _logical_ pixels is 8192 / 3 ~= 2730px.
 
 No, any extra whitespace around the gear will be trimmed during the analysis
 process.
+
+**What if I want to regenerate SVG or Dart files, but don't need to re-render
+PNGs?**
+
+Use the `yarn start:fast` script instead of `yarn:start`. It skips some of the
+optimization steps that `yarn:start` performs, so it's useful for development.

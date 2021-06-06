@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspiral/widgets/color_filters.dart';
+import 'package:inspiral/widgets/helpers/wrap_in_clip.dart';
 import 'package:provider/provider.dart';
 import 'package:inspiral/state/state.dart';
 import 'package:inspiral/extensions/extensions.dart';
@@ -22,25 +23,27 @@ class FixedGear extends StatelessWidget {
     var widgetContent = Transform.translate(
         offset: gear.position - gear.definition.center,
         child: Transform.rotate(
-          origin:
-              gear.definition.center - gear.definition.size.toOffset() / 2.0,
-          angle: gear.rotation,
-          child: Listener(
-              onPointerDown: (event) {
-                pointers.pointerDown(event);
-                gear.gearPointerDown(event);
-              },
-              onPointerMove: gear.gearPointerMove,
-              onPointerUp: (event) {
-                pointers.pointerUp(event);
-                gear.gearPointerUp(event);
-              },
-              child: ColorFiltered(
-                  colorFilter: colorFilter,
-                  child: Image.asset(gear.definition.image,
-                      width: gear.definition.size.width,
-                      height: gear.definition.size.height))),
-        ));
+            origin:
+                gear.definition.center - gear.definition.size.toOffset() / 2.0,
+            angle: gear.rotation,
+            child: wrapInClip(
+              definition: gear.definition,
+              child: Listener(
+                  onPointerDown: (event) {
+                    pointers.pointerDown(event);
+                    gear.gearPointerDown(event);
+                  },
+                  onPointerMove: gear.gearPointerMove,
+                  onPointerUp: (event) {
+                    pointers.pointerUp(event);
+                    gear.gearPointerUp(event);
+                  },
+                  child: ColorFiltered(
+                      colorFilter: colorFilter,
+                      child: Image.asset(gear.definition.image,
+                          width: gear.definition.size.width,
+                          height: gear.definition.size.height))),
+            )));
 
     // When the gear is locked, prevent this widget from absorbing pointer
     // events. Instead, allow the user to manipulate the canvas through

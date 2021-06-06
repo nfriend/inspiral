@@ -3,6 +3,7 @@ import { AngleGearHole } from './gear_hole';
 import { Entitlement } from './entitlement';
 import { Package } from './package';
 import { Point } from './point';
+import { Clip, ClipType } from './clip';
 
 /**
  * A class that holds all the data necessary to
@@ -87,4 +88,13 @@ export interface GearDefinition {
    * any two consecutive teeth on this gear.
    */
   biggestConcaveDiff: number;
+
+  /**
+   * The list of clip definitions. These clips are used to generate
+   * a custom Clipper() class that limits the hit test area of the gear.
+   */
+  clips: Clip[];
+
+  /** The type of clip that should be generated for this gear */
+  clipType: ClipType;
 }

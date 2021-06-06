@@ -3,6 +3,66 @@ import 'dart:ui';
 import 'package:inspiral/models/contact_point.dart';
 import 'package:inspiral/models/gear_definition.dart';
 import 'package:inspiral/models/models.dart';
+<%_ if (gearDefinition.clipType !== 'none') { _%>
+import 'package:flutter/material.dart';
+<%_ } _%>
+
+<%_ if (gearDefinition.clipType === 'oval') { _%>
+class <%= clipperClassName %> extends CustomClipper<Rect> {
+  const <%= clipperClassName %>();
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromCenter(
+        center: Offset(<%= ovalClip.centerPoint.x %>, <%= ovalClip.centerPoint.y %>), width: <%= ovalClip.width %>, height: <%= ovalClip.height %>);
+  }
+
+  @override
+  bool shouldReclip(oldClipper) => false;
+}
+<%_ } _%>
+
+<%_ if (gearDefinition.clipType === 'path') { _%>
+class <%= clipperClassName %> extends CustomClipper<Path> {
+  const <%= clipperClassName %>();
+
+  @override
+  Path getClip(Size size) {
+    final clip = Path()..fillType = PathFillType.evenOdd;
+
+    <%_ for (const clip of gearDefinition.clips) { _%>
+      <%_ if (clip.type === 'oval') { _%>
+        clip.addOval(
+          Rect.fromCenter(
+            center: Offset(<%= clip.centerPoint.x %>, <%= clip.centerPoint.y %>),
+            width: <%= clip.width %>,
+            height: <%= clip.height %>));
+      <%_ } _%>
+
+      <%_ if (clip.type === 'path') { _%>
+        <%_ for (const command of clip.commands) { _%>
+          <%_ if (command[0] === 'M') { _%>
+            clip.moveTo(<%= command[1] %>, <%= command[2] %>);
+          <%_ } else if (command[0] === 'L') { _%>
+            clip.lineTo(<%= command[1] %>, <%= command[2] %>);
+          <%_ } else if (command[0] === 'Z') { _%>
+            clip.close();
+          <%_ } else {
+            throw new Error(`Unsupported command: ${command[0]}`);
+          } _%>
+        <%_ } _%>
+      <%_ } _%>
+
+      clip.close();
+    <%_ } _%>
+
+    return clip;
+  }
+
+  @override
+  bool shouldReclip(oldClipper) => false;
+}
+<%_ } _%>
 
 final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
     id: '<%= gearDefinition.camelCasedGearName %>',
@@ -33,5 +93,17 @@ final <%= gearDefinition.camelCasedGearName %> = GearDefinition(
     smallestConvexDiff: <%= gearDefinition.smallestConvexDiff %>,
     biggestConvexDiff: <%= gearDefinition.biggestConvexDiff %>,
     smallestConcaveDiff: <%= gearDefinition.smallestConcaveDiff %>,
-    biggestConcaveDiff: <%= gearDefinition.biggestConcaveDiff %>
+    biggestConcaveDiff: <%= gearDefinition.biggestConcaveDiff %>,
+
+    <%_ if (gearDefinition.clipType === 'oval') { _%>
+    ovalClipper: const <%= clipperClassName %>(),
+    <%_ } else { _%>
+    ovalClipper: null,
+    <%_ } _%>
+
+    <%_ if (gearDefinition.clipType === 'path') { _%>
+    pathClipper: const <%= clipperClassName %>(),
+    <%_ } else { _%>
+    pathClipper: null,
+    <%_ } _%>
     );

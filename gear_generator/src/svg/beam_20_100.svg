@@ -218,7 +218,8 @@
       <text x="227" y="21.00000000000003" text-anchor="end">110</text>
     </mask>
 
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M 240 20
              A 20 20 0 0 0 220 0
              L 20 0
@@ -228,5 +229,6 @@
              A 20 20 0 0 0 240 20
              Z" />
     <circle id="center-point" cx="120" cy="20" r="1" fill="#42d7f5" />
+
   </g>
 </svg>

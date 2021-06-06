@@ -3,7 +3,12 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { circleGearSizes, holeSize, gearOrder } from '../constants';
+import {
+  circleGearSizes,
+  holeSize,
+  gearOrder,
+  toothHeight,
+} from '../constants';
 import { PointGearHole } from '../models/gear_hole';
 import { getHoles } from './get_holes';
 
@@ -50,6 +55,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       radius: size.radius,
       holeSize,
       holes,
+      toothHeight,
       isRing: Boolean(size.isRing),
       gearOrder: gearOrder.circles + i,
     });

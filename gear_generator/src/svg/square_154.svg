@@ -960,7 +960,8 @@
       <text x="240.80256121069155" y="65.19743878930849" text-anchor="end">127</text>
     </mask>
 
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M 308 154
              A 231 231 0 0 0 154 0
              A 231 231 0 0 0 0 153.99999999999997
@@ -968,5 +969,18 @@
              A 231 231 0 0 0 308 154.00000000000003
              Z" />
     <circle id="center-point" cx="154" cy="154" r="1" fill="#42d7f5" />
+
+    <style>
+      #clip {
+        fill: green;
+        opacity: 0.4;
+      }
+    </style>
+
+    <ellipse id="clip"
+             cx="154"
+             cy="154"
+             rx="154"
+             ry="154" />
   </g>
 </svg>

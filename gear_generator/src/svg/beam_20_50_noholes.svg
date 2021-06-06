@@ -22,7 +22,8 @@
       <rect width="100%" height="100%" fill="white" />
     </mask>
 
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M 140 20
              A 20 20 0 0 0 120 0
              L 20 0
@@ -32,5 +33,6 @@
              A 20 20 0 0 0 140 20
              Z" />
     <circle id="center-point" cx="70" cy="20" r="1" fill="#42d7f5" />
+
   </g>
 </svg>

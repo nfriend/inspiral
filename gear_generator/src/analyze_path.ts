@@ -4,6 +4,12 @@ import { AngleGearHole } from './models/gear_hole';
 import { allEntitlements } from './models/entitlement';
 import { allPackages } from './models/package';
 import { Point } from './models/point';
+import { Clip, ClipType, OvalClip, PathClip } from './models/clip';
+
+// Any third-party libraries that are used in this file
+// need to be imported/bundled in `add_third_party_libs.ts`
+// and made available globally in `add-browserify-globals.js`.
+declare var parseSvgPath: any;
 
 export interface AnalyzePathParams {
   baseScale: number;
@@ -39,7 +45,13 @@ export const analyzePath = ({
   const pi2 = 2 * Math.PI;
 
   const svg = document.querySelector('svg');
-  const path = svg.querySelector('path');
+  const path = svg.querySelector('path#shape') as SVGPathElement;
+
+  if (!path) {
+    throw new Error(
+      'The SVG input file must include a `path` element with an `id` of `shape`',
+    );
+  }
 
   // Find the entitlement ID embeded in the <entitlement-id> element.
   // If no <entitlement-id> element was provided, the gear is assumed to free.
@@ -343,19 +355,134 @@ export const analyzePath = ({
     })
     .sort((a, b) => a.distance - b.distance);
 
+  const size = {
+    width: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
+    height: (svgSize.height + (toothHeight + meshSpacing) * 2) * baseScale,
+  };
+
+  const center = {
+    x: (centerPoint.x + toothHeight + meshSpacing) * baseScale,
+    y: (centerPoint.y + toothHeight + meshSpacing) * baseScale,
+  };
+
+  // A helper function that adjusts a clip point from its original,
+  // literal position to its correct position after transformation,
+  // scaling/etc. is applied.
+  const adjustClipPoint = (point: Point): Point => {
+    return {
+      x:
+        (point.x -
+          boundaries.x.min +
+          toothHeight +
+          meshSpacing +
+          // The `* 2` is due to some weirdness around the boundaries
+          // above, since they've already been modified to take
+          // `ringGearWidth` into account. This isn't ideal - there's
+          // probably a better way to structure this.
+          (inverted ? ringGearWidth * 2 : 0)) *
+        baseScale,
+      y:
+        (point.y -
+          boundaries.y.min +
+          toothHeight +
+          meshSpacing +
+          (inverted ? ringGearWidth * 2 : 0)) *
+        baseScale,
+    };
+  };
+
+  // Read the clip definition, if it exists.
+  // Clips are defined by including an <ellipse id="clip">
+  // or <path id="clip"> element in the SVG.
+  const clips: Clip[] = [];
+  const clipSvg = document.querySelector('#clip');
+  if (clipSvg) {
+    if (clipSvg.nodeName === 'ellipse') {
+      const ovalSvg = clipSvg as SVGEllipseElement;
+      const clip: OvalClip = {
+        type: 'oval',
+        centerPoint: adjustClipPoint({
+          x: parseFloat(ovalSvg.getAttribute('cx')),
+          y: parseFloat(ovalSvg.getAttribute('cy')),
+        }),
+        width:
+          (parseFloat(ovalSvg.getAttribute('rx')) + toothHeight + meshSpacing) *
+          2 *
+          baseScale,
+        height:
+          (parseFloat(ovalSvg.getAttribute('ry')) + toothHeight + meshSpacing) *
+          2 *
+          baseScale,
+      };
+
+      clips.push(clip);
+    } else if (clipSvg.nodeName === 'path') {
+      const pathSvg = clipSvg as SVGPathElement;
+
+      const clip: PathClip = {
+        type: 'path',
+        commands: parseSvgPath(pathSvg.getAttribute('d')),
+      };
+
+      // Translate and scale all the clip commands
+      clip.commands = clip.commands.map((command) => {
+        const commandType = command[0];
+
+        if (commandType === 'M' || commandType === 'L') {
+          const originalPoint: Point = {
+            x: command[1] as number,
+            y: command[2] as number,
+          };
+          const updatedPoint = adjustClipPoint(originalPoint);
+          return [commandType, updatedPoint.x, updatedPoint.y];
+        } else if (command[0] === 'Z') {
+          return command;
+        } else {
+          throw new Error(
+            `Unsupported <path> command in #clip: ${command[0]}. Only M, L, and Z commands are supported.`,
+          );
+        }
+      });
+
+      clips.push(clip);
+    } else {
+      throw new Error(
+        'Only <ellipse> or <path> elements are supported when defining a #clip for a gear',
+      );
+    }
+
+    if (inverted) {
+      // If this is a ring gear, we need to define a second clip that surrounds the gear.
+      // This results in the inner clip acting as a "cutout" from the middle of the gear.
+      const clip: PathClip = {
+        type: 'path',
+        commands: [
+          ['M', 0, 0],
+          ['L', 0, size.height],
+          ['L', size.width, size.height],
+          ['L', size.width, 0],
+          ['Z'],
+        ],
+      };
+
+      clips.push(clip);
+    }
+  }
+
+  let clipType: ClipType = 'none';
+  if (clips.length === 1 && clips[0].type === 'oval') {
+    clipType = 'oval';
+  } else if (clips.length > 0) {
+    clipType = 'path';
+  }
+
   const gearDefinition: GearDefinition = {
     gearName,
     camelCasedGearName,
     image: `images/gears/${gearName}.png`,
     thumbnailImage: `images/gears/${gearName}_thumb.png`,
-    size: {
-      width: (svgSize.width + (toothHeight + meshSpacing) * 2) * baseScale,
-      height: (svgSize.height + (toothHeight + meshSpacing) * 2) * baseScale,
-    },
-    center: {
-      x: (centerPoint.x + toothHeight + meshSpacing) * baseScale,
-      y: (centerPoint.y + toothHeight + meshSpacing) * baseScale,
-    },
+    size,
+    center,
     toothCount,
     points: evaluatedPoints,
     holes,
@@ -369,6 +496,8 @@ export const analyzePath = ({
     biggestConvexDiff,
     smallestConcaveDiff,
     biggestConcaveDiff,
+    clips,
+    clipType,
   };
 
   return gearDefinition;

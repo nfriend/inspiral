@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { polygonRingVariations, holeSize } from '../constants';
+import { polygonRingVariations, holeSize, toothHeight } from '../constants';
 import { Point } from '../models/point';
 
 const writeFile = util.promisify(fs.writeFile);
@@ -70,6 +70,20 @@ const renderFile: any = util.promisify(ejs.renderFile);
         });
       }
 
+      // `clipRadius` is the radius of the circle to clip from the center
+      // of the gear for hit testing purposes. The numbers below are arbitrary
+      // numbers found through trial and error that worked best for each of
+      // the sizes currently supported.
+      // A fancier method might actually try to define a <path> element that
+      // perfectly matched the interior of the ring, but this level isn't
+      // necessary for this purpose.
+      let clipRadiusRatio = 0.79;
+      if (polygonDef.sides >= 5) {
+        clipRadiusRatio = 0.92;
+      } else if (polygonDef.sides >= 4) {
+        clipRadiusRatio = 0.88;
+      }
+
       const templateParams = {
         caps,
         endPointRadius: endCapRadius,
@@ -80,6 +94,8 @@ const renderFile: any = util.promisify(ejs.renderFile);
         isRing: true,
         holes: size.holes,
         holeSize,
+        toothHeight,
+        clipRadius: centerPoint.x * clipRadiusRatio,
       };
 
       const rendered = await renderFile(templateFilePath, templateParams);

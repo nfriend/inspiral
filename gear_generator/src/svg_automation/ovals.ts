@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import util from 'util';
 import ejs from 'ejs';
-import { holeSize, gearOrder, ovalGearSizes } from '../constants';
+import { holeSize, gearOrder, ovalGearSizes, toothHeight } from '../constants';
 import { getHoles } from './get_holes';
 import { PointGearHole } from '../models/gear_hole';
 
@@ -50,6 +50,7 @@ const renderFile: any = util.promisify(ejs.renderFile);
       ...ovalParams,
       holeSize,
       holes,
+      toothHeight,
       gearOrder: gearOrder.ovals + i,
       isRing: Boolean(ovalParams.isRing),
     });

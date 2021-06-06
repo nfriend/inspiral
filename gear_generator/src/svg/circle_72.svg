@@ -425,10 +425,25 @@
       <text x="113.54772721475251" y="28.452272785247516" text-anchor="end">63</text>
     </mask>
 
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M 144 72
              A 72 72 0 1 0 0 72
              A 72 72 0 0 0 144 72
              Z" />
+
+    <style>
+      #clip {
+        fill: green;
+        opacity: 0.4;
+      }
+    </style>
+
+
+    <ellipse id="clip"
+             cx="72"
+             cy="72"
+             rx="72"
+             ry="72" />
   </g>
 </svg>

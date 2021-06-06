@@ -22,12 +22,26 @@
       <rect width="100%" height="100%" fill="white" />
     </mask>
 
-    <path mask="url(#holes)"
+    <path id="shape"
+          mask="url(#holes)"
           d="M 326 163
              A 244.5 244.5 0 0 0 81.50000000000004 21.837859183136487
              A 244.5 244.5 0 0 0 81.49999999999993 304.1621408168635
              A 244.5 244.5 0 0 0 326 163.00000000000003
              Z" />
     <circle id="center-point" cx="163" cy="163" r="1" fill="#42d7f5" />
+
+    <style>
+      #clip {
+        fill: green;
+        opacity: 0.4;
+      }
+    </style>
+
+    <ellipse id="clip"
+             cx="163"
+             cy="163"
+             rx="163"
+             ry="163" />
   </g>
 </svg>
