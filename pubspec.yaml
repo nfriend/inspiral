@@ -55,7 +55,7 @@ dependencies:
   in_app_review: ^2.0.2
   pedantic: ^1.11.0
   url_launcher: ^6.0.3
-  webview_flutter: ^2.0.4
+  webview_flutter: 2.0.4
 
 dev_dependencies:
   flutter_test:
