@@ -169,9 +169,31 @@ class UndoRedoState extends InspiralStateObject {
     await _createSnapshot(_SnapshotType.Quick);
   }
 
+  /// See comment where this is used for an explanation
+  _SnapshotType _lastSuccessfulSnapshotType = _SnapshotType.Full;
+
   Future<void> _createSnapshot(_SnapshotType snapshotType) async {
     // Don't try to create a new snapshot if it's already in progress
     if (_isCreatingSnapshot) {
+      return;
+    }
+
+    // It's possible for quick snapshots to "starve" full snapshots. Since
+    // quick snapshots are triggered on pointer down, and full snapshots
+    // are triggered on pointer up, it's common for a quick snapshot
+    // to be followed very quickly by a full snapshot (especially when using
+    // auto-draw on fast mode).
+    // But since we only allow one snapshot process (quick or full) at a time,
+    // this can cause the full snapshots to never be allowed to continue, since
+    // we're always in the process of quick snapshoting. This is bad, since
+    // quick snapshots don't save the canvas.
+    // In fact, we should _never_ call a quick snapshot twice in a row. Doing
+    // so indicates that we ignored a request for a full snapshot. (Assuming
+    // the only time we call quick snapshots is on point down events). To avoid
+    // this scenario, disallow two quick snapshots from happening in succession.
+    // This keeps full snapshots from being starved by quick snapshots.
+    if (_lastSuccessfulSnapshotType == _SnapshotType.Quick &&
+        snapshotType == _SnapshotType.Quick) {
       return;
     }
 
@@ -208,6 +230,8 @@ class UndoRedoState extends InspiralStateObject {
           "an error occured while creating a ${snapshotType == _SnapshotType.Full ? 'full' : 'quick'} undo snapshot: $err");
       await Sentry.captureException(err, stackTrace: stackTrace);
     }
+
+    _lastSuccessfulSnapshotType = snapshotType;
 
     _isCreatingSnapshot = false;
 
