@@ -7,17 +7,6 @@ export default function Home() {
       <HelpCustomHead />
 
       <div className="max-w-xl pb-10">
-        <div className="alert alert-info">
-          <p>
-            <b>Welcome to the Inspiral documentation!</b>
-          </p>
-
-          <p>
-            This content is a work-in-progress and is not complete, but will
-            hopefully answer some of the most common questions.
-          </p>
-        </div>
-
         <h2 id="table-of-contents">Table of contents</h2>
 
         <ul>
