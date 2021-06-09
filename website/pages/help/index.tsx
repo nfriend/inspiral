@@ -37,6 +37,9 @@ export default function Home() {
             <a href="#locking-the-fixed-gear">Locking the fixed gear</a>
           </li>
           <li>
+            <a href="#rotating-the-fixed-gear">Rotating the fixed gear</a>
+          </li>
+          <li>
             <a href="#using-fixed-gear-snap-points">
               Using fixed gear "snap points"
             </a>
@@ -54,11 +57,11 @@ export default function Home() {
               Where do pictures go when they are saved?
             </a>
           </li>
-          {/* <li>
+          <li>
             <a href="#fixing-mistakes-with-undo-redo">
               Fixing mistakes with undo/redo
             </a>
-          </li> */}
+          </li>
         </ul>
 
         <h3 id="what-does-this-button-do">What does this button do?</h3>
@@ -116,10 +119,10 @@ export default function Home() {
           alt="A screenshot of the 'Auto draw' buttons"
         />
 
-        {/* <p>
+        <p>
           To make auto-draw faster, open the <b>Additional options</b> sidebar
           and set the <b>Auto-draw speed</b> setting to "Fast".
-        </p> */}
+        </p>
 
         <h3 id="locking-the-fixed-gear">Locking the fixed gear</h3>
 
@@ -134,6 +137,14 @@ export default function Home() {
           src="/help/images/fixed-gear-lock.png"
           alt="A screenshot of the 'Lock fixed gear' button"
         />
+
+        <h3 id="rotating-the-fixed-gear">Rotating the fixed gear</h3>
+
+        <p>
+          The fixed gear can be rotated using a two-finger gesture. Note that
+          both fingers must be touching the fixed gear. For small gears, it may
+          help to zoom in on the gear before attempting to rotate it.
+        </p>
 
         <h3 id="using-fixed-gear-snap-points">
           Using fixed gear "snap points"
@@ -227,9 +238,9 @@ export default function Home() {
           the <b>Photos on device</b> screen.
         </p>
 
-        {/* <h3 id="fixing-mistakes-with-undo-redo">
+        <h3 id="fixing-mistakes-with-undo-redo">
           Fixing mistakes with undo/redo
-          <VersionIndicator version="1.2.0" />
+          <VersionIndicator version="1.2.1" />
         </h3>
 
         <p>
@@ -261,7 +272,7 @@ export default function Home() {
           <li>
             <a href="#using-fixed-gear-snap-points">Snap points</a>
           </li>
-        </ul> */}
+        </ul>
       </div>
 
       {/* https://github.com/bryanbraun/anchorjs */}
