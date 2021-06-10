@@ -3,7 +3,7 @@ Inspiral creates breathtaking, geometric line drawings using a clever system of 
 <b>Features</b>
 
 • No ads
-• 125+ gears, including circles, ovals, triangles, squares, pentagons, rings, beams, and a variety of unusual shapes
+• 150+ gears, including circles, ovals, triangles, squares, pentagons, rings, beams, and a variety of unusual shapes
 • Drag gears to draw, or let auto-draw do it for you
 • Large variety of pen styles
 • Custom pen and canvas colors
