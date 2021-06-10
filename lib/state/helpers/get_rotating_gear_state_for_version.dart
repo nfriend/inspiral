@@ -11,12 +11,14 @@ class RotatingGearStateSnapshot {
   GearHole activeHole;
   GearDefinition definition;
   bool isVisible;
+  int toothOffset;
 
   RotatingGearStateSnapshot(
       {required this.angle,
       required this.activeHole,
       required this.definition,
-      required this.isVisible});
+      required this.isVisible,
+      required this.toothOffset});
 }
 
 Future<RotatingGearStateSnapshot> getRotatingGearStateForVersion(
@@ -28,7 +30,8 @@ Future<RotatingGearStateSnapshot> getRotatingGearStateForVersion(
         Schema.state.rotatingGearAngle,
         Schema.state.rotatingGearActiveHoleName,
         Schema.state.rotatingGearDefinitionId,
-        Schema.state.gearsAreVisible
+        Schema.state.gearsAreVisible,
+        Schema.state.rotatingGearToothOffset
       ],
       where: getWhereClauseForVersion(Schema.state.version, version)));
 
@@ -37,7 +40,8 @@ Future<RotatingGearStateSnapshot> getRotatingGearStateForVersion(
         angle: rotatingGearStartingAngle,
         definition: defaultRotatingGear,
         activeHole: defaultActiveHole,
-        isVisible: defaultGearVisibility);
+        isVisible: defaultGearVisibility,
+        toothOffset: defaultRotatingGearToothOffset);
   } else {
     var state = allRows.first;
 
@@ -49,6 +53,7 @@ Future<RotatingGearStateSnapshot> getRotatingGearStateForVersion(
 
     return RotatingGearStateSnapshot(
         angle: state[Schema.state.rotatingGearAngle] as double,
+        toothOffset: state[Schema.state.rotatingGearToothOffset] as int,
         definition: definition,
         isVisible: (state[Schema.state.gearsAreVisible] as int).toBool(),
         activeHole: definition.holes.firstWhere(

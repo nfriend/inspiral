@@ -95,7 +95,7 @@ const double selectorDrawerHeight = 168.0;
 const String localDatabaseName = 'inspiral.db';
 
 /// The version of the local database file. Used for performing migrations.
-const int localDatabaseVersion = 7;
+const int localDatabaseVersion = 8;
 
 /// The maximum zoom scale
 const double maxScale = 2.0;
@@ -142,6 +142,9 @@ final bool defaultGearVisibility = true;
 
 /// The default state of the fixed gear's "locked" setting
 final bool defaultFixedGearLocked = false;
+
+/// The default tooth offset of the rotating gear
+final int defaultRotatingGearToothOffset = 0;
 
 /// The default set of pen colors
 final List<TinyColor> defaultPenColors = [

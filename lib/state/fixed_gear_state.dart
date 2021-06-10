@@ -158,9 +158,10 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
   Future<void> undo(int version) async {
     var snapshot = await getFixedGearStateForVersion(version, allStateObjects);
 
-    // Don't update the isVisible property - this property should
-    // not be undone/redone
+    // Don't update the isVisible or isLocked properties -
+    // these properties should not be undone/redone
     snapshot.isVisible = isVisible;
+    snapshot.isLocked = isLocked;
 
     _applyStateSnapshot(snapshot);
   }
@@ -171,6 +172,7 @@ class FixedGearState extends BaseGearState with WidgetsBindingObserver {
 
     // Same comment as above
     snapshot.isVisible = isVisible;
+    snapshot.isLocked = isLocked;
 
     _applyStateSnapshot(snapshot);
   }

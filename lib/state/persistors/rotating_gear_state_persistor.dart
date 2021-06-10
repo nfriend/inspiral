@@ -14,6 +14,7 @@ class RotatingGearStatePersistor {
           Schema.state.rotatingGearDefinitionId: rotatingGear.definition.id,
           Schema.state.rotatingGearActiveHoleName: rotatingGear.activeHole.name,
           Schema.state.gearsAreVisible: rotatingGear.isVisible.toInt(),
+          Schema.state.rotatingGearToothOffset: rotatingGear.toothOffset
         },
         where: getWhereClauseForVersion(Schema.state.version, null));
   }

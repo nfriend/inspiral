@@ -421,6 +421,7 @@ class RotatingGearState extends BaseGearState {
     definition = snapshot.definition;
     isVisible = snapshot.isVisible;
     activeHole = snapshot.activeHole;
+    toothOffset = snapshot.toothOffset;
 
     initializePosition();
     notifyListeners();

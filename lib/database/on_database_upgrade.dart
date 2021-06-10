@@ -5,6 +5,7 @@ import 'package:inspiral/database/migrations/upgrades/upgrade_v3_to_v4.dart';
 import 'package:inspiral/database/migrations/upgrades/upgrade_v4_to_v5.dart';
 import 'package:inspiral/database/migrations/upgrades/upgrade_v5_to_v6.dart';
 import 'package:inspiral/database/migrations/upgrades/upgrade_v6_to_v7.dart';
+import 'package:inspiral/database/migrations/upgrades/upgrade_v7_to_v8.dart';
 import 'package:quiver/iterables.dart';
 import 'package:sqflite/sqlite_api.dart';
 
@@ -15,7 +16,8 @@ const Map<int, Future<void> Function(Database)> upgradeFunctions = {
   3: upgradeV3ToV4,
   4: upgradeV4ToV5,
   5: upgradeV5ToV6,
-  6: upgradeV6ToV7
+  6: upgradeV6ToV7,
+  7: upgradeV7ToV8
 };
 
 Future<void> onDatabaseUpgrade(

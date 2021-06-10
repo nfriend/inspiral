@@ -70,6 +70,7 @@ class StateTable extends Table {
   final String rotatingGearAngle = 'rotatingGearAngle';
   final String rotatingGearDefinitionId = 'rotatingGearDefinitionId';
   final String rotatingGearActiveHoleName = 'rotatingGearActiveHoleName';
+  final String rotatingGearToothOffset = 'rotatingGearToothOffset';
   final String gearsAreVisible = 'gearsAreVisible';
   final String fixedGearPositionX = 'fixedGearPositionX';
   final String fixedGearPositionY = 'fixedGearPositionY';

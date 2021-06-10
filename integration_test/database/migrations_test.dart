@@ -227,5 +227,18 @@ void main() {
         expect(row[Schema.state.createQuickSnapshotBeforeNextDraw], 0);
       }
     });
+
+    testWidgets('upgrade from version 7 to version 8',
+        (WidgetTester tester) async {
+      db = await getDatabase(version: 8, databaseName: testDatabaseName);
+
+      final stateRows = await db.query(Schema.state.toString());
+
+      expect(stateRows.length, 3);
+
+      for (var row in stateRows) {
+        expect(row[Schema.state.rotatingGearToothOffset], 0);
+      }
+    });
   });
 }
