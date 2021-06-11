@@ -46,6 +46,8 @@ final _incompatibleMapping = <GearDefinition, HashSet<GearDefinition>>{
     circle40,
   ]),
   waveCircleRing: HashSet.from([circle42]),
+  beam84103Ring: HashSet.from([circle80]),
+  beam84182Ring: HashSet.from([circle80])
 };
 
 /// The algorithm above works _most_ of the time, but it breaks down in a few
